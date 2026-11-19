@@ -1,0 +1,138 @@
+{
+  "reproductionSource": "96aebd10",
+  "fixCommit": "29d9cb9d",
+  "jvmBefore": {
+    "keyboardFocusTraversalDoesNotReleaseFollowing[jvm]": "java.lang.AssertionError: Expected value to be true."
+  },
+  "jvmAfter": {
+    "core": {
+      "MessageScrollerParityTest[jvm]": {
+        "passed": 32,
+        "failed": 0,
+        "testCases": {
+          "rowPaddingBelongsToTheMeasuredMessageBoundary[jvm]": null,
+          "shrinkingViewportKeepsTheExistingEndWithoutEnablingOutputFollowing[jvm]": null,
+          "cancellingSmoothCommandClearsItsProgrammaticState[jvm]": null,
+          "visibilityExcludesPreviousPeekBandAndTracksCurrentTurn[jvm]": null,
+          "newTurnKeepsPreviousPeekAndSpacerIsConsumedByStreaming[jvm]": null,
+          "commandsHonorContentPaddingMarginAndAllFourAlignments[jvm]": null,
+          "commandsBeforeAViewportExistsReturnFalse[jvm]": null,
+          "novaContentGapIsTwentyFour[jvm]": null,
+          "keyboardFocusTraversalDoesNotReleaseFollowing[jvm]": null,
+          "nova_dark[jvm]": null,
+          "nova_light[jvm]": null,
+          "prependingPreservesTheSameVisibleMessagePosition[jvm]": null,
+          "keyboardEndCanReachTheLiveEdgeAndFollowLaterAppends[jvm]": null,
+          "providerDefaultsOpenAtEndWithoutFollowingNewContent[jvm]": null,
+          "cancelledOpeningPositionDoesNotKeepTheTranscriptTransparent[jvm]": null,
+          "nestedGroupItemsKeepTheirOffsetInTheContentCoordinateSpace[jvm]": null,
+          "shortLastTurnOpensAtEndWithoutAddingBlankSpace[jvm]": null,
+          "pointerIntentCancelsAnActiveSmoothCommand[jvm]": null,
+          "thresholdScalesWithDensityInsteadOfUsingPhysicalPixels[jvm]": null,
+          "openingAtLastAnchorOnlyPinsATurnTallerThanTheViewport[jvm]": null,
+          "optedInFollowingHandlesStreamGrowthAndPointerIntentReleasesIt[jvm]": null,
+          "prependPreservationCanBeDisabled[jvm]": null,
+          "reflowAboveTheReadingRowPreservesItsPosition[jvm]": null,
+          "anonymousAnchorDoesNotEraseTheLastNamedCurrentAnchor[jvm]": null,
+          "buttonStopsAcceptingInputWhileItsExitAnimationIsStillMounted[jvm]": null,
+          "readerScrollReleasesAndExplicitEndResumesFollowing[jvm]": null,
+          "newerCommandKeepsItsFollowingModeWhenTheOlderAnimationIsCancelled[jvm]": null,
+          "pointerIntentCancelsAnAnchorWaitingForItsSpacerFrame[jvm]": null,
+          "shrinkingViewportPreservesAReaderWhoIsAwayFromTheEnd[jvm]": null,
+          "commandsReturnFalseAfterViewportUnmountAndVisibilityClears[jvm]": null,
+          "keyboardEndKeepsTheEndWhenScrollStatusChangesTheViewportHeight[jvm]": null,
+          "userMutationCancelsOneCorrectionWithoutDetachingTheController[jvm]": null
+        }
+      },
+      "MessageScrollerScreenshotTest[jvm]": {
+        "passed": 9,
+        "failed": 5,
+        "testCases": {
+          "icon_override_light[jvm]": "java.lang.AssertionError: Roborazzi: shadcn/core/src/jvmTest/snapshots/message_scroller_icon_override_light.png is changed.\nSee the compare image at shadcn/core/build/outputs/roborazzi/message_scroller_icon_override_light_compare.png",
+          "chat_panel_light[jvm]": "java.lang.AssertionError: Roborazzi: shadcn/core/src/jvmTest/snapshots/message_scroller_chat_panel_light.png is changed.\nSee the compare image at shadcn/core/build/outputs/roborazzi/message_scroller_chat_panel_light_compare.png",
+          "button_start_dark[jvm]": null,
+          "content_items_dark[jvm]": null,
+          "viewport_dark[jvm]": null,
+          "jump_to_bottom_button_light[jvm]": null,
+          "chat_panel_dark[jvm]": "java.lang.AssertionError: Roborazzi: shadcn/core/src/jvmTest/snapshots/message_scroller_chat_panel_dark.png is changed.\nSee the compare image at shadcn/core/build/outputs/roborazzi/message_scroller_chat_panel_dark_compare.png",
+          "short_content_dark[jvm]": null,
+          "button_start_light[jvm]": null,
+          "content_items_light[jvm]": null,
+          "overflowing_content_settles_at_bottom_dark[jvm]": "java.lang.AssertionError: Roborazzi: shadcn/core/src/jvmTest/snapshots/message_scroller_overflow_settles_at_bottom_dark.png is changed.\nSee the compare image at shadcn/core/build/outputs/roborazzi/message_scroller_overflow_settles_at_bottom_dark_compare.png",
+          "short_content_light[jvm]": null,
+          "viewport_light[jvm]": null,
+          "overflowing_content_settles_at_bottom_light[jvm]": "java.lang.AssertionError: Roborazzi: shadcn/core/src/jvmTest/snapshots/message_scroller_overflow_settles_at_bottom_light.png is changed.\nSee the compare image at shadcn/core/build/outputs/roborazzi/message_scroller_overflow_settles_at_bottom_light_compare.png"
+        }
+      }
+    },
+    "catalog": {
+      "MessageScrollerExamplesTest[jvm]": {
+        "passed": 6,
+        "failed": 0,
+        "testCases": {
+          "officialPageOrderGuidesAndKotlinExtensions[jvm]": null,
+          "resettingTheDemoCancelsStreamingAndRestoresTheEmptyConversation[jvm]": null,
+          "usageExplainsCanonicalCompositionAndExposesRealStateApi[jvm]": null,
+          "resettingTheInteractivePanelCancelsTheOldReplyBeforeReusingItsId[jvm]": null,
+          "releasedReaderStaysPutAndExplicitButtonResumesFollowing[jvm]": null,
+          "jumpAndLoadingEarlierKeepTheSameReadingPosition[jvm]": null
+        }
+      }
+    }
+  },
+  "snapshotVerification": {
+    "roborazzi.test.verify": true,
+    "existingFailures": {
+      "icon_override_light[jvm]": "message_scroller_icon_override_light.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/message_scroller_icon_override_light_compare.png",
+      "chat_panel_light[jvm]": "message_scroller_chat_panel_light.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/message_scroller_chat_panel_light_compare.png",
+      "chat_panel_dark[jvm]": "message_scroller_chat_panel_dark.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/message_scroller_chat_panel_dark_compare.png",
+      "overflowing_content_settles_at_bottom_dark[jvm]": "message_scroller_overflow_settles_at_bottom_dark.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/message_scroller_overflow_settles_at_bottom_dark_compare.png",
+      "overflowing_content_settles_at_bottom_light[jvm]": "message_scroller_overflow_settles_at_bottom_light.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/message_scroller_overflow_settles_at_bottom_light_compare.png"
+    },
+    "actualPngSha256BeforeAndAfter": {
+      "message_scroller_chat_panel_dark_actual.png": "6369b4ce140e4497104d9039866c0c195e45494ec44d43f90d87bc9f47004602",
+      "message_scroller_chat_panel_light_actual.png": "7785393a9689b7b80bab456f531eab154d5d23934f48cde6c48c6137c81d5977",
+      "message_scroller_icon_override_light_actual.png": "380b93003d960893568565a31eb2ea1c88ff03fa31fd4d3361d1a9635717b594",
+      "message_scroller_overflow_settles_at_bottom_dark_actual.png": "77e9a9dec2d17ee09a7bad03956ab02a44dfd192af90551347ee043f7f6144bd",
+      "message_scroller_overflow_settles_at_bottom_light_actual.png": "7e13e7b38c2301c1f7382249c509681f0d87bfe93ed6e495d19ca7320a96b2db"
+    }
+  },
+  "detekt": {
+    "files": 565,
+    "before": 4468,
+    "after": 4463,
+    "removed": [
+      "CyclomaticComplexMethod:MessageScroller.kt$@Composable private fun ScrollerViewport( modifier: Modifier, state: MessageScrollerState, content: @Composable ColumnScope.() -> Unit, )",
+      "LongMethod:MessageScroller.kt$@Composable private fun ScrollerViewport( modifier: Modifier, state: MessageScrollerState, content: @Composable ColumnScope.() -> Unit, )",
+      "MagicNumber:MessageScroller.kt$180f",
+      "MagicNumber:MessageScroller.kt$200",
+      "MagicNumber:MessageScroller.kt$400"
+    ],
+    "added": []
+  },
+  "ktlintCheck": "passed",
+  "web": {
+    "viewportCssPixels": [
+      900,
+      650
+    ],
+    "theme": "Nova",
+    "builds": "passed",
+    "results": [
+      {
+        "runtime": "js",
+        "tabMovedFocus": true,
+        "tabKeptFollowing": true,
+        "appendStayedAtEnd": true,
+        "arrowUpReleasedFollowing": true
+      },
+      {
+        "runtime": "wasmJs",
+        "tabMovedFocus": true,
+        "tabKeptFollowing": true,
+        "appendStayedAtEnd": true,
+        "arrowUpReleasedFollowing": true
+      }
+    ]
+  }
+}

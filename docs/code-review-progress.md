@@ -158,7 +158,7 @@
 | `marker` | 已验收 | 已验收 | 统一 Nova、Rhea 的布局选择，`6da4551e`。 |
 | `menubar` | 局部审查 | 局部清理 | 已有悬停、焦点与 Canvas 适配证据。 |
 | `message` | 已验收 | 已验收 | 头部与页脚共用元数据布局，`489bd03c`。 |
-| `messagescroller` | 待审 | 待审 |  |
+| `messagescroller` | 已验收 | 已验收 | Tab 移动焦点时继续跟随新消息，`29d9cb9d`。 |
 | `navigationmenu` | 待审 | 待审 |  |
 | `overlay` | 已验收 | 已验收 | 前两轮及第一批记录。 |
 | `pagination` | 待审 | 待审 |  |
@@ -274,3 +274,9 @@
 - `Bubble.kt:175`。父消息的末端对齐原先会覆盖调用方显式传入的 Start，JVM 测得偏到 318 px，预期 24 px。省略参数时继承父消息，显式参数以自身为准。将静态与悬停颜色计算移出样式声明，并为宽度比例、反应布局和动效命名。提交 `bfefce66`。
 - `MessageMetadata.kt:29`。头部与页脚共用排版和主题样式，注册页脚和 Ghost 气泡的生命周期仍由各自插槽拥有。公开函数的 JVM 入口留在 `Message.kt`，保留对应的函数数量告警。相对 OKLCH 的转换矩阵、混合权重和组件源样式数值有明确依据。
 - Detekt 同配置扫描从 4,475 减至 4,468 条，零新增。Detekt、ktlint、101 项核心和 22 项目录 JVM 测试通过，包含 Bubble 和 Message 的 21 张现有快照。关联的 MessageScroller 五张快照在原实现同样失败，实际 PNG 的 SHA-256 逐一相同。Chromium 在 JS/Wasm 上核对 LTR 和 RTL 的显式与继承对齐，以及头部、正文和页脚的顺序。[验证证据](code-review-evidence/bubble-message.json)
+
+### MessageScroller 验收
+
+- `MessageScroller.kt:204`。任意按键的预览事件原先都会停止跟随，Tab 穿过消息内动作也无法继续跟随新消息。键盘退出跟随现在由滚动容器实际处理的方向、翻页和首尾按键触发。已复核触摸、滚轮以及回到末尾恢复跟随。提交 `29d9cb9d`。
+- 核对 `MessageScrollerState.kt:280` 的滚动命令取消、布局调和、插入历史时保持阅读位置和挂载清理。保留公开的默认值和 getter，以及初始化、视口收缩、前插和锚点按顺序调和的实现。物理像素的旧阈值和运行时随密度换算的键盘步长均明确单位。删除三个只有旧测试引用的谓词，现行阈值、增长与释放由真实滚动状态的测试覆盖。
+- Detekt 同配置扫描从 4,468 减至 4,463 条，零新增。Detekt、ktlint、41 项核心和 6 项目录 JVM 测试通过。五张既有快照失败的实际 PNG 前后逐一相同。JS/Wasm 都通过 Chromium 实际 Tab、Enter、追加和向上键回归。[验证证据](code-review-evidence/messagescroller.json)
