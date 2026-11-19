@@ -7,6 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toPixelMap
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
 import androidx.compose.ui.unit.LayoutDirection
@@ -232,6 +234,27 @@ class TraceParityTest : ScreenshotTest() {
             },
             "The automatic chevron must use the line's explicit destructive status color",
         )
+    }
+
+    @Test fun keyboardLinkActivationWaitsForReleaseAndOpensOnce() {
+        val href = "https://example.com/docs"
+        val opened = mutableListOf<String>()
+        val handler =
+            object : UriHandler {
+                override fun openUri(uri: String) {
+                    opened.add(uri)
+                }
+            }
+        setThemedContent {
+            CompositionLocalProvider(LocalUriHandler provides handler) {
+                TraceLink(href, Modifier.testTag("link")) { Text { "Read docs" } }
+            }
+        }
+        val link = composeRule.onNodeWithTag("link").requestFocus()
+        link.performKeyInput { keyDown(Key.Enter) }
+        composeRule.runOnIdle { assertTrue(opened.isEmpty()) }
+        link.performKeyInput { keyUp(Key.Enter) }
+        composeRule.runOnIdle { assertEquals(listOf(href), opened) }
     }
 
     @Test fun linkRowKeepsTheAccessibleNameForANewTab() {

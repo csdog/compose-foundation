@@ -8,7 +8,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.hoverable
-import androidx.compose.foundation.interaction.FocusInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
@@ -24,15 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.KeyEventType
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onPreviewKeyEvent
-import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -40,7 +32,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
@@ -56,6 +47,11 @@ import com.toutiaoyan.compose.ui.styles.focusRingShadow
 import com.toutiaoyan.compose.ui.styles.shimmer
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
+
+private const val TRACE_PENDING_ALPHA = 0.6f
+private const val TRACE_DISCLOSURE_MILLIS = 200
+private const val TRACE_EXPANDED_CHEVRON_DEGREES = 90f
 
 sealed interface TraceStatus {
     data object Running : TraceStatus
@@ -102,7 +98,7 @@ fun TraceLine(
             },
     ) {
         Row(
-            modifier.alpha(if (status == TraceStatus.Pending) 0.6f else 1f),
+            modifier.alpha(if (status == TraceStatus.Pending) TRACE_PENDING_ALPHA else 1f),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -228,7 +224,12 @@ fun CollapsibleScope.TraceCollapsibleTrigger(
     val radius = twRadius.md
     val source = remember { MutableInteractionSource() }
     val hovered by source.collectIsHoveredAsState()
-    val rotation = animateFloatAsState(if (open) 90f else 0f, tween(200), label = "trace-chevron")
+    val rotation =
+        animateFloatAsState(
+            if (open) TRACE_EXPANDED_CHEVRON_DEGREES else 0f,
+            tween(TRACE_DISCLOSURE_MILLIS),
+            label = "trace-chevron",
+        )
     CollapsibleTrigger(
         modifier = modifier.hoverable(source),
         style =
@@ -263,8 +264,8 @@ fun CollapsibleScope.TraceCollapsibleContent(
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     CollapsibleContent(
         style = Style { contentPadding(0.dp) },
-        enter = expandVertically(tween(200)),
-        exit = shrinkVertically(tween(200)),
+        enter = expandVertically(tween(TRACE_DISCLOSURE_MILLIS)),
+        exit = shrinkVertically(tween(TRACE_DISCLOSURE_MILLIS)),
         keepMounted = keepMounted,
     ) {
         CompositionLocalProvider(LocalContentColor provides theme.colors.mutedForeground) {
@@ -298,29 +299,14 @@ fun TraceLink(
     val radius = twRadius.md
     val source = remember { MutableInteractionSource() }
     val hovered by source.collectIsHoveredAsState()
-    val focusInteraction = remember { FocusInteraction.Focus() }
     val styleState = rememberUpdatedStyleState(source)
-    val focusRequester = remember { androidx.compose.ui.focus.FocusRequester() }
     val open: () -> Unit = { uri.openUri(href) }
     Box(
         modifier
             .clip(RoundedCornerShape(radius))
             .hoverable(source)
             .pointerHoverIcon(PointerIcon.Hand)
-            .focusRequester(focusRequester)
-            .onFocusChanged {
-                source.tryEmit(
-                    if (it.hasFocus) focusInteraction else FocusInteraction.Unfocus(focusInteraction),
-                )
-            }
-            .onPreviewKeyEvent { event ->
-                if (event.type == KeyEventType.KeyDown && (event.key == Key.Enter || event.key == Key.Spacebar)) {
-                    open()
-                    true
-                } else {
-                    false
-                }
-            }
+            .keyboardInputMode()
             .clickable(
                 interactionSource = source,
                 indication = null,
@@ -340,7 +326,6 @@ fun TraceLink(
                 } else {
                     Modifier.semantics {
                         this.contentDescription = contentDescription
-                        role = Role.Button
                     }
                 },
             ),
