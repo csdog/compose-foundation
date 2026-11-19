@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.ClipEntry
@@ -31,6 +32,29 @@ import kotlin.test.assertEquals
 
 class InputOTPParityTest {
     @get:Rule val rule = createComposeRule()
+
+    @Test fun reportsValueChangesWithoutReportingCursorMovesOrRejectedInput() {
+        var value by mutableStateOf("12")
+        val seen = mutableListOf<String>()
+        rule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                InputOTP(
+                    value = value,
+                    onValueChange = {
+                        value = it
+                        seen.add(it)
+                    },
+                    length = 6,
+                )
+            }
+        }
+        val input = rule.onNode(hasSetTextAction()).requestFocus()
+        input.performTextInputSelection(TextRange(0))
+        input.performTextInput("X")
+        rule.runOnIdle { assertEquals(emptyList(), seen) }
+        input.performTextInput("5")
+        rule.runOnIdle { assertEquals(listOf("512"), seen) }
+    }
 
     @Test fun invalidGroupDoesNotPaintRingsAcrossItsInternalSeams() {
         var invalid by mutableStateOf(true)
@@ -92,6 +116,37 @@ class InputOTPParityTest {
             }
         }
         rule.onNodeWithTag("group").assertWidthIsEqualTo(132.dp).assertHeightIsEqualTo(48.dp)
+    }
+
+    @Test fun tapWhereASlotWasRemovedTargetsAMountedSlot() {
+        var value by mutableStateOf("12")
+        var showSecondSlot by mutableStateOf(true)
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                InputOTP(
+                    value = value,
+                    onValueChange = { value = it },
+                    length = 2,
+                    modifier = Modifier.testTag("otp"),
+                ) {
+                    InputOTPGroup {
+                        InputOTPSlot(0)
+                        if (showSecondSlot) {
+                            InputOTPSlot(1)
+                        } else {
+                            Box(Modifier.size(32.dp))
+                        }
+                    }
+                }
+            }
+        }
+
+        rule.runOnIdle { showSecondSlot = false }
+        rule.onNodeWithTag("otp").performTouchInput {
+            click(Offset(width * 0.75f, center.y))
+        }
+        rule.onNode(hasSetTextAction()).performTextInput("5")
+        rule.runOnIdle { assertEquals("52", value) }
     }
 
     @Test fun clipboardPasteFiltersAndTruncatesThenBackspaceDeletesSelection() {

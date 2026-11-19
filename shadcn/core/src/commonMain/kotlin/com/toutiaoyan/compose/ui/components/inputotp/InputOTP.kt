@@ -63,7 +63,6 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.ui.text.TextStyle
 import com.toutiaoyan.compose.ui.styles.cssStyleable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -95,15 +94,20 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
 
 enum class InputOTPType { Text, Password }
 
-@Immutable
-internal class InputOTPController(
-    val value: String,
-    val maxLength: Int,
-    val isFocused: Boolean,
-    val masked: Boolean,
+private const val OTP_DISABLED_ALPHA = 0.5f
+private const val OTP_ACTIVE_SLOT_Z_INDEX = 10f
+private const val OTP_CARET_CYCLE_MILLIS = 1000
+private const val OTP_CARET_FADE_OUT_END_MILLIS = 200
+private const val OTP_CARET_FADE_IN_START_MILLIS = 500
+private const val OTP_CARET_FADE_IN_END_MILLIS = 700
+
+private class InputOTPSlotHitTarget(var index: Int)
+
+private class InputOTPController(
+    val state: InputOTPState,
     val invalid: Boolean,
     val activeIndex: Int,
-    val slots: MutableMap<Int, Rect>,
+    val slots: MutableMap<InputOTPSlotHitTarget, Rect>,
 )
 
 private val LocalOTPGroupRegistry = staticCompositionLocalOf<GroupChildRegistry?> { null }
@@ -125,15 +129,7 @@ class InputOTPState(
 
 /** Reads the nearest [InputOTP] state. */
 @Composable
-fun inputOTPState(): InputOTPState {
-    val ctrl = inputOTPController()
-    return InputOTPState(
-        value = ctrl.value,
-        maxLength = ctrl.maxLength,
-        isFocused = ctrl.isFocused,
-        masked = ctrl.masked,
-    )
-}
+fun inputOTPState(): InputOTPState = inputOTPController().state
 
 class InputOTPScope internal constructor()
 
@@ -201,7 +197,7 @@ fun InputOTP(
 ) {
     val nova = currentTheme.activePreset == StylePreset.Nova
     var selection by remember { mutableStateOf(TextRange(value.length)) }
-    val slots = remember { mutableMapOf<Int, Rect>() }
+    val slots = remember { mutableMapOf<InputOTPSlotHitTarget, Rect>() }
     val rootBounds = remember { mutableStateOf(Rect.Zero) }
     val focusRequester = remember { FocusRequester() }
     val interactionSource = remember { MutableInteractionSource() }
@@ -230,10 +226,7 @@ fun InputOTP(
     val styleState = remember { MutableStyleState(interactionSource) }
     val controller =
         InputOTPController(
-            value = value,
-            maxLength = resolvedLength,
-            isFocused = isFocused,
-            masked = resolvedMasked,
+            state = InputOTPState(value, resolvedLength, isFocused, resolvedMasked),
             invalid = invalid,
             activeIndex = selection.start.coerceIn(0, minOf(value.length, resolvedLength - 1)),
             slots = slots,
@@ -247,7 +240,7 @@ fun InputOTP(
                     .then(
                         if (nova) {
                             Modifier.alpha(
-                                if (resolvedEnabled) 1f else 0.5f,
+                                if (resolvedEnabled) 1f else OTP_DISABLED_ALPHA,
                             ).pointerInput(resolvedEnabled, value, readOnly) {
                                 if (!resolvedEnabled) return@pointerInput
                                 awaitEachGesture {
@@ -257,7 +250,7 @@ fun InputOTP(
                                     val index =
                                         slots.entries
                                             .minByOrNull { kotlin.math.abs(it.value.center.x - absolute.x) }
-                                            ?.key
+                                            ?.key?.index
                                             ?: 0
                                     focusRequester.requestFocus()
                                     val cursor = index.coerceAtMost(value.length)
@@ -302,7 +295,7 @@ fun InputOTP(
 
                     fun mapped(offset: Int) = next.text.take(offset).count(resolvedAccept).coerceAtMost(clean.length)
                     selection = TextRange(mapped(next.selection.start), mapped(next.selection.end))
-                    onValueChange(clean)
+                    if (clean != value) onValueChange(clean)
                 },
                 enabled = resolvedEnabled,
                 readOnly = readOnly,
@@ -395,12 +388,18 @@ private fun InputOTPGroupScope.InputOTPSlotContent(
 ) {
     val ctrl = inputOTPController()
     val resolvedInvalid = invalid || ctrl.invalid
-    val slotKey = remember { Any() }
-    DisposableEffect(invalidSlots, slotKey) {
-        onDispose { invalidSlots.remove(slotKey) }
+    val hitTarget = remember { InputOTPSlotHitTarget(index) }
+    DisposableEffect(invalidSlots, ctrl.slots, hitTarget) {
+        onDispose {
+            invalidSlots.remove(hitTarget)
+            ctrl.slots.remove(hitTarget)
+        }
     }
-    SideEffect { invalidSlots[slotKey] = resolvedInvalid }
-    val char = ctrl.value.getOrNull(index)
+    SideEffect {
+        hitTarget.index = index
+        invalidSlots[hitTarget] = resolvedInvalid
+    }
+    val char = ctrl.state.value.getOrNull(index)
     val nova = currentTheme.activePreset == StylePreset.Nova
     val (position, count) = checkNotNull(LocalOTPGroupRegistry.current).register()
     val corners = groupItemCorners(position, count, ButtonGroupOrientation.Horizontal, twRadius.lg)
@@ -415,14 +414,14 @@ private fun InputOTPGroupScope.InputOTPSlotContent(
         } else {
             RoundedCornerShape(twRadius.md)
         }
-    val isActive = ctrl.isFocused && index == if (nova) ctrl.activeIndex else ctrl.value.length
+    val isActive = ctrl.state.isFocused && index == if (nova) ctrl.activeIndex else ctrl.state.value.length
     OtpSlot(
         char = char,
         isActive = isActive,
-        masked = ctrl.masked,
+        masked = ctrl.state.masked,
         modifier =
             modifier.onGloballyPositioned {
-                ctrl.slots[index] = it.boundsInRoot()
+                ctrl.slots[hitTarget] = it.boundsInRoot()
             },
         shape = shape,
         overlap = nova && position > 0,
@@ -537,7 +536,7 @@ private fun OtpSlot(
                         },
                     height = if (nova) 32.dp else 36.dp,
                 )
-                .zIndex(if (isActive) 10f else 0f)
+                .zIndex(if (isActive) OTP_ACTIVE_SLOT_Z_INDEX else 0f)
                 .styleable(remember { MutableStyleState(MutableInteractionSource()) }, slotStyle),
         contentAlignment = Alignment.Center,
     ) {
@@ -596,12 +595,12 @@ private fun animateOtpSlot(target: OtpSlotPaint): OtpSlotPaint {
 private val OtpCaretBlink =
     keyframes {
         val easeOut = CubicBezierEasing(0f, 0f, .58f, 1f)
-        durationMillis = 1000
+        durationMillis = OTP_CARET_CYCLE_MILLIS
         1f at 0 using easeOut
-        0f at 200
-        0f at 500 using easeOut
-        1f at 700
-        1f at 1000
+        0f at OTP_CARET_FADE_OUT_END_MILLIS
+        0f at OTP_CARET_FADE_IN_START_MILLIS using easeOut
+        1f at OTP_CARET_FADE_IN_END_MILLIS
+        1f at OTP_CARET_CYCLE_MILLIS
     }
 
 /** Horizontal minus between separate OTP groups. */
