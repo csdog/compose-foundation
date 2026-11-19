@@ -77,6 +77,7 @@ class CheckboxLiveStyleTest {
         try {
             rule.runOnIdle { checked = true }
             rule.mainClock.advanceTimeByFrame()
+            assertTrue(abs(red() - start) < .02f, "Checked fill must start from the unchecked color")
             rule.mainClock.advanceTimeBy(64)
             val middle = red()
             rule.mainClock.advanceTimeBy(200)
@@ -84,6 +85,15 @@ class CheckboxLiveStyleTest {
             assertTrue(start - middle > .02f, "Color must have started transitioning")
             assertTrue(middle - end > .02f, "Mid-frame must differ from the settled checked fill")
             assertTrue(end < .3f, "Checked fill must settle to the dark primary")
+
+            rule.runOnIdle { checked = false }
+            rule.mainClock.advanceTimeByFrame()
+            rule.mainClock.advanceTimeBy(64)
+            val reverseMiddle = red()
+            rule.mainClock.advanceTimeBy(200)
+            assertTrue(reverseMiddle - end > .02f, "Unchecked fill must transition from the checked color")
+            assertTrue(start - reverseMiddle > .02f, "Reverse mid-frame must differ from the unchecked fill")
+            assertTrue(abs(red() - start) < .02f, "Unchecked fill must return to the starting color")
         } finally {
             rule.mainClock.autoAdvance = true
         }

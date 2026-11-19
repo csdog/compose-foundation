@@ -215,7 +215,7 @@ fun Checkbox(
                 modifier =
                     Modifier
                         .size(16.dp)
-                        .cssStyleable(styleState, rememberCheckboxStyle() then invalidStyle, style),
+                        .cssStyleable(styleState, rememberCheckboxStyle(toggleState) then invalidStyle, style),
                 contentAlignment = Alignment.Center,
             ) {
                 content()
