@@ -172,6 +172,18 @@ class TableParityTest(private val dark: Boolean) : ScreenshotTest() {
         assertEquals(fill, node("selected").captureToImage().toPixelMap()[280, 5])
     }
 
+    @Test
+    fun directLastRowAndFooterShareOneDivider() {
+        setThemedContent(darkTheme = dark, stylePreset = StylePreset.Nova) {
+            Table(Modifier.width(300.dp).testTag("table")) {
+                TableRow(Modifier.testTag("last-body-row")) { TableCell("INV001") }
+                TableFooter { TableRow(Modifier.testTag("direct-footer")) { TableCell("Total") } }
+            }
+        }
+        assertEquals(bounds("last-body-row").bottom + 1f, bounds("direct-footer").top, .1f)
+        node("table").assertHeightIsEqualTo(73.dp)
+    }
+
     @Test fun footerIsHalfMutedWithATopRuleAndNoTrailingRule() {
         var fill = Color.Unspecified
         setThemedContent(darkTheme = dark, stylePreset = StylePreset.Nova) {

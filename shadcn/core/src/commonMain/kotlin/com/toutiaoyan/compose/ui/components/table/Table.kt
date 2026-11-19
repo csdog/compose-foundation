@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.separator.Separator
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
+import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.ui.text.TextStyle
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
@@ -100,6 +101,7 @@ private enum class TablePart : ParentDataModifier {
     Caption,
     HeaderDivider,
     RowDivider,
+    Footer,
     ;
 
     override fun Density.modifyParentData(parentData: Any?): Any = this@TablePart
@@ -109,20 +111,13 @@ private enum class TablePart : ParentDataModifier {
 @Composable
 private fun ColumnScope.TableStack(content: @Composable ColumnScope.() -> Unit) {
     Layout(content = { content() }) { children, constraints ->
-        val ordered =
-            children.filter { it.parentData != TablePart.Caption } +
-                children.filter { it.parentData == TablePart.Caption }
-        val lastContent =
-            ordered.indexOfLast {
-                it.parentData != TablePart.Caption && it.parentData != TablePart.RowDivider
-            }
+        val (captions, rows) = children.partition { it.parentData == TablePart.Caption }
+        val lastRow =
+            rows.indexOfLast { it.parentData != TablePart.RowDivider && it.parentData != TablePart.Footer }
         val visible =
-            ordered.filterIndexed {
-                    index,
-                    child,
-                ->
-                child.parentData != TablePart.RowDivider || index < lastContent
-            }
+            rows.filterIndexed { index, child ->
+                child.parentData != TablePart.RowDivider || index < lastRow
+            } + captions
         val placeables =
             visible.map {
                 it.measure(constraints.copy(minWidth = 0, minHeight = 0, maxHeight = Constraints.Infinity))
@@ -201,7 +196,8 @@ fun ColumnScope.TableBody(content: @Composable ColumnScope.() -> Unit) {
 @Composable
 fun ColumnScope.TableFooter(content: @Composable ColumnScope.() -> Unit) {
     Column(
-        Modifier.fillMaxWidth().background(com.toutiaoyan.compose.ui.theme.currentTheme.colors.muted.copy(alpha = .5f)),
+        Modifier.then(TablePart.Footer).fillMaxWidth()
+            .background(currentTheme.colors.muted.copy(alpha = TABLE_MUTED_BACKGROUND_ALPHA)),
     ) {
         Separator()
         CompositionLocalProvider(LocalTableFooter provides true) { TableStack(content) }
@@ -336,18 +332,20 @@ fun RowScope.TableCell(
     textStyle: TextStyle = TextStyle.Default,
     colSpan: Int,
 ) {
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Box(
-        spanModifier(modifier, colSpan).styleable(styleState, Style { contentPadding(8.dp) } then style),
+    TableCell(
+        content = {
+            Text(
+                maxLines = 1,
+                textStyle =
+                    tableTypography(LocalTableFooter.current)
+                        .merge(if (muted) TextColors.Muted else TextStyle.Default).merge(textStyle),
+            ) { text }
+        },
+        modifier = modifier,
+        style = style,
         contentAlignment = tableAlignment(textStyle),
-    ) {
-        Text(
-            maxLines = 1,
-            textStyle =
-                tableTypography(LocalTableFooter.current)
-                    .merge(if (muted) TextColors.Muted else TextStyle.Default).merge(textStyle),
-        ) { text }
-    }
+        colSpan = colSpan,
+    )
 }
 
 /** Supply `content = { ... }` for arbitrary cells; the trailing String-lambda overload stays unambiguous. */
