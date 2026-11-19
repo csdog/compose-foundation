@@ -2,6 +2,8 @@ package com.toutiaoyan.compose.ui.components.togglegroup
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.test.*
@@ -98,6 +100,25 @@ class ToggleGroupKeyboardTest {
         }
         gamma.assertIsFocused().assertIsOn()
         rule.onNodeWithText("Beta").assertIsNotEnabled()
+    }
+
+    @Test
+    fun arrowsFollowTheVisibleOrderAfterKeyedItemsMove() {
+        val labels = mutableStateOf(listOf("Alpha", "Beta", "Gamma"))
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                ToggleGroup {
+                    labels.value.forEach { label ->
+                        key(label) { ToggleGroupItem(label, label) }
+                    }
+                }
+            }
+        }
+        rule.onNodeWithText("Alpha").requestFocus().performKeyInput { pressKey(Key.DirectionRight) }
+        rule.onNodeWithText("Beta").assertIsFocused()
+        rule.runOnIdle { labels.value = labels.value.reversed() }
+        rule.onNodeWithText("Beta").assertIsFocused().performKeyInput { pressKey(Key.DirectionRight) }
+        rule.onNodeWithText("Alpha").assertIsFocused()
     }
 
     @Test fun mouseSelectionOwnsSubsequentKeyboardInput() {

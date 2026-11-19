@@ -10,6 +10,8 @@ import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.key.*
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import com.toutiaoyan.compose.ui.components.field.LocalFieldSetDisabled
@@ -113,6 +115,25 @@ private class ToggleGroupNavigation {
     val items = androidx.compose.runtime.mutableStateMapOf<String, Pair<FocusRequester, Boolean>>()
     var focused by mutableStateOf<String?>(null)
     val order = androidx.compose.runtime.mutableStateListOf<String>()
+    val positions = androidx.compose.runtime.mutableStateMapOf<String, Offset>()
+
+    fun enabledValues(
+        horizontal: Boolean,
+        rtl: Boolean,
+    ): List<String> {
+        val available = order.filter { items[it]?.second == true }
+        if (!available.all { it in positions }) return available
+        return available.sortedBy { value ->
+            val position = positions.getValue(value)
+            if (!horizontal) {
+                position.y
+            } else if (rtl) {
+                -position.x
+            } else {
+                position.x
+            }
+        }
+    }
 }
 
 private val LocalToggleGroupNavigation = staticCompositionLocalOf<ToggleGroupNavigation?> { null }
@@ -544,6 +565,7 @@ fun ToggleGroupScope.ToggleGroupItem(
         onDispose {
             navigation.order.remove(value)
             navigation.items.remove(value)
+            navigation.positions.remove(value)
         }
     }
     androidx.compose.runtime.SideEffect { navigation.items[value] = requester to resolvedEnabled }
@@ -562,8 +584,10 @@ fun ToggleGroupScope.ToggleGroupItem(
             )
         }
     val navigationModifier =
-        Modifier.focusRequester(requester).focusProperties {
-            val available = navigation.order.filter { navigation.items[it]?.second == true }
+        Modifier.onGloballyPositioned { coordinates ->
+            navigation.positions[value] = coordinates.positionInRoot()
+        }.focusRequester(requester).focusProperties {
+            val available = navigation.enabledValues(horizontal, rtl)
             val entry =
                 navigation.focused?.takeIf { it in available }
                     ?: available.firstOrNull { controller.isPressed(it) } ?: available.firstOrNull()
@@ -572,7 +596,6 @@ fun ToggleGroupScope.ToggleGroupItem(
             if (it.isFocused) navigation.focused = value
         }.onPreviewKeyEvent { event ->
             if (event.type != KeyEventType.KeyDown || !resolvedEnabled) return@onPreviewKeyEvent false
-            val horizontal = controller.orientation == ToggleGroupOrientation.Horizontal
             val forward =
                 if (horizontal) {
                     if (rtl) Key.DirectionLeft else Key.DirectionRight
@@ -585,7 +608,7 @@ fun ToggleGroupScope.ToggleGroupItem(
                 } else {
                     Key.DirectionUp
                 }
-            val available = navigation.order.filter { navigation.items[it]?.second == true }
+            val available = navigation.enabledValues(horizontal, rtl)
             if (available.isEmpty()) return@onPreviewKeyEvent false
             val current = available.indexOf(value).coerceAtLeast(0)
             val target =
@@ -824,6 +847,8 @@ fun ToggleGroupScope.ToggleGroupItem(
     ToggleGroupItem(value, label, modifier, enabled, disabled, style, null, null)
 }
 
+private const val MAX_CONNECTED_BORDER_CROSS_FRACTION = 0.5f
+
 /** Masks the joined edge while retaining both perpendicular borders. */
 private class ConnectedItemBorder(
     private val color: Color,
@@ -843,7 +868,7 @@ private class ConnectedItemBorder(
                 colorStops = listOf(0f, edge, edge, 1f),
             )
         val crossExtent = if (horizontal) size.height else size.width
-        val crossEdge = (width / crossExtent.coerceAtLeast(1f)).coerceIn(0f, .5f)
+        val crossEdge = (width / crossExtent.coerceAtLeast(1f)).coerceIn(0f, MAX_CONNECTED_BORDER_CROSS_FRACTION)
         val perimeter =
             LinearGradientShader(
                 from = Offset.Zero,
