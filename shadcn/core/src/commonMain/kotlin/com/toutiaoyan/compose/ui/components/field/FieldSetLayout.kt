@@ -45,7 +45,6 @@ internal data class FieldSetChildData(
     val weight: Float? = null,
     val fill: Boolean = true,
     val align: FieldSetAlignment? = null,
-    val previous: Any? = null,
 )
 
 private class FieldSetChildModifier(
@@ -63,7 +62,6 @@ private class FieldSetChildModifier(
             weight = weight ?: previous?.weight,
             fill = fill ?: previous?.fill ?: true,
             align = align ?: previous?.align,
-            previous = parentData,
         )
     }
 }
