@@ -6,6 +6,8 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.key.*
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
 import com.toutiaoyan.compose.ui.components.overlay.overlayTypography
@@ -15,18 +17,62 @@ internal val LocalContextMenuNova = staticCompositionLocalOf { false }
 // Menubar selection marks occupy the leading slot; DropdownMenu marks are trailing.
 internal val LocalContextMenuLeadingSelectionIndicator = staticCompositionLocalOf { false }
 
+private const val MENU_TYPEAHEAD_RESET_MILLIS = 500L
+private const val MENU_ROW_FONT_SIZE_SP = 14
+private const val MENU_ROW_LINE_HEIGHT_SP = 20
+private const val MENU_LABEL_FONT_SIZE_SP = 12
+private const val MENU_LABEL_LINE_HEIGHT_SP = 16
+
 internal class ContextMenuNavigation {
-    val items = mutableStateListOf<FocusRequester>()
+    private val registeredItems = mutableStateListOf<FocusRequester>()
+    private val itemPositions = mutableMapOf<FocusRequester, Float>()
+    val items: List<FocusRequester>
+        get() =
+            if (registeredItems.all { it in itemPositions }) {
+                registeredItems.sortedBy(itemPositions::getValue)
+            } else {
+                registeredItems
+            }
+
     var focused: FocusRequester? = null
     val labels = mutableMapOf<FocusRequester, String>()
     var search = ""
     var lastType = kotlin.time.TimeSource.Monotonic.markNow()
 
-    private fun typeAhead(event: KeyEvent): Boolean {
-        if (event.isCtrlPressed || event.isMetaPressed || event.isAltPressed) return false
+    fun setEnabled(
+        focus: FocusRequester,
+        enabled: Boolean,
+    ) {
+        if (enabled) {
+            if (focus !in registeredItems) registeredItems.add(focus)
+        } else {
+            registeredItems.remove(focus)
+            if (focused === focus) focused = null
+        }
+    }
+
+    fun place(
+        focus: FocusRequester,
+        y: Float,
+    ) {
+        itemPositions[focus] = y
+    }
+
+    fun unregister(focus: FocusRequester) {
+        registeredItems.remove(focus)
+        labels.remove(focus)
+        itemPositions.remove(focus)
+        if (focused === focus) focused = null
+    }
+
+    private fun typeAhead(
+        event: KeyEvent,
+        items: List<FocusRequester>,
+    ): Boolean {
+        val hasModifier = event.isCtrlPressed || event.isMetaPressed || event.isAltPressed
         val char = event.utf16CodePoint.toChar()
-        if (!char.isLetterOrDigit()) return false
-        if (lastType.elapsedNow().inWholeMilliseconds > 500) search = ""
+        if (hasModifier || !char.isLetterOrDigit()) return false
+        if (lastType.elapsedNow().inWholeMilliseconds > MENU_TYPEAHEAD_RESET_MILLIS) search = ""
         lastType = kotlin.time.TimeSource.Monotonic.markNow()
         search += char
         val prefix = if (search.all { it.equals(char, ignoreCase = true) }) char.toString() else search
@@ -37,17 +83,18 @@ internal class ContextMenuNavigation {
     }
 
     fun key(event: KeyEvent): Boolean {
-        if (event.type != KeyEventType.KeyDown || items.isEmpty()) return false
-        val i = items.indexOf(focused)
+        val order = if (event.type == KeyEventType.KeyDown) items else emptyList()
+        if (order.isEmpty()) return false
+        val i = order.indexOf(focused)
         val target =
             when (event.key) {
-                Key.DirectionDown -> (i + 1).mod(items.size)
-                Key.DirectionUp -> (if (i < 0) items.lastIndex else i - 1).mod(items.size)
+                Key.DirectionDown -> (i + 1).mod(order.size)
+                Key.DirectionUp -> (if (i < 0) order.lastIndex else i - 1).mod(order.size)
                 Key.MoveHome -> 0
-                Key.MoveEnd -> items.lastIndex
-                else -> return typeAhead(event)
+                Key.MoveEnd -> order.lastIndex
+                else -> return typeAhead(event, order)
             }
-        items[target].requestFocus()
+        order[target].requestFocus()
         return true
     }
 }
@@ -61,16 +108,16 @@ internal fun Modifier.contextMenuNavigation(
 ): Modifier {
     val nav = LocalContextMenuNavigation.current ?: return this
     val focus = remember { FocusRequester() }
-    DisposableEffect(nav, enabled) {
-        if (enabled) nav.items.add(focus)
-        nav.labels[focus] = label
-        onDispose {
-            nav.items.remove(focus)
-            nav.labels.remove(focus)
-        }
+    DisposableEffect(nav, focus) {
+        onDispose { nav.unregister(focus) }
     }
-    SideEffect { nav.labels[focus] = label }
-    return focusRequester(focus).onFocusChanged { if (it.isFocused) nav.focused = focus }
+    SideEffect {
+        nav.setEnabled(focus, enabled)
+        nav.labels[focus] = label
+    }
+    return focusRequester(focus)
+        .onGloballyPositioned { nav.place(focus, it.positionInRoot().y) }
+        .onFocusChanged { if (it.isFocused) nav.focused = focus }
 }
 
 @Composable
@@ -79,7 +126,12 @@ internal fun contextMenuTypography(
     label: Boolean = false,
 ): TextStyle =
     if (LocalContextMenuNova.current) {
-        overlayTypography(if (label) 12 else 14, if (label) 16 else 20, medium = label, muted = label)
+        overlayTypography(
+            if (label) MENU_LABEL_FONT_SIZE_SP else MENU_ROW_FONT_SIZE_SP,
+            if (label) MENU_LABEL_LINE_HEIGHT_SP else MENU_ROW_LINE_HEIGHT_SP,
+            medium = label,
+            muted = label,
+        )
             .copy(lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None))
             .merge(fallback)
     } else {
