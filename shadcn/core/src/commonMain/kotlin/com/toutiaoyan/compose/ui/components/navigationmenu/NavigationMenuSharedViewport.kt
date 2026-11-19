@@ -4,16 +4,19 @@ package com.toutiaoyan.compose.ui.components.navigationmenu
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.EnterExitState
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateIntOffset
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
@@ -23,6 +26,7 @@ import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.styleable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -41,11 +45,13 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.util.lerp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupPositionProvider
 import androidx.compose.ui.window.PopupProperties
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
+import com.toutiaoyan.compose.ui.components.overlay.popupGraphicsLayer
 import com.toutiaoyan.compose.ui.components.overlay.PopupPositionProvider as AnchoredPositionProvider
 
 internal class NavigationMenuViewportState(
@@ -187,12 +193,11 @@ internal fun NavigationMenuSharedViewport(
         val chrome = remember { MutableStyleState(MutableInteractionSource()) }
         AnimatedVisibility(
             visibleState = visible,
-            enter =
-                fadeIn(tween(ViewportDuration, easing = ViewportEasing)) +
-                    scaleIn(tween(ViewportDuration, easing = ViewportEasing), .9f, origin.value),
-            exit = fadeOut(tween(ViewportExitDuration)) + scaleOut(tween(ViewportExitDuration), .9f, origin.value),
+            enter = EnterTransition.None,
+            exit = ExitTransition.None,
         ) {
-            Box(Modifier.testTag(NavigationMenuViewportTag).styleable(chrome, rememberNavMenuViewportStyle())) {
+            val motion = viewportMotion(origin).testTag(NavigationMenuViewportTag)
+            Box(motion.styleable(chrome, rememberNavMenuViewportStyle())) {
                 AnimatedContent(
                     targetState = selected,
                     contentAlignment = Alignment.TopStart,
@@ -214,5 +219,30 @@ internal fun NavigationMenuSharedViewport(
                 }
             }
         }
+    }
+}
+
+private const val VIEWPORT_COLLAPSED_SCALE = 0.9f
+
+@Composable
+private fun AnimatedVisibilityScope.viewportMotion(origin: State<TransformOrigin>): Modifier {
+    val visibility =
+        transition.animateFloat(
+            transitionSpec = {
+                if (targetState == EnterExitState.Visible) {
+                    tween(ViewportDuration, easing = ViewportEasing)
+                } else {
+                    tween(ViewportExitDuration)
+                }
+            },
+            label = "Navigation menu opacity and scale",
+        ) { state -> if (state == EnterExitState.Visible) 1f else 0f }
+
+    return Modifier.popupGraphicsLayer {
+        val scale = lerp(VIEWPORT_COLLAPSED_SCALE, 1f, visibility.value)
+        alpha = visibility.value
+        scaleX = scale
+        scaleY = scale
+        transformOrigin = origin.value
     }
 }
