@@ -16,10 +16,6 @@ import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Spacer
@@ -29,10 +25,8 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import com.toutiaoyan.compose.ui.theme.currentTheme
-import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import androidx.compose.runtime.CompositionLocalProvider
@@ -50,29 +44,6 @@ enum class MessageAlign { Start, End }
 
 /** Alignment inherited by the content column, bubbles, and footer. */
 internal val LocalMessageAlign = compositionLocalOf { MessageAlign.Start }
-
-/** Registers descendant parts after successful composition; no writes during composition/measurement. */
-internal class MessageParts {
-    var footerCount by mutableIntStateOf(0)
-    var ghostCount by mutableIntStateOf(0)
-}
-
-internal val LocalMessageParts = compositionLocalOf<MessageParts?> { null }
-
-@Composable
-internal fun TrackMessagePart(ghost: Boolean = false) {
-    val parts = LocalMessageParts.current
-    DisposableEffect(parts, ghost) {
-        if (parts != null) {
-            if (ghost) parts.ghostCount++ else parts.footerCount++
-        }
-        onDispose {
-            if (parts != null) {
-                if (ghost) parts.ghostCount-- else parts.footerCount--
-            }
-        }
-    }
-}
 
 class MessageState(val align: MessageAlign)
 
@@ -282,38 +253,7 @@ fun ColumnScope.MessageHeader(
     style: Style = Style,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val align = LocalMessageAlign.current
-    val novaOrRhea =
-        currentTheme.activePreset == StylePreset.Nova || currentTheme.activePreset == StylePreset.Rhea
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Row(
-        modifier =
-            modifier
-                .align(if (align == MessageAlign.End) Alignment.End else Alignment.Start)
-                .styleable(styleState, rememberMessageMetadataStyle() then style),
-        horizontalArrangement = Arrangement.spacedBy(if (novaOrRhea) 0.dp else twSpacing.xs),
-        verticalAlignment = Alignment.CenterVertically,
-        content = {
-            CompositionLocalProvider(
-                LocalContentColor provides
-                    if (novaOrRhea) currentTheme.colors.mutedForeground else LocalContentColor.current,
-                LocalDefaultTextStyle provides
-                    if (novaOrRhea) {
-                        TextStyle(
-                            fontFamily = currentTheme.fontFamily, fontSize = 12.sp, lineHeight = 16.sp,
-                            fontWeight = FontWeight.Medium,
-                            lineHeightStyle =
-                                LineHeightStyle(
-                                    LineHeightStyle.Alignment.Center,
-                                    LineHeightStyle.Trim.None,
-                                ),
-                        )
-                    } else {
-                        LocalDefaultTextStyle.current
-                    },
-            ) { content() }
-        },
-    )
+    MessageMetadata(modifier, style, content)
 }
 
 /** String-label overload of [MessageHeader]. */
@@ -336,7 +276,7 @@ fun ColumnScope.MessageHeader(
 }
 
 /**
- * A metadata row (e.g. timestamp) below a [Message]'s content, aligned to start in Nova/Rhea and to the message side in legacy presets.
+ * A metadata row (e.g. timestamp) below a [Message]'s content, aligned to the message side.
  */
 @Composable
 fun ColumnScope.MessageFooter(
@@ -344,39 +284,8 @@ fun ColumnScope.MessageFooter(
     style: Style = Style,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val align = LocalMessageAlign.current
-    val novaOrRhea =
-        currentTheme.activePreset == StylePreset.Nova || currentTheme.activePreset == StylePreset.Rhea
     TrackMessagePart()
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Row(
-        modifier =
-            modifier
-                .align(if (align == MessageAlign.End) Alignment.End else Alignment.Start)
-                .styleable(styleState, rememberMessageMetadataStyle() then style),
-        horizontalArrangement = Arrangement.spacedBy(if (novaOrRhea) 0.dp else twSpacing.xs),
-        verticalAlignment = Alignment.CenterVertically,
-        content = {
-            CompositionLocalProvider(
-                LocalContentColor provides
-                    if (novaOrRhea) currentTheme.colors.mutedForeground else LocalContentColor.current,
-                LocalDefaultTextStyle provides
-                    if (novaOrRhea) {
-                        TextStyle(
-                            fontFamily = currentTheme.fontFamily, fontSize = 12.sp, lineHeight = 16.sp,
-                            fontWeight = FontWeight.Medium,
-                            lineHeightStyle =
-                                LineHeightStyle(
-                                    LineHeightStyle.Alignment.Center,
-                                    LineHeightStyle.Trim.None,
-                                ),
-                        )
-                    } else {
-                        LocalDefaultTextStyle.current
-                    },
-            ) { content() }
-        },
-    )
+    MessageMetadata(modifier, style, content)
 }
 
 /** String-label overload of [MessageFooter]. */
