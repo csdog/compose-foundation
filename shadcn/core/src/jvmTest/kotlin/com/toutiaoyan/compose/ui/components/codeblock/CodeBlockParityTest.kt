@@ -17,10 +17,15 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -321,6 +326,90 @@ class CodeBlockParityTest : ScreenshotTest() {
         )
         composeRule.mainClock.advanceTimeBy(2100)
         composeRule.onNodeWithContentDescription("Copy").assertExists()
+    }
+
+    @Test
+    fun eachSuccessfulCopyRenewsTheConfirmation() {
+        var writes = 0
+        val clipboard =
+            object : Clipboard {
+                override suspend fun getClipEntry(): ClipEntry? = null
+
+                override suspend fun setClipEntry(clipEntry: ClipEntry?) {
+                    writes++
+                }
+            }
+        composeRule.mainClock.autoAdvance = false
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                CompositionLocalProvider(LocalClipboard provides clipboard) { CodeBlockCopyButton("code") }
+            }
+        }
+        composeRule.onNodeWithContentDescription("Copy").performClick()
+        composeRule.mainClock.advanceTimeBy(1000)
+        composeRule.onNodeWithContentDescription("Copied").performClick()
+        composeRule.mainClock.advanceTimeBy(1200)
+        assertEquals(2, writes)
+        composeRule.onNodeWithContentDescription("Copied").assertExists()
+        composeRule.mainClock.advanceTimeBy(1000)
+        composeRule.onNodeWithContentDescription("Copy").assertExists()
+    }
+
+    @Test
+    fun pageKeysScrollByTheMeasuredViewport() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            CodeBlock(Modifier.width(260.dp)) {
+                CodeBlockContent(
+                    (1..30).joinToString("\n") { "Line $it" },
+                    modifier = Modifier.testTag("paginated-code"),
+                    wrap = true,
+                    maxHeight = 80.dp,
+                )
+            }
+        }
+        val viewport = composeRule.onNodeWithTag("paginated-code")
+        val range =
+            viewport.fetchSemanticsNode().config[SemanticsProperties.VerticalScrollAxisRange]
+        viewport.assertHeightIsEqualTo(80.dp).requestFocus().performKeyInput { pressKey(Key.PageDown) }
+        composeRule.waitForIdle()
+        assertEquals(80f, range.value(), 0.5f)
+        viewport.performKeyInput { pressKey(Key.PageUp) }
+        composeRule.waitForIdle()
+        assertEquals(0f, range.value(), 0.5f)
+    }
+
+    @Test
+    fun unscrollableCodeLetsTheParentHandleVerticalArrows() {
+        val parentKeys = mutableListOf<Key>()
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Column(
+                Modifier.onKeyEvent { event ->
+                    if (event.type == KeyEventType.KeyDown) parentKeys += event.key
+                    false
+                },
+            ) {
+                CodeBlock {
+                    CodeBlockContent(
+                        "Only one line",
+                        Modifier.testTag("uncapped-code"),
+                        wrap = true,
+                    )
+                }
+                CodeBlock {
+                    CodeBlockContent(
+                        "Only one line",
+                        Modifier.testTag("clipped-code"),
+                        wrap = true,
+                        maxHeight = 12.dp,
+                        scrollable = false,
+                    )
+                }
+            }
+        }
+        for (tag in listOf("uncapped-code", "clipped-code")) {
+            composeRule.onNodeWithTag(tag).requestFocus().performKeyInput { pressKey(Key.DirectionDown) }
+        }
+        composeRule.runOnIdle { assertEquals(listOf(Key.DirectionDown, Key.DirectionDown), parentKeys) }
     }
 
     @Test fun rejectedClipboardWriteDoesNotShowSuccess() {

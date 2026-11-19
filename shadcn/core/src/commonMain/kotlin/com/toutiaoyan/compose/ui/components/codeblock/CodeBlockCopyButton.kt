@@ -3,7 +3,7 @@ package com.toutiaoyan.compose.ui.components.codeblock
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -28,6 +28,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+private const val COPY_CONFIRMATION_MILLIS = 2_000L
+
 /** Copies exactly [value], including its original whitespace; confirms only a successful write. */
 @Composable
 fun CodeBlockCopyButton(
@@ -40,11 +42,13 @@ fun CodeBlockCopyButton(
 ) {
     val clipboard = LocalClipboard.current
     val scope = rememberCoroutineScope()
-    var copied by remember(value) { mutableStateOf(false) }
-    LaunchedEffect(copied, value) {
+    var successfulCopies by remember(value) { mutableIntStateOf(0) }
+    val confirmation = successfulCopies
+    val copied = confirmation > 0
+    LaunchedEffect(confirmation, value) {
         if (copied) {
-            delay(2000)
-            copied = false
+            delay(COPY_CONFIRMATION_MILLIS)
+            if (successfulCopies == confirmation) successfulCopies = 0
         }
     }
     Button(
@@ -52,7 +56,7 @@ fun CodeBlockCopyButton(
             scope.launch {
                 try {
                     clipboard.setClipEntry(plainTextClipEntry(value))
-                    copied = true
+                    successfulCopies++
                 } catch (cancelled: CancellationException) {
                     throw cancelled
                 } catch (_: Exception) {

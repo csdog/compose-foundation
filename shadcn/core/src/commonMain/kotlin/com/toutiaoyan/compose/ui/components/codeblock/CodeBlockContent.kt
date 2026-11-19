@@ -137,6 +137,7 @@ fun CodeBlockScope.CodeBlockContent(
     val horizontalScrollState = rememberScrollState()
     val scopeCoroutine = rememberCoroutineScope()
     val lineStep = with(LocalDensity.current) { (if (context.size == CodeBlockSize.Sm) 20.dp else 24.dp).toPx() }
+    val scrollsVertically = maxHeight != null && scrollable
     val keyboardScroll =
         Modifier.onPreviewKeyEvent { event ->
             if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
@@ -144,8 +145,8 @@ fun CodeBlockScope.CodeBlockContent(
                 when (event.key) {
                     Key.DirectionUp -> -lineStep
                     Key.DirectionDown -> lineStep
-                    Key.PageUp -> -lineStep * 8
-                    Key.PageDown -> lineStep * 8
+                    Key.PageUp -> -verticalScrollState.viewportSize.toFloat()
+                    Key.PageDown -> verticalScrollState.viewportSize.toFloat()
                     Key.MoveHome -> -verticalScrollState.value.toFloat()
                     Key.MoveEnd -> verticalScrollState.maxValue.toFloat()
                     else -> 0f
@@ -157,7 +158,7 @@ fun CodeBlockScope.CodeBlockContent(
                     else -> 0f
                 }
             when {
-                verticalDelta != 0f && verticalScrollState.maxValue > 0 -> {
+                scrollsVertically && verticalDelta != 0f && verticalScrollState.maxValue > 0 -> {
                     scopeCoroutine.launch { verticalScrollState.scrollBy(verticalDelta) }
                     true
                 }
@@ -341,6 +342,9 @@ fun CodeBlockContentScope.CodeBlockLine(
     }
 }
 
+private const val CLIPPED_SCROLL_FADE_HEIGHT_FRACTION = 0.12f
+private val ClippedScrollFadeMaxHeight = 40.dp
+
 /**
  * Static `scroll-fade` trailing mask for a clipped, non-scrollable block. Matches the official
  * `max-h-* scroll-fade-y overflow-y-hidden` combination: the bottom edge fades even though the
@@ -349,7 +353,7 @@ fun CodeBlockContentScope.CodeBlockLine(
 private fun Modifier.clippedScrollFade(): Modifier =
     graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }.drawWithContent {
         drawContent()
-        val depth = minOf(size.height * 0.12f, 40.dp.toPx())
+        val depth = minOf(size.height * CLIPPED_SCROLL_FADE_HEIGHT_FRACTION, ClippedScrollFadeMaxHeight.toPx())
         if (depth <= 0f || depth >= size.height) return@drawWithContent
         drawRect(
             brush =
