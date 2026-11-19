@@ -85,6 +85,7 @@ import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubScope
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubTrigger
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupTransitions
+import com.toutiaoyan.compose.ui.components.overlay.popupFadeModifier
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.styles.rememberMenuPanelStyle
 import kotlin.experimental.ExperimentalTypeInference
@@ -360,12 +361,15 @@ fun ContextMenuScope.ContextMenuContent(
         }
         ContextMenuPortal {
             val host = LocalOverlayHost.current
+            val defaultEnter = enter === PopupTransitions.Enter
+            val defaultExit = exit === PopupTransitions.Exit
             val menuPanel: @Composable () -> Unit = {
                 AnimatedVisibility(
                     visibleState = visibleState,
-                    enter = enter,
-                    exit = exit,
+                    enter = if (defaultEnter) EnterTransition.None else enter,
+                    exit = if (defaultExit) ExitTransition.None else exit,
                 ) {
+                    val motion = popupFadeModifier(defaultEnter, defaultExit)
                     CompositionLocalProvider(
                         LocalContextMenuNova provides nova,
                         LocalContextMenuNavigation provides navigation,
@@ -378,7 +382,7 @@ fun ContextMenuScope.ContextMenuContent(
                         }
                         Column(
                             modifier =
-                                modifier.heightIn(max = windowHeight).overlayOutsideDismiss(
+                                motion.then(modifier).heightIn(max = windowHeight).overlayOutsideDismiss(
                                     host,
                                     !controller.modal && visibleState.targetState && dismissOnClickOutside,
                                 ) {
