@@ -33,17 +33,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.composables.icons.lucide.ArrowRight
-import com.composables.icons.lucide.Calendar
-import com.composables.icons.lucide.ChevronRight
-import com.composables.icons.lucide.Lock
-import com.composables.icons.lucide.Lucide
-import com.composables.icons.lucide.Plus
-import com.composables.icons.lucide.RefreshCw
-import com.composables.icons.lucide.Search
-import com.composables.icons.lucide.Send
-import com.composables.icons.lucide.Settings
-import com.composables.icons.lucide.X
 import com.toutiaoyan.compose.ui.components.alertdialog.AlertDialog
 import com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogContent
 import com.toutiaoyan.compose.ui.components.badge.Badge
@@ -82,7 +71,6 @@ import com.toutiaoyan.compose.ui.components.field.Field
 import com.toutiaoyan.compose.ui.components.field.FieldDescription
 import com.toutiaoyan.compose.ui.components.field.FieldGroup
 import com.toutiaoyan.compose.ui.components.field.FieldLabel
-import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.icon.IconVariant
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroup
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddon
@@ -138,7 +126,7 @@ fun CreateUiElementsCard(modifier: Modifier = Modifier) {
             Row(horizontalArrangement = Arrangement.spacedBy(twSpacing.sm)) {
                 Button(onClick = {}) {
                     Text { "Button" }
-                    Icon(Lucide.ArrowRight)
+                    PreviewIcon(CreateIcon.ArrowRight)
                 }
                 Button(onClick = {}, variant = ButtonVariant.Secondary) { Text { "Secondary" } }
                 Button(onClick = {}, variant = ButtonVariant.Outline) { Text { "Outline" } }
@@ -148,7 +136,7 @@ fun CreateUiElementsCard(modifier: Modifier = Modifier) {
                     InputGroup {
                         Input(value = name, onValueChange = { name = it }, placeholder = "Name")
                         InputGroupAddon(InputGroupAddonAlign.InlineEnd) {
-                            Icon(Lucide.Search, variant = IconVariant.Small)
+                            PreviewIcon(CreateIcon.Search, variant = IconVariant.Small)
                         }
                     }
                 }
@@ -245,8 +233,8 @@ fun CreateSidebarNavCard(modifier: Modifier = Modifier) {
                                             ButtonVariant.Ghost
                                         },
                                 ) {
-                                    Icon(
-                                        if (entry == "Calendar") Lucide.Calendar else Lucide.ChevronRight,
+                                    PreviewIcon(
+                                        if (entry == "Calendar") CreateIcon.Calendar else CreateIcon.ChevronRight,
                                         variant = IconVariant.Small,
                                     )
                                     Text { entry }
@@ -296,7 +284,7 @@ private fun SavingsTarget(
         verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
     ) {
         Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { name }
-        Text(variant = TextVariant.TitleLarge) { amount }
+        Text(variant = TextVariant.TitleLarge, textStyle = LocalCreateHeadingStyle.current) { amount }
         Progress(progress)
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { achievement }
@@ -380,7 +368,7 @@ fun CreateClaimableBalanceCard(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(twSpacing.md),
         ) {
             Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { "Claimable Balance" }
-            Text(variant = TextVariant.TitleLarge) { "$1,211.29" }
+            Text(variant = TextVariant.TitleLarge, textStyle = LocalCreateHeadingStyle.current) { "$1,211.29" }
             Badge(variant = BadgeVariant.Outline) { Text { "Pending Setup" } }
             Column(
                 modifier =
@@ -428,7 +416,9 @@ fun CreateDividendIncomeCard(modifier: Modifier = Modifier) {
                     CardTitle { "Q2 Dividend Income" }
                     CardDescription { "Quarterly dividend payouts across your portfolio holdings." }
                 }
-                CardAction(modifier = Modifier.align(Alignment.TopEnd)) { Icon(Lucide.X, variant = IconVariant.Small) }
+                CardAction(
+                    modifier = Modifier.align(Alignment.TopEnd),
+                ) { PreviewIcon(CreateIcon.X, variant = IconVariant.Small) }
             }
         }
         ItemGroup(modifier = cardContentModifier) {
@@ -502,7 +492,7 @@ fun CreatePayoutThresholdCard(modifier: Modifier = Modifier) {
                     size = ButtonSize.IconSm,
                     style = Style { background(actionFill) },
                 ) {
-                    Icon(Lucide.X, variant = IconVariant.Small, contentDescription = "Close")
+                    PreviewIcon(CreateIcon.X, variant = IconVariant.Small, contentDescription = "Close")
                 }
             }
         }
@@ -585,16 +575,16 @@ fun CreateAccountAccessCard(modifier: Modifier = Modifier) {
         }
         Column(modifier = cardContentModifier, verticalArrangement = Arrangement.spacedBy(twSpacing.md)) {
             Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
-                Icon(Lucide.Lock)
+                PreviewIcon(CreateIcon.Lock)
                 Text { "Update Security" }
             }
             Item(variant = ItemVariant.Muted) {
-                ItemMedia(variant = ItemMediaVariant.Icon) { Icon(Lucide.X) }
+                ItemMedia(variant = ItemMediaVariant.Icon) { PreviewIcon(CreateIcon.X) }
                 ItemContent {
                     ItemTitle("Danger Zone")
                     ItemDescription("Archive account and remove catalog")
                 }
-                Icon(Lucide.ArrowRight, variant = IconVariant.Small)
+                PreviewIcon(CreateIcon.ArrowRight, variant = IconVariant.Small)
             }
         }
     }
@@ -645,9 +635,9 @@ fun CreateQrConnectCard(modifier: Modifier = Modifier) {
 fun CreatePaymentsCard(modifier: Modifier = Modifier) {
     val payments =
         listOf(
-            Triple("Change transfer limit", "Adjust how much you can send from your balance.", Lucide.Settings),
-            Triple("Scheduled transfers", "Set up a transfer to send at a later date.", Lucide.Calendar),
-            Triple("Recurring card payments", "Manage your repeated card transactions.", Lucide.RefreshCw),
+            Triple("Change transfer limit", "Adjust how much you can send from your balance.", CreateIcon.Settings),
+            Triple("Scheduled transfers", "Set up a transfer to send at a later date.", CreateIcon.Calendar),
+            Triple("Recurring card payments", "Manage your repeated card transactions.", CreateIcon.RefreshCw),
         )
     Card(modifier = modifier) {
         Column(
@@ -664,12 +654,12 @@ fun CreatePaymentsCard(modifier: Modifier = Modifier) {
             ItemGroup {
                 payments.forEach { (title, description, icon) ->
                     Item(variant = ItemVariant.Muted) {
-                        ItemMedia(variant = ItemMediaVariant.Icon) { Icon(icon) }
+                        ItemMedia(variant = ItemMediaVariant.Icon) { PreviewIcon(icon) }
                         ItemContent {
                             ItemTitle(title)
                             ItemDescription(description)
                         }
-                        Icon(Lucide.ArrowRight, variant = IconVariant.Small)
+                        PreviewIcon(CreateIcon.ArrowRight, variant = IconVariant.Small)
                     }
                 }
             }
@@ -681,7 +671,7 @@ fun CreatePaymentsCard(modifier: Modifier = Modifier) {
 fun CreateEmptyDistributeTrackCard(modifier: Modifier = Modifier) {
     Card(modifier = modifier) {
         Empty(modifier = cardContentModifier.padding(vertical = twSpacing.xl)) {
-            EmptyMedia { Icon(Lucide.Plus) }
+            EmptyMedia { PreviewIcon(CreateIcon.Plus) }
             EmptyHeader {
                 EmptyTitle("Distribute Track")
                 EmptyDescription(
@@ -800,12 +790,14 @@ fun CreatePowerUsageCard(modifier: Modifier = Modifier) {
                     Text(textStyle = TextColors.Muted) { "Currently Using" }
                     Text(
                         variant = TextVariant.TitleMedium,
+                        textStyle = LocalCreateHeadingStyle.current,
                     ) { "3.4 kW" }
                 }
                 Column(modifier = Modifier.weight(1f)) {
                     Text(textStyle = TextColors.Muted) { "Solar Gen" }
                     Text(
                         variant = TextVariant.TitleMedium,
+                        textStyle = LocalCreateHeadingStyle.current,
                     ) { "+1.2 kW" }
                 }
             }
@@ -824,7 +816,9 @@ fun CreateTransferFundsCard(modifier: Modifier = Modifier) {
                     CardTitle { "Transfer Funds" }
                     CardDescription { "Move money between your connected accounts." }
                 }
-                CardAction(modifier = Modifier.align(Alignment.TopEnd)) { Icon(Lucide.X, variant = IconVariant.Small) }
+                CardAction(
+                    modifier = Modifier.align(Alignment.TopEnd),
+                ) { PreviewIcon(CreateIcon.X, variant = IconVariant.Small) }
             }
         }
         FieldGroup(modifier = cardContentModifier) {
@@ -882,8 +876,8 @@ fun CreateMessageScrollerCard(modifier: Modifier = Modifier) {
                     CardDescription { "How can I help you today?" }
                 }
                 CardAction(modifier = Modifier.align(Alignment.TopEnd)) {
-                    Icon(
-                        Lucide.RefreshCw,
+                    PreviewIcon(
+                        CreateIcon.RefreshCw,
                         variant = IconVariant.Small,
                     )
                 }
@@ -896,11 +890,11 @@ fun CreateMessageScrollerCard(modifier: Modifier = Modifier) {
         }
         InputGroup(modifier = cardContentModifier) {
             InputGroupAddon(InputGroupAddonAlign.InlineStart) {
-                Icon(Lucide.Plus, variant = IconVariant.Small)
+                PreviewIcon(CreateIcon.Plus, variant = IconVariant.Small)
             }
             Input("", {}, placeholder = "Message MessageScroller…")
             InputGroupAddon(InputGroupAddonAlign.InlineEnd) {
-                Icon(Lucide.Send, variant = IconVariant.Small)
+                PreviewIcon(CreateIcon.Send, variant = IconVariant.Small)
             }
         }
     }

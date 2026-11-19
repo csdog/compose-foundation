@@ -261,6 +261,7 @@ fun CatalogNavDisplay(
                                                 accent = accent,
                                                 onAccentChange = onAccentChange,
                                                 getCodeRequest = createGetCodeRequest,
+                                                onToggleTheme = { onToggleDarkMode(!isDarkMode) },
                                             )
                                         }
                                     },

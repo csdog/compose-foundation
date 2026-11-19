@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.movableContentOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -22,8 +24,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.tailwind.core.twSpacing
+import com.toutiaoyan.compose.ui.catalog.create.CreateConfiguration
 import com.toutiaoyan.compose.ui.catalog.create.CreateCustomizer
+import com.toutiaoyan.compose.ui.catalog.create.CreateDialog
 import com.toutiaoyan.compose.ui.catalog.create.CreatePreviewCanvas
+import com.toutiaoyan.compose.ui.catalog.create.CreatePreviewTheme
 import com.toutiaoyan.compose.ui.catalog.create.CreateWelcomeDialog
 import com.toutiaoyan.compose.ui.components.command.Command
 import com.toutiaoyan.compose.ui.components.command.CommandGroup
@@ -36,7 +42,6 @@ import com.toutiaoyan.compose.ui.components.dialog.DialogContent
 import com.toutiaoyan.compose.ui.tokens.Accent
 import com.toutiaoyan.compose.ui.tokens.BaseColor
 import com.toutiaoyan.compose.ui.tokens.StylePreset
-import com.toutiaoyan.compose.tailwind.core.twSpacing
 
 /**
  * Full recreate of [ui.shadcn.com/create](https://ui.shadcn.com/create)
@@ -45,7 +50,10 @@ import com.toutiaoyan.compose.tailwind.core.twSpacing
  *
  * Official `md:flex-row-reverse` with Preview then Customizer in DOM → visual
  * Customizer (menu rail) on the **left**, Preview on the right.
+ *
+ * Theme options remain hoisted to the catalog. This screen owns only its preview and dialogs.
  */
+@Suppress("LongParameterList", "LongMethod")
 @Composable
 fun CreatePage(
     stylePreset: StylePreset,
@@ -57,37 +65,45 @@ fun CreatePage(
     modifier: Modifier = Modifier,
     /** Bumped by header Get Code (DesignerActions). */
     getCodeRequest: Int = 0,
+    onToggleTheme: () -> Unit = {},
 ) {
     var welcomeOpen by remember { mutableStateOf(true) }
-    var commandOpen by remember { mutableStateOf(false) }
-    var chartColor by remember { mutableStateOf(baseColor.label) }
-    val currentChartColor by rememberUpdatedState(chartColor)
+    var dialog by remember { mutableStateOf<CreateDialog?>(null) }
+    var previewIndex by remember { mutableIntStateOf(0) }
+    var choices by remember { mutableStateOf(CreateConfiguration(baseColor = baseColor)) }
+    val configuration = choices.changeBase(baseColor).copy(style = stylePreset, accent = accent)
+    val updateConfiguration: (CreateConfiguration) -> Unit = { next ->
+        choices = next
+        if (next.style != stylePreset) onStylePresetChange(next.style)
+        if (next.baseColor != baseColor) onBaseColorChange(next.baseColor)
+        if (next.accent != accent) onAccentChange(next.accent)
+    }
+    LaunchedEffect(getCodeRequest) {
+        if (getCodeRequest > 0) dialog = CreateDialog.GetCode
+    }
+
+    val currentConfiguration by rememberUpdatedState(configuration)
     val preview =
         remember {
             movableContentOf<Modifier> { placement ->
-                CreatePreviewCanvas(chartColor = currentChartColor, modifier = placement)
+                CreatePreviewTheme(currentConfiguration) {
+                    CreatePreviewCanvas(
+                        chartColor = currentConfiguration.chartColor,
+                        previewIndex = previewIndex,
+                        onPreviewChange = { previewIndex = it },
+                        modifier = placement,
+                    )
+                }
             }
         }
-    val changeBaseColor: (BaseColor) -> Unit = { next ->
-        // Official normalization keeps a colored chart theme, but replaces a base
-        // chart palette that is no longer available under the new base.
-        if (BaseColor.entries.any { it.label == chartColor }) chartColor = next.label
-        onBaseColorChange(next)
-    }
-
     val customizerContent by rememberUpdatedState<@Composable (Modifier, Boolean, Dp) -> Unit>(
         { placement, docked, railWidth ->
             CreateCustomizer(
-                stylePreset = stylePreset,
-                onStylePresetChange = onStylePresetChange,
-                baseColor = baseColor,
-                onBaseColorChange = changeBaseColor,
-                accent = accent,
-                onAccentChange = onAccentChange,
-                chartColor = chartColor,
-                onChartColorChange = { chartColor = it },
-                onOpenCommandPalette = { commandOpen = true },
-                getCodeRequest = getCodeRequest,
+                configuration = configuration,
+                onConfigurationChange = updateConfiguration,
+                dialog = dialog,
+                onDialogChange = { dialog = it },
+                onToggleTheme = onToggleTheme,
                 docked = docked,
                 railWidth = railWidth,
                 modifier = placement,
@@ -138,7 +154,7 @@ fun CreatePage(
             onDismissRequest = { welcomeOpen = false },
         )
 
-        Dialog(open = commandOpen, onOpenChange = { commandOpen = it }) {
+        Dialog(open = dialog == CreateDialog.Commands, onOpenChange = { if (!it) dialog = null }) {
             DialogContent(showCloseButton = false) {
                 Command(
                     modifier =
@@ -150,15 +166,34 @@ fun CreatePage(
                     CommandInput(placeholder = "Search")
                     CommandList {
                         CommandGroup(heading = "Previews") {
-                            CommandItem("Preview 01", onSelect = { commandOpen = false })
-                            CommandItem("Preview 02", onSelect = { commandOpen = false })
+                            listOf("Preview 01", "Preview 02").forEachIndexed { index, label ->
+                                CommandItem(
+                                    label,
+                                    onSelect = {
+                                        previewIndex = index
+                                        dialog = null
+                                    },
+                                )
+                            }
                         }
                         CommandSeparator()
                         CommandGroup(heading = "Actions") {
-                            CommandItem("Shuffle", onSelect = { commandOpen = false })
-                            CommandItem("Reset", onSelect = { commandOpen = false })
-                            CommandItem("Open Preset", onSelect = { commandOpen = false })
-                            CommandItem("Get Code", onSelect = { commandOpen = false })
+                            CommandItem(
+                                "Shuffle",
+                                onSelect = {
+                                    updateConfiguration(CreateConfiguration.shuffled())
+                                    dialog = null
+                                },
+                            )
+                            CommandItem(
+                                "Reset",
+                                onSelect = {
+                                    updateConfiguration(CreateConfiguration())
+                                    dialog = null
+                                },
+                            )
+                            CommandItem("Open Preset", onSelect = { dialog = CreateDialog.OpenPreset })
+                            CommandItem("Get Code", onSelect = { dialog = CreateDialog.GetCode })
                         }
                     }
                 }

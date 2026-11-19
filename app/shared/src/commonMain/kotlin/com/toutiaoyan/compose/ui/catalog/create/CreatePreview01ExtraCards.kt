@@ -22,14 +22,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.composables.icons.lucide.ArrowRight
-import com.composables.icons.lucide.Calendar
-import com.composables.icons.lucide.Lock
-import com.composables.icons.lucide.Lucide
-import com.composables.icons.lucide.Plus
-import com.composables.icons.lucide.RefreshCw
-import com.composables.icons.lucide.Search
-import com.composables.icons.lucide.X
 import com.toutiaoyan.compose.ui.components.accordion.Accordion
 import com.toutiaoyan.compose.ui.components.accordion.AccordionItem
 import com.toutiaoyan.compose.ui.components.badge.Badge
@@ -54,7 +46,6 @@ import com.toutiaoyan.compose.ui.components.field.FieldDescription
 import com.toutiaoyan.compose.ui.components.spinner.Spinner
 import com.toutiaoyan.compose.ui.components.field.FieldGroup
 import com.toutiaoyan.compose.ui.components.field.FieldLabel
-import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.icon.IconVariant
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroup
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddon
@@ -144,7 +135,9 @@ fun CreatePreferencesCard(modifier: Modifier = Modifier) {
                     CardTitle { "Preferences" }
                     CardDescription { "Manage your account settings and notifications." }
                 }
-                CardAction(modifier = Modifier.align(Alignment.TopEnd)) { Icon(Lucide.X, variant = IconVariant.Small) }
+                CardAction(
+                    modifier = Modifier.align(Alignment.TopEnd),
+                ) { PreviewIcon(CreateIcon.X, variant = IconVariant.Small) }
             }
         }
         FieldGroup(extraCardContent) {
@@ -198,7 +191,7 @@ fun CreateSavingsProgressCard(modifier: Modifier = Modifier) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
             ) {
-                Text(variant = TextVariant.TitleLarge) { "$24,000" }
+                Text(variant = TextVariant.TitleLarge, textStyle = LocalCreateHeadingStyle.current) { "$24,000" }
                 Text(textStyle = TextColors.Muted) { "80% of $30,000" }
                 Progress(.8f, modifier = Modifier.fillMaxWidth())
             }
@@ -280,7 +273,9 @@ private fun KitchenSliderRow(
         if (currentTheme.activePreset == StylePreset.Nova) SliderDefaults.NovaThumbSize else SliderDefaults.ThumbSize
     val sliderHeight = maxOf(thumbSize, currentTheme.minTouchTarget ?: 0.dp)
     Item(variant = ItemVariant.Muted) {
-        ItemMedia(variant = ItemMediaVariant.Icon) { Icon(Lucide.RefreshCw, variant = IconVariant.Small) }
+        ItemMedia(
+            variant = ItemMediaVariant.Icon,
+        ) { PreviewIcon(CreateIcon.RefreshCw, variant = IconVariant.Small) }
         ItemContent { ItemTitle(label) }
         ItemActions(modifier = Modifier.weight(1f)) {
             Slider(
@@ -325,7 +320,9 @@ fun CreateRecentTransactionsCard(modifier: Modifier = Modifier) {
         ItemGroup(extraCardContent.padding(bottom = twSpacing.lg)) {
             transactions.forEach { (title, description, amount) ->
                 Item(variant = ItemVariant.Muted) {
-                    ItemMedia(variant = ItemMediaVariant.Icon) { Icon(Lucide.ArrowRight, variant = IconVariant.Small) }
+                    ItemMedia(
+                        variant = ItemMediaVariant.Icon,
+                    ) { PreviewIcon(CreateIcon.ArrowRight, variant = IconVariant.Small) }
                     ItemContent {
                         ItemTitle(title)
                         ItemDescription(description)
@@ -402,8 +399,8 @@ fun CreateFrontDoorCard(modifier: Modifier = Modifier) {
                 CardAction(modifier = Modifier.align(Alignment.TopEnd)) {
                     Row {
                         Text(textStyle = TextColors.Muted) { "Locked" }
-                        Icon(
-                            Lucide.Lock,
+                        PreviewIcon(
+                            CreateIcon.Lock,
                             variant = IconVariant.Small,
                         )
                     }
@@ -437,7 +434,7 @@ fun CreateReleaseCatalogCard(modifier: Modifier = Modifier) {
         ) {
             InputGroup {
                 InputGroupAddon(InputGroupAddonAlign.InlineStart) {
-                    Icon(Lucide.Search, variant = IconVariant.Small)
+                    PreviewIcon(CreateIcon.Search, variant = IconVariant.Small)
                 }
                 Input("", {}, placeholder = "Search holdings or tickers...")
             }
@@ -487,7 +484,7 @@ fun CreateCardOverviewCard(modifier: Modifier = Modifier) {
                     verticalArrangement = Arrangement.spacedBy(twSpacing.md),
                 ) {
                     Text(textStyle = TextColors.Muted) { "Payment Due" }
-                    Text(variant = TextVariant.TitleLarge) { "1 Apr" }
+                    Text(variant = TextVariant.TitleLarge, textStyle = LocalCreateHeadingStyle.current) { "1 Apr" }
                     Button(
                         onClick = {},
                         modifier = Modifier.fillMaxWidth(),
@@ -532,7 +529,7 @@ fun CreateCoverArtCard(modifier: Modifier = Modifier) {
                 Modifier.fillMaxWidth().height(220.dp)
                     .background(currentTheme.colors.muted, RoundedCornerShape(twRadius.lg)),
                 contentAlignment = Alignment.Center,
-            ) { Icon(Lucide.Plus) }
+            ) { PreviewIcon(CreateIcon.Plus) }
         }
         Column(extraCardContent, horizontalAlignment = Alignment.CenterHorizontally) {
             Button(
@@ -580,7 +577,9 @@ fun CreateReceivingMethodCard(modifier: Modifier = Modifier) {
                     CardTitle { "Receiving Method" }
                     CardDescription { "Payout Preferences" }
                 }
-                CardAction(modifier = Modifier.align(Alignment.TopEnd)) { Icon(Lucide.X, variant = IconVariant.Small) }
+                CardAction(
+                    modifier = Modifier.align(Alignment.TopEnd),
+                ) { PreviewIcon(CreateIcon.X, variant = IconVariant.Small) }
             }
         }
         FieldGroup(extraCardContent) {
@@ -630,7 +629,7 @@ fun CreateUpcomingPaymentsCard(modifier: Modifier = Modifier) {
                 contentAlignment = Alignment.Center,
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Icon(Lucide.Calendar)
+                    PreviewIcon(CreateIcon.Calendar)
                     Text { "April 2024" }
                     Text(
                         textStyle = TextColors.Muted,
@@ -648,8 +647,8 @@ fun CreateUpcomingPaymentsCard(modifier: Modifier = Modifier) {
                             ItemTitle(title)
                             ItemDescription(detail)
                         }
-                        Icon(
-                            Lucide.ArrowRight,
+                        PreviewIcon(
+                            CreateIcon.ArrowRight,
                             variant = IconVariant.Small,
                         )
                     }
@@ -779,7 +778,7 @@ fun CreateSocialLinksCard(modifier: Modifier = Modifier) {
                 FieldLabel("Spotify Artist URL")
                 InputGroup {
                     InputGroupAddon(InputGroupAddonAlign.InlineStart) {
-                        Icon(Lucide.Plus, variant = IconVariant.Small)
+                        PreviewIcon(CreateIcon.Plus, variant = IconVariant.Small)
                     }
                     Input(spotify, { spotify = it })
                 }
@@ -860,6 +859,7 @@ private fun OverviewMetric(
             Text(textStyle = TextColors.Muted) { title }
             Text(
                 variant = TextVariant.TitleLarge,
+                textStyle = LocalCreateHeadingStyle.current,
             ) { value }
             Text(textStyle = TextColors.Muted) { description }
         }
@@ -875,7 +875,7 @@ private fun PreviewEmptyCard(
 ) {
     Card(modifier) {
         Empty(extraCardContent.padding(vertical = twSpacing.xl)) {
-            EmptyMedia { Icon(Lucide.Plus) }
+            EmptyMedia { PreviewIcon(CreateIcon.Plus) }
             EmptyHeader {
                 EmptyTitle(title)
                 EmptyDescription(description)

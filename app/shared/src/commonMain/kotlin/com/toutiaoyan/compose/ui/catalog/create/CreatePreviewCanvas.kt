@@ -52,8 +52,17 @@ fun CreatePreviewCanvas(
     chartColor: String,
     modifier: Modifier = Modifier,
 ) {
-    // Official default item is preview-02 (= our 01).
     var previewIndex by remember { mutableIntStateOf(0) }
+    CreatePreviewCanvas(chartColor, previewIndex, { previewIndex = it }, modifier)
+}
+
+@Composable
+internal fun CreatePreviewCanvas(
+    chartColor: String,
+    previewIndex: Int,
+    onPreviewChange: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     // preview.tsx: rounded-2xl ring ring-foreground/10
     val frameShape = RoundedCornerShape(16.dp)
 
@@ -102,7 +111,7 @@ fun CreatePreviewCanvas(
 
         CreatePreviewSwitcher(
             selectedIndex = previewIndex,
-            onSelect = { previewIndex = it },
+            onSelect = onPreviewChange,
             modifier =
                 Modifier
                     .align(Alignment.BottomEnd)

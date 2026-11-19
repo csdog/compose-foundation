@@ -72,12 +72,24 @@ private val previewContent: Modifier
 
 @Composable
 fun CreatePreview02StyleOverviewCard(modifier: Modifier = Modifier) {
+    val bodyFont = LocalCreatePreviewConfiguration.current.bodyFont
+    val colors = currentTheme.colors
+    val swatches =
+        listOf(
+            colors.background,
+            colors.foreground,
+            colors.primary,
+            colors.secondary,
+            colors.muted,
+            colors.accent,
+            colors.border,
+        ) + previewChartColors()
     Card(modifier) {
         Column(
             previewContent.padding(vertical = twSpacing.lg),
             verticalArrangement = Arrangement.spacedBy(twSpacing.lg),
         ) {
-            Text(variant = TextVariant.TitleLarge) { "Default - Inter" }
+            Text(variant = TextVariant.TitleLarge, textStyle = LocalCreateHeadingStyle.current) { bodyFont }
             Text(textStyle = TextColors.Muted) {
                 "Designers love packing quirky glyphs into test phrases. This is a preview of the typography styles."
             }
@@ -88,7 +100,7 @@ fun CreatePreview02StyleOverviewCard(modifier: Modifier = Modifier) {
                         Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
                             Box(
                                 Modifier.fillMaxWidth().height(28.dp)
-                                    .background(previewColor(index), RoundedCornerShape(twRadius.md)),
+                                    .background(swatches[index], RoundedCornerShape(twRadius.md)),
                             )
                             Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) {
                                 listOf(
@@ -116,10 +128,13 @@ fun CreatePreview02StyleOverviewCard(modifier: Modifier = Modifier) {
 
 @Composable
 fun CreatePreview02TypographySpecimenCard(modifier: Modifier = Modifier) {
+    val headingFont = LocalCreatePreviewConfiguration.current.headingFont
     Card(modifier) {
         Column(previewContent, verticalArrangement = Arrangement.spacedBy(twSpacing.sm)) {
-            Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { "Inherit - Default" }
-            Text(variant = TextVariant.TitleLarge) { "Designing with rhythm and hierarchy." }
+            Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { headingFont }
+            Text(variant = TextVariant.TitleLarge, textStyle = LocalCreateHeadingStyle.current) {
+                "Designing with rhythm and hierarchy."
+            }
             Text(textStyle = TextColors.Muted) {
                 "A strong body style keeps long-form content readable and balances the visual weight of headings."
             }
@@ -138,34 +153,15 @@ fun CreatePreview02IconGridCard(modifier: Modifier = Modifier) {
             previewContent.padding(vertical = twSpacing.lg),
             horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
         ) {
-            repeat(8) { column ->
+            CreateIcon.entries.chunked(2).forEach { column ->
                 Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(twSpacing.sm)) {
-                    repeat(2) {
+                    column.forEach { icon ->
                         Box(
                             Modifier.fillMaxWidth().size(30.dp)
                                 .background(currentTheme.colors.muted, RoundedCornerShape(twRadius.sm)),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Text(variant = TextVariant.LabelSmall) {
-                                listOf(
-                                    "□",
-                                    "!",
-                                    "×",
-                                    "↗",
-                                    "◫",
-                                    "…",
-                                    "◌",
-                                    "+",
-                                    "−",
-                                    "←",
-                                    "→",
-                                    "✓",
-                                    "⌄",
-                                    "›",
-                                    "⌕",
-                                    "⚙",
-                                )[column * 2 + it]
-                            }
+                            PreviewIcon(icon)
                         }
                     }
                 }
@@ -234,7 +230,7 @@ fun CreatePreview02PieChartCard(modifier: Modifier = Modifier) {
                 contentAlignment = Alignment.Center,
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(variant = TextVariant.TitleLarge) { "935" }
+                    Text(variant = TextVariant.TitleLarge, textStyle = LocalCreateHeadingStyle.current) { "935" }
                     Text(
                         textStyle = TextColors.Muted,
                     ) { "Visitors" }

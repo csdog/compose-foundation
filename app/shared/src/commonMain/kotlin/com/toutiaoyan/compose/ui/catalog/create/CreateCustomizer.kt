@@ -26,7 +26,6 @@ import androidx.compose.foundation.style.fillWidth
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,7 +42,6 @@ import com.composables.icons.lucide.Menu
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.ui.catalog.docs.CopyLabel
 import com.toutiaoyan.compose.ui.catalog.docs.DocIcon
-import com.toutiaoyan.compose.ui.utils.clipboard.rememberCopyToClipboard
 import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
@@ -56,6 +54,7 @@ import com.toutiaoyan.compose.ui.components.dialog.DialogFooter
 import com.toutiaoyan.compose.ui.components.dialog.DialogHeader
 import com.toutiaoyan.compose.ui.components.dialog.DialogTitle
 import com.toutiaoyan.compose.ui.components.field.Field
+import com.toutiaoyan.compose.ui.components.field.FieldError
 import com.toutiaoyan.compose.ui.components.field.FieldGroup
 import com.toutiaoyan.compose.ui.components.field.FieldLabel
 import com.toutiaoyan.compose.ui.components.field.FieldSeparator
@@ -74,96 +73,49 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.Accent
 import com.toutiaoyan.compose.ui.tokens.BaseColor
 import com.toutiaoyan.compose.ui.tokens.StylePreset
-import kotlin.random.Random
-
-private val HEADING_FONTS = listOf("Inter", "Geist", "Geist Mono", "System", "Serif")
-private val BODY_FONTS = listOf("Inter", "Geist", "Geist Mono", "System", "Mono")
-private val ICON_LIBRARIES = listOf("Lucide", "Hugeicons", "Tabler", "Phosphor", "Remix Icon")
-private val RADII = listOf("Default", "None", "Small", "Medium", "Large", "Full")
-private val MENU_COLORS =
-    listOf(
-        "Default / Solid",
-        "Default / Translucent",
-        "Inverted / Solid",
-        "Inverted / Translucent",
-    )
-private val MENU_ACCENTS = listOf("Subtle", "Bold", "Primary", "Muted")
-private val COMPONENT_BASES =
-    listOf(
-        "Base UI" to "base",
-        "Radix" to "radix",
-        "React Aria" to "aria",
-    )
+import com.toutiaoyan.compose.ui.utils.clipboard.rememberCopyToClipboard
 
 /**
  * Customizer matching ui.shadcn.com/create. [docked] places a horizontal bottom bar
  * (narrow viewports); otherwise a vertical left rail (desktop).
+ *
+ * The compact and rail layouts share settings and actions but use different scrolling axes.
  */
+@Suppress("LongParameterList", "LongMethod")
 @Composable
-fun CreateCustomizer(
-    stylePreset: StylePreset,
-    onStylePresetChange: (StylePreset) -> Unit,
-    baseColor: BaseColor,
-    onBaseColorChange: (BaseColor) -> Unit,
-    accent: Accent,
-    onAccentChange: (Accent) -> Unit,
-    chartColor: String,
-    onChartColorChange: (String) -> Unit,
+internal fun CreateCustomizer(
+    configuration: CreateConfiguration,
+    onConfigurationChange: (CreateConfiguration) -> Unit,
+    dialog: CreateDialog?,
+    onDialogChange: (CreateDialog?) -> Unit,
+    onToggleTheme: () -> Unit,
     modifier: Modifier = Modifier,
     docked: Boolean = false,
-    /** Official `--customizer-width`: 48→192dp, 2xl 56→224dp. */
     railWidth: Dp = 192.dp,
-    /** When incremented, opens the Get Code dialog (header DesignerActions). */
-    getCodeRequest: Int = 0,
-    onOpenCommandPalette: () -> Unit = {},
 ) {
-    var headingFont by remember { mutableStateOf(HEADING_FONTS.first()) }
-    var bodyFont by remember { mutableStateOf(BODY_FONTS.first()) }
-    var iconLibrary by remember { mutableStateOf(ICON_LIBRARIES.first()) }
-    var radius by remember { mutableStateOf(RADII.first()) }
-    var menuColor by remember { mutableStateOf(MENU_COLORS.first()) }
-    var menuAccent by remember { mutableStateOf(MENU_ACCENTS.first()) }
-    var componentBase by remember { mutableStateOf(COMPONENT_BASES.first().first) }
-    var openPresetVisible by remember { mutableStateOf(false) }
-    var getCodeVisible by remember { mutableStateOf(false) }
     var presetInput by remember { mutableStateOf("") }
-
-    LaunchedEffect(getCodeRequest) {
-        if (getCodeRequest > 0) getCodeVisible = true
-    }
-
-    val presetCode =
-        remember(stylePreset, baseColor, accent, chartColor, headingFont, bodyFont, iconLibrary, radius) {
-            buildPresetCode(
-                stylePreset = stylePreset,
-                baseColor = baseColor,
-                accent = accent,
-                chartColor = chartColor,
-                headingFont = headingFont,
-                bodyFont = bodyFont,
-                iconLibrary = iconLibrary,
-                radius = radius,
-            )
-        }
+    var invalidPreset by remember { mutableStateOf(false) }
+    val presetCode = "--preset ${configuration.toPresetCode()}"
     val snippet =
-        remember(stylePreset, baseColor, accent) {
-            """
-            Theme(
-                preset = StylePreset.${stylePreset.name},
-                baseColor = BaseColor.${baseColor.name},
-                accent = Accent.${accent.name},
-            ) {
-                // your content
-            }
-            """.trimIndent()
+        """
+        Theme(
+            preset = StylePreset.${configuration.style.name},
+            baseColor = BaseColor.${configuration.baseColor.name},
+            accent = Accent.${configuration.accent.name},
+            baseRadius = Radius(${configuration.radiusDp}.dp),
+        ) {
+            // your content
         }
-    val presetCopy = rememberCopyToClipboard("--preset $presetCode")
+        """.trimIndent()
+    val presetCopy = rememberCopyToClipboard(presetCode)
     val codeCopy = rememberCopyToClipboard(snippet)
+    val shuffle = { onConfigurationChange(CreateConfiguration.shuffled()) }
+    val reset = { onConfigurationChange(CreateConfiguration()) }
 
     Theme(
-        preset = stylePreset,
-        baseColor = baseColor,
-        accent = accent,
+        preset = configuration.style,
+        baseColor = configuration.baseColor,
+        accent = configuration.accent,
         isDark = true,
     ) {
         // customizer.tsx: dark Card size=sm rounded-2xl bg-card/90
@@ -198,29 +150,16 @@ fun CreateCustomizer(
                                 .horizontalScroll(rememberScrollState()),
                         horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
                     ) {
+                        Button(
+                            onClick = { onDialogChange(CreateDialog.Commands) },
+                            variant = ButtonVariant.Outline,
+                            size = ButtonSize.Sm,
+                        ) {
+                            Text { "Actions" }
+                        }
                         CreateCustomizerPickers(
-                            stylePreset = stylePreset,
-                            onStylePresetChange = onStylePresetChange,
-                            baseColor = baseColor,
-                            onBaseColorChange = onBaseColorChange,
-                            accent = accent,
-                            onAccentChange = onAccentChange,
-                            chartColor = chartColor,
-                            onChartColorChange = onChartColorChange,
-                            headingFont = headingFont,
-                            onHeadingFontChange = { headingFont = it },
-                            bodyFont = bodyFont,
-                            onBodyFontChange = { bodyFont = it },
-                            iconLibrary = iconLibrary,
-                            onIconLibraryChange = { iconLibrary = it },
-                            radius = radius,
-                            onRadiusChange = { radius = it },
-                            menuColor = menuColor,
-                            onMenuColorChange = { menuColor = it },
-                            menuAccent = menuAccent,
-                            onMenuAccentChange = { menuAccent = it },
-                            componentBase = componentBase,
-                            onComponentBaseChange = { componentBase = it },
+                            configuration = configuration,
+                            onConfigurationChange = onConfigurationChange,
                             compact = true,
                         )
                     }
@@ -236,42 +175,24 @@ fun CreateCustomizer(
                             size = ButtonSize.Sm,
                             modifier = Modifier.weight(1f),
                         ) {
-                            CopyLabel(presetCopy.justCopied, "--preset $presetCode")
+                            CopyLabel(presetCopy.justCopied, "Copy Preset")
                         }
                         Button(
-                            onClick = { openPresetVisible = true },
+                            onClick = { onDialogChange(CreateDialog.OpenPreset) },
                             variant = ButtonVariant.Outline,
                             size = ButtonSize.Sm,
                         ) {
                             Text { "Open" }
                         }
                         Button(
-                            onClick = {
-                                onStylePresetChange(StylePreset.entries.random())
-                                val shuffledBase = BaseColor.entries.random()
-                                onBaseColorChange(shuffledBase)
-                                onAccentChange(Accent.entries.random())
-                                onChartColorChange(
-                                    (
-                                        listOf(shuffledBase.label) +
-                                            Accent.entries.filter { it != Accent.Base }.map { it.label }
-                                    ).random(),
-                                )
-                                headingFont = HEADING_FONTS.random()
-                                bodyFont = BODY_FONTS.random()
-                                iconLibrary = ICON_LIBRARIES.random()
-                                radius = RADII.random()
-                                menuColor = MENU_COLORS.random()
-                                menuAccent = MENU_ACCENTS.random()
-                                componentBase = COMPONENT_BASES.random().first
-                            },
+                            onClick = shuffle,
                             variant = ButtonVariant.Outline,
                             size = ButtonSize.Sm,
                         ) {
                             Text { "Shuffle" }
                         }
                         Button(
-                            onClick = { getCodeVisible = true },
+                            onClick = { onDialogChange(CreateDialog.GetCode) },
                             size = ButtonSize.Sm,
                         ) {
                             Text { "Get Code" }
@@ -336,35 +257,24 @@ fun CreateCustomizer(
                                 ) {
                                     MainMenuItem("Navigate...", "⌘P") {
                                         menuOpen = false
-                                        onOpenCommandPalette()
+                                        onDialogChange(CreateDialog.Commands)
                                     }
                                     MainMenuItem("Open Preset...", "O") {
                                         menuOpen = false
-                                        openPresetVisible = true
+                                        onDialogChange(CreateDialog.OpenPreset)
                                     }
                                     MainMenuItem("Shuffle", "R") {
                                         menuOpen = false
-                                        onStylePresetChange(StylePreset.entries.random())
-                                        val shuffledBase = BaseColor.entries.random()
-                                        onBaseColorChange(shuffledBase)
-                                        onAccentChange(Accent.entries.random())
-                                        onChartColorChange(
-                                            (
-                                                listOf(shuffledBase.label) +
-                                                    Accent.entries.filter { it != Accent.Base }.map { it.label }
-                                            ).random(),
-                                        )
+                                        shuffle()
                                     }
                                     MainMenuItem("Light/Dark", "D") {
                                         menuOpen = false
+                                        onToggleTheme()
                                     }
                                     FieldSeparator()
                                     MainMenuItem("Reset", "⇧R") {
                                         menuOpen = false
-                                        onStylePresetChange(StylePreset.Nova)
-                                        onBaseColorChange(BaseColor.Neutral)
-                                        onAccentChange(Accent.Base)
-                                        onChartColorChange(BaseColor.Neutral.label)
+                                        reset()
                                     }
                                 }
                             }
@@ -379,28 +289,8 @@ fun CreateCustomizer(
                     }
 
                     CreateCustomizerPickers(
-                        stylePreset = stylePreset,
-                        onStylePresetChange = onStylePresetChange,
-                        baseColor = baseColor,
-                        onBaseColorChange = onBaseColorChange,
-                        accent = accent,
-                        onAccentChange = onAccentChange,
-                        chartColor = chartColor,
-                        onChartColorChange = onChartColorChange,
-                        headingFont = headingFont,
-                        onHeadingFontChange = { headingFont = it },
-                        bodyFont = bodyFont,
-                        onBodyFontChange = { bodyFont = it },
-                        iconLibrary = iconLibrary,
-                        onIconLibraryChange = { iconLibrary = it },
-                        radius = radius,
-                        onRadiusChange = { radius = it },
-                        menuColor = menuColor,
-                        onMenuColorChange = { menuColor = it },
-                        menuAccent = menuAccent,
-                        onMenuAccentChange = { menuAccent = it },
-                        componentBase = componentBase,
-                        onComponentBaseChange = { componentBase = it },
+                        configuration = configuration,
+                        onConfigurationChange = onConfigurationChange,
                         compact = false,
                     )
 
@@ -418,10 +308,10 @@ fun CreateCustomizer(
                             modifier = Modifier.fillMaxWidth(),
                             style = fullWidth,
                         ) {
-                            CopyLabel(presetCopy.justCopied, "--preset $presetCode")
+                            CopyLabel(presetCopy.justCopied, "Copy Preset")
                         }
                         Button(
-                            onClick = { openPresetVisible = true },
+                            onClick = { onDialogChange(CreateDialog.OpenPreset) },
                             variant = ButtonVariant.Outline,
                             size = ButtonSize.Sm,
                             modifier = Modifier.fillMaxWidth(),
@@ -430,25 +320,7 @@ fun CreateCustomizer(
                             Text { "Open Preset" }
                         }
                         Button(
-                            onClick = {
-                                onStylePresetChange(StylePreset.entries.random())
-                                val shuffledBase = BaseColor.entries.random()
-                                onBaseColorChange(shuffledBase)
-                                onAccentChange(Accent.entries.random())
-                                onChartColorChange(
-                                    (
-                                        listOf(shuffledBase.label) +
-                                            Accent.entries.filter { it != Accent.Base }.map { it.label }
-                                    ).random(),
-                                )
-                                headingFont = HEADING_FONTS.random()
-                                bodyFont = BODY_FONTS.random()
-                                iconLibrary = ICON_LIBRARIES.random()
-                                radius = RADII.random()
-                                menuColor = MENU_COLORS.random()
-                                menuAccent = MENU_ACCENTS.random()
-                                componentBase = COMPONENT_BASES.random().first
-                            },
+                            onClick = shuffle,
                             variant = ButtonVariant.Outline,
                             size = ButtonSize.Sm,
                             modifier = Modifier.fillMaxWidth(),
@@ -457,19 +329,7 @@ fun CreateCustomizer(
                             Text { "Shuffle" }
                         }
                         Button(
-                            onClick = {
-                                onStylePresetChange(StylePreset.Nova)
-                                onBaseColorChange(BaseColor.Neutral)
-                                onAccentChange(Accent.Base)
-                                onChartColorChange(BaseColor.Neutral.label)
-                                headingFont = HEADING_FONTS.first()
-                                bodyFont = BODY_FONTS.first()
-                                iconLibrary = ICON_LIBRARIES.first()
-                                radius = RADII.first()
-                                menuColor = MENU_COLORS.first()
-                                menuAccent = MENU_ACCENTS.first()
-                                componentBase = COMPONENT_BASES.first().first
-                            },
+                            onClick = reset,
                             variant = ButtonVariant.Ghost,
                             size = ButtonSize.Sm,
                             modifier = Modifier.fillMaxWidth(),
@@ -478,7 +338,7 @@ fun CreateCustomizer(
                             Text { "Reset" }
                         }
                         Button(
-                            onClick = onOpenCommandPalette,
+                            onClick = { onDialogChange(CreateDialog.Commands) },
                             variant = ButtonVariant.Outline,
                             size = ButtonSize.Sm,
                             modifier = Modifier.fillMaxWidth(),
@@ -487,7 +347,7 @@ fun CreateCustomizer(
                             Text { "Command Palette" }
                         }
                         Button(
-                            onClick = { getCodeVisible = true },
+                            onClick = { onDialogChange(CreateDialog.GetCode) },
                             size = ButtonSize.Sm,
                             modifier = Modifier.fillMaxWidth(),
                             style = fullWidth,
@@ -500,32 +360,56 @@ fun CreateCustomizer(
         }
     }
 
-    Dialog(open = openPresetVisible, onOpenChange = { openPresetVisible = it }) {
+    Dialog(
+        open = dialog == CreateDialog.OpenPreset,
+        onOpenChange = {
+            if (!it) {
+                presetInput = ""
+                invalidPreset = false
+                onDialogChange(null)
+            }
+        },
+    ) {
         DialogContent {
             DialogHeader {
                 DialogTitle("Open Preset")
                 DialogDescription("Paste a preset code to load a saved configuration.")
             }
             FieldGroup(modifier = Modifier.padding(top = twSpacing.md)) {
-                Field {
+                Field(invalid = invalidPreset) {
                     FieldLabel("Preset")
                     Input(
                         value = presetInput,
-                        onValueChange = { presetInput = it },
-                        placeholder = "e.g. b2D0wqNxT",
+                        onValueChange = {
+                            presetInput = it
+                            invalidPreset = false
+                        },
+                        invalid = invalidPreset,
+                        placeholder = "Paste a Compose Foundation preset",
                         modifier = Modifier.fillMaxWidth(),
                     )
+                    if (invalidPreset) FieldError("Enter a valid Compose Foundation preset code.")
                 }
             }
             DialogFooter(modifier = Modifier.padding(top = twSpacing.md)) {
-                Button(onClick = { openPresetVisible = false }, variant = ButtonVariant.Outline) {
+                Button(
+                    onClick = {
+                        presetInput = ""
+                        invalidPreset = false
+                        onDialogChange(null)
+                    },
+                    variant = ButtonVariant.Outline,
+                ) {
                     Text { "Cancel" }
                 }
                 Button(
                     onClick = {
-                        // Accept any non-empty code as a no-op apply for catalog demo purposes.
-                        if (presetInput.isNotBlank()) {
-                            openPresetVisible = false
+                        val next = CreateConfiguration.fromPresetCode(presetInput)
+                        if (next == null) {
+                            invalidPreset = true
+                        } else {
+                            onConfigurationChange(next)
+                            onDialogChange(null)
                             presetInput = ""
                         }
                     },
@@ -536,11 +420,11 @@ fun CreateCustomizer(
         }
     }
 
-    Dialog(open = getCodeVisible, onOpenChange = { getCodeVisible = it }) {
+    Dialog(open = dialog == CreateDialog.GetCode, onOpenChange = { if (!it) onDialogChange(null) }) {
         DialogContent {
             DialogHeader {
                 DialogTitle("Get Code")
-                DialogDescription("Copy the Theme() setup for your current Style, Base Color, and Accent.")
+                DialogDescription("Copy the theme setup or a preset for the current configuration.")
             }
             Text(
                 variant = TextVariant.BodySmall,
@@ -548,50 +432,40 @@ fun CreateCustomizer(
                 modifier = Modifier.padding(top = twSpacing.md),
             ) { snippet }
             DialogFooter(modifier = Modifier.padding(top = twSpacing.md)) {
-                Button(onClick = { getCodeVisible = false }, variant = ButtonVariant.Outline) {
+                Button(onClick = { onDialogChange(null) }, variant = ButtonVariant.Outline) {
                     Text { "Close" }
                 }
+                Button(onClick = presetCopy.copy, variant = ButtonVariant.Outline) {
+                    CopyLabel(presetCopy.justCopied, "Copy Preset")
+                }
                 Button(onClick = codeCopy.copy) {
-                    CopyLabel(codeCopy.justCopied, "Copy")
+                    CopyLabel(codeCopy.justCopied, "Copy Code")
                 }
             }
         }
     }
 }
 
+// Each section of the configuration is declared in its navigation order.
+@Suppress("LongMethod", "CyclomaticComplexMethod")
 @Composable
 private fun CreateCustomizerPickers(
-    stylePreset: StylePreset,
-    onStylePresetChange: (StylePreset) -> Unit,
-    baseColor: BaseColor,
-    onBaseColorChange: (BaseColor) -> Unit,
-    accent: Accent,
-    onAccentChange: (Accent) -> Unit,
-    chartColor: String,
-    onChartColorChange: (String) -> Unit,
-    headingFont: String,
-    onHeadingFontChange: (String) -> Unit,
-    bodyFont: String,
-    onBodyFontChange: (String) -> Unit,
-    iconLibrary: String,
-    onIconLibraryChange: (String) -> Unit,
-    radius: String,
-    onRadiusChange: (String) -> Unit,
-    menuColor: String,
-    onMenuColorChange: (String) -> Unit,
-    menuAccent: String,
-    onMenuAccentChange: (String) -> Unit,
-    componentBase: String,
-    onComponentBaseChange: (String) -> Unit,
+    configuration: CreateConfiguration,
+    onConfigurationChange: (CreateConfiguration) -> Unit,
     compact: Boolean,
 ) {
+    val stylePreset = configuration.style
+    val baseColor = configuration.baseColor
+    val accent = configuration.accent
+    val chartColor = configuration.chartColor
+    val radius = configuration.radius
     val rowModifier = if (compact) Modifier.width(144.dp) else Modifier.fillMaxWidth()
 
     PresetSelectorRow(
         label = "Style",
         value = stylePreset.label,
         options = StylePreset.entries,
-        onValueChange = onStylePresetChange,
+        onValueChange = { onConfigurationChange(configuration.copy(style = it)) },
         optionLabel = { it.label },
         modifier = rowModifier,
         swatch = {
@@ -611,7 +485,7 @@ private fun CreateCustomizerPickers(
         label = "Base Color",
         value = baseColor.label,
         options = BaseColor.entries,
-        onValueChange = onBaseColorChange,
+        onValueChange = { onConfigurationChange(configuration.changeBase(it)) },
         optionLabel = { it.label },
         modifier = rowModifier,
         swatch = {
@@ -622,7 +496,7 @@ private fun CreateCustomizerPickers(
         label = "Theme",
         value = if (accent == Accent.Base) baseColor.label else accent.label,
         options = Accent.entries,
-        onValueChange = onAccentChange,
+        onValueChange = { onConfigurationChange(configuration.copy(accent = it)) },
         optionLabel = { if (it == Accent.Base) baseColor.label else it.label },
         modifier = rowModifier,
         swatch = {
@@ -633,8 +507,8 @@ private fun CreateCustomizerPickers(
     PresetSelectorRow(
         label = "Chart Color",
         value = chartColor,
-        options = listOf(baseColor.label) + Accent.entries.filter { it != Accent.Base }.map { it.label },
-        onValueChange = onChartColorChange,
+        options = chartColors(baseColor),
+        onValueChange = { onConfigurationChange(configuration.copy(chartColor = it)) },
         optionLabel = { it },
         modifier = rowModifier,
         swatch = {
@@ -644,9 +518,9 @@ private fun CreateCustomizerPickers(
     if (!compact) FieldSeparator()
     PresetSelectorRow(
         label = "Heading",
-        value = headingFont,
+        value = configuration.headingFont,
         options = HEADING_FONTS,
-        onValueChange = onHeadingFontChange,
+        onValueChange = { onConfigurationChange(configuration.copy(headingFont = it)) },
         optionLabel = { it },
         modifier = rowModifier,
         swatch = {
@@ -655,9 +529,9 @@ private fun CreateCustomizerPickers(
     )
     PresetSelectorRow(
         label = "Font",
-        value = bodyFont,
+        value = configuration.bodyFont,
         options = BODY_FONTS,
-        onValueChange = onBodyFontChange,
+        onValueChange = { onConfigurationChange(configuration.copy(bodyFont = it)) },
         optionLabel = { it },
         modifier = rowModifier,
         swatch = {
@@ -667,9 +541,9 @@ private fun CreateCustomizerPickers(
     if (!compact) FieldSeparator()
     PresetSelectorRow(
         label = "Icon Library",
-        value = iconLibrary,
+        value = configuration.iconLibrary,
         options = ICON_LIBRARIES,
-        onValueChange = onIconLibraryChange,
+        onValueChange = { onConfigurationChange(configuration.copy(iconLibrary = it)) },
         optionLabel = { it },
         modifier = rowModifier,
         swatch = {},
@@ -678,7 +552,7 @@ private fun CreateCustomizerPickers(
         label = "Radius",
         value = radius,
         options = RADII,
-        onValueChange = onRadiusChange,
+        onValueChange = { onConfigurationChange(configuration.copy(radius = it)) },
         optionLabel = { it },
         modifier = rowModifier,
         swatch = {
@@ -705,27 +579,27 @@ private fun CreateCustomizerPickers(
     if (!compact) FieldSeparator()
     PresetSelectorRow(
         label = "Menu",
-        value = menuColor,
+        value = configuration.menuColor,
         options = MENU_COLORS,
-        onValueChange = onMenuColorChange,
+        onValueChange = { onConfigurationChange(configuration.copy(menuColor = it)) },
         optionLabel = { it },
         modifier = rowModifier,
         swatch = {},
     )
     PresetSelectorRow(
         label = "Menu Accent",
-        value = menuAccent,
+        value = configuration.menuAccent,
         options = MENU_ACCENTS,
-        onValueChange = onMenuAccentChange,
+        onValueChange = { onConfigurationChange(configuration.copy(menuAccent = it)) },
         optionLabel = { it },
         modifier = rowModifier,
         swatch = {},
     )
     PresetSelectorRow(
         label = "Base",
-        value = componentBase,
-        options = COMPONENT_BASES.map { it.first },
-        onValueChange = onComponentBaseChange,
+        value = configuration.componentBase,
+        options = COMPONENT_BASES,
+        onValueChange = { onConfigurationChange(configuration.copy(componentBase = it)) },
         optionLabel = { it },
         modifier = rowModifier,
         swatch = {},
@@ -871,34 +745,5 @@ private fun MainMenuItem(
     ) {
         Text(variant = TextVariant.BodyMedium) { label }
         Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { shortcut }
-    }
-}
-
-private fun buildPresetCode(
-    stylePreset: StylePreset,
-    baseColor: BaseColor,
-    accent: Accent,
-    chartColor: String,
-    headingFont: String,
-    bodyFont: String,
-    iconLibrary: String,
-    radius: String,
-): String {
-    val seed =
-        listOf(
-            stylePreset.name,
-            baseColor.name,
-            accent.name,
-            chartColor,
-            headingFont,
-            bodyFont,
-            iconLibrary,
-            radius,
-        ).joinToString("|").hashCode()
-    val alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    val random = Random(seed)
-    return buildString {
-        append('b')
-        repeat(8) { append(alphabet[random.nextInt(alphabet.length)]) }
     }
 }
