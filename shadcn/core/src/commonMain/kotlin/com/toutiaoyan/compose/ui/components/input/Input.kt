@@ -225,21 +225,9 @@ fun Input(
     // to different intrinsic heights. Textarea passes singleLine = false and keeps a
     // flexible min height instead.
     val inputHeight = InputDefaults.Height
-    val singleLineStyle =
-        if (singleLine &&
-            !(
-                nova &&
-                    insideGroup &&
-                    (
-                        InputGroupAddonAlign.BlockStart in addons ||
-                            InputGroupAddonAlign.BlockEnd in addons
-                    )
-            )
-        ) {
-            Style { height(inputHeight) }
-        } else {
-            Style
-        }
+    val groupedWithBlockAddon =
+        nova && insideGroup && (InputGroupAddonAlign.BlockStart in addons || InputGroupAddonAlign.BlockEnd in addons)
+    val singleLineStyle = if (singleLine && !groupedWithBlockAddon) Style { height(inputHeight) } else Style
 
     var fieldValue by remember { mutableStateOf(TextFieldValue(value)) }
     val displayedValue = fieldValue.copy(text = value)
@@ -252,10 +240,10 @@ fun Input(
     BasicTextField(
         value = displayedValue,
         onValueChange = { next ->
-            val text = if (maxLength != null) next.text.take(maxLength) else next.text
-            fieldValue = next.copy(text = text)
-            compositionObserver?.invoke(fieldValue.composition != null)
-            if (text != value) onValueChange(text)
+            val accepted = if (maxLength == null) next else next.limitInsertion(displayedValue, maxLength)
+            fieldValue = accepted
+            compositionObserver?.invoke(accepted.composition != null)
+            if (accepted.text != value) onValueChange(accepted.text)
         },
         enabled = resolvedEnabled,
         readOnly = readOnly,
