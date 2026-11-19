@@ -35,7 +35,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import kotlinx.coroutines.CoroutineScope
 import androidx.compose.ui.semantics.Role
@@ -68,6 +68,9 @@ private fun carouselState(state: PagerState?): PagerState =
 /** Reads the nearest [Carousel] pager state. Matches shadcn's `useCarousel()`. */
 @Composable
 fun carouselApi(): PagerState = carouselState(null)
+
+private const val CAROUSEL_CHEVRON_QUARTER_TURN_DEGREES = 90f
+private const val CAROUSEL_CHEVRON_HALF_TURN_DEGREES = 180f
 
 private val LocalCarouselOrientation = staticCompositionLocalOf { Orientation.Horizontal }
 private val LocalCarouselRoot = staticCompositionLocalOf { false }
@@ -104,36 +107,31 @@ private fun Modifier.carouselKeys(
     state: PagerState,
     scope: CoroutineScope,
 ): Modifier =
-    onPreviewKeyEvent { event ->
-        if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
+    onKeyEvent { event ->
+        if (event.type != KeyEventType.KeyDown) return@onKeyEvent false
         val delta =
             when (event.key) {
                 Key.DirectionLeft -> -1
                 Key.DirectionRight -> 1
-                else -> return@onPreviewKeyEvent false
+                else -> return@onKeyEvent false
             }
         scope.scrollCarousel(state, delta)
-        true
     }
 
 private fun CoroutineScope.scrollCarousel(
     state: PagerState,
     delta: Int,
-) {
-    if (state.pageCount == 0 ||
-        (
-            delta < 0 &&
-                !state.canScrollBackward
-        ) ||
-        (
-            delta > 0 &&
-                !state.canScrollForward
-        )
-    ) {
-        return
+): Boolean {
+    val canScroll = if (delta < 0) state.canScrollBackward else state.canScrollForward
+    if (state.pageCount == 0 || !canScroll) return false
+    val activeTarget = state.targetPage
+    val target = (activeTarget + delta).coerceIn(0, state.pageCount - 1)
+    return if (target == activeTarget) {
+        false
+    } else {
+        launch { state.animateScrollToPage(target) }
+        true
     }
-    val target = (state.targetPage + delta).coerceIn(0, state.pageCount - 1)
-    launch { state.animateScrollToPage(target) }
 }
 
 @Composable
@@ -142,9 +140,9 @@ private fun CarouselChevron(previous: Boolean) {
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val rotation =
         if (vertical) {
-            if (previous) -90f else 90f
+            if (previous) -CAROUSEL_CHEVRON_QUARTER_TURN_DEGREES else CAROUSEL_CHEVRON_QUARTER_TURN_DEGREES
         } else if (previous != rtl) {
-            180f
+            CAROUSEL_CHEVRON_HALF_TURN_DEGREES
         } else {
             0f
         }

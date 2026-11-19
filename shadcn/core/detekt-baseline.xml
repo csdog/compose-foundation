@@ -4,7 +4,6 @@
   <CurrentIssues>
     <ID>ComplexCondition:AnchoredPopup.kt$!visibleState.currentState &amp;&amp; !visibleState.targetState &amp;&amp; (!retainInterruptedEnter || visibleState.isIdle)</ID>
     <ID>ComplexCondition:Calendar.kt$nova &amp;&amp; (middle || start || end) &amp;&amp; range?.rangeFrom != range?.rangeTo</ID>
-    <ID>ComplexCondition:Carousel.kt$state.pageCount == 0 || ( delta &lt; 0 &amp;&amp; !state.canScrollBackward ) || ( delta &gt; 0 &amp;&amp; !state.canScrollForward )</ID>
     <ID>ComplexCondition:ChartPlot.kt$count &lt;= 0 || width &lt;= 0 || !x.isFinite() || x &lt; 0 || x &gt;= width</ID>
     <ID>ComplexCondition:Command.kt$nova &amp;&amp; ( controller.controlled || controller.items.none { it.id == controller.highlightedId &amp;&amp; it.enabled } )</ID>
     <ID>ComplexCondition:ContextMenu.kt$!disabled &amp;&amp; it.type == KeyEventType.KeyDown &amp;&amp; ( it.key == Key.Menu || ( it.key == Key.F10 &amp;&amp; it.isShiftPressed ) )</ID>
@@ -650,8 +649,6 @@
     <ID>MagicNumber:CalendarSystem.kt$CalendarSystem$6</ID>
     <ID>MagicNumber:CalendarSystem.kt$CalendarSystem$621</ID>
     <ID>MagicNumber:CalendarSystem.kt$CalendarSystem$9</ID>
-    <ID>MagicNumber:Carousel.kt$180f</ID>
-    <ID>MagicNumber:Carousel.kt$90f</ID>
     <ID>MagicNumber:Chair.kt$0.9f</ID>
     <ID>MagicNumber:Chair.kt$0xFFA4523A</ID>
     <ID>MagicNumber:Chair.kt$0xFFC1694F</ID>
