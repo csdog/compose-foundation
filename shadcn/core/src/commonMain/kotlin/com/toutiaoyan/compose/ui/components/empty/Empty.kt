@@ -92,24 +92,17 @@ fun Empty(
     if (variant == EmptyVariant.Outline && nova) {
         composed = composed then rememberEmptyPaddingStyle((padding ?: EmptyDefaults.Padding) + 1.dp)
     }
-    val corner = radius ?: EmptyDefaults.Radius
     val borderColor = rememberTheme { colors.border }
-    val dashed =
-        if ((nova && variant == EmptyVariant.Outline) || (!nova && variant == EmptyVariant.Default)) {
-            Modifier.emptyDashedBorder(color = borderColor, corner = corner)
-        } else {
-            Modifier
-        }
+    val dashed = (nova && variant == EmptyVariant.Outline) || (!nova && variant == EmptyVariant.Default)
     Column(
         modifier =
-            modifier
-                .then(if (nova) dashed else Modifier)
-                .styleable(
-                    styleState,
-                    composed,
-                    style,
-                )
-                .then(if (nova) Modifier else dashed),
+            modifier.emptyStyleable(
+                state = styleState,
+                base = composed,
+                style = style,
+                dashedBorderColor = borderColor.takeIf { dashed },
+                nova = nova,
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(spacing, if (nova) Alignment.CenterVertically else Alignment.Top),
         content = content,

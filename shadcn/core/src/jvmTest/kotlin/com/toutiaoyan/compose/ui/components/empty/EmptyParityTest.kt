@@ -4,6 +4,15 @@ package com.toutiaoyan.compose.ui.components.empty
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.shape.GenericShape
+import androidx.compose.ui.graphics.PixelMap
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsProperties
@@ -16,9 +25,120 @@ import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.theme.Theme
 import kotlin.test.*
 
 class EmptyParityTest : ScreenshotTest() {
+    @Test fun dashedOutlineFollowsDynamicCallerShapeAndRestores() =
+        assertDynamicBorderShape(StylePreset.Nova, EmptyVariant.Outline)
+
+    @Test
+    fun legacyDefaultDashedBorderFollowsCallerShape() = assertDynamicBorderShape(StylePreset.Vega, EmptyVariant.Default)
+
+    @Test
+    fun legacyOutlineSolidBorderFollowsCallerShape() = assertDynamicBorderShape(StylePreset.Vega, EmptyVariant.Outline)
+
+    private fun assertDynamicBorderShape(
+        preset: StylePreset,
+        variant: EmptyVariant,
+    ) {
+        var shapeIndex by mutableStateOf(0)
+        val diamond =
+            GenericShape { size, _ ->
+                moveTo(size.width / 2, 0f)
+                lineTo(size.width, size.height / 2)
+                lineTo(size.width / 2, size.height)
+                lineTo(0f, size.height / 2)
+                close()
+            }
+        setThemedContent(stylePreset = preset) {
+            Theme(preset = preset, isDark = shapeIndex == 1) {
+                Empty(
+                    Modifier.size(160.dp).testTag("root"),
+                    variant = variant,
+                    padding = if (preset == StylePreset.Nova) null else 0.dp,
+                    style =
+                        Style {
+                            shape(RectangleShape)
+                            if (Theme.LocalTheme.currentValue.isDark) shape(CircleShape)
+                            if (shapeIndex == 2) shape(diamond)
+                            background(Color.Red)
+                        },
+                ) {}
+            }
+        }
+
+        fun capture(): PixelMap {
+            composeRule.waitForIdle()
+            return composeRule.onNodeWithTag("root").captureToImage().toPixelMap()
+        }
+
+        fun borderInk(
+            pixels: PixelMap,
+            xs: IntRange,
+            ys: IntRange,
+        ): Int =
+            ys.sumOf { y ->
+                xs.count { x ->
+                    val color = pixels[x, y]
+                    color.red < 0.99f || color.green in 0.01f..0.99f
+                }
+            }
+        val rectangle = capture()
+        assertTrue(rectangle[3, 3].red > 0.99f && rectangle[3, 3].green < 0.01f)
+        assertTrue(borderInk(rectangle, 16..40, 0..0) > 0, "Rectangle has visible top-edge border ink")
+        for (index in 1..2) {
+            composeRule.runOnIdle { shapeIndex = index }
+            val shaped = capture()
+            assertTrue(shaped[3, 3].green > 0.9f, "Resolved shape clears the fill corner")
+            assertEquals(
+                0,
+                borderInk(shaped, 16..40, 0..0),
+                "Border follows the resolved shape away from the old top edge",
+            )
+            assertTrue(borderInk(shaped, 0..159, 0..159) > 20, "Resolved shape retains a visible border")
+        }
+        composeRule.runOnIdle { shapeIndex = 0 }
+        val restored = capture()
+        for (y in 0 until rectangle.height) {
+            for (x in 0 until rectangle.width) {
+                assertEquals(rectangle[x, y], restored[x, y], "Rectangle restores at ($x, $y)")
+            }
+        }
+    }
+
+    @Test fun defaultAndExplicitRadiusBordersRestore() {
+        var radius by mutableStateOf<androidx.compose.ui.unit.Dp?>(null)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Empty(
+                Modifier.size(160.dp).testTag("root"),
+                variant = EmptyVariant.Outline,
+                radius = radius,
+                style = Style { background(Color.Red) },
+            ) {}
+        }
+
+        fun capture(): PixelMap {
+            composeRule.waitForIdle()
+            return composeRule.onNodeWithTag("root").captureToImage().toPixelMap()
+        }
+        val default = capture()
+        composeRule.runOnIdle { radius = 0.dp }
+        val square = capture()
+        assertTrue(square[3, 3].red > 0.99f && square[3, 3].green < 0.01f)
+        composeRule.runOnIdle { radius = 40.dp }
+        val rounded = capture()
+        assertTrue(rounded[3, 3].green > 0.9f)
+        assertTrue((16..25).all { rounded[it, 0].red > 0.99f }, "Rounded border clears the square top-edge region")
+        composeRule.runOnIdle { radius = null }
+        val restored = capture()
+        for (y in 0 until default.height) {
+            for (x in 0 until default.width) {
+                assertEquals(default[x, y], restored[x, y], "Default radius restores at ($x, $y)")
+            }
+        }
+    }
+
     @Test fun originalPositionalSignaturesRemainCallable() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Column {
