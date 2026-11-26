@@ -31,11 +31,11 @@ Web 兼容分发在 Chromium 的 Wasm 路径和 JS 回退路径均显示原生�
 | chip | 可切换选中状态，支持内容标签和选中语义。缺少 Compose 的独立 chip 样式变体。 |
 | code-block | 支持横向滚动、语言标签和行号。缺少复制按钮、行状态、页脚和操作栏。 |
 | collapsible | 原生 DisclosureGroup 与展开绑定。Compose 的自定义 trigger slot、状态联动与展开动画参数未移植。 |
-| combobox | 支持搜索、空态、禁用选项、分组、单选和可移除的多选 chips。iOS 模拟器已验证方向键跨组、跳过禁用项、硬件 Return 选择、Escape 关闭、触控多选、移除 chips 和搜索隐藏空分组。平铺模式此前还验证了软键盘提交和 VoiceOver 朗读，以及 macOS 方向键、Return 和 Escape。macOS 分组运行交互仍待复验。 |
+| combobox | 支持搜索、空态、禁用选项、分组、单选和可移除的多选 chips。iOS 模拟器和 macOS 已验证方向键跨组、跳过禁用项、Return 选择、Escape 关闭、多选、移除 chips 和搜索隐藏空分组。iOS 平铺模式此前还验证了软键盘提交和 VoiceOver 朗读。 |
 | command | 支持分组过滤、空态、禁用项和回车选择首个可用结果。缺少对话框、加载状态、footer 和逐项快捷键。 |
 | context-menu | 使用系统右键或长按菜单。调用方可传入系统菜单视图，Compose 的位置、portal、子菜单和条目 DSL 有独立 API。 |
-| dialog | 原生 sheet 显示标题、说明、内容和关闭按钮。支持 Escape、初始关闭焦点和 `onDismiss`。iOS 26.2 模拟器已验证 Return 激活关闭按钮，以及关闭后能用原触发器重新打开。Compose 另有遮罩、portal、尺寸与页脚控制。 |
-| drawer | 支持底部面板、遮罩点击、拖动关闭、减少动态效果和 `onDismiss`。iOS 模拟器已验证初始关闭焦点、Return、Escape 和退场后归还焦点。Compose 另有多方向、吸附点和背景缩进。 |
+| dialog | 原生 sheet 显示标题、说明、内容和关闭按钮。iOS 模拟器与 macOS 已验证 Return、Escape 和关闭后的触发器焦点。Compose 另有遮罩、portal、尺寸与页脚控制。 |
+| drawer | 支持底部面板、遮罩点击、拖动关闭、减少动态效果和 `onDismiss`。iOS 模拟器与 macOS 已验证初始关闭焦点、Return、Escape 和键盘关闭后归还焦点。macOS 已验证向下拖动关闭和向上拖动边界。Compose 另有多方向、吸附点和背景缩进。 |
 | dropdown-menu | 自定义外部触发器外观，菜单内容走 SwiftUI Menu。Compose 可控制菜单锚点、portal、焦点和自定义条目状态。 |
 | emoji-text | Apple 系统彩色 emoji，可保留 ZWJ 等 Unicode 序列。Compose 使用自己的 emoji 图形与替换逻辑。 |
 | empty | 支持符号、标题、说明和操作 slot。缺少 Compose 的默认/虚线框变体和说明换行策略。 |
@@ -61,9 +61,9 @@ Web 兼容分发在 Chromium 的 Wasm 路径和 JS 回退路径均显示原生�
 | resizable | 支持双窗格纵向/横向比例、拖动限制、RTL 和无障碍增减。拖动读取全局坐标，避免手柄移动改变手势参考点。Compose 另有专门的状态与面板 slots。 |
 | scroll-area | 使用原生 ScrollView，支持滚动轴和指示器。缺少 Compose 的独立滚动条、显隐策略、lazy API 和拖动 thumb 配置。 |
 | scroll-fade | 按所选边缘和固定距离加渐变遮罩。和 Compose 的静态 overload 对应，缺少按可滚动方向和偏移量驱动的 overload。 |
-| select | 原生 Menu 支持单选、占位、选中图标、禁用项和原生分区标题。iOS 模拟器已验证分区、禁用状态、触控选择及无障碍值。Compose 另有尺寸、变体及不同面板位置。 |
+| select | 原生 Menu 支持单选、占位、选中图标、禁用项和原生分区标题。iOS 模拟器及 macOS 已验证分区、禁用状态、指针选择及无障碍值。Compose 另有尺寸、变体及不同面板位置。 |
 | separator | 横纵向装饰性分隔线可用。边缘颜色和屏幕像素由 SwiftUI/theme 决定。 |
-| sheet | 原生 sheet 支持标题、内容、Done、Escape 和 `onDismiss`。iOS 26.2 模拟器已验证初始关闭焦点和关闭后的触发器键盘焦点。Compose 具备 top/end/bottom/start 方位与独立 header/footer/close slots。 |
+| sheet | 原生 sheet 支持标题、内容、Done、Escape 和 `onDismiss`。iOS 模拟器与 macOS 已验证初始关闭焦点、Return、Escape 和关闭后的触发器焦点。Compose 具备 top/end/bottom/start 方位与独立 header/footer/close slots。 |
 | shimmer | 支持开关、穿过内容的光带、减少动态效果。Compose 另有文本遮罩及可调颜色、宽度、方向、时序。 |
 | sidebar | 可开关侧栏，宽容器并排、窄容器遮罩。Compose 另有侧栏方位、collapsible/rail 策略、菜单 slots 和键盘快捷键。 |
 | skeleton | 支持静态主题占位圆角。Compose 默认包含 pulse 动画。 |
@@ -125,17 +125,62 @@ iOS 模拟器的 `ComboboxUITests.swift` 覆盖方向键高亮、软键盘提交
 
 启动 iOS 审计应用时传入 `--choice-groups-interaction`，再运行 `validation/verify_choice_groups.py`。测试覆盖 Combobox 分组的标题语义、跨组键盘导航、搜索空态、多选和移除 chips，以及 Select 分区标题、禁用项和选择结果。两个组件的独立 SwiftUI registry 条目均通过 iOS 14 和 macOS 11 类型检查。
 
+macOS 15.6.1 的审计应用也接受 `--choice-groups-interaction`。在实际窗口打开 Grouped Combobox，等 Search 获取焦点后按两次 Down 和 Return，从 Fruit 跨到 Vegetables，跳过 Apricot 并选中 Carrot。再次打开并输入 `cel` 后，树中只剩 Vegetables 和 Celery，Escape 保留 Carrot。多选框从两个组选中 Apple 与 Carrot，点 Done 后移除 Apple，触发器只显示 Carrot。Grouped Select 的原生菜单显示 Fruit、Vegetables 和禁用的 Apricot，选择 Carrot 后核对了菜单关闭及触发器无障碍值。
+
 启动审计应用时传入 `--tabs-interaction` 或 `--tabs-manual-interaction` 可打开 Tabs 测试页。在 iOS 26.2 模拟器开启完全键盘控制后，自动模式下按右键会从 Overview 跳过 Restricted 选中 Activity，Home 和 End 会跳到首项和末项，末项再按右键回到首项。手动模式下，同一次右键只将焦点移到 Activity，按 Space 后才切换面板，从 Activity 按右键再按 Return 会选中 Settings。
 
 同一测试页接受 `--tabs-rtl` 和 `--tabs-overflow`。在模拟器的完全键盘控制服务运行时，`validation/verify_tabs_keyboard.py` 通过 idb USB HID 验证 RTL 方向键、跨组 Tab、手动 Return，以及长列表最后一个标签可完全滚入可视区域。启用系统的完全键盘控制时，系统接管部分方向键和 Space 行为，自动模式会在组内焦点移动时同步选择。
 
 启动审计应用时传入 `--menus-interaction` 可打开 Menubar 和 Navigation Menu 测试页。上述 iOS 14 部署目标构建在 iPhone 17 Pro（iOS 26.2）上通过 `validation/verify_menu_keyboard.py`。实测 Menubar 触控打开后 Down 跳过禁用项，Return 执行选项，右键跳过禁用分组后切至 Edit，Escape 关闭后保留原操作结果。Navigation Menu 的右键从 Project 切至 Resources，Return 执行 User guide。
 
-iPhone 紧凑布局在原生 sheet 的关闭回调里归还焦点。模拟器已验证从 File 切到 Edit、按 Escape 关闭，再按 Down 会重新打开 Edit。该验收使用应用处理的键盘事件，系统完全键盘控制服务开启时会接管横向键。最终实现的 macOS 键盘回归仍待验收。
+iPhone 紧凑布局在原生 sheet 的关闭回调里归还焦点。模拟器回归用硬件 Down 验证两类菜单的焦点归还。Menubar 从 File 切到 Edit 后按 Escape，再按 Down 会重开 Edit。Navigation Menu 从 Project 切到 Resources 后，Escape 或 Return 关闭，再按 Down 都会重开 Resources。每次关闭也会检查菜单项已经退出无障碍树。完全键盘控制服务开启时，系统可能接管横向键。
+
+macOS 15.6.1 上，触发器栏和打开的菜单面板各持有自己的键盘焦点。两者记录方向键选定的活动项，按该项绘制焦点环并处理 Return。Menubar 和 Navigation Menu 都通过了 AppKit 完整回归。Down 跳过禁用项并执行 Save。Right 跳过禁用组切到 Edit，Escape 关闭后 Down 重开 Edit 并执行 Copy。在面板中切回 File 后可直接按 Return 执行 New。
+
+使用 `validation/MacMenuKeyboardAudit.swift` 可独立复验。下例编译 macOS 14 及以上运行的审计应用。传入 `--actions-only` 可单独运行菜单内的禁用项跳过用例。
+
+```sh
+mkdir -p build/shadcn-audit
+audit_dir="$(mktemp -d "$PWD/build/shadcn-audit/macos-menu.XXXXXX")"
+app_bundle="$audit_dir/MenuKeyboardAudit.app"
+mkdir -p "$app_bundle/Contents/MacOS"
+plutil -create xml1 "$app_bundle/Contents/Info.plist"
+plutil -insert CFBundleExecutable -string MenuKeyboardAudit "$app_bundle/Contents/Info.plist"
+plutil -insert CFBundleIdentifier -string com.toutiaoyan.compose.foundation.macos-menu-audit "$app_bundle/Contents/Info.plist"
+plutil -insert CFBundlePackageType -string APPL "$app_bundle/Contents/Info.plist"
+xcrun swiftc -whole-module-optimization -parse-as-library -target "$(uname -m)-apple-macos14.0" -swift-version 6 \
+  shadcn/iosApp/Sources/ComposeFoundationSwiftUI/*.swift shadcn/iosApp/validation/MacMenuKeyboardAudit.swift \
+  -o "$app_bundle/Contents/MacOS/MenuKeyboardAudit"
+open -F -n -W --stdout "$audit_dir/menubar.log" "$app_bundle"
+open -F -n -W --stdout "$audit_dir/navigation.log" "$app_bundle" --args --navigation
+grep '^PASS' "$audit_dir/menubar.log" && grep '^PASS' "$audit_dir/navigation.log"
+```
 
 启动审计应用时传入 `--overlay-focus` 可打开 Dialog 和 Sheet 测试页。在 iOS 完全键盘控制服务运行时，通过 `validation/verify_overlay_focus.py` 复验初始关闭焦点、Return 和 Escape 两种关闭方式，以及关闭后按 Space 从同一个触发器重新打开。用重新打开的结果判断系统焦点，关闭次数用于核对每次关闭只触发一次回调。
 
-启动审计应用时传入 `--drawer-focus`，再运行 `validation/verify_drawer_focus.py`。在 iPhone 17 Pro 模拟器开启完全键盘控制后，Return、Escape、点击遮罩和拖动把手均能关闭 Drawer，每次关闭只触发一次回调。测试页通过只在触发器有焦点时处理的 D 键确认焦点已归还。打开时后台动作从无障碍树隐藏，点遮罩不会执行后台动作。macOS 15.6.1 的 AppKit 窗口测试验证了 Escape、一次关闭回调及按 D 从原触发器重新打开。macOS 的初始关闭按钮焦点、Return 和拖动仍待验。
+启动审计应用时传入 `--drawer-focus`，再运行 `validation/verify_drawer_focus.py`。在 iPhone 17 Pro 模拟器开启完全键盘控制后，Return、Escape、点击遮罩和拖动把手均能关闭 Drawer，每次关闭只触发一次回调。测试页通过只在触发器有焦点时处理的 D 键确认焦点已归还。打开时后台动作从无障碍树隐藏，点遮罩时后台动作计数保持为零。
+
+macOS 15.6.1 上，共用关闭按钮接受普通键盘焦点后，Drawer、Dialog 和 Sheet 均通过初始 Return、Escape、单次关闭回调及触发器焦点归还回归。Drawer 的无障碍窗口树直接确认初始焦点位于 Close。窗口鼠标检查确认向上拖动保持打开，向下拖过阈值关闭一次，后台动作计数保持为零。一次短距离快拖也触发了关闭。慢速短拖的回弹和鼠标关闭后的触发器键盘焦点仍待复验。
+
+下例运行 macOS 三类弹层的键盘回归。
+
+```sh
+mkdir -p build/shadcn-audit
+audit_dir="$(mktemp -d "$PWD/build/shadcn-audit/macos-presentation.XXXXXX")"
+app_bundle="$audit_dir/PresentationFocusAudit.app"
+mkdir -p "$app_bundle/Contents/MacOS"
+plutil -create xml1 "$app_bundle/Contents/Info.plist"
+plutil -insert CFBundleExecutable -string PresentationFocusAudit "$app_bundle/Contents/Info.plist"
+plutil -insert CFBundleIdentifier -string com.toutiaoyan.compose.foundation.presentation-focus-audit "$app_bundle/Contents/Info.plist"
+plutil -insert CFBundlePackageType -string APPL "$app_bundle/Contents/Info.plist"
+xcrun swiftc -whole-module-optimization -parse-as-library -target "$(uname -m)-apple-macos14.0" -swift-version 6 \
+  shadcn/iosApp/Sources/ComposeFoundationSwiftUI/*.swift shadcn/iosApp/validation/MacPresentationFocusAudit.swift \
+  -o "$app_bundle/Contents/MacOS/PresentationFocusAudit"
+for kind in drawer dialog sheet; do
+  open -F -n -W --stdout "$audit_dir/$kind.log" "$app_bundle" --args "$kind"
+  test "$(grep -c '^PASS:' "$audit_dir/$kind.log")" -eq 2 || break
+done
+```
 
 启动 iOS 审计应用时传入 `--popover-interaction` 可打开 Popover 测试页。在 iPhone 17 Pro 模拟器上，已确认无箭头面板显示在触发器下方，无障碍树包含内容和关闭按钮。点击关闭按钮、点击面板外部或发送硬件 Escape 后，触发器重新出现在无障碍树中。macOS 实现已通过类型检查。
 
@@ -168,7 +213,9 @@ Calendar 和 Checkbox 的状态回归可单独运行。测试覆盖禁止选择�
 
 启动 iOS 审计应用时传入 `--calendar-navigation`，再运行 `validation/verify_calendar_navigation.py`。已通过 iPhone 17 Pro 模拟器触控验证纵向双月、跨月选区、月份和年份菜单、边界外日期及翻页禁用。macOS 上运行了导航状态回归，并在 740 pt 容器中检查了浅色和深色的并排双月渲染。
 
-启动 iOS 审计应用时传入 `--carousel-interaction`，再运行 `validation/verify_carousel.py`。加入 `--carousel-rtl` 启动参数并给脚本传入 `--rtl` 可验收 RTL。iPhone 17 Pro 模拟器上，两种方向均确认页面在绑定改变前就随手势移动，短拖和到达边界时不翻页，按钮和外部绑定可翻页，未选中的页面不进入无障碍树，纵向滑动仍可滚动父视图。macOS 运行了页高与越界绑定回归，鼠标拖动待验收。
+启动 iOS 审计应用时传入 `--carousel-interaction`，再运行 `validation/verify_carousel.py`。加入 `--carousel-rtl` 启动参数并给脚本传入 `--rtl` 可验收 RTL。iPhone 17 Pro 模拟器上，两种方向均确认页面在绑定改变前就随手势移动，短拖和到达边界时不翻页，按钮和外部绑定可翻页，未选中的页面不进入无障碍树，纵向滑动仍可滚动父视图。
+
+macOS 审计应用也接受 `--carousel-interaction`，可附加 `--carousel-rtl` 打开相同的 RTL 样例。macOS 15.6.1 的 LTR 窗口实测确认鼠标左拖从第 1 页到第 2 页，右拖返回第 1 页。首尾越界拖动保持原页，外部绑定可以跳至第 3 页。滚轮能滚动父视图，同时保持页码。拖动中页面按钮未误触，稳定后无障碍树只提供当前页的操作。macOS 也运行了页高与越界绑定回归。鼠标按住期间的逐帧位移及 macOS RTL 鼠标路径仍待采样。
 
 启动 iOS 审计应用时传入 `--theme-presets`，再运行 `validation/verify_theme_presets.py` 验证深浅色下切换八套预设、按钮尺寸和触控、切换前后保存状态。macOS 渲染了 16 组预设与深浅色的组合，并检查了自定义配色、圆角覆盖和旧初始化器的默认值。打包检查确认全部 69 项 SwiftUI registry 都包含同一份主题源码。
 

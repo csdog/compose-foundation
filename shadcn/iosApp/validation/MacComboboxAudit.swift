@@ -13,13 +13,16 @@ struct MacComboboxAudit: App {
         let popover = arguments.contains("--popover-focus")
         let toasts = arguments.contains("--toast-interaction")
         let groups = arguments.contains("--choice-groups-interaction")
+        let carousel = arguments.contains("--carousel-interaction")
         let title = drawer ? "Drawer Focus Audit" : popover ? "Popover Focus Audit"
             : groups ? "Choice Groups Audit" : toasts ? "Toast Audit" : overlays ? "Overlay Focus Audit"
-            : menus ? "Menu Audit" : tabs ? "Tabs Audit" : "Combobox Audit"
+            : menus ? "Menu Audit" : tabs ? "Tabs Audit" : carousel ? "Carousel Audit" : "Combobox Audit"
         WindowGroup(title) {
             Group {
                 if groups {
                     ChoiceGroupsInteractionFixture()
+                } else if carousel {
+                    CarouselInteractionFixture(rightToLeft: arguments.contains("--carousel-rtl"))
                 } else if toasts {
                     ToastInteractionFixture()
                 } else if #available(macOS 14, *), drawer {

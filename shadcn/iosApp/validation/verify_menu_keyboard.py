@@ -21,13 +21,13 @@ def main():
         )
         return {row["AXLabel"]: row for row in rows if row.get("AXLabel")}
 
-    def expect(*labels):
+    def expect(*labels, absent=()):
         for _ in range(12):
             elements = read_elements()
-            if set(labels) <= elements.keys():
+            if set(labels) <= elements.keys() and set(absent).isdisjoint(elements):
                 return elements
             time.sleep(0.2)
-        raise AssertionError(f"Expected {labels}, got {tuple(elements)}")
+        raise AssertionError(f"Expected {labels} with {absent} absent, got {tuple(elements)}")
 
     def tap(label):
         frame = expect(label)[label]["frame"]
@@ -58,15 +58,27 @@ def main():
     press(79)  # Right
     expect("Copy", "Paste")
     press(41)  # Escape
-    expect("Result: Save file", "Project")
+    expect("Result: Save file", "Edit", absent=("Copy", "Paste"))
+    press(81)  # Down must reopen Edit from its restored trigger.
+    expect("Copy", "Paste", absent=("New file",))
+    press(40)
+    expect("Result: Copy", "Edit", absent=("Copy", "Paste"))
 
     tap("Project")
     expect("Overview", "Settings")
     press(79)
     expect("User guide")
+    press(41)
+    expect("Result: Copy", "Resources", absent=("User guide",))
+    press(81)  # Down must reopen Resources from its restored trigger.
+    expect("User guide", absent=("Overview",))
     press(40)
-    expect("Result: User guide", "Resources")
-    print("PASS: disabled items, group switching, Escape, and action execution")
+    expect("Result: User guide", "Resources", absent=("User guide",))
+    press(81)  # Selection must also return focus to Resources.
+    expect("User guide", absent=("Overview",))
+    press(41)
+    expect("Result: User guide", absent=("User guide",))
+    print("PASS: disabled items, group switching, action execution, and focus restoration after Escape and selection")
 
 
 if __name__ == "__main__":

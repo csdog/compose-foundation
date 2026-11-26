@@ -40,13 +40,21 @@ private struct FoundationFocusedPresentationHeader<Heading: View, Close: View>: 
     let close: Close
     let onActivate: () -> Void
 
+    private var closeFocusInteractions: FocusInteractions {
+        #if os(macOS)
+        [.edit, .activate]
+        #else
+        .activate
+        #endif
+    }
+
     var body: some View {
         FoundationPresentationHeaderRow(
             heading: heading.accessibilityFocused($headingFocused),
             description: description,
             alignment: alignment,
             close: close
-                .focusable(interactions: .activate)
+                .focusable(interactions: closeFocusInteractions)
                 .focused($closeFocused)
                 .onKeyPress(keys: [.return, .space], phases: .down) { press in
                     guard press.modifiers.intersection([.command, .control, .option, .shift]).isEmpty else {
