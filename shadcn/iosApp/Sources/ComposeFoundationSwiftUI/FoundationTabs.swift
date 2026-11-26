@@ -1,10 +1,5 @@
 import SwiftUI
 
-public enum FoundationTabsActivationMode {
-    case automatic
-    case manual
-}
-
 public struct FoundationTabs<Value: Hashable, Panel: View>: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
@@ -93,6 +88,7 @@ public struct FoundationTabs<Value: Hashable, Panel: View>: View {
 
 @available(iOS 17, macOS 14, *)
 private struct FoundationKeyboardTabs<Value: Hashable, Row: View>: View {
+    @Environment(\.isEnabled) private var isEnabled
     @Environment(\.layoutDirection) private var layoutDirection
     @FocusState private var focused: Value?
     let choices: [FoundationChoice<Value>]
@@ -101,16 +97,15 @@ private struct FoundationKeyboardTabs<Value: Hashable, Row: View>: View {
     let scrollTo: (Value) -> Void
     let row: (FoundationChoice<Value>, Bool) -> Row
 
-    private var entryFocus: Value? {
-        choices.first { $0.isEnabled && $0.value == selection }?.value
-            ?? choices.first(where: \.isEnabled)?.value
+    private var navigation: FoundationTabsNavigation<Value> {
+        FoundationTabsNavigation(enabledValues: isEnabled ? choices.filter(\.isEnabled).map(\.value) : [])
     }
 
     var body: some View {
         HStack(spacing: 2) {
             ForEach(choices) { choice in
                 row(choice, focused == choice.value)
-                    .focusable(choice.isEnabled)
+                    .focusable(isEnabled && choice.isEnabled)
                     .focused($focused, equals: choice.value)
                     .id(choice.value)
                     .onKeyPress(keys: [.leftArrow, .rightArrow, .home, .end, .return, .space]) {
@@ -118,41 +113,52 @@ private struct FoundationKeyboardTabs<Value: Hashable, Row: View>: View {
                     }
             }
         }
-        .defaultFocus($focused, entryFocus, priority: .userInitiated)
+        .defaultFocus($focused, navigation.entryFocus(for: selection), priority: .userInitiated)
         .onChange(of: focused) { previous, value in
-            guard let value else { return }
+            let navigation = self.navigation
+            guard let value, navigation.enabledValues.contains(value) else { return }
             scrollTo(value)
-            if previous != nil { selectAutomatically(value) }
+            updateSelection(for: value, previousFocus: previous, navigation: navigation)
         }
     }
 
     private func handle(_ press: KeyPress, from choice: FoundationChoice<Value>) -> KeyPress.Result {
-        guard choice.isEnabled,
+        let navigation = self.navigation
+        guard choice.isEnabled, navigation.enabledValues.contains(choice.value),
               press.modifiers.intersection([.command, .control, .option, .shift]).isEmpty else {
             return .ignored
         }
         if press.key == .return || press.key == .space {
-            if press.phase == .down, selection != choice.value { selection = choice.value }
+            if press.phase == .down,
+               let value = navigation.selection(afterActivating: choice.value, current: selection) {
+                selection = value
+            }
             return .handled
         }
 
-        let enabled = choices.filter(\.isEnabled).map(\.value)
-        guard let index = enabled.firstIndex(of: choice.value) else { return .ignored }
-        let next: Value
+        let move: FoundationTabsNavigation<Value>.Move
         switch press.key {
-        case .home: next = enabled[0]
-        case .end: next = enabled[enabled.count - 1]
-        case .leftArrow, .rightArrow:
-            let forward = press.key == (layoutDirection == .rightToLeft ? .leftArrow : .rightArrow)
-            next = enabled[(index + (forward ? 1 : -1) + enabled.count) % enabled.count]
+        case .home: move = .first
+        case .end: move = .last
+        case .leftArrow: move = .left
+        case .rightArrow: move = .right
         default: return .ignored
         }
+        guard let next = navigation.destination(
+            for: move, from: choice.value, rightToLeft: layoutDirection == .rightToLeft
+        ) else { return .ignored }
         focused = next
-        selectAutomatically(next)
+        updateSelection(for: next, previousFocus: choice.value, navigation: navigation)
         return .handled
     }
 
-    private func selectAutomatically(_ value: Value) {
-        if activationMode == .automatic, selection != value { selection = value }
+    private func updateSelection(
+        for value: Value, previousFocus: Value?, navigation: FoundationTabsNavigation<Value>
+    ) {
+        if let value = navigation.selection(
+            afterFocusing: value, previousFocus: previousFocus, current: selection, mode: activationMode
+        ) {
+            selection = value
+        }
     }
 }

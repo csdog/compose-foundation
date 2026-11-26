@@ -25,6 +25,7 @@ SWIFT_SUPPORT_FILES = {
     "menubar": ("FoundationMenuGroups.swift", "FoundationPopover.swift"),
     "navigation-menu": ("FoundationMenuGroups.swift", "FoundationPopover.swift"),
     "sheet": ("FoundationPresentationHeader.swift",),
+    "tabs": ("FoundationTabsNavigation.swift",),
     "toast": ("FoundationButtonStyle.swift",),
 }
 PACKAGE = re.compile(r"^package ([\w.]+)", re.MULTILINE)

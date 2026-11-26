@@ -588,6 +588,7 @@ struct TabsInteractionFixture: View {
             }
             Spacer()
         }
+        .disabled(ProcessInfo.processInfo.arguments.contains("--tabs-disabled"))
         .padding()
         .environment(
             \.layoutDirection,

@@ -129,7 +129,54 @@ macOS 15.6.1 的审计应用也接受 `--choice-groups-interaction`。在实际�
 
 启动审计应用时传入 `--tabs-interaction` 或 `--tabs-manual-interaction` 可打开 Tabs 测试页。在 iOS 26.2 模拟器开启完全键盘控制后，自动模式下按右键会从 Overview 跳过 Restricted 选中 Activity，Home 和 End 会跳到首项和末项，末项再按右键回到首项。手动模式下，同一次右键只将焦点移到 Activity，按 Space 后才切换面板，从 Activity 按右键再按 Return 会选中 Settings。
 
-同一测试页接受 `--tabs-rtl` 和 `--tabs-overflow`。在模拟器的完全键盘控制服务运行时，`validation/verify_tabs_keyboard.py` 通过 idb USB HID 验证 RTL 方向键、跨组 Tab、手动 Return，以及长列表最后一个标签可完全滚入可视区域。启用系统的完全键盘控制时，系统接管部分方向键和 Space 行为，自动模式会在组内焦点移动时同步选择。
+同一测试页接受 `--tabs-rtl` 和 `--tabs-overflow`。在模拟器的完全键盘控制服务运行时，`validation/verify_tabs_keyboard.py` 通过 idb USB HID 验证 RTL 方向键、跨组 Tab、手动 Return，以及长列表最后一个标签可完全滚入可视区域。脚本新增 `--tabs-disabled` 场景，核对方向键、End、Space 和 Return 不改变两个已禁用的 tab strip 的选择。启用系统的完全键盘控制时，系统接管部分方向键和 Space 行为，自动模式会在组内焦点移动时同步选择。组件的自定义方向键处理采用 iOS 17、macOS 14 起提供的 SwiftUI API。包仍支持 iOS 14、macOS 11，较早系统走原生 Button 的选择路径。
+
+本轮以 shadcn `0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4` 的 Base UI / Nova 为参考。Tabs 整组禁用后退出键盘焦点路径，方向键和激活键不写入选择绑定。Menubar 与 Navigation Menu 共用同一规则，整组禁用时关闭已打开的菜单。iOS 上如果原触发器在关闭时已移除或禁用，焦点回到首个可用触发器。Swift 6 语法检查与 Calendar 的连续月、月份选择和年份边界状态回归已在 Linux 通过。本轮 Tabs 和菜单的新增用例仍需在 Apple 系统上运行。[Tabs 禁用示例](https://github.com/shadcn-ui/ui/blob/0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4/apps/v4/examples/base/tabs-disabled.tsx) · [Nova 样式](https://github.com/shadcn-ui/ui/blob/0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4/apps/v4/registry/styles/style-nova.css)
+
+Tabs 的焦点目标和选择写回规则现在可用纯 Swift 独立复验。18 条断言覆盖焦点入口、LTR/RTL、方向键循环、首末项、失效焦点、自动与手动激活，以及重复事件的去重。SwiftUI registry 的 Tabs 安装项包含导航源码。
+
+```sh
+mkdir -p build/shadcn-audit/swiftui-linux
+swiftc -swift-version 6 -parse-as-library \
+  shadcn/iosApp/Sources/ComposeFoundationSwiftUI/FoundationTabsNavigation.swift \
+  shadcn/iosApp/validation/TabsNavigationAudit.swift \
+  -o build/shadcn-audit/swiftui-linux/tabs-navigation-audit
+build/shadcn-audit/swiftui-linux/tabs-navigation-audit
+```
+
+在 Linux 上用 isim 0.36.0（兼容 iOS 18）、Swift 6.2.4 和 LLVM 21 编译并运行了独立探针。Tabs 实测 LTR/RTL 跳过禁用项、自动切换、手动 Return/Space 提交、Home/End、首项向后循环与整组禁用。Menubar 通过 Down 跳过禁用项、Return 执行 Save、Right 切组及 Escape 关闭后用 Down 重开原菜单。Navigation Menu 通过 Right 切组和 Return 执行 User guide。Dialog 用 Return 关闭，Sheet 用 Escape 关闭，Drawer 用两键分别关闭。三个弹层均核对了关闭回调计数和焦点归还。[isim 的 SwiftUI 焦点和键盘覆盖](https://github.com/kolabs-dev/isim/blob/v0.36.0/docs/frameworks/SwiftUI.md#focus--keyboard)
+
+isim 上还验证了 Combobox 分组标题与触控选择、Calendar 双月显示及月份和年份切换、Toast 队列显示上限与 Undo、Carousel 拖动松手后切页与外部绑定，以及 Theme 的八个预设菜单项、切换 Lyra 和深色后保留保存计数。探针在临时源码中适配了 isim 的 `defaultFocus` 签名，弹层和其余独立探针用 Swift 5 语言模式编译。主题探针省去了依赖 `TextField` 旧初始化器的输入框。
+
+后续在同一版本 isim 上完成了三项补验。Popover 探针在临时适配中把 `UIWindow.makeKey()` 接到该运行时的 `makeKeyWindow()`，观测到打开后焦点进入面板、Return 关闭、按 P 从原触发器重开、Escape 关闭，每次关闭只回调一次并归还焦点。Select 探针使用等价的组索引范围及 `Section` 构造方式，观察到两个分区的选项、禁用 Apricot 后选择值保持为空，以及选择 Carrot 后关闭并写回。Carousel 的临时探针记录了 LTR 和 RTL 手势期间连续变化的布局位移，绑定在松手前保持第 1 页，松手后切到第 2 页。Apple 模拟器和 macOS 仍是原生焦点验收环境。探针源码、界面树与断言结果位于 `build/shadcn-audit/swiftui-linux/isim/`。
+
+Linux 回归继续使用 isim。agent-sim 试跑已结束，安装停在磁盘检查，未产生 SwiftUI 界面验收结果。当前 Linux 实例可运行 Swift 状态回归，无法运行 Xcode 的 iOS Simulator 或 macOS AppKit 回归。下文的 Apple 实测记录对应此前的 iOS 26.2 和 macOS 15.6.1 构建，本轮 Tabs 和菜单变更仍需原生复验。
+
+macOS Tabs 回归在活动图形会话中分别验证 LTR、RTL 及两种选择模式。用例覆盖跳过禁用项、Home/End、双向循环、选择绑定的写入次数、手动模式的 Space/Return，以及整组禁用后的键盘输入。
+
+```sh
+mkdir -p build/shadcn-audit
+audit_dir="$(mktemp -d "$PWD/build/shadcn-audit/macos-tabs.XXXXXX")"
+app_bundle="$audit_dir/TabsKeyboardAudit.app"
+mkdir -p "$app_bundle/Contents/MacOS"
+plutil -create xml1 "$app_bundle/Contents/Info.plist"
+plutil -insert CFBundleExecutable -string TabsKeyboardAudit "$app_bundle/Contents/Info.plist"
+plutil -insert CFBundleIdentifier -string com.toutiaoyan.compose.foundation.macos-tabs-audit "$app_bundle/Contents/Info.plist"
+plutil -insert CFBundlePackageType -string APPL "$app_bundle/Contents/Info.plist"
+xcrun swiftc -whole-module-optimization -parse-as-library -target "$(uname -m)-apple-macos14.0" -swift-version 6 \
+  shadcn/iosApp/Sources/ComposeFoundationSwiftUI/*.swift shadcn/iosApp/validation/MacTabsKeyboardAudit.swift \
+  -o "$app_bundle/Contents/MacOS/TabsKeyboardAudit"
+for direction in ltr rtl; do
+  for activation in automatic manual; do
+    set --
+    if [ "$direction" = rtl ]; then set -- "$@" --rtl; fi
+    if [ "$activation" = manual ]; then set -- "$@" --manual; fi
+    log="$audit_dir/$direction-$activation.log"
+    open -F -n -W --stdout "$log" "$app_bundle" --args "$@"
+    grep '^PASS: Tabs' "$log" || exit 1
+  done
+done
+```
 
 启动审计应用时传入 `--menus-interaction` 可打开 Menubar 和 Navigation Menu 测试页。上述 iOS 14 部署目标构建在 iPhone 17 Pro（iOS 26.2）上通过 `validation/verify_menu_keyboard.py`。实测 Menubar 触控打开后 Down 跳过禁用项，Return 执行选项，右键跳过禁用分组后切至 Edit，Escape 关闭后保留原操作结果。Navigation Menu 的右键从 Project 切至 Resources，Return 执行 User guide。
 
@@ -137,7 +184,7 @@ iPhone 紧凑布局在原生 sheet 的关闭回调里归还焦点。模拟器回
 
 macOS 15.6.1 上，触发器栏和打开的菜单面板各持有自己的键盘焦点。两者记录方向键选定的活动项，按该项绘制焦点环并处理 Return。Menubar 和 Navigation Menu 都通过了 AppKit 完整回归。Down 跳过禁用项并执行 Save。Right 跳过禁用组切到 Edit，Escape 关闭后 Down 重开 Edit 并执行 Copy。在面板中切回 File 后可直接按 Return 执行 New。
 
-使用 `validation/MacMenuKeyboardAudit.swift` 可独立复验。下例编译 macOS 14 及以上运行的审计应用。传入 `--actions-only` 可单独运行菜单内的禁用项跳过用例。
+使用 `validation/MacMenuKeyboardAudit.swift` 可独立复验。下例编译 macOS 14 及以上运行的审计应用，完整用例也检查整组禁用时关闭已打开的菜单，以及禁用期间的方向键和 Return。传入 `--actions-only` 可单独运行菜单内的禁用项跳过用例。
 
 ```sh
 mkdir -p build/shadcn-audit

@@ -4,6 +4,7 @@ import SwiftUI
 @MainActor
 private final class MenuResult: ObservableObject {
     @Published var actions: [String] = []
+    @Published var isEnabled = true
 }
 
 @available(macOS 14, *)
@@ -28,6 +29,7 @@ private struct MenuProbe: View {
                 FoundationMenubar(groups: groups)
             }
         }
+        .disabled(!result.isEnabled)
         .frame(width: 400, height: 240)
     }
 
@@ -123,7 +125,18 @@ struct MacMenuKeyboardAudit {
             guard await waitUntil({ result.actions == ["Save", "Copy", "New"] }) else {
                 fail("Return did not execute the first item in the switched menu", result)
             }
-            print("PASS \(navigation ? "Navigation Menu" : "Menubar"): skips disabled items, executes across groups, and restores focus")
+            guard await waitUntil({ window.isKeyWindow }) else { fail("Selection did not close File", result) }
+            press(125, "\u{F701}", app)
+            guard await waitUntil({ app.keyWindow is NSPanel }) else { fail("Could not reopen File", result) }
+            result.isEnabled = false
+            guard await waitUntil({ window.isKeyWindow }) else { fail("Disabling the bar did not close File", result) }
+            press(125, "\u{F701}", app)
+            press(36, "\r", app)
+            try? await Task.sleep(for: .milliseconds(350))
+            guard window.isKeyWindow, result.actions == ["Save", "Copy", "New"] else {
+                fail("Keyboard input opened a disabled bar or executed an action", result)
+            }
+            print("PASS \(navigation ? "Navigation Menu" : "Menubar"): skips disabled items, executes across groups, restores focus, and closes when disabled")
             exit(0)
         }
         app.run()
