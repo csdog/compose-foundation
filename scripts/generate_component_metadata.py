@@ -18,9 +18,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CATALOG_REGISTRY = ROOT / "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/CatalogRegistry.kt"
 DOCS_DIR = ROOT / "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs"
-STYLES_DIR = ROOT / "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/styles"
-COMPONENTS_DIR = ROOT / "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components"
-SNAPSHOTS_DIR = ROOT / "shadcn/core/src/jvmTest/snapshots"
+STYLES_DIR = ROOT / "shadcn/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/styles"
+COMPONENTS_DIR = ROOT / "shadcn/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components"
+SNAPSHOTS_DIR = ROOT / "shadcn/shared/src/jvmTest/snapshots"
 OUTPUT = ROOT / "docs/component-metadata.json"
 
 RAW_BASE = "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews"

@@ -1,6 +1,6 @@
 # SwiftUI 与 Compose 组件逐项核对
 
-核对基准是本仓库 `/r/registry.json` 的 69 个条目，以及 `shadcn/core` 中对应的 Compose 实现。三份 registry 使用相同的条目名。下表记录 SwiftUI 源码具有的行为，以及与 Compose 版有实质区别的能力。Apple 原生控件的样式、键盘行为和系统弹层适配由运行系统决定。
+核对基准是本仓库 `/r/registry.json` 的 69 个条目，以及 `shadcn/shared` 中对应的 Compose 实现。三份 registry 使用相同的条目名。下表记录 SwiftUI 源码具有的行为，以及与 Compose 版有实质区别的能力。Apple 原生控件的样式、键盘行为和系统弹层适配由运行系统决定。
 
 本轮使用 shadcn CLI 4.23.0 从本地 HTTP 安装三个目录各自的全部条目，并核对各目录的名称和安装文件。已安装的 Swift Package 通过 macOS 构建，并逐项通过 iOS 14 模拟器目标类型检查。在 macOS 和 iOS 26.2 的 iPhone 17 Pro 模拟器上，各渲染 69 个条目的深浅两种外观，共 276 张非空截图。
 
@@ -93,10 +93,10 @@ Web 兼容分发在 Chromium 的 Wasm 路径和 JS 回退路径均显示原生�
 ```sh
 python3 shadcn/registry/build.py
 xcrun swiftc -parse-as-library -target arm64-apple-macos11.0 -swift-version 6 \
-  shadcn/swiftui/Sources/ComposeFoundationSwiftUI/*.swift \
-  shadcn/swiftui/validation/AuditFixtures.swift \
-  shadcn/swiftui/validation/RenderAudit.swift -o /tmp/compose-foundation-render-audit
-/tmp/compose-foundation-render-audit build/shadcn-registry/swiftui/registry.json build/swiftui-parity-audit
+  shadcn/iosApp/Sources/ComposeFoundationSwiftUI/*.swift \
+  shadcn/iosApp/validation/AuditFixtures.swift \
+  shadcn/iosApp/validation/RenderAudit.swift -o /tmp/compose-foundation-render-audit
+/tmp/compose-foundation-render-audit build/shadcn-registry/swiftui/registry.json build/shadcn-audit/swiftui/macos
 ```
 
 渲染程序要求 fixture 和 registry 条目一一对应，在 macOS AppKit 容器中输出浅色与深色图。iOS 使用同一套 fixture，由 `IOSAuditApp.swift` 和 `IOSAuditInfo.plist` 组成独立模拟器应用，构建时将 SwiftUI 的 `registry.json` 放入应用 bundle。渲染结果保存到应用容器的 `Documents/ParityAudit`。
@@ -109,9 +109,9 @@ iOS 审计应用以 iOS 14.0 为部署目标。用 iOS 26.2 SDK 构建后，二�
 
 ```sh
 xcrun swiftc -parse-as-library -target arm64-apple-macos11.0 -swift-version 6 \
-  shadcn/swiftui/Sources/ComposeFoundationSwiftUI/*.swift \
-  shadcn/swiftui/validation/AuditFixtures.swift \
-  shadcn/swiftui/validation/MacComboboxAudit.swift -o /tmp/compose-foundation-combobox-audit
+  shadcn/iosApp/Sources/ComposeFoundationSwiftUI/*.swift \
+  shadcn/iosApp/validation/AuditFixtures.swift \
+  shadcn/iosApp/validation/MacComboboxAudit.swift -o /tmp/compose-foundation-combobox-audit
 /tmp/compose-foundation-combobox-audit
 ```
 
@@ -154,7 +154,7 @@ plutil -insert CFBundleExecutable -string PopoverFocusAudit "$app_bundle/Content
 plutil -insert CFBundleIdentifier -string com.toutiaoyan.compose.foundation.macos-popover-audit "$app_bundle/Contents/Info.plist"
 plutil -insert CFBundlePackageType -string APPL "$app_bundle/Contents/Info.plist"
 xcrun swiftc -whole-module-optimization -parse-as-library -target arm64-apple-macos14.0 -swift-version 6 \
-  shadcn/swiftui/Sources/ComposeFoundationSwiftUI/*.swift shadcn/swiftui/validation/MacPopoverFocusAudit.swift \
+  shadcn/iosApp/Sources/ComposeFoundationSwiftUI/*.swift shadcn/iosApp/validation/MacPopoverFocusAudit.swift \
   -o "$app_bundle/Contents/MacOS/PopoverFocusAudit"
 open -F -n -W --stdout "$audit_dir/escape.log" "$app_bundle"
 open -F -n -W --stdout "$audit_dir/return.log" "$app_bundle" --args --return-only
@@ -174,10 +174,10 @@ Calendar 和 Checkbox 的状态回归可单独运行。测试覆盖禁止选择�
 
 ```sh
 xcrun swiftc -parse-as-library -target arm64-apple-macos11.0 -swift-version 6 \
-  shadcn/swiftui/Sources/ComposeFoundationSwiftUI/FoundationTheme.swift \
-  shadcn/swiftui/Sources/ComposeFoundationSwiftUI/FoundationCalendarNavigation.swift \
-  shadcn/swiftui/Sources/ComposeFoundationSwiftUI/FoundationCalendarSelection.swift \
-  shadcn/swiftui/Sources/ComposeFoundationSwiftUI/FoundationCheckbox.swift \
-  shadcn/swiftui/validation/SelectionAudit.swift -o /tmp/compose-foundation-selection-audit
+  shadcn/iosApp/Sources/ComposeFoundationSwiftUI/FoundationTheme.swift \
+  shadcn/iosApp/Sources/ComposeFoundationSwiftUI/FoundationCalendarNavigation.swift \
+  shadcn/iosApp/Sources/ComposeFoundationSwiftUI/FoundationCalendarSelection.swift \
+  shadcn/iosApp/Sources/ComposeFoundationSwiftUI/FoundationCheckbox.swift \
+  shadcn/iosApp/validation/SelectionAudit.swift -o /tmp/compose-foundation-selection-audit
 /tmp/compose-foundation-selection-audit
 ```

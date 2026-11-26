@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Derives docs/previews/*.png from the Roborazzi test goldens in
-shadcn/core/src/jvmTest/snapshots/ -- same filenames, flattened onto a solid opaque
+shadcn/shared/src/jvmTest/snapshots/ -- same filenames, flattened onto a solid opaque
 background and padded with a consistent margin, so images meant for a side-by-side
 cross-library comparison actually look consistent next to each other. The raw test
 goldens themselves are untouched; this is a derived, comparison-only asset.
@@ -35,7 +35,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-SNAPSHOTS_DIR = ROOT / "shadcn/core/src/jvmTest/snapshots"
+SNAPSHOTS_DIR = ROOT / "shadcn/shared/src/jvmTest/snapshots"
 OUTPUT_DIR = ROOT / "docs/previews"
 
 MARGIN_PX = 24

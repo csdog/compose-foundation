@@ -34,11 +34,13 @@ plugins {
 }
 
 include(":app:androidApp")
+project(":app:androidApp").projectDir = file("shadcn/androidApp")
 include(":app:desktopApp")
 include(":app:shared")
 include(":app:webApp")
 include(":core")
 include(":shadcn:core")
+project(":shadcn:core").projectDir = file("shadcn/shared")
 // Unique Gradle project name (not ":tailwind:core") — two leaf projects both named
 // "core" make KMP/Gradle substitute one for the other and create a self-cycle.
 include(":tailwind-core")

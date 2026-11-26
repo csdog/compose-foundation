@@ -90,15 +90,17 @@
 
 ## 复验
 
+Android Preview 像素校验使用 `:app:androidApp:testScreenshotTestDefaultDebugTestSuite`。目录迁移前后的 8 张 Layoutlib 渲染图逐文件字节一致，和现有基准图比较得到的差异比例也完全一致。迁移前的对照提交为 `2573ae34`，8 项基准差异已存在。当前报告位于 `shadcn/androidApp/build/reports/tests/testScreenshotTestDefaultDebugTestSuite/index.html`。
+
 安装当前工作树的 catalog 调试 APK，到专用 Android 模拟器运行下面的检查。目录脚本恢复运行前的系统夜间模式。
 
 ```sh
-python3 shadcn/registry/build.py --output /tmp/compose-android-registry
-python3 shadcn/registry/validation/verify_android_catalog.py \
-  --device emulator-5580 --registry /tmp/compose-android-registry/android/registry.json \
-  --output /tmp/compose-android-catalog-results
-python3 shadcn/registry/validation/verify_android_interactions.py \
-  --device emulator-5580 --output /tmp/compose-android-interaction-results
+python3 shadcn/registry/build.py --output build/shadcn-audit/android/registry
+python3 shadcn/androidApp/validation/verify_android_catalog.py \
+  --device emulator-5580 --registry build/shadcn-audit/android/registry/android/registry.json \
+  --output build/shadcn-audit/android/catalog
+python3 shadcn/androidApp/validation/verify_android_interactions.py \
+  --device emulator-5580 --output build/shadcn-audit/android/interaction
 ```
 
 交互脚本可用 `--only menus modals dialog-focus` 重跑菜单、模态弹层和 Dialog 的键盘焦点。使用 `--only carousel command combobox` 可重跑 Carousel 按钮和两个搜索输入用例。Combobox 的触控选择另用模拟器截图定位，因为非模态建议列表独立成窗。使用 `--only disclosures select text password otp toggles` 可重跑展开、选择和输入用例。
@@ -190,12 +192,12 @@ Input Group 的金额用例先滚到 Enter amount 显示在视口内，再用 `-
 对于需要先调整视口的示例，可定位后传入 `--current-screen`。Pagination 的 TalkBack 验收先滑动 Controlled 示例的单行，使 Next 显示在视口内，再按 `--current-screen --route pagination --label 'Go to next page' --role android.widget.Button` 聚焦并激活。
 
 ```sh
-python3 shadcn/registry/validation/verify_android_talkback.py \
+python3 shadcn/androidApp/validation/verify_android_talkback.py \
   --sdk "$ANDROID_HOME" --device emulator-5580
-python3 shadcn/registry/validation/verify_android_talkback.py \
+python3 shadcn/androidApp/validation/verify_android_talkback.py \
   --sdk "$ANDROID_HOME" --device emulator-5580 \
   --route radio-group --label Compact --role android.widget.RadioButton --position 2 0
-python3 shadcn/registry/validation/verify_android_talkback.py \
+python3 shadcn/androidApp/validation/verify_android_talkback.py \
   --sdk "$ANDROID_HOME" --device emulator-5580 \
   --route aspect-ratio --label Photo --role android.widget.ImageView --focus-only
 ```

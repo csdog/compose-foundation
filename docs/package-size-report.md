@@ -9,9 +9,9 @@
 
 | 产物 | 路径 | 大小 | 最近文件修改时间 |
 |---|---|---:|---|
-| Android Release APK | `app/androidApp/build/outputs/apk/release/androidApp-release-unsigned.apk` | 14.84 MiB (15,560,639 B) | 2026-11-11 09:42 UTC |
-| Android Release AAB | `app/androidApp/build/outputs/bundle/release/androidApp-release.aab` | 14.70 MiB (15,416,487 B) | 2026-11-11 09:42 UTC |
-| Android Debug APK | `app/androidApp/build/intermediates/apk/debug/androidApp-debug.apk` | 22.91 MiB (24,023,442 B) | 2026-11-11 04:40 UTC |
+| Android Release APK | `shadcn/androidApp/build/outputs/apk/release/androidApp-release-unsigned.apk` | 14.84 MiB (15,560,639 B) | 2026-11-11 09:42 UTC |
+| Android Release AAB | `shadcn/androidApp/build/outputs/bundle/release/androidApp-release.aab` | 14.70 MiB (15,416,487 B) | 2026-11-11 09:42 UTC |
+| Android Debug APK | `shadcn/androidApp/build/intermediates/apk/debug/androidApp-debug.apk` | 22.91 MiB (24,023,442 B) | 2026-11-11 04:40 UTC |
 | macOS 应用镜像 | `app/desktopApp/build/compose/binaries/main/app/com.toutiaoyan.compose.ui.app` | 150.68 MiB (157,995,496 B) | 2026-11-11 09:53 UTC |
 | macOS DMG | `app/desktopApp/build/compose/binaries/main/dmg/com.toutiaoyan.compose.ui-1.0.0.dmg` | 86.75 MiB (90,964,163 B) | 2026-11-11 09:55 UTC |
 | Windows MSI | — | 未测得 | — |

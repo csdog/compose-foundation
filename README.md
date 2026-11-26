@@ -19,7 +19,7 @@ dependency, no icon-library dependency — every component is drawn from this li
 
 Use the shadcn registry to copy editable sources for
 [Compose Multiplatform or Android-only Jetpack Compose](shadcn/registry/README.md)
-and [native SwiftUI](shadcn/swiftui/README.md). All three catalogs use the same
+and [native SwiftUI](shadcn/iosApp/README.md). All three catalogs use the same
 component names.
 
 The coordinates below use this checkout's **0.3.0 development version**. A Maven
@@ -64,29 +64,23 @@ need either the same compiler flag or:
 
 ## Registry parity
 
-Every component in real shadcn/ui's `base/*` registry is implemented here, with a small set of
-deliberate, documented exceptions — `native-select`, `direction`, `data-table`, and `toast`
-(deprecated upstream in favor of `sonner`, implemented here as `ShadcnToast`). Full reasoning in
-[`.claude/AGENTS.md`](.claude/AGENTS.md#registry-parity-status); token/component-level verification
-against real source in [`../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md`](../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md).
-Historical alignment work is in the [archive](../archive/compose-foundation/2026-11-19/docs/archive/2026-11-09/shadcn-align-progress.md).
-
-Documentation: [index](../archive/compose-foundation/2026-11-19/docs/README.md).
-
-Web visual alignment: [implementation plan](../archive/compose-foundation/2026-11-19/docs/shadcn-web-plan.md) ·
-[current progress and component checklist](docs/shadcn-web-progress.md).
+The Compose Multiplatform, Jetpack Compose, and SwiftUI registries publish the same
+item slugs. See the [component SOP](docs/shadcn-component-sop.md) for the reference
+and test workflow, and the [Android](docs/android-registry-audit.md) and
+[SwiftUI](docs/swiftui-parity-audit.md) audits for current coverage and open cases.
 
 ## Project structure
 
-- [`/shadcn/core`](./shadcn/core/src) — the published library (`commonMain` has every `Shadcn*`
+- [`/shadcn/shared`](./shadcn/shared/src) — the published library (`commonMain` has every `Shadcn*`
   component).
 - [`/tailwind/core`](./tailwind/core/src) — `TwColors` / Modifier utilities (
   `com.toutiaoyan.compose:tailwind`).
 - [`/core`](./core/src) — shared utilities used across the catalog app's targets.
 - [`/app/shared`](./app/shared/src) — the catalog/documentation app's shared UI.
-- [`/app/androidApp`](./app/androidApp), [`/app/desktopApp`](./app/desktopApp), [
-  `/app/webApp`](./app/webApp) — catalog app platform entry points.
-- [`/app/iosApp`](./app/iosApp/iosApp) — the iOS entry point; open in Xcode.
+- [`/shadcn/androidApp`](./shadcn/androidApp) — Android catalog host and platform validation.
+- [`/shadcn/iosApp`](./shadcn/iosApp) — native SwiftUI package and capture fixtures.
+- [`/shadcn/registry`](./shadcn/registry) — source registry generator.
+- [`/app/desktopApp`](./app/desktopApp), [`/app/webApp`](./app/webApp), and [`/app/iosApp`](./app/iosApp/iosApp) — the other Compose catalog hosts.
 
 ## Development
 
@@ -97,7 +91,8 @@ Requires JDK 21 (matches CI). Android SDK and Xcode only needed for those specif
 - build everything `./gradlew build  `                        
 - run the catalog app (desktop) `./gradlew :app:desktopApp:run`            #
 - desktop with Compose Hot Reload and navigate to drawer `./gradlew :app:desktopApp:hotRun --autoReload --args="shadcncompose://app/drawer"`  
-- library tests + Roborazzi screenshots (JVM)`./gradlew :shadcn:core:jvmTest`           
+- library tests (JVM) `./gradlew :shadcn:core:jvmTest`
+- pixel comparison (Roborazzi) `./gradlew :shadcn:core:verifyRoborazziJvm`
 - library tests, all platforms`./gradlew :shadcn:core:allTests  `        
 - code quality (also run in CI)`./gradlew ktlintCheck detekt lint `
 
@@ -106,9 +101,7 @@ the [Compose Hot Reload](https://kotlinlang.org/docs/multiplatform/compose-hot-r
 plugin (`org.jetbrains.compose.hot-reload`). Cursor MCP is wired in `.cursor/mcp.json`
 (`:app:desktopApp:hotMcpServer`).
 
-See [`../archive/compose-foundation/2026-11-19/docs/visual-testing.md`](../archive/compose-foundation/2026-11-19/docs/visual-testing.md) for the screenshot-testing workflow
-(`recordRoborazziJvm`/`verifyRoborazziJvm`) and [`../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md`](../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md) for
-how components are checked against real shadcn/ui source.
+See the [component SOP](docs/shadcn-component-sop.md) for pixel, animation, and gesture checks.
 
 ### Android Preview 截图测试
 
@@ -117,29 +110,28 @@ how components are checked against real shadcn/ui source.
 
 ```bash
 # 校验当前 UI 与已提交的基准图是否一致
-./gradlew :app:androidApp:testDebugScreenshotTestDefaultTestSuite
+./gradlew :app:androidApp:testScreenshotTestDefaultDebugTestSuite
 
 # 首次生成或确认外观变化符合预期后更新基准；检查 PNG 差异后提交
-./gradlew :app:androidApp:updateDebugScreenshotTestDefaultTestSuite
+./gradlew :app:androidApp:updateScreenshotTestDefaultDebugTestSuite
 ```
 
-- 测试源码：`app/androidApp/src/screenshotTest/kotlin/`
-- 基准图片：`app/androidApp/src/screenshotTestDefaultDebug/reference/`
-- 差异报告：`app/androidApp/build/reports/tests/testDebugScreenshotTestDefaultTestSuite/index.html`
+- 测试源码：`shadcn/androidApp/src/screenshotTest/kotlin/`
+- 基准图片：`shadcn/androidApp/src/screenshotTestDefaultDebug/reference/`
+- 差异报告：`shadcn/androidApp/build/reports/tests/testScreenshotTestDefaultDebugTestSuite/index.html`
 
 当前使用 AGP `9.4.0`、Gradle `9.8.2` 和截图引擎 `0.0.1-alpha16`，
 测试套件仍为实验功能。上述任务名按当前 AGP 实际生成的名称填写，顺序与官方文档示例不同。
 覆盖浅色、深色、平板宽度和大字体；交互行为继续由 JVM 测试验证。
 
-详见 [项目截图测试说明](../archive/compose-foundation/2026-11-19/docs/visual-testing.md) 和
-[Android 官方：使用测试套件进行截图测试](https://developer.android.com/studio/preview/compose-screenshot-testing-with-testsuites?hl=zh-cn)。
+详见 [组件开发与验收 SOP](docs/shadcn-component-sop.md)。
 
 ## License
 
 [Apache License 2.0](LICENSE).
 
 The curated emoji reaction set used by `EmojiText`
-(`shadcn/core/src/commonMain/.../icons/emoji/`) is derived from
+(`shadcn/shared/src/commonMain/.../icons/emoji/`) is derived from
 [Twemoji](https://github.com/jdecked/twemoji), licensed under
 [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). Copyright 2020 Twitter, Inc and other
 contributors, graphics licensed under CC-BY 4.0.

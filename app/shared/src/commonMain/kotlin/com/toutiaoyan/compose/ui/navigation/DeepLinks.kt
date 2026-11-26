@@ -15,7 +15,7 @@ import kotlinx.serialization.serializer
  *
  * Catalog has no production domain, so there is no Universal Link / App Link host —
  * only `shadcncompose://app/…`. Keep [SCHEME] / [NATIVE_HOST] in sync with
- * `app/androidApp/build.gradle.kts`, `app/androidApp/src/main/AndroidManifest.xml`,
+ * `shadcn/androidApp/build.gradle.kts`, `shadcn/androidApp/src/main/AndroidManifest.xml`,
  * `app/iosApp/iosApp/Info.plist`, and `app/desktopApp/build.gradle.kts`.
  */
 object DeepLinks {

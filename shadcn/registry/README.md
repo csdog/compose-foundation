@@ -1,6 +1,6 @@
 # Install Compose Foundation source with shadcn
 
-For native SwiftUI components, see the [SwiftUI setup](../swiftui/README.md).
+For native SwiftUI components, see the [SwiftUI setup](../iosApp/README.md).
 
 The root registry copies Kotlin files into an existing Compose Multiplatform module,
 including supporting packages and platform implementations. It keeps the
@@ -106,7 +106,7 @@ kotlin {
 If the installed sources include `AvatarImage.kt`, add Coil Compose, Coil SVG,
 Coil's Ktor 3 network integration, and a Ktor client engine for each enabled
 target. Use the versions and target dependencies in
-[`shadcn/core/build.gradle.kts`](../core/build.gradle.kts) and the version
+[`shadcn/shared/build.gradle.kts`](../shared/build.gradle.kts) and the version
 catalog. For JS and Wasm, configure the same `webMain` hierarchy and browser
 dependency as that module so installed web implementations are compiled.
 

@@ -9,9 +9,9 @@ from pathlib import Path
 
 ROOT = Path("/Users/cscs/IdeaProjects/angryecho")
 SHADCN = ROOT / "shadcn-compose"
-MAIN = SHADCN / "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui"
-JVM_TEST = SHADCN / "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui"
-COMMON_TEST = SHADCN / "shadcn/core/src/commonTest/kotlin/com/toutiaoyan/compose/ui"
+MAIN = SHADCN / "shadcn/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui"
+JVM_TEST = SHADCN / "shadcn/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui"
+COMMON_TEST = SHADCN / "shadcn/shared/src/commonTest/kotlin/com/toutiaoyan/compose/ui"
 COMP = MAIN / "components"
 STYLES = MAIN / "styles"
 PKG = "com.toutiaoyan.compose.ui.components"

@@ -15,9 +15,9 @@ from zipfile import BadZipFile, ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 ARTIFACTS = {
-    "android-apk": ("Android Release APK", "app/androidApp/build/outputs/apk/release/*.apk", "android"),
-    "android-aab": ("Android Release AAB", "app/androidApp/build/outputs/bundle/release/*.aab", "android"),
-    "android-debug": ("Android Debug APK", "app/androidApp/build/outputs/apk/debug/*.apk", "android"),
+    "android-apk": ("Android Release APK", "shadcn/androidApp/build/outputs/apk/release/*.apk", "android"),
+    "android-aab": ("Android Release AAB", "shadcn/androidApp/build/outputs/bundle/release/*.aab", "android"),
+    "android-debug": ("Android Debug APK", "shadcn/androidApp/build/outputs/apk/debug/*.apk", "android"),
     "mac-app": ("macOS 应用镜像", "app/desktopApp/build/compose/binaries/main/app/*.app", "desktop"),
     "mac-dmg": ("macOS DMG", "app/desktopApp/build/compose/binaries/main/dmg/*.dmg", "file"),
     "windows-msi": ("Windows MSI", "app/desktopApp/build/compose/binaries/main/msi/*.msi", "file"),
@@ -149,7 +149,7 @@ def report(root, overrides, build_note):
     for key, (label, pattern, kind) in ARTIFACTS.items():
         paths = [overrides[key]] if key in overrides else sorted(root.glob(pattern))
         if key == "android-debug" and not paths and key not in overrides:
-            paths = sorted(root.glob("app/androidApp/build/intermediates/apk/debug/*.apk"))
+            paths = sorted(root.glob("shadcn/androidApp/build/intermediates/apk/debug/*.apk"))
         for path in paths:
             try:
                 if kind in {"desktop", "ios-app", "framework", "web"} and not path.is_dir():

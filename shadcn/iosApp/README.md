@@ -4,7 +4,7 @@ Native SwiftUI implementations for all 69 Compose Foundation registry entries,
 including the theme, utilities, and chat and AI components. The package
 supports iOS 14+ and macOS 11+ and builds with Swift 6.
 
-Add the local `shadcn/swiftui` package in Xcode and select the
+Add the local `shadcn/iosApp` package in Xcode and select the
 `ComposeFoundationSwiftUI` product. To copy component source into your own
 package, point shadcn at an empty directory and add the resulting local package
 to your app.

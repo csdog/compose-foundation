@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 HOMEPAGE = "https://compose-foundation.devops.cn.toutiaoyan.com"
 PACKAGE_PREFIX = "com.toutiaoyan.compose."
 COMPONENT_PREFIX = PACKAGE_PREFIX + "ui.components."
-SWIFT_PACKAGE = Path("shadcn/swiftui")
+SWIFT_PACKAGE = Path("shadcn/iosApp")
 SWIFT_SOURCES = SWIFT_PACKAGE / "Sources/ComposeFoundationSwiftUI"
 SWIFT_FILENAMES = {
     "button": "FoundationButtonStyle.swift",
@@ -58,7 +58,7 @@ COMPONENT_NAMES = {
 
 def load_sources():
     packages = defaultdict(dict)
-    for module in ("shadcn/core", "tailwind/core"):
+    for module in ("shadcn/shared", "tailwind/core"):
         for path in sorted((ROOT / module / "src").glob("*Main/kotlin/**/*.kt")):
             content = path.read_bytes().decode("utf-8")
             package = PACKAGE.search(content)
