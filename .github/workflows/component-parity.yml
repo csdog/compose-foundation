@@ -115,8 +115,21 @@ jobs:
           mkdir -p "$output"
           sudo chown "$(id -u)" /dev/kvm
           image='system-images;android-35;google_apis;x86_64'
-          sdkmanager 'emulator' "$image"
-          echo no | avdmanager create avd --name parity --package "$image" --device pixel_7
+          tools="$ANDROID_HOME/cmdline-tools/latest/bin"
+          if [[ ! -x "$tools/sdkmanager" ]]; then
+            for sdkmanager in "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager; do
+              if [[ -x "$sdkmanager" ]]; then
+                tools="${sdkmanager%/*}"
+                break
+              fi
+            done
+          fi
+          if [[ ! -x "$tools/sdkmanager" || ! -x "$tools/avdmanager" ]]; then
+            echo "Android SDK command-line tools are missing under $ANDROID_HOME/cmdline-tools" >&2
+            exit 1
+          fi
+          "$tools/sdkmanager" 'emulator' "$image"
+          echo no | "$tools/avdmanager" create avd --name parity --package "$image" --device pixel_7
           "$ANDROID_HOME/emulator/emulator" -avd parity -port 5554 -no-window -no-audio \
             -no-snapshot -gpu swiftshader_indirect > "$output/emulator.log" 2>&1 &
           export ANDROID_SERIAL=emulator-5554
@@ -148,6 +161,16 @@ jobs:
           if [[ -n "$COMPONENT" ]]; then flags+=(--component "$COMPONENT"); fi
           python shadcn/validation/report.py build/component-parity --run --platform "$PLATFORM" \
             --baselines build/component-baselines "${flags[@]}"
+      - name: Print capture diagnostics on failure
+        if: failure()
+        run: |
+          for log in capture.log emulator.log; do
+            path="build/component-parity/$PLATFORM/$log"
+            if [[ -f "$path" ]]; then
+              printf "\n--- %s ---\n" "$log"
+              tail -n 120 "$path"
+            fi
+          done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
