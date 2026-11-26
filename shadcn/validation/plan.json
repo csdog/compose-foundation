@@ -1,5 +1,7 @@
 {
   "upstreamRevision": "0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4",
+  "primitive": "base",
+  "style": "nova",
   "baseline": {
     "repository": "csdog/compose-foundation-baselines",
     "revision": null
@@ -16,6 +18,8 @@
   "components": {
     "button": {
       "title": "Button",
+      "variant": "variants",
+      "status": "initial",
       "reference": "apps/v4/examples/base/button-demo.tsx",
       "visual": "review component variants, spacing and content against the reference",
       "behavior": "activation and disabled state",
@@ -24,6 +28,8 @@
     },
     "tabs": {
       "title": "Tabs",
+      "variant": "default",
+      "status": "initial",
       "reference": "apps/v4/examples/base/tabs-disabled.tsx",
       "visual": "review selected and disabled state against the reference",
       "behavior": "skip the disabled tab, select the next available tab and update the panel",
@@ -32,8 +38,11 @@
     },
     "popover": {
       "title": "Popover",
+      "variant": "default",
+      "status": "initial",
+      "platformStatus": {"cmp-desktop": "open"},
       "reference": "apps/v4/examples/base/popover-demo.tsx",
-      "visual": "review trigger; capture and review the open panel separately",
+      "visual": "review trigger and panel chrome; the CMP Desktop open fixture omits the upstream form, which needs its own capture",
       "behavior": "open, dismiss and return focus to the trigger",
       "accessibility": "panel content is reachable while open and absent after dismissal",
       "motion": "enter and exit with normal and reduced motion"

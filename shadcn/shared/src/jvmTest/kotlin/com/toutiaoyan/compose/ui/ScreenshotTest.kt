@@ -41,7 +41,7 @@ abstract class ScreenshotTest {
     // Robolectric path; the Robolectric-less desktop capture used here just resolves
     // the filename passed to `captureRoboImage` against the module's working
     // directory, so the snapshots/ prefix is applied by hand here instead.
-    private val snapshotDir = "src/jvmTest/snapshots"
+    private val snapshotDir = System.getenv("COMPONENT_PARITY_SCREENSHOT_DIR") ?: "src/jvmTest/snapshots"
 
     /** Renders [content] inside a themed, padded background and captures it as `<name>_<light|dark>.png`. */
     fun snapshot(

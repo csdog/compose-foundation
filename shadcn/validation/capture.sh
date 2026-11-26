@@ -3,12 +3,13 @@ set -euo pipefail
 
 platform="${1:?Pass the platform name}"
 output="${2:?Pass an absolute artifact directory}"
+shift 2
 swiftui=shadcn/iosApp
 plan=shadcn/validation/plan.json
 components=()
 while IFS= read -r component; do
   components+=("$component")
-done < <(python3 -c 'import json, sys; print(*json.load(open(sys.argv[1]))["components"], sep="\n")' "$plan")
+done < <(python3 -c 'import json, sys; print(*(sys.argv[2:] or json.load(open(sys.argv[1]))["components"]), sep="\n")' "$plan" "$@")
 
 mkdir -p "$output"
 work="$(mktemp -d)"
@@ -18,6 +19,12 @@ case "$platform" in
   cmp-web)
     node --version
     printf 'Playwright %s\n' "${PLAYWRIGHT_MODULE:?Set PLAYWRIGHT_MODULE to the installed Playwright entry point}"
+    ;;
+  cmp-desktop)
+    if [[ "${components[*]}" != popover ]]; then
+      echo "CMP Desktop capture currently supports Popover. Select --component popover." >&2
+      exit 2
+    fi
     ;;
   cmp-android)
     android_device="${ANDROID_SERIAL:?Set ANDROID_SERIAL to the running CMP simulator}"
@@ -79,6 +86,12 @@ for pass in actual repeat; do
         --registry "$work/registry/registry.json" --device "$android_device" \
         --output "$output/device/$pass" --only "${components[@]}" || capture_status=1
       ;;
+    cmp-desktop)
+      COMPONENT_PARITY_SCREENSHOT_DIR="$work/$pass" \
+        JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:-} -Droborazzi.test.record=true" \
+        xvfb-run -a -s '-screen 0 1024x768x24' ./gradlew :shadcn:core:jvmTest \
+          --tests '*PopoverNovaScreenshotTest' --rerun --console=plain || capture_status=1
+      ;;
     swiftui-macos)
       "$work/render" "$registry" "$work/$pass"
       ;;
@@ -103,9 +116,23 @@ for pass in actual repeat; do
       case "$platform" in
         cmp-web) source="$output/browser/$pass/$component/desktop-$theme.png" ;;
         cmp-android) source="$output/device/$pass/$theme/$component.png" ;;
+        cmp-desktop) source="$work/$pass/popover_nova_basic_$theme.png" ;;
         swiftui-*) source="$work/$pass/$component-$theme.png" ;;
       esac
-      cp "$source" "$destination/$theme.png" || capture_status=1
+      if [[ "$platform" == cmp-desktop ]]; then
+        python3 - "$source" "$destination/$theme.png" <<'PY' || capture_status=1
+import sys
+from PIL import Image
+
+with Image.open(sys.argv[1]) as image:
+    bounds = image.convert("RGBA").getchannel("A").getbbox()
+    if bounds is None:
+        raise ValueError("The desktop screenshot contains no visible pixels")
+    image.crop(bounds).save(sys.argv[2])
+PY
+      else
+        cp "$source" "$destination/$theme.png" || capture_status=1
+      fi
     done
   done
 done
