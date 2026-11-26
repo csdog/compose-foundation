@@ -1,6 +1,8 @@
 name: Component parity
 
 on:
+  push:
+    branches: [codex/popover-baseline-pilot]
   pull_request:
     paths:
       - .github/workflows/component-parity.yml
@@ -140,7 +142,7 @@ jobs:
 
       - name: Capture both passes and compare with the locked baseline
         env:
-          COMPONENT: ${{ inputs.component }}
+          COMPONENT: ${{ inputs.component || (github.event_name == 'push' && 'popover' || '') }}
         run: |
           flags=()
           if [[ -n "$COMPONENT" ]]; then flags+=(--component "$COMPONENT"); fi
@@ -208,7 +210,7 @@ jobs:
       - name: Report the platform results
         env:
           REQUIRE_BASELINES: ${{ inputs.require_baselines }}
-          COMPONENT: ${{ inputs.component }}
+          COMPONENT: ${{ inputs.component || (github.event_name == 'push' && 'popover' || '') }}
           CAPTURE_RESULT: ${{ needs.capture.result }}
           CMP_RESULT: ${{ needs.cmp-behavior.result }}
           SWIFT_RESULT: ${{ needs.swift-logic.result }}
