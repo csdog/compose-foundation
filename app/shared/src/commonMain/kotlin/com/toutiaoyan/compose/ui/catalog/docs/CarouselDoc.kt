@@ -47,6 +47,8 @@ private val carouselTitles =
         "Kotlin extension: With dot indicators",
     )
 
+private val CarouselControlSpace = 48.dp
+
 val carouselDoc =
     ComponentDoc(
         id = "carousel", title = "Carousel",
@@ -313,6 +315,8 @@ private fun CarouselRecipe(
     val gap = if (title == "Spacing" || vertical) 4.dp else 16.dp
     val pageWidth = (width + gap) / visible - gap
     val height = if (vertical) 266.dp else pageWidth + 32.dp
+    val rootWidth = if (vertical) width else width + CarouselControlSpace * 2
+    val rootHeight = if (vertical) height + CarouselControlSpace * 2 else height
     val state = rememberPagerState { 5 }
     val hover = remember { MutableInteractionSource() }
     val hovered by hover.collectIsHoveredAsState()
@@ -323,11 +327,12 @@ private fun CarouselRecipe(
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         CarouselRoot(
             state,
-            Modifier.width(width).height(height).hoverable(hover),
+            Modifier.size(rootWidth, rootHeight),
             orientation = if (vertical) Orientation.Vertical else Orientation.Horizontal,
             ariaLabel = "Slides",
         ) {
             CarouselContent(
+                modifier = Modifier.hoverable(hover).align(Alignment.Center).size(width, height),
                 pageSize = PageSize.Fixed(if (vertical) 131.dp else pageWidth),
                 pageSpacing = gap,
             ) { page ->
@@ -403,17 +408,17 @@ private fun CarouselRecipe(
             CarouselPrevious(
                 modifier =
                     if (vertical) {
-                        Modifier.align(Alignment.TopCenter).offset(y = (-48).dp)
+                        Modifier.align(Alignment.TopCenter)
                     } else {
-                        Modifier.align(Alignment.CenterStart).offset(x = (-48).dp)
+                        Modifier.align(Alignment.CenterStart)
                     },
             )
             CarouselNext(
                 modifier =
                     if (vertical) {
-                        Modifier.align(Alignment.BottomCenter).offset(y = 48.dp)
+                        Modifier.align(Alignment.BottomCenter)
                     } else {
-                        Modifier.align(Alignment.CenterEnd).offset(x = 48.dp)
+                        Modifier.align(Alignment.CenterEnd)
                     },
             )
         }
@@ -500,15 +505,15 @@ private fun carouselCode(title: String): String {
         }
     val previous =
         if (vertical) {
-            "Modifier.align(Alignment.TopCenter).offset(y = (-48).dp)"
+            "Modifier.align(Alignment.TopCenter)"
         } else {
-            "Modifier.align(Alignment.CenterStart).offset(x = (-48).dp)"
+            "Modifier.align(Alignment.CenterStart)"
         }
     val next =
         if (vertical) {
-            "Modifier.align(Alignment.BottomCenter).offset(y = 48.dp)"
+            "Modifier.align(Alignment.BottomCenter)"
         } else {
-            "Modifier.align(Alignment.CenterEnd).offset(x = 48.dp)"
+            "Modifier.align(Alignment.CenterEnd)"
         }
     val padding = if (title == "API") 1 else 4
     val body =
@@ -518,10 +523,17 @@ private fun carouselCode(title: String): String {
         val visible = $visible
         val gap = $gap.dp
         val pageWidth = (width + gap) / visible - gap
+        val height = $height
+        val rootWidth = ${if (vertical) "width" else "width + 96.dp"}
+        val rootHeight = ${if (vertical) "height + 96.dp" else "height"}
         val state = rememberPagerState { 5 }
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            CarouselRoot(state, Modifier.width(width).height($height), orientation = $axis, ariaLabel = "Slides") {
-                CarouselContent(pageSize = PageSize.Fixed($pageSize), pageSpacing = gap) { page ->
+            CarouselRoot(state, Modifier.size(rootWidth, rootHeight), orientation = $axis, ariaLabel = "Slides") {
+                CarouselContent(
+                    modifier = Modifier.align(Alignment.Center).size(width, height),
+                    pageSize = PageSize.Fixed($pageSize),
+                    pageSpacing = gap,
+                ) { page ->
                     CarouselItem(Modifier.fillMaxSize()) {
                         Card(Modifier.fillMaxWidth().padding($padding.dp),
                         style = Style { contentPadding(horizontal = 0.dp, vertical = 16.dp) },
@@ -564,7 +576,10 @@ private fun carouselCode(title: String): String {
                 "val state = rememberPagerState { 5 }\n" +
                     carouselAutoplayCode,
             )
-                .replace("Modifier.width(width).height(", "Modifier.hoverable(hover).width(width).height(")
+                .replace(
+                    "Modifier.align(Alignment.Center).size(width, height)",
+                    "Modifier.hoverable(hover).align(Alignment.Center).size(width, height)",
+                )
         "RTL" ->
             "var language by remember { mutableStateOf(0) }\n" +
                 (

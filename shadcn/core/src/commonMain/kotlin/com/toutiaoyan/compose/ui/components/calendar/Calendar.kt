@@ -805,9 +805,17 @@ private val CELL_SIZE: Dp
                 36.dp
             }
 
+private val DAY_SLOT_SIZE: Dp
+    @Composable get() =
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            CELL_SIZE
+        } else {
+            maxOf(CELL_SIZE, currentTheme.minTouchTarget ?: 0.dp)
+        }
+
 private val CALENDAR_WIDTH: Dp
     @Composable get() =
-        CELL_SIZE *
+        DAY_SLOT_SIZE *
             if (LocalCalendarWeekNumbers.current) {
                 DAYS_IN_WEEK + 1
             } else {
@@ -952,8 +960,8 @@ fun CalendarWeekdays() {
     val weekStartsOn = calendarState().weekStartsOn
     val weekdays = LocalCalendarLocale.current.weekdays
     val labels = weekdays.drop(weekStartsOn) + weekdays.take(weekStartsOn)
-    val size = CELL_SIZE
-    val height = if (currentTheme.activePreset == StylePreset.Nova) 22.4.dp else size
+    val size = DAY_SLOT_SIZE
+    val height = if (currentTheme.activePreset == StylePreset.Nova) 22.4.dp else CELL_SIZE
     Row(modifier = Modifier.size(CALENDAR_WIDTH, height)) {
         if (LocalCalendarWeekNumbers.current) Spacer(Modifier.size(size, height))
         labels.forEach { label ->
@@ -997,7 +1005,7 @@ fun CalendarGrid(
         weeks.forEach { week ->
             Row {
                 if (LocalCalendarWeekNumbers.current) {
-                    Box(Modifier.size(CELL_SIZE), contentAlignment = Alignment.Center) {
+                    Box(Modifier.size(DAY_SLOT_SIZE), contentAlignment = Alignment.Center) {
                         Text(textStyle = TextStyle(fontSize = 12.8.sp, color = currentTheme.colors.mutedForeground)) {
                             calendarWeekNumber(
                                 week.first().date,
@@ -1273,7 +1281,7 @@ fun CalendarDayButton(
     content: (@Composable ColumnScope.() -> Unit)? = null,
 ) {
     if (outsideHidden) {
-        Box(modifier.size(CELL_SIZE))
+        Box(modifier.size(DAY_SLOT_SIZE))
         return
     }
     var hasFocus by remember { mutableStateOf(false) }

@@ -26,17 +26,27 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalInputModeManager
 import kotlinx.coroutines.CoroutineScope
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -74,6 +84,12 @@ private const val CAROUSEL_CHEVRON_HALF_TURN_DEGREES = 180f
 
 private val LocalCarouselOrientation = staticCompositionLocalOf { Orientation.Horizontal }
 private val LocalCarouselRoot = staticCompositionLocalOf { false }
+private val LocalCarouselControlFocus = staticCompositionLocalOf<CarouselControlFocus?> { null }
+
+private class CarouselControlFocus(val state: PagerState) {
+    var previous: FocusRequester? = null
+    var next: FocusRequester? = null
+}
 
 /** Compound root: supplies state/orientation and captures keys from slides and controls. */
 @Composable
@@ -85,6 +101,7 @@ fun CarouselRoot(
     content: @Composable BoxScope.() -> Unit,
 ) {
     val scope = rememberCoroutineScope()
+    val controlFocus = remember(state) { CarouselControlFocus(state) }
     CompositionLocalProvider(
         LocalCarouselState provides
             state,
@@ -92,6 +109,7 @@ fun CarouselRoot(
             orientation,
         LocalCarouselRoot provides
             true,
+        LocalCarouselControlFocus provides controlFocus,
     ) {
         Box(
             modifier.carouselKeys(state, scope).semantics {
@@ -101,6 +119,36 @@ fun CarouselRoot(
             content = content,
         )
     }
+}
+
+@Composable
+private fun Modifier.carouselControlFocus(
+    state: PagerState,
+    previous: Boolean,
+    canScroll: Boolean,
+    disabled: Boolean,
+): Modifier {
+    val controls = LocalCarouselControlFocus.current?.takeIf { it.state === state } ?: return this
+    val requester = remember { FocusRequester() }
+    val inputMode = LocalInputModeManager.current
+    var focused by remember { mutableStateOf(false) }
+    DisposableEffect(controls, requester, previous) {
+        if (previous) controls.previous = requester else controls.next = requester
+        onDispose {
+            if (controls.previous === requester) controls.previous = null
+            if (controls.next === requester) controls.next = null
+        }
+    }
+
+    // Capture focus before disabling the button clears it during modifier application.
+    val reachedEdgeWithFocus = !canScroll && !disabled && focused
+    LaunchedEffect(canScroll) {
+        if (reachedEdgeWithFocus && inputMode.inputMode == InputMode.Keyboard) {
+            val opposite = if (previous) controls.next else controls.previous
+            opposite?.requestFocus()
+        }
+    }
+    return focusRequester(requester).onFocusChanged { focused = it.isFocused }
 }
 
 private fun Modifier.carouselKeys(
@@ -306,11 +354,18 @@ fun CarouselPrevious(
 ) {
     val resolved = carouselState(state)
     val scope = rememberCoroutineScope()
+    val canScrollPrevious = resolved.canScrollBackward
     val buttonSize = if (currentTheme.activePreset == StylePreset.Nova) 28.dp else 32.dp
     Button(
         onClick = { scope.scrollCarousel(resolved, -1) },
-        modifier = modifier,
-        enabled = resolved.canScrollBackward && !disabled,
+        modifier =
+            modifier.carouselControlFocus(
+                resolved,
+                previous = true,
+                canScroll = canScrollPrevious,
+                disabled = disabled,
+            ),
+        enabled = canScrollPrevious && !disabled,
         variant = ButtonVariant.Outline,
         size = ButtonSize.Icon,
         label = "Previous slide",
@@ -341,7 +396,13 @@ fun CarouselNext(
     val buttonSize = if (currentTheme.activePreset == StylePreset.Nova) 28.dp else 32.dp
     Button(
         onClick = { scope.scrollCarousel(resolved, 1) },
-        modifier = modifier,
+        modifier =
+            modifier.carouselControlFocus(
+                resolved,
+                previous = false,
+                canScroll = canScrollNext,
+                disabled = disabled,
+            ),
         enabled = canScrollNext && !disabled,
         variant = ButtonVariant.Outline,
         size = ButtonSize.Icon,

@@ -61,8 +61,10 @@ import com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideSection
 import com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock
 import com.toutiaoyan.compose.ui.catalog.docs.DocIcon
 import com.toutiaoyan.compose.ui.catalog.docs.PreviewCodeSection
+import com.toutiaoyan.compose.ui.catalog.docs.SourceInstallationCode
 import com.toutiaoyan.compose.ui.catalog.docs.componentDocsById
 import com.toutiaoyan.compose.ui.catalog.docs.guidePagesById
+import com.toutiaoyan.compose.ui.catalog.docs.sourceInstallations
 import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
@@ -279,6 +281,12 @@ internal fun ComponentDetailContent(
                                 modifier = Modifier.fillMaxWidth(),
                                 title = "build.gradle.kts",
                             )
+                            sourceInstallations(doc.id).forEach { installation ->
+                                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Text(variant = TextVariant.TitleSmall) { installation.title }
+                                    SourceInstallationCode(installation)
+                                }
+                            }
                             if (doc.installationBlocks.isNotEmpty()) GuideBlocks(doc.installationBlocks)
                         }
                         Section("Usage", Modifier.docAnchor(anchors, "usage"), spacing = 17.5.dp, anchorId = "usage") {

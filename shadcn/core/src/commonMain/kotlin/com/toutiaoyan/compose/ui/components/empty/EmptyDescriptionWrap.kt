@@ -18,8 +18,6 @@ private const val MAX_SEARCH_TEXT_LENGTH = 4096
 private const val MAX_SEARCH_LINE_COUNT = 6
 private const val MAX_SEARCH_MEASUREMENTS = 64
 
-internal expect val emptyDescriptionWebWrap: Boolean
-
 /** Native paths do not install the hook or resolve any additional typography. */
 @Composable
 internal fun EmptyDescriptionWrapping(

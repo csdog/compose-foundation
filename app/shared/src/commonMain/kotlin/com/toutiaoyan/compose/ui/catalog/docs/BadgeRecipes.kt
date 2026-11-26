@@ -17,6 +17,7 @@ import com.composables.icons.lucide.Bookmark
 import com.composables.icons.lucide.Lucide
 import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
 import com.toutiaoyan.compose.tailwind.core.TwColors
+import com.toutiaoyan.compose.ui.catalog.LocalDocHeadingLinks
 import com.toutiaoyan.compose.ui.catalog.LocalDocNavigation
 import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
 import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
@@ -34,6 +35,7 @@ internal fun BadgeRecipe(
     language: Int = 0,
 ) {
     val navigation = LocalDocNavigation.current
+    val linkAnchor = LocalDocHeadingLinks.current.values.firstOrNull { it.fragment == "link" }
     val words =
         when (language) {
             1 -> listOf("شارة", "ثانوي", "مدمر", "مخطط", "متحقق", "إشارة مرجعية")
@@ -75,7 +77,9 @@ internal fun BadgeRecipe(
             4 ->
                 Badge(
                     href = "#link",
-                    onClick = { navigation?.navigate("link") },
+                    onClick = {
+                        if (navigation != null) navigation.navigate("link") else linkAnchor?.onClick?.invoke()
+                    },
                     iconPlacement = BadgeIconPlacement.End,
                     modifier = Modifier.testTag("badge-link"),
                 ) {

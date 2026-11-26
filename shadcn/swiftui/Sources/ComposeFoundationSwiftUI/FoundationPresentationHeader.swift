@@ -1,0 +1,88 @@
+import SwiftUI
+
+struct FoundationPresentationHeader<Close: View>: View {
+    @Environment(\.foundationTheme) private var theme
+    @Environment(\.textCase) private var textCase
+    let title: String
+    let description: Text?
+    let alignment: VerticalAlignment
+    let close: Close
+    let dismiss: () -> Void
+
+    var body: some View {
+        let heading = Text(title)
+            .font(theme.font(.headline, heading: true))
+            .textCase(theme.preset == .sera ? .uppercase : textCase)
+            .accessibilityAddTraits(.isHeader)
+        let dismissButton = close.keyboardShortcut(.cancelAction)
+        if #available(iOS 17, macOS 14, *) {
+            FoundationFocusedPresentationHeader(
+                heading: heading, description: description, alignment: alignment, close: dismissButton,
+                onActivate: dismiss
+            )
+        } else {
+            FoundationPresentationHeaderRow(
+                heading: heading, description: description, alignment: alignment, close: dismissButton
+            )
+        }
+    }
+}
+
+@available(iOS 17, macOS 14, *)
+private struct FoundationFocusedPresentationHeader<Heading: View, Close: View>: View {
+    @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
+    @FocusState private var closeFocused: Bool
+    @AccessibilityFocusState(for: .voiceOver) private var headingFocused: Bool
+
+    let heading: Heading
+    let description: Text?
+    let alignment: VerticalAlignment
+    let close: Close
+    let onActivate: () -> Void
+
+    var body: some View {
+        FoundationPresentationHeaderRow(
+            heading: heading.accessibilityFocused($headingFocused),
+            description: description,
+            alignment: alignment,
+            close: close
+                .focusable(interactions: .activate)
+                .focused($closeFocused)
+                .onKeyPress(keys: [.return, .space], phases: .down) { press in
+                    guard press.modifiers.intersection([.command, .control, .option, .shift]).isEmpty else {
+                        return .ignored
+                    }
+                    onActivate()
+                    return .handled
+                }
+        )
+        .defaultFocus($closeFocused, !voiceOverEnabled)
+        .task {
+            await Task.yield()
+            guard !Task.isCancelled else { return }
+            if voiceOverEnabled {
+                headingFocused = true
+            } else {
+                closeFocused = true
+            }
+        }
+    }
+}
+
+private struct FoundationPresentationHeaderRow<Heading: View, Close: View>: View {
+    let heading: Heading
+    let description: Text?
+    let alignment: VerticalAlignment
+    let close: Close
+
+    var body: some View {
+        HStack(alignment: alignment) {
+            VStack(alignment: .leading, spacing: 5) {
+                heading
+                description
+            }
+            Spacer()
+            close
+        }
+    }
+}

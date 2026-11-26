@@ -21,6 +21,26 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class CarouselKeyboardTest : ScreenshotTest() {
+    @Test fun reachingEitherEdgeMovesFocusToTheEnabledControl() {
+        setThemedContent {
+            val state = rememberPagerState { 2 }
+            CarouselRoot(state, Modifier.size(260.dp, 100.dp)) {
+                CarouselContent {}
+                CarouselPrevious()
+                CarouselNext()
+            }
+        }
+        val next = composeRule.onNodeWithContentDescription("Next slide")
+        val previous = composeRule.onNodeWithContentDescription("Previous slide")
+
+        previous.assertIsNotEnabled()
+        next.requestFocus().performKeyInput { pressKey(Key.Enter) }
+        next.assertIsNotEnabled()
+        previous.assertIsFocused().performKeyInput { pressKey(Key.Spacebar) }
+        previous.assertIsNotEnabled()
+        next.assertIsFocused()
+    }
+
     @Test fun anEditableSlideHandlesItsOwnArrowKey() {
         var value by mutableStateOf("")
         var activePage = -1

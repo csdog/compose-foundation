@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
@@ -46,10 +45,15 @@ import com.toutiaoyan.compose.ui.styles.cssStyleable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.semantics.CollectionInfo
+import androidx.compose.ui.semantics.CollectionItemInfo
+import androidx.compose.ui.semantics.collectionInfo
+import androidx.compose.ui.semantics.collectionItemInfo
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.selectableGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.offset
@@ -262,6 +266,7 @@ internal class RadioGroupController(
     val onValueChange: (String) -> Unit,
     val disabled: Boolean,
     val required: Boolean,
+    val orientation: RadioGroupOrientation,
 )
 
 private class RadioNavigation {
@@ -329,20 +334,28 @@ fun RadioGroup(
         if (value == null) internalValue = next
         onValueChange?.invoke(next)
     }
-    val controller = RadioGroupController(current, setValue, disabled || LocalFieldSetDisabled.current, required)
+    val controller =
+        RadioGroupController(current, setValue, disabled || LocalFieldSetDisabled.current, required, orientation)
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val nova = currentTheme.activePreset == StylePreset.Nova
     val grouped =
         modifier
             .then(if (nova) Modifier.fieldSetChild(dense = true) else Modifier)
-            .selectableGroup()
-            .then(
-                if (contentDescription != null) {
-                    Modifier.semantics { this.contentDescription = contentDescription }
+            .semantics {
+                val count = navigation.order.size
+                // Compose's inferred indices restart when selectable children are wrapped in rows.
+                if (count == 0) {
+                    selectableGroup()
                 } else {
-                    Modifier
-                },
-            )
+                    collectionInfo =
+                        if (orientation == RadioGroupOrientation.Horizontal) {
+                            CollectionInfo(1, count)
+                        } else {
+                            CollectionInfo(count, 1)
+                        }
+                }
+                if (contentDescription != null) this.contentDescription = contentDescription
+            }
             .styleable(styleState, style)
     CompositionLocalProvider(LocalRadioGroup provides controller, LocalRadioNavigation provides navigation) {
         if (orientation == RadioGroupOrientation.Horizontal) {
@@ -404,6 +417,17 @@ fun RadioGroupScope.RadioGroupItem(
         Modifier.keyboardInputMode()
             .focusRequester(requester)
             .onGloballyPositioned { navigation.positions[value] = it.positionInRoot() }
+            .semantics {
+                val index = navigation.orderedValues(rtl).indexOf(value)
+                if (index >= 0) {
+                    collectionItemInfo =
+                        if (radio.orientation == RadioGroupOrientation.Horizontal) {
+                            CollectionItemInfo(0, 1, index, 1)
+                        } else {
+                            CollectionItemInfo(index, 1, 0, 1)
+                        }
+                }
+            }
             .focusProperties {
                 val entry =
                     navigation.focusedValue

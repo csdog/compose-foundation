@@ -60,6 +60,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.semantics.onLongClick
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.input.pointer.PointerEventType
@@ -231,6 +232,13 @@ fun ContextMenuScope.ContextMenuTrigger(
                 }
                 .semantics(mergeDescendants = true) {
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
+                    if (!disabled) {
+                        onLongClick(label = "Open context menu") {
+                            onPoint(origin + IntOffset(0, targetSize.height))
+                            onOpenChange(true)
+                            true
+                        }
+                    }
                 }
                 .cssStyleable(styleState, triggerStyle)
                 .focusRequester(requester)

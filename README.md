@@ -17,6 +17,11 @@ dependency, no icon-library dependency — every component is drawn from this li
 
 ## Installation
 
+Use the shadcn registry to copy editable sources for
+[Compose Multiplatform or Android-only Jetpack Compose](shadcn/registry/README.md)
+and [native SwiftUI](shadcn/swiftui/README.md). All three catalogs use the same
+component names.
+
 The coordinates below use this checkout's **0.3.0 development version**. A Maven
 release is a separate publishing step.
 

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.LayoutDirection
@@ -58,6 +59,16 @@ class RadioGroupNavigationTest {
         tag: String,
         key: Key,
     ) = rule.onNodeWithTag(tag).performKeyInput { pressKey(key) }
+
+    private fun assertCollectionPosition(
+        tag: String,
+        row: Int,
+        column: Int,
+    ) {
+        val position = rule.onNodeWithTag(tag).fetchSemanticsNode().config[SemanticsProperties.CollectionItemInfo]
+        assertEquals(row, position.rowIndex)
+        assertEquals(column, position.columnIndex)
+    }
 
     @Test fun tabEntersSelectedAndExitsWithoutVisitingOtherItemsOrLabels() {
         show()
@@ -153,6 +164,9 @@ class RadioGroupNavigationTest {
         }
         rule.onNodeWithTag("b").requestFocus()
         rule.runOnIdle { values = listOf("c", "disabled", "b", "a") }
+        assertCollectionPosition("c", row = 0, column = 0)
+        assertCollectionPosition("disabled", row = 1, column = 0)
+        assertCollectionPosition("b", row = 2, column = 0)
         key("b", Key.DirectionDown)
         rule.onNodeWithTag("a").assertIsSelected().assertIsFocused()
         key("a", Key.DirectionDown)
@@ -166,6 +180,9 @@ class RadioGroupNavigationTest {
         }
         rule.onNodeWithTag("b").performClick()
         rule.runOnIdle { values = listOf("c", "disabled", "b", "a") }
+        assertCollectionPosition("c", row = 0, column = 0)
+        assertCollectionPosition("disabled", row = 0, column = 1)
+        assertCollectionPosition("b", row = 0, column = 2)
         key("b", Key.DirectionLeft)
         rule.onNodeWithTag("a").assertIsSelected().assertIsFocused()
         key("a", Key.DirectionLeft)

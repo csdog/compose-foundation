@@ -1,0 +1,5 @@
+Compose Foundation's curated emoji reaction graphics are derived from Twemoji
+(https://github.com/jdecked/twemoji).
+
+Copyright 2020 Twitter, Inc. and other contributors. Graphics are licensed
+under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).

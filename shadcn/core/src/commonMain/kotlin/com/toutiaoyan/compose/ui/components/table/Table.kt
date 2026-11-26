@@ -2,7 +2,9 @@
 
 package com.toutiaoyan.compose.ui.components.table
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.background
@@ -39,16 +41,35 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEvent
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.isAltPressed
+import androidx.compose.ui.input.key.isCtrlPressed
+import androidx.compose.ui.input.key.isMetaPressed
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.LayoutDirection
 import com.toutiaoyan.compose.ui.components.separator.Separator
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
+import com.toutiaoyan.compose.ui.styles.focusRing
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.ui.text.TextStyle
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
@@ -81,6 +102,11 @@ fun Table(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val scroll = rememberScrollState()
+    val viewportInteractions = remember { MutableInteractionSource() }
+    val viewportStyleState = remember { MutableStyleState(viewportInteractions) }
+    var viewportFocused by remember { mutableStateOf(false) }
+    val keyStep = with(LocalDensity.current) { 40.dp.toPx() }
+    val leadingDirection = if (LocalLayoutDirection.current == LayoutDirection.Rtl) -1f else 1f
     BoxWithConstraints(
         modifier =
             modifier.fillMaxWidth().then(
@@ -88,12 +114,44 @@ fun Table(
             ).styleable(styleState, style),
     ) {
         val bounded = constraints.hasBoundedWidth
+        val viewportModifier =
+            if (bounded) {
+                Modifier
+                    .styleable(viewportStyleState, Style { focusRing(RectangleShape) })
+                    .horizontalScroll(scroll)
+                    .keyboardInputMode()
+                    .onFocusChanged { viewportFocused = it.isFocused }
+                    .onKeyEvent { event ->
+                        if (!viewportFocused) return@onKeyEvent false
+                        val delta =
+                            event.tableScrollDelta(scroll, keyStep * leadingDirection) ?: return@onKeyEvent false
+                        scroll.dispatchRawDelta(delta)
+                        true
+                    }
+                    .focusable(enabled = scroll.maxValue > 0, interactionSource = viewportInteractions)
+            } else {
+                Modifier
+            }
         Column(
-            Modifier.then(if (bounded) Modifier.horizontalScroll(scroll) else Modifier)
-                .width(IntrinsicSize.Max).widthIn(min = if (bounded) maxWidth else 0.dp),
+            viewportModifier.width(IntrinsicSize.Max).widthIn(min = if (bounded) maxWidth else 0.dp),
         ) {
             TableStack(content)
         }
+    }
+}
+
+private fun KeyEvent.tableScrollDelta(
+    scroll: ScrollState,
+    directionalStep: Float,
+): Float? {
+    val hasCommandModifier = isAltPressed || isCtrlPressed || isMetaPressed
+    if (type != KeyEventType.KeyDown || hasCommandModifier) return null
+    return when (key) {
+        Key.DirectionLeft -> -directionalStep
+        Key.DirectionRight -> directionalStep
+        Key.MoveHome -> -scroll.value.toFloat()
+        Key.MoveEnd -> (scroll.maxValue - scroll.value).toFloat()
+        else -> null
     }
 }
 

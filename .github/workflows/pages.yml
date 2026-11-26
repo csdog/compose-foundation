@@ -39,6 +39,11 @@ jobs:
       - name: Build web distribution
         run: ./gradlew :app:webApp:composeCompatibilityBrowserDistribution
 
+      - name: Build shadcn registry
+        run: >
+          python3 shadcn/registry/build.py
+          --output app/webApp/build/dist/composeWebCompatibility/productionExecutable/r
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

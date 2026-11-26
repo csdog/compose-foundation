@@ -51,6 +51,28 @@ class CarouselExamplesTest {
         assertEquals(slide.center.y, number.center.y, .5f)
         rule.onNodeWithContentDescription("Previous slide").assertWidthIsEqualTo(28.dp).assertIsNotEnabled()
         rule.onNodeWithContentDescription("Next slide").assertWidthIsEqualTo(28.dp).assertIsEnabled()
+        assertNavigationInsideCarousel()
+    }
+
+    @Test fun verticalControlsStayInsideTheCarouselBounds() {
+        show("Orientation")
+        assertNavigationInsideCarousel()
+    }
+
+    private fun assertNavigationInsideCarousel() {
+        val carousel =
+            rule.onNodeWithContentDescription(
+                "Slides",
+                useUnmergedTree = true,
+            ).fetchSemanticsNode().boundsInRoot
+        for (label in listOf("Previous slide", "Next slide")) {
+            val button = rule.onNodeWithContentDescription(label).assertIsDisplayed().fetchSemanticsNode().boundsInRoot
+            assertTrue(
+                button.left >= carousel.left && button.top >= carousel.top &&
+                    button.right <= carousel.right && button.bottom <= carousel.bottom,
+                "$label bounds $button must be inside carousel bounds $carousel",
+            )
+        }
     }
 
     @Test fun apiCounterFollowsSelectionAndReturnsToTheFirstSlide() {

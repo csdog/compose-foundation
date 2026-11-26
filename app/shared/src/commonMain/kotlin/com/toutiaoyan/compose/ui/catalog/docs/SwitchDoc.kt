@@ -80,6 +80,7 @@ val switchDoc =
                                 checked = checked,
                                 onCheckedChange = { checked = it },
                                 modifier = Modifier.focusRequester(target),
+                                label = "Airplane Mode",
                             )
                             FieldLabel(
                                 "Airplane Mode",
@@ -102,6 +103,7 @@ val switchDoc =
                                 checked = checked,
                                 onCheckedChange = { checked = it },
                                 modifier = Modifier.focusRequester(target),
+                                label = "Airplane Mode",
                             )
                             FieldLabel(
                                 "Airplane Mode",

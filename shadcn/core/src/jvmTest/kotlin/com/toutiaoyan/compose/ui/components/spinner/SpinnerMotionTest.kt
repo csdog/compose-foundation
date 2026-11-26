@@ -12,13 +12,20 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.tailwind.modifiers.animateSpin
+import com.toutiaoyan.compose.ui.theme.Theme
 import org.junit.Rule
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class SpinnerMotionTest {
@@ -29,6 +36,22 @@ class SpinnerMotionTest {
                     override val scaleFactor = 1f
                 },
         )
+
+    @Test fun spinnerKeepsStableAccessibilityBoundsDuringRotation() {
+        rule.mainClock.autoAdvance = false
+        rule.setContent { Theme { Spinner() } }
+        rule.mainClock.advanceTimeByFrame()
+        val spinner = rule.onNodeWithContentDescription("Loading")
+        spinner.assert(
+            SemanticsMatcher.expectValue(
+                SemanticsProperties.ProgressBarRangeInfo,
+                ProgressBarRangeInfo.Indeterminate,
+            ),
+        )
+        val initialBounds = spinner.fetchSemanticsNode().boundsInRoot
+        rule.mainClock.advanceTimeBy(125)
+        assertEquals(initialBounds, spinner.fetchSemanticsNode().boundsInRoot)
+    }
 
     @Test fun spinDrawsNewFramesWithoutRecomposingItsCaller() {
         var compositions = 0

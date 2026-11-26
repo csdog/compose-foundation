@@ -6,6 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performKeyInput
@@ -26,6 +28,36 @@ class OverlayEscapeTest {
     @Test fun dialogClosesFromFocusedInput() = checkEscape(sheet = false)
 
     @Test fun sheetClosesFromFocusedInput() = checkEscape(sheet = true)
+
+    @Test
+    fun positionalOpenStillFocusesFirstInput() {
+        rule.setContent {
+            Theme {
+                Dialog(true) {
+                    DialogContent {
+                        Input(value = "", modifier = Modifier.testTag("search"))
+                    }
+                }
+            }
+        }
+        rule.onNodeWithTag("search").assertIsFocused()
+    }
+
+    @Test
+    fun dialogCanKeepInitialFocusOnPanelUntilTab() {
+        rule.setContent {
+            Theme {
+                Dialog(focusPanelOnOpen = true, open = true) {
+                    DialogContent {
+                        Input(value = "", modifier = Modifier.testTag("search"))
+                    }
+                }
+            }
+        }
+        val search = rule.onNodeWithTag("search").assertIsNotFocused()
+        search.performKeyInput { pressKey(Key.Tab) }
+        search.assertIsFocused()
+    }
 
     private fun checkEscape(sheet: Boolean) {
         var open by mutableStateOf(true)

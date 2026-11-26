@@ -50,6 +50,11 @@ internal fun componentPageMarkdown(doc: ComponentDoc): String =
         doc.introMarkdown?.let { appendLine("$it\n") }
         doc.introductionSections.forEach(::guide)
         appendLine("## Installation\n\n```kotlin\n$catalogInstallationCode\n```\n")
+        sourceInstallations(doc.id).forEach { installation ->
+            appendLine("### ${installation.title}\n")
+            appendLine("${installation.description}\n")
+            appendLine("```sh\n${installation.code}\n```\n")
+        }
         blocks(doc.installationBlocks)
         appendLine("## Usage\n")
         doc.usageImportsCode?.let { appendLine("```kotlin\n$it\n```\n") }

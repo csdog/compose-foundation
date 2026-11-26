@@ -9,8 +9,6 @@ import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.PointerType
 import androidx.compose.ui.input.pointer.pointerInput
 
-internal expect fun captureTouchCanvasFocus(event: PointerEvent): (() -> Unit)?
-
 /** Makes touch metadata available to the click handler during the release's Main pass. */
 internal class TouchRelease<T : Any>(private val capture: (PointerEvent) -> T?) {
     var value: T? = null

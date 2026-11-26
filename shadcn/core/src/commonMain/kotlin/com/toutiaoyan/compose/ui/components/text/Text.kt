@@ -219,12 +219,7 @@ private fun TextImpl(
             }
         }
     val styleState = remember { MutableStyleState(interactionSource = null) }
-    val colorStyle =
-        if (specifiedColor != null) {
-            Style { contentColor(specifiedColor) }
-        } else {
-            Style
-        }
+    val colorStyle = Style { if (specifiedColor != null) contentColor(specifiedColor) }
     val paintStyle = remember(style) { style.preserveTextCurrentColor() }
     val styledModifier =
         modifier
@@ -232,7 +227,8 @@ private fun TextImpl(
             // Foundation contentColor clears contentBrush on the same Style node.
             // Keep the explicit solid-color fallback nearer, on a separate node,
             // so it retains its precedence without deleting an ancestor brush.
-            .then(if (specifiedColor != null) Modifier.styleable(style = colorStyle) else Modifier)
+            // Keep both Style nodes attached when the override changes between set and unset.
+            .styleable(style = colorStyle)
             .then(AncestorContentColorElement(inheritedContentColor, resolvedColor))
             .then(textParagraphModifier(plainText != null, resolvedStyle))
     // Prefer BasicText(String): only TextStringSimpleNode applies Style-inherited typography

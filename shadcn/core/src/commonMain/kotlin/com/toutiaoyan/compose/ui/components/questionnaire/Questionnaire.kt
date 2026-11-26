@@ -86,6 +86,7 @@ import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.role
@@ -1110,6 +1111,7 @@ fun QuestionnaireScope.QuestionnaireItem(
             .focusRequester(itemFocusRequester)
             .focusable()
             .semantics {
+                isTraversalGroup = true
                 val message = itemError?.let { labels.errorMessage ?: it }
                 val announcement = listOfNotNull(labels.title, labels.description, message).filter { it.isNotBlank() }
                 if (announcement.isNotEmpty()) contentDescription = announcement.joinToString("\n")

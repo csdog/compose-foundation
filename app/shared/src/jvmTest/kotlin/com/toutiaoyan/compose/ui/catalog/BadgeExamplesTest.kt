@@ -127,6 +127,22 @@ class BadgeExamplesTest(private val width: Int, private val dark: Boolean) {
         assertEquals("link", selectedFragment)
     }
 
+    @Test fun linkRecipeUsesTheLocalHeadingWithoutBrowserNavigation() {
+        val selectedHeadings = mutableListOf<String>()
+        val headings =
+            mapOf(
+                "examples-default" to DocHeadingLink("default") { selectedHeadings += "default" },
+                "examples-link" to DocHeadingLink("link") { selectedHeadings += "link" },
+            )
+        rule.setContent {
+            CompositionLocalProvider(LocalDocHeadingLinks provides headings) {
+                Theme(preset = StylePreset.Nova, isDark = dark) { badgeDoc.examples[4].preview() }
+            }
+        }
+        rule.onNodeWithTag("badge-link").performClick()
+        assertEquals(listOf("link"), selectedHeadings)
+    }
+
     companion object {
         @JvmStatic
         @Parameterized.Parameters(name = "width={0}, dark={1}")

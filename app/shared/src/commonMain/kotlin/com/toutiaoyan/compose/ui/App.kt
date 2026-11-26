@@ -3,6 +3,7 @@ package com.toutiaoyan.compose.ui
 import com.toutiaoyan.compose.ui.components.drawer.DrawerIndentHost
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import com.toutiaoyan.compose.ui.catalog.CatalogToastHost
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -11,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavBackStack
@@ -23,6 +25,7 @@ import com.toutiaoyan.compose.ui.navigation.CatalogNavDisplay
 import com.toutiaoyan.compose.ui.navigation.DeepLinks
 import com.toutiaoyan.compose.ui.navigation.RouteKey
 import com.toutiaoyan.compose.ui.theme.Theme
+import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.Accent
 import com.toutiaoyan.compose.ui.tokens.BaseColor
 import com.toutiaoyan.compose.ui.tokens.Radius
@@ -40,6 +43,7 @@ import kotlinx.coroutines.flow.emptyFlow
 //   the window-level Toaster only while the Toast detail page is active.
 @Composable
 @Preview
+@Suppress("LongParameterList")
 fun App(
     inboundDeepLinks: Flow<String> = emptyFlow(),
     searchRequests: Flow<Unit> = emptyFlow(),
@@ -47,6 +51,7 @@ fun App(
     initialDarkModeOverride: Boolean? = null,
     /** Called for explicit theme changes so the host can persist its preference. */
     onDarkModeOverrideChange: (Boolean) -> Unit = {},
+    modifier: Modifier = Modifier,
     /**
      * Web: called once the Navigation 3 back stack is attached, for browser path sync
      * (see angryecho-kmp `onNavHostReady`).
@@ -89,7 +94,7 @@ fun App(
         isDark = isDarkMode,
         fontFamily = catalogFontFamily(),
     ) {
-        OverlayHost {
+        OverlayHost(Modifier.background(currentTheme.colors.background).then(modifier)) {
             CatalogToastHost(
                 toastPreset = stylePreset.takeIf { appRouter.current == RouteKey.ComponentDetail("toast") },
                 toastBaseColor = baseColor,

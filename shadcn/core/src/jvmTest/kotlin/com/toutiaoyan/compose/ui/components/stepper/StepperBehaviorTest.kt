@@ -70,6 +70,25 @@ class StepperBehaviorTest : ScreenshotTest() {
     }
 
     @Test
+    fun labeledStepsCanAdvanceAndRetreat() {
+        val current = mutableStateOf(0)
+        setThemedContent {
+            Stepper(currentStep = current.value, modifier = Modifier.width(320.dp)) {
+                StepperItem("Details")
+                StepperItem("Review")
+                StepperItem("Done")
+            }
+        }
+
+        for (step in listOf(1, 2, 1, 0)) {
+            composeRule.runOnIdle { current.value = step }
+            composeRule.onNodeWithText((step + 1).toString())
+                .assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Current"))
+            composeRule.onNodeWithText("Review").assertIsDisplayed()
+        }
+    }
+
+    @Test
     fun independentlyInsertedAndRemovedDeclarationUpdatesRenderedSteps() {
         val visible = mutableStateOf(false)
         setThemedContent {

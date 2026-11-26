@@ -2,7 +2,9 @@
 
 package com.toutiaoyan.compose.ui.components.pagination
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toPixelMap
@@ -21,6 +23,44 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
 class PaginationParityTest : ScreenshotTest() {
+    @Test fun narrowPaginationScrollsToActivateItsLastControl() {
+        var page by mutableIntStateOf(1)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Box(Modifier.width(120.dp)) {
+                Pagination(page = page, pageCount = 5, onPageChange = { page = it }) {
+                    PaginationContent {
+                        PaginationPrevious(text = "")
+                        (1..5).forEach { PaginationLink(it) }
+                        PaginationNext(text = "")
+                    }
+                }
+            }
+        }
+        composeRule.onNodeWithContentDescription("Go to next page")
+            .assertIsNotDisplayed()
+            .performScrollTo()
+            .assertIsDisplayed()
+            .performTouchInput { click() }
+        composeRule.onNodeWithText("2").assertIsSelected()
+    }
+
+    @Test fun paginationMeasuresInsideAnUnboundedHorizontalParent() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Row(Modifier.horizontalScroll(rememberScrollState())) {
+                Pagination {
+                    PaginationContent {
+                        PaginationPrevious(onClick = {}, text = "")
+                        PaginationLink(1, isActive = true, onClick = {})
+                        PaginationNext(onClick = {}, text = "")
+                    }
+                }
+            }
+        }
+        composeRule.onNodeWithContentDescription("Go to previous page").assertIsDisplayed()
+        composeRule.onNodeWithText("1").assertIsSelected()
+        composeRule.onNodeWithContentDescription("Go to next page").assertIsDisplayed()
+    }
+
     @Test
     fun knownPageWindowStaysValidNearTheLargestPageNumber() {
         setThemedContent {

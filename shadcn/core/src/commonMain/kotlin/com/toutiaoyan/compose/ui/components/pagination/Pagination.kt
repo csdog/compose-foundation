@@ -3,11 +3,13 @@
 package com.toutiaoyan.compose.ui.components.pagination
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
@@ -22,6 +24,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
@@ -233,7 +236,7 @@ fun PaginationScope.PaginationDefaultContent() {
     }
 }
 
-/** Row of page controls. Matches shadcn's `PaginationContent`. */
+/** Single row of page controls that scrolls when the available width is smaller than the row. */
 @Composable
 fun PaginationScope.PaginationContent(
     modifier: Modifier = Modifier,
@@ -241,8 +244,27 @@ fun PaginationScope.PaginationContent(
     content: @Composable PaginationContentScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val scroll = rememberScrollState()
     Row(
-        modifier = modifier.styleable(styleState, style),
+        modifier =
+            modifier.styleable(styleState, style)
+                .layout { measurable, constraints ->
+                    // A parent horizontal scroller already provides room for the entire row.
+                    // Give our scroll modifier a finite viewport of the row's natural width.
+                    val viewport =
+                        if (constraints.hasBoundedWidth) {
+                            constraints
+                        } else {
+                            constraints.copy(
+                                maxWidth =
+                                    measurable.maxIntrinsicWidth(constraints.maxHeight)
+                                        .coerceAtLeast(constraints.minWidth),
+                            )
+                        }
+                    val row = measurable.measure(viewport)
+                    layout(row.width, row.height) { row.placeRelative(0, 0) }
+                }
+                .horizontalScroll(scroll),
         horizontalArrangement =
             Arrangement.spacedBy(
                 if (currentTheme.activePreset == StylePreset.Nova) {

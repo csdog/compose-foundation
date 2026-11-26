@@ -68,7 +68,7 @@ import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.icon.IconVariant
-import com.toutiaoyan.compose.ui.components.overlay.Content
+import com.toutiaoyan.compose.ui.components.overlay.ContentWithInitialFocus
 import com.toutiaoyan.compose.ui.components.overlay.Overlay
 import com.toutiaoyan.compose.ui.components.overlay.OverlayAnimMs
 import com.toutiaoyan.compose.ui.components.overlay.OverlayTransitions
@@ -98,6 +98,7 @@ internal class DialogController(
     val open: Boolean,
     val onOpenChange: (Boolean) -> Unit,
     val modal: Boolean,
+    val focusPanelOnOpen: Boolean,
 ) {
     fun toggle() = onOpenChange(!open)
 }
@@ -182,6 +183,31 @@ fun Dialog(
     defaultOpen: Boolean = false,
     modal: Boolean = true,
     content: @Composable DialogScope.() -> Unit,
+) = Dialog(
+    focusPanelOnOpen = false,
+    open = open,
+    onOpenChange = onOpenChange,
+    modifier = modifier,
+    defaultOpen = defaultOpen,
+    modal = modal,
+    content = content,
+)
+
+/**
+ * [focusPanelOnOpen] keeps initial focus on the dialog panel until the user
+ * interacts with an item or presses Tab. Useful when the first item is a
+ * text field that would open the software keyboard.
+ */
+@Composable
+@Suppress("LongParameterList")
+fun Dialog(
+    open: Boolean? = null,
+    onOpenChange: ((Boolean) -> Unit)? = null,
+    modifier: Modifier = Modifier,
+    defaultOpen: Boolean = false,
+    modal: Boolean = true,
+    focusPanelOnOpen: Boolean,
+    content: @Composable DialogScope.() -> Unit,
 ) {
     var internalOpen by remember { mutableStateOf(defaultOpen) }
     val controlled = open != null
@@ -190,7 +216,7 @@ fun Dialog(
         if (!controlled) internalOpen = next
         onOpenChange?.invoke(next)
     }
-    val controller = DialogController(open = isOpen, onOpenChange = setOpen, modal = modal)
+    val controller = DialogController(isOpen, setOpen, modal, focusPanelOnOpen)
     OverlayFocusOwner(isOpen, modal) {
         CompositionLocalProvider(LocalDialog provides controller) {
             Box(modifier = modifier) {
@@ -325,7 +351,12 @@ fun DialogScope.DialogContent(
             checkNotNull(LocalDialogTeleportScope.current) {
                 "DialogContent panel must be used within DialogPortal { }"
             }
-        modal.Content(enter = enter, exit = exit) {
+        modal.ContentWithInitialFocus(
+            contentAlignment = Alignment.Center,
+            enter = enter,
+            exit = exit,
+            focusPanelOnOpen = controller.focusPanelOnOpen,
+        ) {
             Box(
                 modifier =
                     modifier.then(

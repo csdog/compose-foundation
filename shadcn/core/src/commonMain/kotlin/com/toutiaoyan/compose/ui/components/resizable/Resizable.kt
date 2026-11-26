@@ -15,6 +15,7 @@ import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.platform.ViewConfiguration
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.setProgress
 import androidx.compose.ui.semantics.stateDescription
@@ -369,7 +370,11 @@ fun ResizableHandle(
                         if (state != null && bounds != null) {
                             progressBarRangeInfo = ProgressBarRangeInfo(state.fraction, bounds.min..bounds.max, 0)
                             stateDescription = "${(state.fraction * PERCENT_PER_FRACTION).roundToInt()}%"
-                            if (!resolvedDisabled) setProgress { setFraction(it) }
+                            if (!resolvedDisabled) {
+                                // A semantic press focuses the divider and exposes its minimum touch bounds.
+                                onClick { focus.requestFocus() }
+                                setProgress { setFraction(it) }
+                            }
                         }
                     }
                     .cssStyleable(styleState, rememberResizableHandleStyle(horizontal) then style)

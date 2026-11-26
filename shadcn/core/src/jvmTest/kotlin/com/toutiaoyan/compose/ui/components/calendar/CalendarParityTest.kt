@@ -83,6 +83,29 @@ class CalendarParityTest : ScreenshotTest() {
         composeRule.onNodeWithContentDescription("Next month").assertWidthIsEqualTo(40.dp)
     }
 
+    @Test fun weekdayLabelsKeepTheirColumnsWhenTouchTargetsExpand() {
+        composeRule.setContent {
+            Theme(preset = StylePreset.Vega, minTouchTarget = 48.dp) {
+                Calendar(
+                    year = 2026,
+                    month = 6,
+                    onMonthChange = { _, _ -> },
+                    selected = null,
+                    onSelectedChange = {},
+                    cellSize = 40.dp,
+                    showOutsideDays = false,
+                )
+            }
+        }
+        for ((weekday, date) in listOf("Mo" to "2026-6-1", "Sa" to "2026-6-6")) {
+            val label = composeRule.onNodeWithText(weekday).getUnclippedBoundsInRoot()
+            val day = composeRule.onNodeWithContentDescription(date).getUnclippedBoundsInRoot()
+            val dayCenter = (day.left.value + day.right.value) / 2f
+            val labelCenter = (label.left.value + label.right.value) / 2f
+            assertEquals(dayCenter, labelCenter, absoluteTolerance = 0.5f)
+        }
+    }
+
     @Test fun navigationButtonsKeepEnterInsteadOfSelectingTheOldDay() {
         var selected: CalendarDate? = null
         var month by mutableStateOf(10)
