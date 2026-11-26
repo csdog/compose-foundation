@@ -1,0 +1,233 @@
+name: Component parity
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/component-parity.yml
+      - "app/**"
+      - "shadcn/**"
+      - "tailwind/**"
+      - "core/**"
+      - "gradle/**"
+      - "*gradle*"
+      - scripts/verify_component_browser.mjs
+      - scripts/component_browser_helpers.mjs
+  workflow_dispatch:
+    inputs:
+      require_baselines:
+        description: Fail if an automated capture does not have an approved baseline
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: component-parity-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    name: Capture and compare / ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: cmp-web
+            runner: ubuntu-24.04
+          - platform: cmp-android
+            runner: ubuntu-24.04
+          - platform: swiftui-ios
+            runner: macos-15
+          - platform: swiftui-macos
+            runner: macos-15
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    env:
+      PLATFORM: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install Pillow==11.3.0
+
+      - name: Read the baseline lock
+        id: baseline
+        run: |
+          plan=shadcn/validation/plan.json
+          repository="$(jq -er '.baseline.repository | select(test("^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"))' "$plan")"
+          revision="$(jq -er '.baseline.revision // ""' "$plan")"
+          if [[ -n "$revision" && ! "$revision" =~ ^[0-9a-f]{40}$ ]]; then
+            echo 'Baseline revision must be a full commit SHA' >&2
+            exit 1
+          fi
+          printf 'repository=%s\nrevision=%s\n' "$repository" "$revision" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        if: steps.baseline.outputs.revision != ''
+        with:
+          repository: ${{ steps.baseline.outputs.repository }}
+          ref: ${{ steps.baseline.outputs.revision }}
+          token: ${{ secrets.COMPONENT_BASELINES_READ_TOKEN || github.token }}
+          sparse-checkout: ${{ matrix.platform }}
+          path: build/component-baselines
+          persist-credentials: false
+
+      - uses: actions/setup-java@v4
+        if: startsWith(matrix.platform, 'cmp-')
+        with:
+          distribution: zulu
+          java-version: "21"
+      - uses: gradle/actions/setup-gradle@v4
+        if: startsWith(matrix.platform, 'cmp-')
+      - uses: actions/setup-node@v4
+        if: matrix.platform == 'cmp-web'
+        with:
+          node-version: "24.12.0"
+      - name: Build the CMP Web catalog
+        if: matrix.platform == 'cmp-web'
+        run: ./gradlew :app:webApp:wasmJsBrowserDistribution
+      - name: Install Playwright and Chromium
+        if: matrix.platform == 'cmp-web'
+        run: |
+          npm install --prefix "$RUNNER_TEMP/parity-browser" --no-save playwright@1.58.2
+          "$RUNNER_TEMP/parity-browser/node_modules/.bin/playwright" install --with-deps chromium
+          echo "PLAYWRIGHT_MODULE=$RUNNER_TEMP/parity-browser/node_modules/playwright/index.mjs" >> "$GITHUB_ENV"
+      - name: Select Xcode
+        if: runner.os == 'macOS'
+        run: sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
+
+      - name: Build the CMP Android catalog
+        if: matrix.platform == 'cmp-android'
+        run: ./gradlew :app:androidApp:assembleDebug
+      - name: Boot the Android emulator and install the CMP catalog
+        if: matrix.platform == 'cmp-android'
+        run: |
+          output="$PWD/build/component-parity/$PLATFORM"
+          mkdir -p "$output"
+          sudo chown "$(id -u)" /dev/kvm
+          image='system-images;android-35;google_apis;x86_64'
+          sdkmanager 'emulator' "$image"
+          echo no | avdmanager create avd --name parity --package "$image" --device pixel_7
+          "$ANDROID_HOME/emulator/emulator" -avd parity -port 5554 -no-window -no-audio \
+            -no-snapshot -gpu swiftshader_indirect > "$output/emulator.log" 2>&1 &
+          export ANDROID_SERIAL=emulator-5554
+          timeout 120 adb wait-for-device
+          for ((attempt = 0; attempt < 90; attempt++)); do
+            if [[ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" == 1 ]]; then
+              break
+            fi
+            sleep 2
+          done
+          [[ "$(adb shell getprop sys.boot_completed | tr -d '\r')" == 1 ]]
+          adb shell input keyevent 82
+          adb shell settings put global window_animation_scale 0
+          adb shell settings put global transition_animation_scale 0
+          adb shell settings put global animator_duration_scale 0
+          adb shell settings put global sysui_demo_allowed 1
+          adb shell am broadcast -a com.android.systemui.demo -e command enter
+          adb shell am broadcast -a com.android.systemui.demo -e command clock -e hhmm 0941
+          adb shell am broadcast -a com.android.systemui.demo -e command battery -e level 100 -e plugged false
+          adb shell am broadcast -a com.android.systemui.demo -e command notifications -e visible false
+          adb install -r -t shadcn/androidApp/build/outputs/apk/debug/androidApp-debug.apk
+          echo "ANDROID_SERIAL=$ANDROID_SERIAL" >> "$GITHUB_ENV"
+
+      - name: Capture both passes
+        run: |
+          output="$PWD/build/component-parity/$PLATFORM"
+          mkdir -p "$output"
+          bash shadcn/validation/capture.sh "$PLATFORM" "$output" 2>&1 | tee "$output/capture.log"
+      - name: Compare with the locked baseline
+        if: always()
+        run: |
+          python shadcn/validation/report.py build/component-parity --platform "$PLATFORM" \
+            --baselines build/component-baselines
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: component-parity-${{ matrix.platform }}
+          path: build/component-parity/${{ matrix.platform }}
+          if-no-files-found: error
+
+  cmp-behavior:
+    name: CMP shared interaction tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: "21"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Verify the shared Tabs and Popover behavior
+        run: |
+          xvfb-run -a ./gradlew :shadcn:core:jvmTest \
+            --tests '*TabsBehaviorParityTest' --tests '*PopoverBehaviorTest' \
+            --tests '*PopoverFocusTest' --tests '*PopoverMotionTest'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: component-cmp-interaction-tests
+          path: shadcn/shared/build/reports/tests/jvmTest
+
+  swift-logic:
+    name: SwiftUI Tabs navigation logic
+    runs-on: macos-15
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify focus and selection rules
+        run: |
+          swiftui=shadcn/iosApp
+          sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
+          xcrun swiftc -swift-version 6 -parse-as-library \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationTabsNavigation.swift" \
+            "$swiftui/validation/TabsNavigationAudit.swift" -o "$RUNNER_TEMP/tabs-navigation"
+          "$RUNNER_TEMP/tabs-navigation"
+
+  report:
+    name: Component parity report
+    needs: [capture, cmp-behavior, swift-logic]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install Pillow==11.3.0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: component-parity-*
+          path: build/component-parity
+      - name: Report the platform results
+        env:
+          REQUIRE_BASELINES: ${{ inputs.require_baselines }}
+          CAPTURE_RESULT: ${{ needs.capture.result }}
+          CMP_RESULT: ${{ needs.cmp-behavior.result }}
+          SWIFT_RESULT: ${{ needs.swift-logic.result }}
+        run: |
+          for folder in build/component-parity/component-parity-*; do
+            [[ -d "$folder" ]] || continue
+            mv "$folder" "build/component-parity/${folder##*/component-parity-}"
+          done
+          flags=()
+          if [[ "$REQUIRE_BASELINES" == true ]]; then
+            flags+=(--require-baselines)
+          fi
+          result=0
+          python shadcn/validation/report.py build/component-parity "${flags[@]}" || result=$?
+          {
+            echo '### 组件逻辑与共享交互'
+            echo
+            echo "- CMP JVM Tabs 与 Popover（交互、焦点和动画测试）：$CMP_RESULT"
+            echo "- SwiftUI Tabs 焦点与选择逻辑：$SWIFT_RESULT"
+          } | tee -a build/component-parity/report.md >> "$GITHUB_STEP_SUMMARY"
+          [[ "$result" == 0 && "$CAPTURE_RESULT" == success && "$CMP_RESULT" == success && "$SWIFT_RESULT" == success ]]
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: component-parity-report
+          path: build/component-parity/report.md

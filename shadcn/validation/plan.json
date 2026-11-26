@@ -1,0 +1,42 @@
+{
+  "upstreamRevision": "0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4",
+  "baseline": {
+    "repository": "csdog/compose-foundation-baselines",
+    "revision": null
+  },
+  "platforms": {
+    "cmp-web": "automated",
+    "cmp-android": "automated",
+    "cmp-ios": "pending",
+    "cmp-desktop": "pending",
+    "jetpack-compose": "pending",
+    "swiftui-ios": "automated",
+    "swiftui-macos": "automated"
+  },
+  "components": {
+    "button": {
+      "title": "Button",
+      "reference": "apps/v4/examples/base/button-demo.tsx",
+      "visual": "review component variants, spacing and content against the reference",
+      "behavior": "activation and disabled state",
+      "accessibility": "accessible name, button role and disabled state",
+      "motion": "press and release with normal and reduced motion"
+    },
+    "tabs": {
+      "title": "Tabs",
+      "reference": "apps/v4/examples/base/tabs-disabled.tsx",
+      "visual": "review selected and disabled state against the reference",
+      "behavior": "skip the disabled tab, select the next available tab and update the panel",
+      "accessibility": "selected and disabled states, panel association and traversal order",
+      "motion": "selection indicator or panel transitions where present"
+    },
+    "popover": {
+      "title": "Popover",
+      "reference": "apps/v4/examples/base/popover-demo.tsx",
+      "visual": "review trigger; capture and review the open panel separately",
+      "behavior": "open, dismiss and return focus to the trigger",
+      "accessibility": "panel content is reachable while open and absent after dismissal",
+      "motion": "enter and exit with normal and reduced motion"
+    }
+  }
+}

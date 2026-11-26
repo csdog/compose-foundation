@@ -38,6 +38,16 @@
 
 ## 4. 从仓库根目录运行
 
+### 跨平台视觉回归试点
+
+GitHub Actions 的 **Component parity** 在相关 PR 上采集 Button、Tabs、Popover 的初始状态和深浅色截图。CMP Web、CMP Android、SwiftUI iOS 与 SwiftUI macOS 使用各自的 Catalog。CMP iOS、CMP Desktop 和独立 Jetpack Compose 的平台执行入口待接入，报告会标为待验。报告同时收录 CMP JVM 的 Tabs 和 Popover 行为测试，以及 SwiftUI 的 Tabs 导航逻辑测试。设备交互、无障碍和动画仍需按下文的方法单独验收。
+
+[`shadcn/validation/plan.json`](../shadcn/validation/plan.json) 记录每个组件的 shadcn Base UI / Nova 源码版本和示例。首次运行会采集两遍，按像素核对复现性。对照上游示例审核实际图，检查内容、排版、主题和各平台状态，并在 PR 上说明有意保留的平台差异。初始截图只覆盖当前 fixture 的状态。例如 Popover 展开态要单独验收。
+
+审核通过的实际图提交到独立的 `csdog/compose-foundation-baselines` 仓库，路径格式为 `<platform>/<slug>/initial/<light|dark>.png`。基准提交应记录用于采集的源码提交、上游示例、渲染环境和审核记录。随后在主仓库更新 `plan.json` 中的 `baseline.revision` 为完整提交 SHA。私有基准仓库需要 Actions 能读它的 `COMPONENT_BASELINES_READ_TOKEN`。外部贡献者的 PR 无法读取该 secret，基准需要在允许读取它的工作流环境复验。
+
+Actions 的 **Summary** 显示逐平台和主题的结果。附件提供实际图、第二次采集、已锁定基准、差异图和采集日志。缺基准的稳定截图显示待审核。确认基准发布后，可手动运行并启用 `require_baselines` 检查自动采集用例是否都有基准。
+
 ### Compose JVM 与 Android Preview 像素基线
 
 ```sh
