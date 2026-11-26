@@ -64,7 +64,7 @@ elif [[ "$platform" == swiftui-ios ]]; then
   xcrun simctl bootstatus "$device" -b
   xcrun simctl status_bar "$device" override --time '9:41' --dataNetwork wifi \
     --wifiMode active --wifiBars 3 --cellularMode active --cellularBars 4 \
-    --batteryState unplugged --batteryLevel 100
+    --batteryState discharging --batteryLevel 100
   xcrun simctl spawn "$device" defaults write com.apple.Accessibility ReduceMotionEnabled -bool YES
   xcrun simctl install "$device" "$app"
   container="$(xcrun simctl get_app_container "$device" "$bundle" data)"
