@@ -115,16 +115,21 @@ jobs:
           mkdir -p "$ANDROID_AVD_HOME"
           printf 'no\n' | "$tools/avdmanager" create avd --name parity --package "$image" --device pixel_7
           "$ANDROID_HOME/emulator/emulator" -avd parity -port 5554 -no-window -no-audio \
-            -no-snapshot -gpu swiftshader_indirect > "$output/emulator.log" 2>&1 &
+            -no-snapshot -no-boot-anim -gpu swiftshader_indirect > "$output/emulator.log" 2>&1 &
           export ANDROID_SERIAL=emulator-5554
           timeout 120 adb wait-for-device
-          for ((attempt = 0; attempt < 90; attempt++)); do
+          for ((attempt = 0; attempt < 300; attempt++)); do
             if [[ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" == 1 ]]; then
               break
             fi
             sleep 2
           done
-          [[ "$(adb shell getprop sys.boot_completed | tr -d '\r')" == 1 ]]
+          if [[ "$(adb shell getprop sys.boot_completed | tr -d '\r')" != 1 ]]; then
+            echo 'Android emulator did not complete boot within 10 minutes' >&2
+            adb devices -l
+            timeout 15 adb logcat -d -b system -t 120 || true
+            exit 1
+          fi
           adb shell input keyevent 82
           adb shell settings put global window_animation_scale 0
           adb shell settings put global transition_animation_scale 0
