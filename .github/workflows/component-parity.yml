@@ -195,6 +195,7 @@ jobs:
         if: always()
         with:
           name: component-parity-${{ matrix.platform }}
+          retention-days: 7
           path: build/component-parity/${{ matrix.platform }}
           if-no-files-found: error
 
@@ -218,6 +219,7 @@ jobs:
         if: always()
         with:
           name: component-cmp-interaction-tests
+          retention-days: 7
           path: shadcn/shared/build/reports/tests/jvmTest
 
   swift-logic:
@@ -295,6 +297,7 @@ jobs:
         if: always()
         with:
           name: component-parity-report
+          retention-days: 7
           path: build/component-parity-report/
       - name: Link to the report bundle
         if: always() && steps.report-artifact.outputs.artifact-url != ''
