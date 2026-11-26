@@ -79,6 +79,11 @@ jobs:
         if: runner.os == 'macOS'
         run: sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
 
+      - name: Free disk space for the Android emulator
+        if: matrix.platform == 'cmp-android'
+        run: |
+          sudo rm -rf -- /usr/share/dotnet /usr/local/.ghcup /opt/ghc /usr/local/share/boost
+          df -h "$RUNNER_TEMP"
       - name: Build the CMP Android catalog
         if: matrix.platform == 'cmp-android'
         run: ./gradlew :app:androidApp:assembleDebug
@@ -109,9 +114,6 @@ jobs:
           export ANDROID_AVD_HOME="$ANDROID_USER_HOME/avd"
           mkdir -p "$ANDROID_AVD_HOME"
           printf 'no\n' | "$tools/avdmanager" create avd --name parity --package "$image" --device pixel_7
-          avd_config="$ANDROID_AVD_HOME/parity.avd/config.ini"
-          sed -i '/^disk\.dataPartition\.size[[:space:]]*=/d' "$avd_config"
-          printf '\ndisk.dataPartition.size=2G\n' >> "$avd_config"
           "$ANDROID_HOME/emulator/emulator" -avd parity -port 5554 -no-window -no-audio \
             -no-snapshot -gpu swiftshader_indirect > "$output/emulator.log" 2>&1 &
           export ANDROID_SERIAL=emulator-5554
