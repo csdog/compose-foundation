@@ -54,7 +54,7 @@ jobs:
     timeout-minutes: 45
     env:
       PLATFORM: ${{ matrix.platform }}
-      UPDATE_BASELINES: ${{ inputs.update_baselines }}
+      UPDATE_BASELINES: ${{ inputs.update_baselines || (github.event_name == 'push' && contains(github.event.head_commit.message, '[update-baselines]')) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -211,7 +211,7 @@ jobs:
           path: build/component-parity/${{ matrix.platform }}/diff/
           if-no-files-found: ignore
       - name: Upload baseline candidates
-        if: ${{ !cancelled() && inputs.update_baselines }}
+        if: ${{ !cancelled() && env.UPDATE_BASELINES == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: component-parity-candidates-${{ matrix.platform }}
@@ -265,7 +265,7 @@ jobs:
     steps:
       - name: Summarize platform and interaction checks
         env:
-          UPDATE_BASELINES: ${{ inputs.update_baselines }}
+          UPDATE_BASELINES: ${{ inputs.update_baselines || (github.event_name == 'push' && contains(github.event.head_commit.message, '[update-baselines]')) }}
           CAPTURE_RESULT: ${{ needs.capture.result }}
           CMP_RESULT: ${{ needs.cmp-behavior.result }}
           SWIFT_RESULT: ${{ needs.swift-logic.result }}
