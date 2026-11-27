@@ -204,6 +204,14 @@ iPad mini（A17 Pro，iOS 26.2）复拍四个变体的八张深浅色图，全�
 
 macOS 真实窗口中，排序前后点击同一位置的按钮，分别执行 Zulu 和 Alpha 的操作。升降序、页脚位置、横向滚动及 Tabs 回归通过。iOS 菜单展开、选择和 VoiceOver 待实机交互验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46065612262/job/140730127707)
 
+### Tooltip 样式、悬停与关闭
+
+对照 shadcn Base UI / Nova 的 `tooltip-demo.tsx`，保留 Hover 按钮和 Add to library 提示。Nova 使用反色圆角气泡、指向触发器的箭头和可配置的悬停延迟。原初始化器继续可用。iOS 保留长按和原生无障碍提示，macOS 的非 Nova 原有调用沿用系统帮助。调用方也可以绑定显示状态，例如在已有键盘焦点状态变化时显示提示。
+
+iPhone 17 Pro（iOS 26.2）使用 402 × 520 共同比较区域，收起与展开的四张深浅色截图复拍逐字节一致。SwiftUI 从按钮的 44 pt 操作区下缘放置气泡，气泡比参考低约 6 pt。Web 展开图带鼠标悬停填色，iOS 图通过绑定打开并保留按钮的静态外观。[截图与差异报告](https://github.com/csdog/compose-foundation/actions/runs/46067416555/artifacts/15232095750)
+
+macOS 实际窗口调用悬停回调，验证配置的延迟、提前移出取消、已打开后移出关闭和禁用关闭。气泡显示在按钮下方，窗口保持 key 状态。SwiftUI 包构建与 Tabs 导航回归通过。系统指针路径、iOS 实际长按、Escape 和 VoiceOver 待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46067416555/job/140736147725)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -275,7 +283,7 @@ macOS 真实窗口中，排序前后点击同一位置的按钮，分别执行 Z
 | toast | 支持原有单条通知和 `FoundationToastState` 队列。队列默认显示最新三条，支持深浅色、变体图标、可选操作、逐条关闭、清空和独立计时。面板目前纵向展开。堆叠展开、滑动手势、优先级播报和多操作仍待对齐。 |
 | toggle | 可绑定选中、禁用及自定义标签。Nova 支持普通、描边和三个尺寸。描边书签的状态已截图。 |
 | toggle-group | 支持单选、多选、是否允许空选择、禁用以及自定义图标标签。Nova 与 Toggle 共用外观。纵向布局和组内方向键导航仍待补齐。 |
-| tooltip | macOS 使用系统 help，iOS 使用长按提示和无障碍 hint。Compose 支持 provider、延迟、位置与更广的触发策略。 |
+| tooltip | Nova 支持反色气泡、方向配置、悬停延迟和绑定显示。iOS 继续提供长按提示及无障碍 hint。共享 provider、边界自动换边、滚动容器裁剪、自动键盘焦点触发和 RTL 上屏验收待补。 |
 | trace | 支持状态、标题和可展开内容。Compose 的多行跟踪、独立图标、描述和链接 slots 未移植。 |
 
 ## Button 逐帧对比
