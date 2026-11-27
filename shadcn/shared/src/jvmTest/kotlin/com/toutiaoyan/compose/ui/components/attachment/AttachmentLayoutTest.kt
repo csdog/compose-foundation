@@ -38,7 +38,7 @@ class AttachmentLayoutTest : ScreenshotTest() {
     @Test fun longTitleReservesActionsAndTracksWidthAndDirection() {
         var width by mutableStateOf(384.dp)
         var direction by mutableStateOf(LayoutDirection.Ltr)
-        setThemedContent(stylePreset = StylePreset.Nova) {
+        setThemedContent(stylePreset = StylePreset.Nova, useMinimumTouchTarget = false) {
             CompositionLocalProvider(LocalLayoutDirection provides direction) {
                 Attachment(Modifier.width(width).testTag("card"), actions = {
                     AttachmentActions(Modifier.testTag("actions")) {

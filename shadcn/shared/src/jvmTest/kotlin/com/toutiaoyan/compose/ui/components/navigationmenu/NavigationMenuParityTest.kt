@@ -53,7 +53,7 @@ class NavigationMenuParityTest : ScreenshotTest() {
     }
 
     @Test fun novaTriggerHasSourceHeightAndDecorativeChevronSpace() {
-        setThemedContent(stylePreset = StylePreset.Nova) {
+        setThemedContent(stylePreset = StylePreset.Nova, useMinimumTouchTarget = false) {
             NavigationMenu { NavigationMenuList { first() } }
         }
         composeRule.onNodeWithTag("first").assertHeightIsEqualTo(36.dp)
@@ -484,7 +484,7 @@ class NavigationMenuParityTest : ScreenshotTest() {
     }
 
     @Test fun callerStyleOverridesTriggerDimensionsAndNovaPanelHasIntrinsicWidth() {
-        setThemedContent(stylePreset = StylePreset.Nova) {
+        setThemedContent(stylePreset = StylePreset.Nova, useMinimumTouchTarget = false) {
             NavigationMenu(defaultValue = "first") {
                 NavigationMenuList {
                     NavigationMenuItem("first") {

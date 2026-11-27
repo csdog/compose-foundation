@@ -80,7 +80,7 @@ class PaginationParityTest : ScreenshotTest() {
     }
 
     @Test fun novaPageLinksAre32SquareWithTwoPixelGap() {
-        setThemedContent(stylePreset = StylePreset.Nova) {
+        setThemedContent(stylePreset = StylePreset.Nova, useMinimumTouchTarget = false) {
             Pagination {
                 PaginationContent {
                     PaginationLink(1, onClick = {}, modifier = Modifier.testTag("one"))
@@ -180,7 +180,7 @@ class PaginationParityTest : ScreenshotTest() {
 
     @Test fun directionalLabelsSwitchAt640AndKeepSourcePadding() {
         var width by mutableIntStateOf(639)
-        setThemedContent(stylePreset = StylePreset.Nova) {
+        setThemedContent(stylePreset = StylePreset.Nova, useMinimumTouchTarget = false) {
             val original = LocalWindowInfo.current
             val density = LocalDensity.current
             val current = width
@@ -205,7 +205,7 @@ class PaginationParityTest : ScreenshotTest() {
     }
 
     @Test fun localizedSlotUsesVisibleTextAndCallerSizeOverrides() {
-        setThemedContent(stylePreset = StylePreset.Nova) {
+        setThemedContent(stylePreset = StylePreset.Nova, useMinimumTouchTarget = false) {
             PaginationLink(
                 2,
                 isActive =

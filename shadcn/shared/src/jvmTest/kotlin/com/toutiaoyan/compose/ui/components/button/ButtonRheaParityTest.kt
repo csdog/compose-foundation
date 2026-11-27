@@ -30,6 +30,7 @@ import com.toutiaoyan.compose.ui.tokens.BaseColor
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class ButtonRheaParityTest : ScreenshotTest() {
     @Test
@@ -84,7 +85,15 @@ class ButtonRheaParityTest : ScreenshotTest() {
         button.performMouseInput { moveTo(center) }
         val input = BaseColor.Neutral.dark.input
         val darkHover = input.copy(alpha = input.alpha * 0.3f).compositeOver(surface)
-        assertEquals(darkHover.toArgb(), topFill())
+        val rendered = topFill()
+        val expected = darkHover.toArgb()
+        // Skia's blend can round a color channel to the neighboring 8-bit value.
+        for (shift in listOf(16, 8, 0)) {
+            val actualChannel = (rendered ushr shift) and 0xff
+            val expectedChannel = (expected ushr shift) and 0xff
+            assertTrue(actualChannel in expectedChannel - 1..expectedChannel + 1)
+        }
+        assertEquals(expected ushr 24, rendered ushr 24)
         composeRule.runOnIdle { dark = false }
         assertEquals(BaseColor.Neutral.light.muted.toArgb(), topFill())
     }

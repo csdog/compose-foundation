@@ -130,7 +130,7 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
       - name: Run Desktop (JVM) tests
-        run: ./gradlew jvmTest --continue
+        run: ./gradlew jvmTest --continue --no-parallel --max-workers=2 -Pkotlin.daemon.jvmargs=-Xmx6g
 
       - name: Upload test results
         if: always()

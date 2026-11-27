@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.InputModeManager
 import androidx.compose.ui.platform.LocalInputModeManager
@@ -100,10 +101,20 @@ abstract class ScreenshotTest {
     fun setThemedContent(
         darkTheme: Boolean = false,
         stylePreset: StylePreset = StylePreset.Vega,
+        useMinimumTouchTarget: Boolean = true,
         content: @Composable () -> Unit,
     ) {
         composeRule.setContent {
-            SnapshotSurface(darkTheme, stylePreset, content)
+            SnapshotSurface(darkTheme, stylePreset) {
+                if (useMinimumTouchTarget) {
+                    content()
+                } else {
+                    CompositionLocalProvider(
+                        Theme.LocalTheme provides currentTheme.copy(minTouchTarget = null),
+                        content = content,
+                    )
+                }
+            }
         }
     }
 
