@@ -157,7 +157,11 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                         AnyView(AlertDialogScreenshotFixture(example: example, isOpen: isOpen))
                     })
                 }
-            },
+            } + [
+                ("alert-dialog-rtl-initial", { AnyView(AlertDialogRTLScreenshotFixture(initialPanel: nil)) }),
+                ("alert-dialog-rtl-open", { AnyView(AlertDialogRTLScreenshotFixture(initialPanel: .regular)) }),
+                ("alert-dialog-rtl-small-open", { AnyView(AlertDialogRTLScreenshotFixture(initialPanel: .small)) }),
+            ],
             "tooltip": [
                 ("tooltip-default-initial", { AnyView(TooltipScreenshotFixture(isOpen: false)) }),
                 ("tooltip-default-open", { AnyView(TooltipScreenshotFixture(isOpen: true)) }),
@@ -921,7 +925,7 @@ private struct AlertDialogScreenshotFixture: View {
                     if example == .media {
                         Image(systemName: "plus.circle").font(.system(size: 24))
                     } else {
-                        bluetooth
+                        Self.bluetooth
                     }
                 }
                 .accessibilityHidden(true)
@@ -929,7 +933,7 @@ private struct AlertDialogScreenshotFixture: View {
         }
     }
 
-    private var bluetooth: some View {
+    static var bluetooth: some View {
         Path { path in
             path.move(to: CGPoint(x: 7, y: 7))
             path.addLine(to: CGPoint(x: 17, y: 17))
@@ -940,6 +944,65 @@ private struct AlertDialogScreenshotFixture: View {
         }
         .stroke(style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
         .frame(width: 24, height: 24)
+    }
+}
+
+private struct AlertDialogRTLScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    @State private var isOpen: Bool
+    @State private var size: FoundationAlertDialog.Size
+
+    init(initialPanel: FoundationAlertDialog.Size?) {
+        _isOpen = State(initialValue: initialPanel != nil)
+        _size = State(initialValue: initialPanel ?? .regular)
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+
+        return HStack(spacing: 16) {
+            Button("إظهار الحوار") { present(.regular) }
+            Button("إظهار الحوار (صغير)") { present(.small) }
+        }
+        .buttonStyle(FoundationButtonStyle(.outline))
+        .padding(.horizontal, 24)
+        .padding(.top, 18)
+        .frame(width: 720, height: 520, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .modifier(dialog)
+        .environment(\.layoutDirection, .rightToLeft)
+        .environment(\.locale, Locale(identifier: "ar"))
+        .foundationTheme(theme)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+
+    private var dialog: FoundationAlertDialog {
+        switch size {
+        case .regular:
+            return FoundationAlertDialog(
+                isPresented: $isOpen, title: "هل أنت متأكد تمامًا؟",
+                message: "لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك نهائيًا من خوادمنا.",
+                size: .regular, confirmTitle: "متابعة", cancelTitle: "إلغاء", onConfirm: {}
+            )
+        case .small:
+            return FoundationAlertDialog(
+                isPresented: $isOpen, title: "السماح للملحق بالاتصال؟",
+                message: "هل تريد السماح لملحق USB بالاتصال بهذا الجهاز؟",
+                size: .small, confirmTitle: "السماح", cancelTitle: "عدم السماح", onConfirm: {}
+            ) {
+                AlertDialogScreenshotFixture.bluetooth.accessibilityHidden(true)
+            }
+        }
+    }
+
+    private func present(_ size: FoundationAlertDialog.Size) {
+        self.size = size
+        isOpen = true
     }
 }
 
