@@ -45,10 +45,42 @@ public struct FoundationPalette: Sendable {
     )
 
     var novaDarkOutlineFill: Color {
+        novaDarkOutlineFill(in: .page)
+    }
+
+    func novaDarkOutlineFill(in surface: FoundationSurface) -> Color {
         if background == Self.neutralDark.background && input == Self.neutralDark.input {
-            return Color(rgb: 0x141414)
+            switch surface {
+            case .page: return Color(rgb: 0x141414)
+            case .card where card == Self.neutralDark.card: return Color(rgb: 0x212121)
+            case .cardFooter where card == Self.neutralDark.card && secondary == Self.neutralDark.secondary:
+                return Color(rgb: 0x272727)
+            default: break
+            }
         }
         return input.opacity(0.3)
+    }
+
+    func novaCardFooterFill(for scheme: ColorScheme) -> Color {
+        if scheme == .dark && card == Self.neutralDark.card && secondary == Self.neutralDark.secondary {
+            return Color(rgb: 0x1e1e1e)
+        }
+        return secondary.opacity(0.5)
+    }
+}
+
+enum FoundationSurface: Sendable {
+    case page, card, cardFooter
+}
+
+private struct FoundationSurfaceKey: EnvironmentKey {
+    static let defaultValue = FoundationSurface.page
+}
+
+extension EnvironmentValues {
+    var foundationSurface: FoundationSurface {
+        get { self[FoundationSurfaceKey.self] }
+        set { self[FoundationSurfaceKey.self] = newValue }
     }
 }
 

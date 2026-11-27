@@ -4,6 +4,7 @@ public struct FoundationInput: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.foundationSurface) private var surface
     @Environment(\.font) private var font
     @ScaledMetric(relativeTo: .subheadline) private var novaFieldHeight: CGFloat = 32
     @ScaledMetric(relativeTo: .body) private var novaFontSize: CGFloat = 16
@@ -37,7 +38,7 @@ public struct FoundationInput: View {
         let underlined = theme.preset == .sera
         let nova = theme.preset == .nova
         let fieldHeight = max(32, novaFieldHeight)
-        let fill = nova ? (colorScheme == .dark ? palette.novaDarkOutlineFill : .clear) : palette.card
+        let fill = nova ? (colorScheme == .dark ? palette.novaDarkOutlineFill(in: surface) : .clear) : palette.card
 
         editor(nova ? "" : placeholder)
             .textFieldStyle(.plain)

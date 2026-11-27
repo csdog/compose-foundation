@@ -66,6 +66,7 @@ public struct FoundationButtonStyle: ButtonStyle {
     @Environment(\.textCase) private var textCase
     @Environment(\.font) private var labelFont
     @Environment(\.foundationButtonGroupPosition) private var groupPosition
+    @Environment(\.foundationSurface) private var surface
     @ScaledMetric(relativeTo: .subheadline) private var horizontalPadding: CGFloat = 12
 
     private let variant: Variant
@@ -112,6 +113,7 @@ public struct FoundationButtonStyle: ButtonStyle {
         let pressed = isEnabled && configuration.isPressed
         let novaOutline = theme.preset == .nova && variant == .outline
         let darkNovaOutline = novaOutline && colorScheme == .dark
+        let outlineBackground = novaOutline && surface != .page ? palette.background : colors.background
         let font = labelFont ?? size.map { Font.system(size: $0.textSize, weight: .medium) }
             ?? theme.font(editorial ? .caption : .subheadline, weight: editorial ? .semibold : .medium)
         let padding = size?.horizontalPadding ?? metrics?.buttonPadding ?? 12
@@ -128,9 +130,9 @@ public struct FoundationButtonStyle: ButtonStyle {
             .frame(minWidth: position == nil ? nil : 44)
             .background(Group {
                 if darkNovaOutline {
-                    shape.inset(by: position == nil ? 1 : 0).fill(palette.novaDarkOutlineFill)
+                    shape.inset(by: position == nil ? 1 : 0).fill(palette.novaDarkOutlineFill(in: surface))
                 } else {
-                    shape.fill(colors.background)
+                    shape.fill(outlineBackground)
                 }
             })
             .overlay(Group {

@@ -38,13 +38,14 @@ public struct FoundationCard<Content: View>: View {
         let palette = theme.palette(for: colorScheme)
         let shape = RoundedRectangle(cornerRadius: theme.cardCornerRadius)
         let inset = padding * (theme.preset?.metrics.cardPadding ?? 16) / 16 * (size == .small ? 0.75 : 1)
+        let footerFill = theme.preset == .nova ? palette.novaCardFooterFill(for: colorScheme) : palette.secondary.opacity(0.5)
 
         if let footer {
             VStack(alignment: .leading, spacing: 0) {
-                content.padding(inset)
-                footer.padding(inset)
+                content.environment(\.foundationSurface, .card).padding(inset)
+                footer.environment(\.foundationSurface, .cardFooter).padding(inset)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(palette.secondary.opacity(0.5))
+                    .background(footerFill)
                     .overlay(Rectangle().fill(palette.border).frame(height: 1).allowsHitTesting(false), alignment: .top)
             }
             .foregroundColor(palette.foreground)
@@ -53,6 +54,7 @@ public struct FoundationCard<Content: View>: View {
             .overlay(shape.strokeBorder(palette.border).allowsHitTesting(false))
         } else {
             content
+                .environment(\.foundationSurface, .card)
                 .foregroundColor(palette.foreground)
                 .padding(inset)
                 .background(shape.fill(palette.card))
