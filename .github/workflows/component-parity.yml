@@ -19,10 +19,14 @@ on:
       component:
         description: Component slug to capture. Leave empty for the full pilot.
         type: string
-      update_baselines:
-        description: Review mode. Capture twice and upload reproducible baseline candidates.
-        type: boolean
-        default: false
+      update:
+        description: Compare screenshots, review new baselines, or publish new baselines from main
+        type: choice
+        options:
+          - "no"
+          - review
+          - publish
+        default: "no"
       require_baselines:
         description: Fail if an automated capture does not have an approved baseline
         type: boolean
@@ -32,8 +36,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: component-parity-${{ github.ref }}
-  cancel-in-progress: true
+  group: component-parity-${{ github.ref }}-${{ inputs.update == 'publish' && 'publish' || 'check' }}
+  cancel-in-progress: ${{ inputs.update != 'publish' }}
 
 jobs:
   baseline:
@@ -49,8 +53,13 @@ jobs:
       - name: Resolve the pinned commit or the latest main
         id: resolve
         env:
+          UPDATE_MODE: ${{ inputs.update }}
           GH_TOKEN: ${{ secrets.COMPONENT_BASELINES_READ_TOKEN || github.token }}
         run: |
+          if [[ "$UPDATE_MODE" == publish && "$GITHUB_REF" != refs/heads/main ]]; then
+            echo 'Publish mode must be run from main.' >&2
+            exit 1
+          fi
           plan=shadcn/validation/plan.json
           repository="$(jq -er '.baseline.repository | select(test("^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"))' "$plan")"
           revision="$(jq -er '.baseline.revision // ""' "$plan")"
@@ -83,7 +92,7 @@ jobs:
     timeout-minutes: 45
     env:
       PLATFORM: ${{ matrix.platform }}
-      UPDATE_BASELINES: ${{ inputs.update_baselines || (github.event_name == 'push' && contains(github.event.head_commit.message, '[update-baselines]')) }}
+      UPDATE_BASELINES: ${{ inputs.update == 'review' || inputs.update == 'publish' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[update-baselines]')) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -242,7 +251,57 @@ jobs:
           name: component-parity-candidates-${{ matrix.platform }}
           retention-days: 7
           path: build/component-parity/${{ matrix.platform }}/candidate/
-          if-no-files-found: ignore
+          if-no-files-found: ${{ inputs.update == 'publish' && 'error' || 'ignore' }}
+
+  publish:
+    name: Publish component baselines
+    needs: [baseline, capture]
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.update == 'publish'
+    runs-on: ubuntu-24.04
+    env:
+      BASELINE_REPOSITORY: ${{ needs.baseline.outputs.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: component-parity-candidates-*
+          path: ${{ runner.temp }}/candidates
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ needs.baseline.outputs.repository }}
+          ref: main
+          token: ${{ secrets.COMPONENT_BASELINES_WRITE_TOKEN }}
+          path: baseline-repository
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install Pillow==11.3.0
+      - name: Publish validated screenshots
+        run: |
+          plan=shadcn/validation/plan.json
+          platforms="$(jq -er '.platforms | to_entries | map(select(.value == "automated") | .key) | join("\n")' "$plan")"
+          published_paths="$RUNNER_TEMP/published-paths.txt"
+          : > "$published_paths"
+          for platform in $platforms; do
+            python shadcn/validation/publish_baselines.py --plan "$plan" --platform "$platform" \
+              --candidates "$RUNNER_TEMP/candidates/component-parity-candidates-$platform" \
+              --baselines baseline-repository >> "$published_paths"
+          done
+          mapfile -t paths < "$published_paths"
+          git -C baseline-repository add -- "${paths[@]}"
+          if ! git -C baseline-repository diff --cached --quiet; then
+            git -C baseline-repository -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -m 'Update component screenshot baselines' \
+                -m "Capture source: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$GITHUB_SHA" \
+                -m "Publish run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            git -C baseline-repository push origin HEAD:main
+          fi
+          revision="$(git -C baseline-repository rev-parse HEAD)"
+          printf '发布后的基准提交：[%s](%s/%s/commit/%s)\n' \
+            "$revision" "$GITHUB_SERVER_URL" "$BASELINE_REPOSITORY" "$revision" >> "$GITHUB_STEP_SUMMARY"
 
   cmp-behavior:
     name: CMP shared interaction tests
@@ -284,21 +343,24 @@ jobs:
 
   report:
     name: Component parity report
-    needs: [capture, cmp-behavior, swift-logic]
+    needs: [capture, cmp-behavior, swift-logic, publish]
     if: always()
     runs-on: ubuntu-24.04
     steps:
       - name: Summarize platform and interaction checks
         env:
-          UPDATE_BASELINES: ${{ inputs.update_baselines || (github.event_name == 'push' && contains(github.event.head_commit.message, '[update-baselines]')) }}
+          UPDATE_MODE: ${{ (github.event_name == 'push' && contains(github.event.head_commit.message, '[update-baselines]')) && 'review' || inputs.update }}
           CAPTURE_RESULT: ${{ needs.capture.result }}
           CMP_RESULT: ${{ needs.cmp-behavior.result }}
           SWIFT_RESULT: ${{ needs.swift-logic.result }}
+          PUBLISH_RESULT: ${{ needs.publish.result }}
         run: |
           {
             echo '## 跨平台组件验收'
-            if [[ "$UPDATE_BASELINES" == true ]]; then
-              echo '基准更新：拍摄两遍，稳定的候选图可从各平台附件下载。'
+            if [[ "$UPDATE_MODE" == publish ]]; then
+              echo "基准发布：$PUBLISH_RESULT"
+            elif [[ "$UPDATE_MODE" == review ]]; then
+              echo '基准审核：稳定的候选图可从各平台附件下载。'
             else
               echo '日常回归：每个用例拍摄一遍。比对详情在各平台任务的 Summary，截图差异只在失败时上传。'
             fi
@@ -308,3 +370,4 @@ jobs:
             echo "- SwiftUI Tabs 焦点与选择逻辑：$SWIFT_RESULT"
           } >> "$GITHUB_STEP_SUMMARY"
           [[ "$CAPTURE_RESULT" == success && "$CMP_RESULT" == success && "$SWIFT_RESULT" == success ]]
+          [[ "$UPDATE_MODE" != publish || "$PUBLISH_RESULT" == success ]]

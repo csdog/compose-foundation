@@ -42,7 +42,7 @@
 
 GitHub Actions 的 **Component parity** 在相关 PR 上采集 Button、Tabs、Popover 的初始状态和深浅色截图。CMP Web、CMP Android 和 SwiftUI iOS 使用各自的 Catalog。SwiftUI 截图在 iPhone 模拟器采集。CMP Desktop 的 Popover 展开态已可在本地采集，平台截图尚未接入 CI。CMP iOS 和独立 Jetpack Compose 的执行入口仍待接入。报告同时收录 CMP JVM 的 Tabs 和 Popover 行为测试，以及 SwiftUI 的 Tabs 导航逻辑测试。设备交互、无障碍和动画仍需按下文的方法单独验收。
 
-[`shadcn/validation/plan.json`](../shadcn/validation/plan.json) 记录每个组件的 shadcn Base UI / Nova 源码版本和示例。日常回归每个用例采集一遍并与本次选定的基准做像素比较。手动启用 `update_baselines` 时采集两遍，只有可复现的截图会成为候选图。对照上游示例审核候选图的内容、排版、主题和组件状态，并在 PR 上说明有意保留的平台差异。初始截图只覆盖当前 fixture 的状态。例如 Popover 展开态要单独验收。
+[`shadcn/validation/plan.json`](../shadcn/validation/plan.json) 记录每个组件的 shadcn Base UI / Nova 源码版本和示例。日常回归和手动运行的默认模式 `update=no` 每个用例采集一遍，并与本次选定的基准做像素比较。手动选择 `review` 或 `publish` 时采集两遍，只有可复现的截图会成为候选图。对照上游示例审核候选图的内容、排版、主题和组件状态，并在 PR 上说明有意保留的平台差异。初始截图只覆盖当前 fixture 的状态。例如 Popover 展开态要单独验收。
 
 审核通过的实际图提交到独立的 `csdog/compose-foundation-baselines` 仓库。目录按 Web 和移动端组织，各平台路径由 `plan.json` 的 `baseline.paths` 定义。文件名保留组件、变体、状态和深浅色。
 
@@ -69,7 +69,7 @@ python3 shadcn/validation/report.py "$second" --run --platform cmp-desktop \
   --component popover --baselines "$first/cmp-desktop/candidate" --try-candidate
 ```
 
-对照上游图审核 Actions 的候选附件后，在 `main` 手动运行 **Publish component baselines**，选择平台并填写审核过的 Actions run ID。发布任务使用 `COMPONENT_BASELINES_WRITE_TOKEN`，该 secret 需要对基准仓库有 Contents 写权限。任务将该平台的候选 PNG 提交到基准仓库的 `main` 并输出 SHA。采用默认配置的新运行会读取这版基准。`--try-candidate` 只用于本地验证，报告会标明候选图仍待审核。
+先在 **Component parity** 手动选择 `update=review` 采集并下载候选图。对照上游确认后，从 `main` 手动选择 `update=publish`，使用同一个组件范围重拍。全部采集平台通过检查后，发布任务下载本次候选图，将 PNG 一次性提交到基准仓库的 `main` 并输出 SHA。发布使用 `COMPONENT_BASELINES_WRITE_TOKEN`，该 secret 需要对基准仓库有 Contents 写权限。采用默认配置的新运行会读取这版基准。`--try-candidate` 只用于本地验证，报告会标明候选图仍待审核。
 
 Popover 的上游参考图可以用固定版本的 shadcn 源码在本地预览中重拍。生成器用 Playwright 打开正式示例的弹层，按深浅色截图，并保存上游提交和浏览器等来源信息。对已有报告使用 `--report-only --shadcn-references <目录>`，保留原生比对结果并加入参考图。
 
