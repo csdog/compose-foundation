@@ -726,6 +726,29 @@ jobs:
           cat "$log"
           grep -q '^PASS:' "$log"
 
+      - name: Verify Nova Pagination clicks and bounds on macOS
+        if: contains(needs.baseline.outputs.matrix, '"pagination"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          app="$RUNNER_TEMP/PaginationAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string PaginationAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.pagination-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationTheme.swift" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationButtonStyle.swift" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationPagination.swift" \
+            "$swiftui/validation/MacPaginationAudit.swift" \
+            -o "$app/Contents/MacOS/PaginationAudit"
+          log="$RUNNER_TEMP/pagination.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app"
+          cat "$log"
+          grep -q '^PASS:' "$log"
+
   report:
     name: Component parity report
     needs: [baseline, capture, cmp-behavior, swift-logic, publish]

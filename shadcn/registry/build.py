@@ -26,6 +26,7 @@ SWIFT_SUPPORT_FILES = {
     "field": ("FoundationLabel.swift",),
     "menubar": ("FoundationMenuGroups.swift", "FoundationPopover.swift"),
     "navigation-menu": ("FoundationMenuGroups.swift", "FoundationPopover.swift"),
+    "pagination": ("FoundationButtonStyle.swift",),
     "sheet": ("FoundationPresentationHeader.swift",),
     "tabs": ("FoundationTabsNavigation.swift",),
     "toast": ("FoundationButtonStyle.swift",),
