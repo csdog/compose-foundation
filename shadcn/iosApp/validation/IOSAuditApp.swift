@@ -155,6 +155,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "checkbox": CheckboxScreenshotFixture.Example.allCases.map { example in
                 ("checkbox-\(example.rawValue)", { AnyView(CheckboxScreenshotFixture(example: example)) })
             },
+            "radio-group": RadioGroupScreenshotFixture.Example.allCases.map { example in
+                ("radio-group-\(example.rawValue)", { AnyView(RadioGroupScreenshotFixture(example: example)) })
+            },
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
         let useComparisonFixtures = !names.isDisjoint(with: Set(comparisonFixtures.keys).union(variantFixtures.keys))
@@ -680,6 +683,52 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct RadioGroupScreenshotFixture: View {
+    enum Example: String, CaseIterable {
+        case initial = "default-initial"
+        case compactSelected = "default-compact"
+        case disabled = "disabled-initial"
+    }
+
+    @Environment(\.colorScheme) private var scheme
+    @State private var selection: String?
+    let example: Example
+
+    init(example: Example) {
+        self.example = example
+        switch example {
+        case .initial: _selection = State(initialValue: "comfortable")
+        case .compactSelected: _selection = State(initialValue: "compact")
+        case .disabled: _selection = State(initialValue: "option2")
+        }
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let disabled = example == .disabled
+        let choices = disabled ? [
+            FoundationChoice("Disabled", value: "option1", isEnabled: false),
+            FoundationChoice("Option 2", value: "option2"),
+            FoundationChoice("Option 3", value: "option3"),
+        ] : [
+            FoundationChoice("Default", value: "default"),
+            FoundationChoice("Comfortable", value: "comfortable"),
+            FoundationChoice("Compact", value: "compact"),
+        ]
+        return FoundationRadioGroup(choices, selection: $selection)
+            .font(.custom(disabled ? "Geist-Regular" : "Geist-Medium", size: 14))
+            .foundationTheme(theme)
+            .padding(.horizontal, 24)
+            .padding(.top, disabled ? 12 : 10)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
     }
 }
 
