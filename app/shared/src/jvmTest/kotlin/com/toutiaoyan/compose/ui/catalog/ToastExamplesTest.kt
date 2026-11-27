@@ -76,7 +76,12 @@ class ToastExamplesTest(private val viewport: Int, private val dark: Boolean) {
                     }
                 }
             CompositionLocalProvider(LocalWindowInfo provides window) {
-                Theme(preset = StylePreset.Vega, isDark = dark, minTouchTarget = 48.dp) {
+                Theme(
+                    preset = StylePreset.Vega,
+                    isDark = dark,
+                    fontFamily = catalogFontFamily(),
+                    minTouchTarget = 48.dp,
+                ) {
                     CatalogToastHost(
                         Modifier.width(minOf(viewport, 640).dp).height(640.dp)
                             .background(currentTheme.colors.background).testTag("toast-scene"),
