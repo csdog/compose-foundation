@@ -20,6 +20,23 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "tooltip": {
+      "title": "Tooltip",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520]},
+          {"variant": "default", "status": "open", "viewport": [402, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/tooltip-demo.tsx",
+      "visual": "compare the default outline trigger and settled open inverse-color hint",
+      "behavior": "open after the hover delay, cancel on exit, and support long press on iOS",
+      "accessibility": "expose the message as the native trigger hint",
+      "motion": "static settled frames"
+    },
     "table": {
       "title": "Table",
       "variant": "default",
