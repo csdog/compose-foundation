@@ -20,6 +20,25 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "item": {
+      "title": "Item",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "variant", "status": "initial", "viewport": [720, 520]},
+          {"variant": "size", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/item-demo.tsx",
+      "visual": "compare the full action rows, three surface variants, and three sizes",
+      "behavior": "preserve independent actions and logical start and end placement",
+      "accessibility": "caller controls retain their native semantics",
+      "motion": "static settled frames"
+    },
     "avatar": {
       "title": "Avatar",
       "variant": "default",
