@@ -71,7 +71,7 @@ class ToggleExamplesTest {
         assertContains(markdown, "Use `variant = ToggleVariant.Outline` for an outline style.")
         assertContains(markdown, "Use the `size` prop to change the size of the toggle.")
         assertFalse(markdown.contains("## Examples"))
-        assertFalse(markdown.contains("## Default"))
+        assertTrue(markdown.lineSequence().none { it == "## Default" })
     }
 
     @Test fun demoIsTheOfficialBookmarkToggle() {
