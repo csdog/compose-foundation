@@ -36,7 +36,38 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  baseline:
+    name: Resolve the baseline once for all platforms
+    runs-on: ubuntu-24.04
+    outputs:
+      repository: ${{ steps.resolve.outputs.repository }}
+      revision: ${{ steps.resolve.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Resolve the pinned commit or the latest main
+        id: resolve
+        env:
+          GH_TOKEN: ${{ secrets.COMPONENT_BASELINES_READ_TOKEN || github.token }}
+        run: |
+          plan=shadcn/validation/plan.json
+          repository="$(jq -er '.baseline.repository | select(test("^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"))' "$plan")"
+          revision="$(jq -er '.baseline.revision // ""' "$plan")"
+          if [[ -z "$revision" ]]; then
+            if ! revision="$(gh api "repos/$repository/commits/main" --jq .sha)"; then
+              echo '::warning::Could not read the baseline repository. Check COMPONENT_BASELINES_READ_TOKEN.'
+              revision=''
+            fi
+          fi
+          if [[ -n "$revision" && ! "$revision" =~ ^[0-9a-f]{40}$ ]]; then
+            echo 'Baseline revision must be a full commit SHA' >&2
+            exit 1
+          fi
+          printf 'repository=%s\nrevision=%s\n' "$repository" "$revision" >> "$GITHUB_OUTPUT"
+
   capture:
+    needs: baseline
     name: Capture and compare / ${{ matrix.platform }}
     strategy:
       fail-fast: false
@@ -60,26 +91,21 @@ jobs:
           python-version: "3.12"
       - run: python -m pip install Pillow==11.3.0
 
-      - name: Read the baseline lock
-        id: baseline
+      - name: Read the platform baseline directory
+        if: needs.baseline.outputs.revision != ''
+        id: baseline-path
         run: |
-          plan=shadcn/validation/plan.json
-          repository="$(jq -er '.baseline.repository | select(test("^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"))' "$plan")"
-          revision="$(jq -er '.baseline.revision // ""' "$plan")"
-          if [[ -n "$revision" && ! "$revision" =~ ^[0-9a-f]{40}$ ]]; then
-            echo 'Baseline revision must be a full commit SHA' >&2
-            exit 1
-          fi
-          printf 'repository=%s\nrevision=%s\n' "$repository" "$revision" >> "$GITHUB_OUTPUT"
+          directory="$(jq -er --arg platform "$PLATFORM" '.baseline.paths[$platform] // $platform' shadcn/validation/plan.json)"
+          printf 'directory=%s\n' "$directory" >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v4
-        if: steps.baseline.outputs.revision != ''
+        if: needs.baseline.outputs.revision != ''
         with:
-          repository: ${{ steps.baseline.outputs.repository }}
-          ref: ${{ steps.baseline.outputs.revision }}
+          repository: ${{ needs.baseline.outputs.repository }}
+          ref: ${{ needs.baseline.outputs.revision }}
           token: ${{ secrets.COMPONENT_BASELINES_READ_TOKEN || github.token }}
           sparse-checkout: |
-            ${{ matrix.platform }}
+            ${{ steps.baseline-path.outputs.directory }}
             shadcn
           path: build/component-baselines
           persist-credentials: false
@@ -174,6 +200,7 @@ jobs:
       - name: Capture screenshots and check the results
         env:
           REQUIRE_BASELINES: ${{ inputs.require_baselines }}
+          BASELINE_REVISION: ${{ needs.baseline.outputs.revision }}
           COMPONENT: ${{ github.event_name == 'push' && 'popover' || inputs.component }}
         run: |
           flags=()
@@ -184,7 +211,7 @@ jobs:
             flags+=(--require-baselines)
           fi
           python shadcn/validation/report.py build/component-parity --run --platform "$PLATFORM" \
-            --baselines build/component-baselines "${flags[@]}"
+            --baselines build/component-baselines --baseline-revision "$BASELINE_REVISION" "${flags[@]}"
       - name: Print the platform result
         if: always()
         run: |

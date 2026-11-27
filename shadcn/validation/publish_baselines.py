@@ -6,7 +6,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from report import copy_image, screenshot_path
+from report import baseline_path, copy_image, screenshot_path
 
 
 def main():
@@ -31,17 +31,20 @@ def main():
         parser.error("candidates must contain complete light/dark PNG pairs for the selected platform")
 
     root = args.baselines.resolve()
+    platform_dir = root / baseline_path(plan, args.platform)
     for relative in sorted(files):
         source = args.candidates / relative
         if not source.resolve().is_relative_to(args.candidates.resolve()):
             parser.error(f"candidate resolves outside the artifact: {relative}")
-        if not (root / relative).resolve().is_relative_to(root):
+        target = platform_dir / relative.relative_to(args.platform)
+        if not target.resolve().is_relative_to(root):
             parser.error(f"baseline resolves outside the checkout: {relative}")
         with Image.open(source, formats=["PNG"]) as image:
             image.verify()
     for relative in sorted(files):
-        copy_image(args.candidates / relative, root / relative)
-        print(relative.as_posix())
+        target = platform_dir / relative.relative_to(args.platform)
+        copy_image(args.candidates / relative, target)
+        print(target.relative_to(root).as_posix())
 
 
 if __name__ == "__main__":

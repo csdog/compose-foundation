@@ -4,7 +4,12 @@
   "style": "nova",
   "baseline": {
     "repository": "csdog/compose-foundation-baselines",
-    "revision": null
+    "revision": null,
+    "paths": {
+      "cmp-web": "web",
+      "cmp-android": "mobile/cmp-android",
+      "swiftui-ios": "mobile/swiftui"
+    }
   },
   "platforms": {
     "cmp-web": "automated",

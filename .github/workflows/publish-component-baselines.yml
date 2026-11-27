@@ -94,8 +94,9 @@ jobs:
         run: |
           python shadcn/validation/publish_baselines.py \
             --plan "$RUNNER_TEMP/review-plan.json" --platform "$PLATFORM" \
-            --candidates "$RUNNER_TEMP/candidates" --baselines baseline-repository
-          git -C baseline-repository add -- "$PLATFORM"
+            --candidates "$RUNNER_TEMP/candidates" --baselines baseline-repository > "$RUNNER_TEMP/published-paths.txt"
+          mapfile -t paths < "$RUNNER_TEMP/published-paths.txt"
+          git -C baseline-repository add -- "${paths[@]}"
           if ! git -C baseline-repository diff --cached --quiet; then
             git -C baseline-repository -c user.name='github-actions[bot]' \
               -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \

@@ -6,6 +6,7 @@ import itertools
 import json
 import os
 from pathlib import Path
+import re
 from shutil import copyfile
 import subprocess
 import sys
@@ -74,6 +75,10 @@ def screenshot_path(plan, component, theme, platform):
     return Path(component, f"{component}-{case['variant']}-{status}-{theme}.png")
 
 
+def baseline_path(plan, platform):
+    return Path(plan["baseline"].get("paths", {}).get(platform, platform))
+
+
 def copy_image(source, target):
     target.parent.mkdir(parents=True, exist_ok=True)
     copyfile(source, target)
@@ -113,7 +118,8 @@ def capture_results(args, plan):
         second = output / "repeat" / captured
         screenshot = screenshot_path(plan, component, theme, args.platform)
         location = Path(args.platform) / screenshot
-        baseline = args.baselines / location
+        native_path = Path(args.platform) if args.try_candidate else baseline_path(plan, args.platform)
+        baseline = args.baselines / native_path / screenshot
         approved = output / "expected" / location
         candidate = output / "candidate" / location
         reference_path = Path("shadcn") / screenshot
@@ -126,12 +132,12 @@ def capture_results(args, plan):
         reference_status = "缺参考图"
         if args.shadcn_references:
             reference_status = include_shadcn_reference(args.shadcn_references, output, screenshot)
-        elif plan["baseline"]["revision"] or args.try_candidate:
+        elif args.baseline_revision or args.try_candidate:
             reference_status = include_shadcn_reference(args.baselines, output, screenshot)
         else:
             (output / reference_path).unlink(missing_ok=True)
         try:
-            if (plan["baseline"]["revision"] or args.try_candidate) and baseline.is_file():
+            if (args.baseline_revision or args.try_candidate) and baseline.is_file():
                 copy_image(baseline, approved)
                 baseline_source = "candidate" if args.try_candidate else "baseline"
             if not first.is_file():
@@ -153,9 +159,9 @@ def capture_results(args, plan):
                 if args.try_candidate:
                     result = ("failed", f"缺少要复跑的本地候选图（{location}）")
                 elif args.require_baselines:
-                    result = ("failed", f"缺少已锁定的原生基准（{location}）")
+                    result = ("failed", f"缺少原生基准（{native_path / screenshot}）")
                 else:
-                    result = ("pending", "缺少已锁定的原生基准，已跳过像素比对")
+                    result = ("pending", "缺少原生基准，已跳过像素比对")
             else:
                 change = differences(approved, first, diff)
                 match = "与本地候选图一致，待审核" if args.try_candidate else "与已锁定基准一致"
@@ -190,7 +196,7 @@ def report_images(root, platform, component, theme, screenshot):
 
 
 def summarize(args, plan):
-    baseline = "本地候选图试跑，待审核" if args.try_candidate else plan["baseline"]["revision"] or "尚未锁定"
+    baseline = "本地候选图试跑，待审核" if args.try_candidate else args.baseline_revision or "未取得基准提交"
     header = [
         "## 跨平台组件验收总报告", "",
         f"shadcn {plan['primitive']} / {plan['style']} `{plan['upstreamRevision']}`",
@@ -329,6 +335,7 @@ def main():
     parser.add_argument("output", type=Path)
     parser.add_argument("--platform")
     parser.add_argument("--baselines", type=Path)
+    parser.add_argument("--baseline-revision", help="Commit SHA of the baseline checkout used by this run.")
     parser.add_argument("--component", action="append", help="Limit the run to this component. Repeat to select more.")
     parser.add_argument("--run", action="store_true", help="Capture screenshots, compare and produce the report.")
     parser.add_argument("--update-baselines", action="store_true", help="Capture twice and prepare reproducible baseline candidates for review.")
@@ -341,6 +348,17 @@ def main():
     if args.update_baselines and (not args.platform or args.report_only or args.try_candidate or args.require_baselines):
         parser.error("--update-baselines requires --platform and cannot be combined with --report-only, --try-candidate or --require-baselines")
     plan = json.loads(Path(__file__).with_name("plan.json").read_text())
+    if not args.baseline_revision:
+        args.baseline_revision = plan["baseline"].get("revision")
+    if not args.try_candidate and args.baselines and (args.baselines / ".git").exists():
+        checkout_revision = subprocess.check_output(
+            ["git", "-C", args.baselines, "rev-parse", "HEAD"], text=True
+        ).strip()
+        if args.baseline_revision and args.baseline_revision != checkout_revision:
+            parser.error("baseline checkout does not match the selected revision")
+        args.baseline_revision = checkout_revision
+    if args.baseline_revision and not re.fullmatch(r"[0-9a-f]{40}", args.baseline_revision):
+        parser.error("baseline revision must be a full commit SHA")
     if args.component:
         unknown = set(args.component) - plan["components"].keys()
         if unknown:
