@@ -704,6 +704,28 @@ jobs:
           cat "$log"
           grep -q '^PASS:' "$log"
 
+      - name: Verify bordered Scroll Area wheels on macOS
+        if: contains(needs.baseline.outputs.matrix, '"scroll-area"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          app="$RUNNER_TEMP/ScrollAreaAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string ScrollAreaAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.scroll-area-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationTheme.swift" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationScrollArea.swift" \
+            "$swiftui/validation/MacScrollAreaAudit.swift" \
+            -o "$app/Contents/MacOS/ScrollAreaAudit"
+          log="$RUNNER_TEMP/scroll-area.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app"
+          cat "$log"
+          grep -q '^PASS:' "$log"
+
   report:
     name: Component parity report
     needs: [baseline, capture, cmp-behavior, swift-logic, publish]

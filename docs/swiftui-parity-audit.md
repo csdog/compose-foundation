@@ -156,6 +156,14 @@ iPhone 17 Pro Max（iOS 26.2）在 440 × 520 画布上复拍六张深浅色图�
 
 macOS 原生渲染测得 160 × 90、160 × 160 和 90 × 160 三种尺寸。零、负数、无穷大和 NaN 都回退到 80 × 80。实际窗口通过 AppKit 点击验证，可见区内的超尺寸按钮仍可操作，横向与纵向裁剪区外的点击交给下层按钮。iOS 实际触控及 RTL 参考示例待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46055187678/job/140695915025)
 
+### Scroll Area 纵向列表、横向照片与 RTL
+
+对照 shadcn Base UI / Nova 的 `scroll-area-demo.tsx`、`scroll-area-horizontal-demo.tsx` 和 `scroll-area-rtl.tsx`。英文和阿拉伯文标签列表使用 192 × 288 pt 视口，横向照片使用 384 × 458 pt 视口。照片沿用仓库内已有的三张资源。`showsBorder: true` 启用主题边框、圆角裁剪和 1 pt 视口内边距。滚动轴、指示器和无障碍操作继续由原生 ScrollView 提供。
+
+iPhone 17 Pro Max（iOS 26.2）以 440 × 520 画布复拍六张深浅色图，逐字节一致。三组视口可见边缘与 shadcn 参考最多相差 1 pt。RTL 标题和标签在右侧对齐，横向视口裁剪第二张照片。首张照片内部的平均 RGB 通道差约为 4/255。Web 默认示例的初始图可见滚动条，iOS 静止截图由系统隐藏指示器。[截图报告](https://github.com/csdog/compose-foundation/actions/runs/46056329426/artifacts/15227071393)
+
+macOS 通过原生 NSScrollView 接收滚轮事件，验证纵向和横向分别沿指定轴滚动，正交轴偏移不变。iOS 实际拖动、硬件键盘、VoiceOver 和滚动指示器的拖动待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46056329426/job/140699684536)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -207,7 +215,7 @@ macOS 原生渲染测得 160 × 90、160 × 160 和 90 × 160 三种尺寸。零
 | questionnaire | 单选、多选、文本题、验证、回退、跳过及提交可用。缺少 Compose 的快捷键、题定义 slots、重置与部分进度状态 API。 |
 | radio-group | 支持纵向单选和禁用。Nova 使用 16 pt 圆形控件、8 pt 选中圆点和深色未选中底色。iOS 每项至少保留 44 × 44 pt 点按区域。横向布局、键盘方向键导航和其他示例仍待验收。 |
 | resizable | 支持双窗格纵向/横向比例、拖动限制、RTL 和无障碍增减。拖动读取全局坐标，避免手柄移动改变手势参考点。Compose 另有专门的状态与面板 slots。 |
-| scroll-area | 使用原生 ScrollView，支持滚动轴和指示器。缺少 Compose 的独立滚动条、显隐策略、lazy API 和拖动 thumb 配置。 |
+| scroll-area | 使用原生 ScrollView，支持滚动轴、系统指示器与可选主题边框和圆角裁剪。自定义滚动条及其显隐和拖动配置待对齐。 |
 | scroll-fade | 按所选边缘和固定距离加渐变遮罩。和 Compose 的静态 overload 对应，缺少按可滚动方向和偏移量驱动的 overload。 |
 | select | 原生 Menu 支持单选、占位、选中图标、禁用项和原生分区标题。iOS 模拟器及 macOS 已验证分区、禁用状态、指针选择及无障碍值。Compose 另有尺寸、变体及不同面板位置。 |
 | separator | 横纵向装饰性分隔线可用。边缘颜色和屏幕像素由 SwiftUI/theme 决定。 |
