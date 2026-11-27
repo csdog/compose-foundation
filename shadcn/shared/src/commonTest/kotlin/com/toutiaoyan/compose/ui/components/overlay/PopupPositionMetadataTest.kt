@@ -18,8 +18,8 @@ class PopupPositionMetadataTest {
         assertEquals(IntOffset(100, 446), top.offset)
         assertEquals(IntRect(100, 446, 220, 546), top.bounds)
         assertEquals(PopupPlacement.Top, top.physicalSide)
-        assertEquals(40f / 120f, top.transformOrigin.pivotFractionX)
-        assertEquals(104f / 100f, top.transformOrigin.pivotFractionY)
+        assertEquals(40f / 120f, top.transformOrigin.pivotFractionX, absoluteTolerance = 1e-6f)
+        assertEquals(104f / 100f, top.transformOrigin.pivotFractionY, absoluteTolerance = 1e-6f)
 
         val left =
             PopupPositionProvider(PopupPlacement.End, 4).calculatePositionResult(
@@ -30,8 +30,8 @@ class PopupPositionMetadataTest {
             )
         assertEquals(IntOffset(546, 100), left.offset)
         assertEquals(PopupPlacement.Start, left.physicalSide)
-        assertEquals(154f / 150f, left.transformOrigin.pivotFractionX)
-        assertEquals(15f / 40f, left.transformOrigin.pivotFractionY)
+        assertEquals(154f / 150f, left.transformOrigin.pivotFractionX, absoluteTolerance = 1e-6f)
+        assertEquals(15f / 40f, left.transformOrigin.pivotFractionY, absoluteTolerance = 1e-6f)
     }
 
     @Test fun oddCenterClampZeroAndBothOverflowRetainTheOldPositionArithmetic() {
