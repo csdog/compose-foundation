@@ -53,7 +53,7 @@ if [[ "$platform" == swiftui-ios ]]; then
   mkdir "$app"
   cp "$swiftui/validation/IOSAuditInfo.plist" "$app/Info.plist"
   cp "$registry" "$app/registry.json"
-  cp app/shared/src/commonMain/composeResources/font/geist_medium.ttf "$app/"
+  cp app/shared/src/commonMain/composeResources/font/geist_{medium,regular}.ttf "$app/"
   audit_components=()
   for component in "${components[@]}"; do
     audit_components+=("--audit-component=$component")

@@ -10,6 +10,7 @@ public struct FoundationBadge<Label: View>: View {
 
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.font) private var labelFont
 
     private let variant: Variant
     private let label: Label
@@ -21,12 +22,15 @@ public struct FoundationBadge<Label: View>: View {
 
     public var body: some View {
         let colors = colors(for: theme.palette(for: colorScheme))
+        let nova = theme.preset == .nova
+        let font = nova ? labelFont ?? .system(size: 12, weight: .medium) : .caption.weight(.medium)
 
-        label
-            .font(.caption.weight(.medium))
+        return label
+            .font(font)
             .foregroundColor(colors.foreground)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 3)
+            .padding(.horizontal, nova ? 9 : 8)
+            .padding(.vertical, nova ? 2 : 3)
+            .frame(minHeight: nova ? 20 : nil)
             .background(Capsule().fill(colors.background))
             .overlay(Capsule().strokeBorder(colors.border).allowsHitTesting(false))
     }
@@ -34,13 +38,14 @@ public struct FoundationBadge<Label: View>: View {
     private func colors(for palette: FoundationPalette) -> (foreground: Color, background: Color, border: Color) {
         switch variant {
         case .primary:
-            (palette.primaryForeground, palette.primary, .clear)
+            return (palette.primaryForeground, palette.primary, .clear)
         case .secondary:
-            (palette.secondaryForeground, palette.secondary, .clear)
+            return (palette.secondaryForeground, palette.secondary, .clear)
         case .outline:
-            (palette.foreground, .clear, palette.border)
+            return (palette.foreground, .clear, palette.border)
         case .destructive:
-            (palette.destructive, palette.destructive.opacity(0.15), .clear)
+            let opacity = theme.preset == .nova ? (colorScheme == .dark ? 0.20 : 0.10) : 0.15
+            return (palette.destructive, palette.destructive.opacity(opacity), .clear)
         }
     }
 }
