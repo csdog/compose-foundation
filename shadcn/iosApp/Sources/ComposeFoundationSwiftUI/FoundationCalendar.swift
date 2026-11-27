@@ -39,6 +39,15 @@ public struct FoundationCalendar: View {
         self.init(selection: .range(range), bounds: bounds, numberOfMonths: numberOfMonths, captionLayout: captionLayout)
     }
 
+    /// Opens at `initialMonth` while retaining the bound selection.
+    public init(
+        range: Binding<FoundationCalendarRange?>, initialMonth: Date, in bounds: ClosedRange<Date>? = nil,
+        numberOfMonths: Int = 1, captionLayout: FoundationCalendarCaptionLayout = .label
+    ) {
+        self.init(selection: .range(range), bounds: bounds, numberOfMonths: numberOfMonths,
+                  captionLayout: captionLayout, initialMonth: initialMonth)
+    }
+
     /// Activating an already selected day removes it from the selection.
     public init(selectedDates: Binding<Set<Date>>, in bounds: ClosedRange<Date>? = nil) {
         self.init(selectedDates: selectedDates, in: bounds, numberOfMonths: 1)
@@ -58,10 +67,11 @@ public struct FoundationCalendar: View {
 
     private init(
         selection: FoundationCalendarBinding, bounds: ClosedRange<Date>?,
-        numberOfMonths: Int, captionLayout: FoundationCalendarCaptionLayout, referenceDate: Date? = nil
+        numberOfMonths: Int, captionLayout: FoundationCalendarCaptionLayout,
+        initialMonth: Date? = nil, referenceDate: Date? = nil
     ) {
         self.selection = selection
-        self._visibleDate = State(initialValue: selection.value.navigationDate ?? referenceDate ?? Date())
+        self._visibleDate = State(initialValue: initialMonth ?? selection.value.navigationDate ?? referenceDate ?? Date())
         self.bounds = bounds
         self.numberOfMonths = max(1, numberOfMonths)
         self.captionLayout = captionLayout
@@ -149,7 +159,7 @@ public struct FoundationCalendar: View {
                         if calendar.isDate(date, equalTo: month, toGranularity: .month) {
                             dayButton(
                                 date, title: number, accessibilityLabel: dayLabels.string(from: date),
-                                selection: selection, palette: palette
+                                column: index % 7, selection: selection, palette: palette
                             )
                         } else {
                             Text(number)
@@ -267,10 +277,12 @@ public struct FoundationCalendar: View {
         _ date: Date,
         title: String,
         accessibilityLabel: String,
+        column: Int,
         selection value: FoundationCalendarSelection,
         palette: FoundationPalette
     ) -> some View {
         let presentation = value.presentation(of: date, calendar: calendar)
+        let connection = isNova ? value.endpointConnection(for: presentation, on: date, column: column, calendar: calendar) : nil
         let enabled = FoundationCalendarSelection.isSelectable(date, calendar: calendar, bounds: bounds)
         let today = isNova && calendar.isDate(date, inSameDayAs: referenceDate ?? Date())
 
@@ -286,7 +298,7 @@ public struct FoundationCalendar: View {
                 .font(isNova ? .system(size: cellTextSize) : .subheadline)
                 .foregroundColor(presentation.hasPrimaryFill ? palette.primaryForeground : palette.foreground)
                 .frame(maxWidth: .infinity, minHeight: dayRowHeight)
-                .background(dayBackground(presentation, today: today, palette: palette))
+                .background(dayBackground(presentation, connection: connection, today: today, palette: palette))
                 .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
@@ -298,14 +310,25 @@ public struct FoundationCalendar: View {
 
     @ViewBuilder
     private func dayBackground(
-        _ presentation: FoundationCalendarSelection.DayPresentation, today: Bool, palette: FoundationPalette
+        _ presentation: FoundationCalendarSelection.DayPresentation,
+        connection: FoundationCalendarSelection.RangeConnection?, today: Bool, palette: FoundationPalette
     ) -> some View {
         if presentation == .rangeInterior {
             Rectangle().fill(palette.secondary).frame(height: dayHighlightSize)
         } else if presentation.hasPrimaryFill || today {
-            RoundedRectangle(cornerRadius: isNova ? max(0, theme.cornerRadius - 2) : theme.cornerRadius)
-                .fill(presentation.hasPrimaryFill ? palette.primary : palette.secondary)
-                .frame(maxWidth: dayHighlightSize, maxHeight: dayHighlightSize)
+            ZStack {
+                if let connection {
+                    HStack(spacing: 0) {
+                        if connection == .next { Color.clear }
+                        palette.secondary
+                        if connection == .previous { Color.clear }
+                    }
+                    .frame(height: dayHighlightSize)
+                }
+                RoundedRectangle(cornerRadius: isNova ? max(0, theme.cornerRadius - 2) : theme.cornerRadius)
+                    .fill(presentation.hasPrimaryFill ? palette.primary : palette.secondary)
+                    .frame(maxWidth: dayHighlightSize, maxHeight: dayHighlightSize)
+            }
         }
     }
 

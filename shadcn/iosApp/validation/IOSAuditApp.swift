@@ -868,7 +868,7 @@ private struct SeparatorInitialScreenshotFixture: View {
 }
 
 private struct CalendarScreenshotFixture: View {
-    enum Example: String, CaseIterable { case `default`, basic, caption }
+    enum Example: String, CaseIterable { case `default`, basic, caption, range, rtl }
 
     private static var calendar: Calendar {
         var value = Calendar(identifier: .gregorian)
@@ -877,17 +877,18 @@ private struct CalendarScreenshotFixture: View {
         return value
     }
 
-    private static var referenceDate: Date {
-        calendar.date(from: DateComponents(year: 2026, month: 11, day: 27))!
+    private static func date(_ month: Int, _ day: Int) -> Date {
+        calendar.date(from: DateComponents(year: 2026, month: month, day: day))!
     }
 
     @Environment(\.colorScheme) private var scheme
     @State private var selection: Date?
+    @State private var range: FoundationCalendarRange? = .init(start: Self.date(1, 12), end: Self.date(2, 11))
     let example: Example
 
     init(example: Example) {
         self.example = example
-        _selection = State(initialValue: example == .default ? Self.referenceDate : nil)
+        _selection = State(initialValue: example == .default || example == .rtl ? Self.date(11, 27) : nil)
     }
 
     var body: some View {
@@ -895,19 +896,27 @@ private struct CalendarScreenshotFixture: View {
         light.foreground = .black
         light.primary = .black
         let theme = FoundationTheme(preset: .nova, light: light)
-        return FoundationCalendar(
-            selection: $selection,
-            captionLayout: example == .basic ? .label : .dropdown,
-            referenceDate: Self.referenceDate
-        )
-        .frame(width: 324)
-        .environment(\.calendar, Self.calendar)
-        .environment(\.locale, Locale(identifier: "en_US"))
-        .foundationTheme(theme)
-        .padding(24)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(theme.palette(for: scheme).background)
-        .ignoresSafeArea()
+        let rightToLeft = example == .rtl
+        return calendarView
+            .frame(width: 324)
+            .environment(\.calendar, Self.calendar)
+            .environment(\.locale, Locale(identifier: rightToLeft ? "ar_SA@numbers=latn" : "en_US"))
+            .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
+            .foundationTheme(theme)
+            .padding(24)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
+    }
+
+    @ViewBuilder
+    private var calendarView: some View {
+        if example == .range {
+            FoundationCalendar(range: $range, initialMonth: Self.date(1, 1), numberOfMonths: 2)
+        } else {
+            FoundationCalendar(selection: $selection, captionLayout: example == .basic ? .label : .dropdown,
+                               referenceDate: Self.date(11, 27))
+        }
     }
 }
 

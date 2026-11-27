@@ -33,6 +33,8 @@ enum FoundationCalendarSelection: Equatable {
         var hasPrimaryFill: Bool { self != .ordinary && self != .rangeInterior }
     }
 
+    enum RangeConnection: Equatable { case previous, next }
+
     var navigationDate: Date? {
         switch self {
         case let .single(date): date
@@ -75,6 +77,21 @@ enum FoundationCalendarSelection: Equatable {
             return date > calendar.startOfDay(for: range.start) && date < calendar.startOfDay(for: end)
                 ? .rangeInterior : .ordinary
         }
+    }
+
+    func endpointConnection(
+        for presentation: DayPresentation, on date: Date, column: Int, calendar: Calendar
+    ) -> RangeConnection? {
+        guard case let .range(range?) = self, range.end != nil else { return nil }
+        let offset: Int
+        switch presentation {
+        case .rangeStart where column < 6: offset = 1
+        case .rangeEnd where column > 0: offset = -1
+        default: return nil
+        }
+        guard let neighbor = calendar.date(byAdding: .day, value: offset, to: date),
+              calendar.isDate(neighbor, equalTo: date, toGranularity: .month) else { return nil }
+        return offset == 1 ? .next : .previous
     }
 
     static func isSelectable(_ date: Date, calendar: Calendar, bounds: ClosedRange<Date>?) -> Bool {
