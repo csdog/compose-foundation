@@ -5,11 +5,17 @@ import UIKit
 import AppKit
 #endif
 
+public enum FoundationPopoverAlignment: Sendable {
+    case start, center, end
+}
+
 public struct FoundationPopover<PopoverContent: View>: ViewModifier {
     @Environment(\.self) private var environment
     @Binding private var isPresented: Bool
 
     private let arrowEdge: Edge
+    private let alignment: FoundationPopoverAlignment
+    private let width: CGFloat?
     private let onDismiss: () -> Void
     private let popoverContent: () -> PopoverContent
 
@@ -27,8 +33,24 @@ public struct FoundationPopover<PopoverContent: View>: ViewModifier {
         onDismiss: @escaping () -> Void,
         @ViewBuilder content: @escaping () -> PopoverContent
     ) {
+        self.init(isPresented: isPresented, arrowEdge: arrowEdge, alignment: .center,
+                  onDismiss: onDismiss, content: content)
+    }
+
+    /// Positions content at the start, center, or end of the trigger's cross axis.
+    /// The width includes panel padding and is clamped to the available viewport.
+    public init(
+        isPresented: Binding<Bool>,
+        arrowEdge: Edge = .top,
+        alignment: FoundationPopoverAlignment,
+        width: CGFloat? = nil,
+        onDismiss: @escaping () -> Void = {},
+        @ViewBuilder content: @escaping () -> PopoverContent
+    ) {
         self._isPresented = isPresented
         self.arrowEdge = arrowEdge
+        self.alignment = alignment
+        self.width = width
         self.onDismiss = onDismiss
         self.popoverContent = content
     }
@@ -37,7 +59,11 @@ public struct FoundationPopover<PopoverContent: View>: ViewModifier {
         #if os(iOS) || os(macOS)
         content.background(
             FoundationPopoverAnchor(
-                isPresented: isPresented, edge: placementEdge, panel: panel,
+                isPresented: isPresented,
+                placement: PopoverPlacement(edge: placementEdge, alignment: alignment,
+                                            rightToLeft: environment.layoutDirection == .rightToLeft,
+                                            width: width, usesSafeArea: !environment.foundationPopoverFullViewport),
+                panel: panel,
                 requestDismissal: { isPresented = false }, onDismiss: onDismiss
             )
                 .allowsHitTesting(false)
@@ -65,9 +91,11 @@ public struct FoundationPopover<PopoverContent: View>: ViewModifier {
         let shape = RoundedRectangle(cornerRadius: theme.popoverCornerRadius)
         return popoverContent()
             .padding(theme.preset?.metrics.popoverPadding ?? 12)
+            .frame(maxWidth: width == nil ? nil : .infinity, alignment: .leading)
             .foregroundColor(palette.foreground)
             .background(shape.fill(palette.card))
-            .overlay(shape.strokeBorder(palette.border).allowsHitTesting(false))
+            .overlay(shape.strokeBorder(theme.preset == .nova ? palette.foreground.opacity(0.10) : palette.border)
+                .allowsHitTesting(false))
             .accentColor(palette.primary)
             .accessibilityAction(.escape) { isPresented = false }
             .environment(\.foundationTheme, theme)
@@ -78,33 +106,63 @@ public struct FoundationPopover<PopoverContent: View>: ViewModifier {
     }
 }
 
-private func popoverFrame(size: CGSize, anchor: CGRect, viewport: CGRect, edge: Edge) -> CGRect {
-    let gap: CGFloat = 4
-    let beforeX = anchor.minX - gap - size.width
-    let afterX = anchor.maxX + gap
-    let beforeY = anchor.minY - gap - size.height
-    let afterY = anchor.maxY + gap
-    var x = anchor.midX - size.width / 2
-    var y = anchor.midY - size.height / 2
-    switch edge {
-    case .top:
-        y = afterY + size.height <= viewport.maxY ? afterY : beforeY
-    case .bottom:
-        y = beforeY >= viewport.minY ? beforeY : afterY
-    case .leading:
-        x = afterX + size.width <= viewport.maxX ? afterX : beforeX
-    case .trailing:
-        x = beforeX >= viewport.minX ? beforeX : afterX
+private struct PopoverFullViewportKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+extension EnvironmentValues {
+    var foundationPopoverFullViewport: Bool {
+        get { self[PopoverFullViewportKey.self] }
+        set { self[PopoverFullViewportKey.self] = newValue }
     }
-    x = min(max(x, viewport.minX), viewport.maxX - size.width)
-    y = min(max(y, viewport.minY), viewport.maxY - size.height)
-    return CGRect(origin: CGPoint(x: x, y: y), size: size)
+}
+
+private struct PopoverPlacement {
+    let edge: Edge
+    let alignment: FoundationPopoverAlignment
+    let rightToLeft: Bool
+    let width: CGFloat?
+    let usesSafeArea: Bool
+
+    func frame(size: CGSize, anchor: CGRect, viewport: CGRect) -> CGRect {
+        let gap: CGFloat = 4
+        let beforeX = anchor.minX - gap - size.width
+        let afterX = anchor.maxX + gap
+        let beforeY = anchor.minY - gap - size.height
+        let afterY = anchor.maxY + gap
+        var x = anchor.midX - size.width / 2
+        var y = anchor.midY - size.height / 2
+        switch alignment {
+        case .center:
+            break
+        case .start, .end:
+            if edge == .top || edge == .bottom {
+                let physicalLeft = (alignment == .start) != rightToLeft
+                x = physicalLeft ? anchor.minX : anchor.maxX - size.width
+            } else {
+                y = alignment == .start ? anchor.minY : anchor.maxY - size.height
+            }
+        }
+        switch edge {
+        case .top:
+            y = afterY + size.height <= viewport.maxY ? afterY : beforeY
+        case .bottom:
+            y = beforeY >= viewport.minY ? beforeY : afterY
+        case .leading:
+            x = afterX + size.width <= viewport.maxX ? afterX : beforeX
+        case .trailing:
+            x = beforeX >= viewport.minX ? beforeX : afterX
+        }
+        x = min(max(x, viewport.minX), viewport.maxX - size.width)
+        y = min(max(y, viewport.minY), viewport.maxY - size.height)
+        return CGRect(origin: CGPoint(x: x, y: y), size: size)
+    }
 }
 
 #if os(iOS)
 private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
     let isPresented: Bool
-    let edge: Edge
+    let placement: PopoverPlacement
     let panel: Panel
     let requestDismissal: () -> Void
     let onDismiss: () -> Void
@@ -153,7 +211,7 @@ private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
     @MainActor final class Coordinator: NSObject {
         var configuration: FoundationPopoverAnchor?
         private var host: PopoverHost?
-        private var sizingHost: UIHostingController<Panel>?
+        private var sizingHost: UIHostingController<MeasuredPanel>?
         private var overlayWindow: UIWindow?
         private weak var returnWindow: UIWindow?
 
@@ -174,13 +232,18 @@ private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
             }
             if returnWindow !== window { remove() }
 
-            let viewport = window.bounds.inset(by: window.safeAreaInsets).insetBy(dx: 8, dy: 8)
+            let placement = configuration.placement
+            let viewport = placement.usesSafeArea
+                ? window.bounds.inset(by: window.safeAreaInsets).insetBy(dx: 8, dy: 8)
+                : window.bounds.insetBy(dx: 5, dy: 5)
             guard viewport.width > 0, viewport.height > 0 else { return }
 
-            let measurement = sizingHost ?? UIHostingController(rootView: configuration.panel)
+            let width = placement.width.map { min(max(1, $0), viewport.width) }
+            let panel = MeasuredPanel(content: configuration.panel, width: width)
+            let measurement = sizingHost ?? UIHostingController(rootView: panel)
             sizingHost = measurement
-            measurement.rootView = configuration.panel
-            let proposal = CGSize(width: min(288, viewport.width), height: viewport.height)
+            measurement.rootView = panel
+            let proposal = CGSize(width: width ?? min(288, viewport.width), height: viewport.height)
             let measured: CGSize
             if #available(iOS 16, *) {
                 measured = measurement.sizeThatFits(in: proposal)
@@ -191,11 +254,11 @@ private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
                 )
             }
             let size = CGSize(
-                width: min(max(1, measured.width), viewport.width),
+                width: width ?? min(max(1, measured.width), viewport.width),
                 height: min(max(1, measured.height), viewport.height)
             )
             let anchorFrame = anchor.convert(anchor.bounds, to: window)
-            let frame = popoverFrame(size: size, anchor: anchorFrame, viewport: viewport, edge: configuration.edge)
+            let frame = placement.frame(size: size, anchor: anchorFrame, viewport: viewport)
             let surface = Surface(panel: configuration.panel, frame: frame) { [weak self] in self?.dismiss() }
             if let host, let overlayWindow {
                 overlayWindow.frame = window.frame
@@ -236,6 +299,13 @@ private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
         }
     }
 
+    private struct MeasuredPanel: View {
+        let content: Panel
+        let width: CGFloat?
+
+        var body: some View { content.frame(width: width) }
+    }
+
     struct Surface: View {
         let panel: Panel
         let frame: CGRect
@@ -272,7 +342,7 @@ private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
 #elseif os(macOS)
 private struct FoundationPopoverAnchor<Panel: View>: NSViewRepresentable {
     let isPresented: Bool
-    let edge: Edge
+    let placement: PopoverPlacement
     let panel: Panel
     let requestDismissal: () -> Void
     let onDismiss: () -> Void
@@ -289,7 +359,6 @@ private struct FoundationPopoverAnchor<Panel: View>: NSViewRepresentable {
 
     func updateNSView(_ view: Anchor, context: Context) {
         context.coordinator.configuration = self
-        context.coordinator.host?.rootView = panel
         view.scheduleRefresh()
     }
 
@@ -321,7 +390,7 @@ private struct FoundationPopoverAnchor<Panel: View>: NSViewRepresentable {
 
     @MainActor final class Coordinator: NSObject, NSWindowDelegate {
         var configuration: FoundationPopoverAnchor?
-        var host: NSHostingView<Panel>?
+        var host: NSHostingView<MeasuredPanel>?
         private var popover: PopoverPanel?
         private var mouseMonitor: Any?
 
@@ -341,9 +410,12 @@ private struct FoundationPopoverAnchor<Panel: View>: NSViewRepresentable {
             let viewport = screen.visibleFrame
             let bounds = CGRect(origin: .zero, size: viewport.size).insetBy(dx: 8, dy: 8)
 
+            let placement = configuration.placement
+            let width = placement.width.map { min(max(1, $0), bounds.width) }
+            let panel = MeasuredPanel(content: configuration.panel, width: width)
             let isOpening = popover == nil
             if isOpening {
-                let host = NSHostingView(rootView: configuration.panel)
+                let host = NSHostingView(rootView: panel)
                 let popover = PopoverPanel(contentRect: .zero, styleMask: [.borderless], backing: .buffered, defer: false)
                 popover.isOpaque = false
                 popover.backgroundColor = .clear
@@ -363,6 +435,7 @@ private struct FoundationPopoverAnchor<Panel: View>: NSViewRepresentable {
             }
 
             guard let host, let popover else { return }
+            host.rootView = panel
             let measured = host.fittingSize
             let size = CGSize(
                 width: min(max(1, measured.width), bounds.width),
@@ -371,7 +444,7 @@ private struct FoundationPopoverAnchor<Panel: View>: NSViewRepresentable {
             let trigger = parent.convertToScreen(anchor.convert(anchor.bounds, to: nil))
             let localAnchor = CGRect(x: trigger.minX - viewport.minX, y: viewport.maxY - trigger.maxY,
                                      width: trigger.width, height: trigger.height)
-            let frame = popoverFrame(size: size, anchor: localAnchor, viewport: bounds, edge: configuration.edge)
+            let frame = placement.frame(size: size, anchor: localAnchor, viewport: bounds)
             popover.setFrame(
                 CGRect(x: viewport.minX + frame.minX, y: viewport.maxY - frame.maxY,
                        width: frame.width, height: frame.height),
@@ -399,6 +472,13 @@ private struct FoundationPopoverAnchor<Panel: View>: NSViewRepresentable {
             popover = nil
             host = nil
         }
+    }
+
+    struct MeasuredPanel: View {
+        let content: Panel
+        let width: CGFloat?
+
+        var body: some View { content.frame(width: width) }
     }
 
     final class PopoverPanel: NSPanel {

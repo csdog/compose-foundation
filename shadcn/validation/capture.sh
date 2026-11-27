@@ -53,7 +53,8 @@ if [[ "$platform" == swiftui-ios ]]; then
   mkdir "$app"
   cp "$swiftui/validation/IOSAuditInfo.plist" "$app/Info.plist"
   cp "$registry" "$app/registry.json"
-  cp app/shared/src/commonMain/composeResources/font/geist_medium.ttf "$app/"
+  cp app/shared/src/commonMain/composeResources/font/geist_{medium,regular}.ttf "$app/"
+  cp "$plan" "$app/parity-plan.json"
   audit_components=()
   for component in "${components[@]}"; do
     audit_components+=("--audit-component=$component")
@@ -114,6 +115,16 @@ for pass in "${passes[@]}"; do
       ;;
   esac
   for component in "${components[@]}"; do
+    if [[ "$platform" == swiftui-ios && "$component" == popover ]]; then
+      while IFS= read -r key; do
+        for theme in light dark; do
+          destination="$output/$pass/$component/${key%%:*}/${key##*:}"
+          mkdir -p "$destination"
+          cp "$work/$pass/$component-${key/:/-}-$theme.png" "$destination/$theme.png" || capture_status=1
+        done
+      done < <(python3 -c 'import json, sys; print(*(c["variant"] + ":" + c["status"] for c in json.load(open(sys.argv[1]))["components"]["popover"]["platformCases"]["swiftui-ios"]), sep="\n")' "$plan")
+      continue
+    fi
     destination="$output/$pass/$component/initial"
     mkdir -p "$destination"
     for theme in light dark; do
