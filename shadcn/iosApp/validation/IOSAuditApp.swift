@@ -168,6 +168,14 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "slider": SliderScreenshotFixture.Example.allCases.map { example in
                 ("slider-\(example.rawValue)", { AnyView(SliderScreenshotFixture(example: example)) })
             },
+            "toggle": [
+                ("toggle-default-initial", { AnyView(ToggleScreenshotFixture(grouped: false, selected: false)) }),
+                ("toggle-default-pressed", { AnyView(ToggleScreenshotFixture(grouped: false, selected: true)) }),
+            ],
+            "toggle-group": [
+                ("toggle-group-default-initial", { AnyView(ToggleScreenshotFixture(grouped: true, selected: false)) }),
+                ("toggle-group-default-bold", { AnyView(ToggleScreenshotFixture(grouped: true, selected: true)) }),
+            ],
             "textarea": [
                 ("textarea-default-initial", { AnyView(TextFieldScreenshotFixture(example: .textarea)) }),
                 ("textarea-field-initial", { AnyView(TextFieldScreenshotFixture(example: .textareaField)) }),
@@ -737,6 +745,117 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct ToggleScreenshotFixture: View {
+    let grouped: Bool
+    @State private var isOn: Bool
+    @State private var selection: Set<ToggleScreenshotIcon>
+    @Environment(\.colorScheme) private var scheme
+
+    init(grouped: Bool, selected: Bool) {
+        self.grouped = grouped
+        _isOn = State(initialValue: selected)
+        _selection = State(initialValue: selected ? [.bold] : [])
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let icons: [FoundationChoice<ToggleScreenshotIcon>] = [
+            FoundationChoice("Bold", value: .bold),
+            FoundationChoice("Italic", value: .italic),
+            FoundationChoice("Underline", value: .underline),
+        ]
+        return Group {
+            if grouped {
+                FoundationToggleGroup(icons, selection: $selection, variant: .outline, allowsMultiple: true) { choice in
+                    choice.value.stroke(style: StrokeStyle(lineWidth: 4.0 / 3, lineCap: .round, lineJoin: .round))
+                        .frame(width: 16, height: 16)
+                        .accessibilityHidden(true)
+                }
+                .frame(height: 44)
+            } else {
+                FoundationToggle(isOn: $isOn, variant: .outline, size: .small) {
+                    HStack(spacing: 4) {
+                        ToggleScreenshotIcon.bookmark
+                            .fill(isOn ? theme.palette(for: scheme).foreground : .clear)
+                            .overlay(ToggleScreenshotIcon.bookmark.stroke(
+                                style: StrokeStyle(lineWidth: 7.0 / 6, lineCap: .round, lineJoin: .round)
+                            ))
+                            .frame(width: 14, height: 14)
+                            .accessibilityHidden(true)
+                        Text("Bookmark")
+                    }
+                }
+                .font(.custom("Geist-Medium", size: 12.8))
+            }
+        }
+        .foundationTheme(theme)
+        .padding(.leading, grouped ? 21 : 24)
+        .padding(.top, grouped ? 18 : 16)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+}
+
+private enum ToggleScreenshotIcon: Shape, Hashable {
+    case bookmark, bold, italic, underline
+
+    func path(in rect: CGRect) -> Path {
+        let path = Path { path in
+            func move(_ x: CGFloat, _ y: CGFloat) { path.move(to: CGPoint(x: x, y: y)) }
+            func line(_ x: CGFloat, _ y: CGFloat) { path.addLine(to: CGPoint(x: x, y: y)) }
+            func curve(_ x: CGFloat, _ y: CGFloat, _ a: CGFloat, _ b: CGFloat, _ c: CGFloat, _ d: CGFloat) {
+                path.addCurve(to: CGPoint(x: x, y: y), control1: CGPoint(x: a, y: b), control2: CGPoint(x: c, y: d))
+            }
+            switch self {
+            case .bookmark:
+                move(7, 3)
+                line(17, 3)
+                curve(19, 5, 18.1, 3, 19, 3.9)
+                line(19, 20)
+                curve(17.5, 20.87, 19, 20.8, 18.2, 21.3)
+                line(13, 18.29)
+                curve(11, 18.29, 12.4, 17.94, 11.6, 17.94)
+                line(6.5, 20.87)
+                curve(5, 20, 5.8, 21.3, 5, 20.8)
+                line(5, 5)
+                curve(7, 3, 5, 3.9, 5.9, 3)
+                path.closeSubpath()
+            case .bold:
+                move(6, 12)
+                line(14, 12)
+                curve(18, 16, 16.21, 12, 18, 13.79)
+                curve(14, 20, 18, 18.21, 16.21, 20)
+                line(6, 20)
+                line(6, 4)
+                line(13, 4)
+                curve(17, 8, 15.21, 4, 17, 5.79)
+                curve(13, 12, 17, 10.21, 15.21, 12)
+            case .italic:
+                move(19, 4)
+                line(10, 4)
+                move(14, 20)
+                line(5, 20)
+                move(15, 4)
+                line(9, 20)
+            case .underline:
+                move(6, 4)
+                line(6, 10)
+                curve(12, 16, 6, 13.31, 8.69, 16)
+                curve(18, 10, 15.31, 16, 18, 13.31)
+                line(18, 4)
+                move(4, 20)
+                line(20, 20)
+            }
+        }
+        return path.applying(CGAffineTransform(
+            a: rect.width / 24, b: 0, c: 0, d: rect.height / 24, tx: rect.minX, ty: rect.minY
+        ))
     }
 }
 
