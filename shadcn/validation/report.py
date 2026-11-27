@@ -1,4 +1,4 @@
-"""Compare two captures per platform and summarize the cross-platform pilot."""
+"""Compare platform screenshots against a locked baseline or prepare updates."""
 
 import argparse
 from array import array
@@ -55,8 +55,8 @@ def differences(expected, actual, output):
         return ""
 
 
-def browser_failures(output, component, theme):
-    for capture in ("actual", "repeat"):
+def browser_failures(output, component, theme, passes):
+    for capture in passes:
         summary = output / "browser" / capture / component / "summary.json"
         if not summary.is_file():
             return f"浏览器没有产出 {capture}/summary.json"
@@ -105,6 +105,7 @@ def include_shadcn_reference(reference_root, output, screenshot):
 def capture_results(args, plan):
     output = args.output / args.platform
     output.mkdir(parents=True, exist_ok=True)
+    passes = ("actual", "repeat") if args.update_baselines else ("actual",)
     results = {}
     for component, theme in itertools.product(plan["components"], ("light", "dark")):
         captured = Path(component, "initial", f"{theme}.png")
@@ -133,25 +134,33 @@ def capture_results(args, plan):
             if (plan["baseline"]["revision"] or args.try_candidate) and baseline.is_file():
                 copy_image(baseline, approved)
                 baseline_source = "candidate" if args.try_candidate else "baseline"
-            if not first.is_file() or not second.is_file():
-                result = ("failed", "两次采集的截图不完整")
-            elif args.platform == "cmp-web" and (error := browser_failures(output, component, theme)):
+            if not first.is_file():
+                result = ("failed", "缺少本次截图")
+            elif args.update_baselines and not second.is_file():
+                result = ("failed", "缺少更新基准所需的重拍图")
+            elif args.platform == "cmp-web" and (error := browser_failures(output, component, theme, passes)):
                 result = ("failed", error)
-            elif instability := differences(first, second, diff):
+            elif args.update_baselines and (instability := differences(first, second, diff)):
                 result = ("failed", f"重复采集不稳定（{instability}）")
                 diff_against = "repeat"
-            else:
+            elif args.update_baselines:
+                change = differences(approved, first, diff) if approved.is_file() else ""
+                diff_against = baseline_source if change else None
                 copy_image(first, candidate)
-                if args.try_candidate and not approved.is_file():
+                detail = "截图可复现，等待审核并录入原生基准"
+                result = ("review", f"{detail}（与原基准相比：{change}）" if change else detail)
+            elif not approved.is_file():
+                if args.try_candidate:
                     result = ("failed", f"缺少要复跑的本地候选图（{location}）")
-                elif not approved.is_file():
-                    result = ("review", "截图可复现，等待审核并录入原生基准")
+                elif args.require_baselines:
+                    result = ("failed", f"缺少已锁定的原生基准（{location}）")
                 else:
-                    change = differences(approved, first, diff)
-                    match = "与本地候选图一致，待审核" if args.try_candidate else "与已锁定基准一致"
-                    result = ("failed", change) if change else ("passed", match)
-                    if change:
-                        diff_against = baseline_source
+                    result = ("pending", "缺少已锁定的原生基准，已跳过像素比对")
+            else:
+                change = differences(approved, first, diff)
+                match = "与本地候选图一致，待审核" if args.try_candidate else "与已锁定基准一致"
+                result = ("failed", change) if change else ("passed", match)
+                diff_against = baseline_source if change else None
         except (OSError, ValueError, KeyError) as error:
             result = ("failed", str(error))
         results[screenshot.as_posix()] = {
@@ -176,8 +185,7 @@ def report_images(root, platform, component, theme, screenshot):
     }
     if files["上游截图"].is_file():
         files["上游截图来源"] = files["上游截图"].with_name("provenance.json")
-    if not baseline.is_file():
-        files["待审核候选图"] = platform_dir / "candidate" / location
+    files["待审核候选图"] = platform_dir / "candidate" / location
     return {label: path.relative_to(root) for label, path in files.items() if path.is_file()}
 
 
@@ -260,12 +268,12 @@ def summarize(args, plan):
             summary_columns[3] += f" · {comparison}"
         lines.append("| " + " | ".join(summary_columns) + " |")
         actual = " · ".join(links[label] for label in ("本次截图", "重拍", "采集日志", "浏览器明细") if label in links)
-        baseline_link = links.get("基准图", links.get("待审核候选图", "缺基准图"))
+        baseline_link = " · ".join(links[label] for label in ("基准图", "待审核候选图") if label in links)
         diff_link = links.get("差异图")
         diff_cell = f"{diff_link}（{comparison or '比较对象未记录'}）" if diff_link else "—"
         upstream = " · ".join(links[label] for label in ("上游截图", "上游截图来源") if label in links)
         row = "| " + " | ".join([
-            *columns[:4], actual or "缺截图", baseline_link, diff_cell,
+            *columns[:4], actual or "缺截图", baseline_link or "缺基准图", diff_cell,
             upstream or columns[-1],
         ]) + " |"
         linked_rows.append(row)
@@ -304,7 +312,10 @@ def run_capture(args, plan):
     if any((destination / phase).exists() for phase in ("actual", "repeat", "browser", "device")):
         sys.exit(f"截图输出目录已使用，请指定新的运行目录。{destination}")
     destination.mkdir(parents=True, exist_ok=True)
-    command = ["bash", "shadcn/validation/capture.sh", args.platform, str(destination.resolve()), *plan["components"]]
+    command = ["bash", "shadcn/validation/capture.sh", args.platform, str(destination.resolve())]
+    if args.update_baselines:
+        command.append("--update-baselines")
+    command.extend(plan["components"])
     with (destination / "capture.log").open("w") as log:
         capture = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT)
     compared = capture_results(args, plan)
@@ -319,13 +330,16 @@ def main():
     parser.add_argument("--platform")
     parser.add_argument("--baselines", type=Path)
     parser.add_argument("--component", action="append", help="Limit the run to this component. Repeat to select more.")
-    parser.add_argument("--run", action="store_true", help="Capture twice, compare and produce the report.")
+    parser.add_argument("--run", action="store_true", help="Capture screenshots, compare and produce the report.")
+    parser.add_argument("--update-baselines", action="store_true", help="Capture twice and prepare reproducible baseline candidates for review.")
     parser.add_argument("--try-candidate", action="store_true", help="Compare against local candidate images for a trial.")
     parser.add_argument("--require-baselines", action="store_true")
     parser.add_argument("--bundle", type=Path, help="Copy the report and images it links to into this directory.")
     parser.add_argument("--report-only", action="store_true", help="Regenerate a report from images and results already on disk.")
     parser.add_argument("--shadcn-references", type=Path, help="Use upstream reference images from this separate directory.")
     args = parser.parse_args()
+    if args.update_baselines and (not args.platform or args.report_only or args.try_candidate or args.require_baselines):
+        parser.error("--update-baselines requires --platform and cannot be combined with --report-only, --try-candidate or --require-baselines")
     plan = json.loads(Path(__file__).with_name("plan.json").read_text())
     if args.component:
         unknown = set(args.component) - plan["components"].keys()

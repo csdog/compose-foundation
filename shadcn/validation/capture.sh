@@ -4,6 +4,11 @@ set -euo pipefail
 platform="${1:?Pass the platform name}"
 output="${2:?Pass an absolute artifact directory}"
 shift 2
+passes=(actual)
+if [[ "${1:-}" == --update-baselines ]]; then
+  passes+=(repeat)
+  shift
+fi
 swiftui=shadcn/iosApp
 plan=shadcn/validation/plan.json
 components=()
@@ -71,7 +76,7 @@ elif [[ "$platform" == swiftui-ios ]]; then
 fi
 
 capture_status=0
-for pass in actual repeat; do
+for pass in "${passes[@]}"; do
   mkdir -p "$work/$pass"
   case "$platform" in
     cmp-web)

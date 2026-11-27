@@ -19,6 +19,10 @@ on:
       component:
         description: Component slug to capture. Leave empty for the full pilot.
         type: string
+      update_baselines:
+        description: Capture twice and upload reproducible baseline candidates for review
+        type: boolean
+        default: false
       require_baselines:
         description: Fail if an automated capture does not have an approved baseline
         type: boolean
@@ -50,6 +54,7 @@ jobs:
     timeout-minutes: 45
     env:
       PLATFORM: ${{ matrix.platform }}
+      UPDATE_BASELINES: ${{ inputs.update_baselines }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -168,12 +173,18 @@ jobs:
           adb install -r -t shadcn/androidApp/build/outputs/apk/debug/androidApp-debug.apk
           echo "ANDROID_SERIAL=$ANDROID_SERIAL" >> "$GITHUB_ENV"
 
-      - name: Capture both passes and compare with the locked baseline
+      - name: Capture screenshots and check the results
         env:
+          REQUIRE_BASELINES: ${{ inputs.require_baselines }}
           COMPONENT: ${{ github.event_name == 'push' && 'popover' || inputs.component }}
         run: |
           flags=()
           if [[ -n "$COMPONENT" ]]; then flags+=(--component "$COMPONENT"); fi
+          if [[ "$UPDATE_BASELINES" == true ]]; then
+            flags+=(--update-baselines)
+          elif [[ "$REQUIRE_BASELINES" == true ]]; then
+            flags+=(--require-baselines)
+          fi
           python shadcn/validation/report.py build/component-parity --run --platform "$PLATFORM" \
             --baselines build/component-baselines "${flags[@]}"
       - name: Print the platform result
@@ -191,13 +202,22 @@ jobs:
               tail -n 120 "$path"
             fi
           done
-      - uses: actions/upload-artifact@v4
-        if: always()
+      - name: Upload screenshot differences
+        if: failure()
+        uses: actions/upload-artifact@v4
         with:
-          name: component-parity-${{ matrix.platform }}
+          name: component-parity-differences-${{ matrix.platform }}
           retention-days: 7
-          path: build/component-parity/${{ matrix.platform }}
-          if-no-files-found: error
+          path: build/component-parity/${{ matrix.platform }}/diff/
+          if-no-files-found: ignore
+      - name: Upload baseline candidates
+        if: ${{ !cancelled() && inputs.update_baselines }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: component-parity-candidates-${{ matrix.platform }}
+          retention-days: 7
+          path: build/component-parity/${{ matrix.platform }}/candidate/
+          if-no-files-found: ignore
 
   cmp-behavior:
     name: CMP shared interaction tests
@@ -216,7 +236,7 @@ jobs:
             --tests '*TabsBehaviorParityTest' --tests '*PopoverBehaviorTest' \
             --tests '*PopoverFocusTest' --tests '*PopoverMotionTest'
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: failure()
         with:
           name: component-cmp-interaction-tests
           retention-days: 7
@@ -243,64 +263,23 @@ jobs:
     if: always()
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: python -m pip install Pillow==11.3.0
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: component-parity-*
-          path: build/component-parity
-      - name: Report the platform results
+      - name: Summarize platform and interaction checks
         env:
-          REQUIRE_BASELINES: ${{ inputs.require_baselines }}
-          COMPONENT: ${{ github.event_name == 'push' && 'popover' || inputs.component }}
+          UPDATE_BASELINES: ${{ inputs.update_baselines }}
           CAPTURE_RESULT: ${{ needs.capture.result }}
           CMP_RESULT: ${{ needs.cmp-behavior.result }}
           SWIFT_RESULT: ${{ needs.swift-logic.result }}
         run: |
-          for folder in build/component-parity/component-parity-*; do
-            [[ -d "$folder" ]] || continue
-            mv "$folder" "build/component-parity/${folder##*/component-parity-}"
-          done
-          flags=()
-          if [[ -n "$COMPONENT" ]]; then flags+=(--component "$COMPONENT"); fi
-          if [[ "$REQUIRE_BASELINES" == true ]]; then
-            flags+=(--require-baselines)
-          fi
-          result=0
-          python shadcn/validation/report.py build/component-parity \
-            --bundle build/component-parity-report "${flags[@]}" || result=$?
-          cmp_label='❌ 失败'
-          swift_label='❌ 失败'
-          if [[ "$CMP_RESULT" == success ]]; then cmp_label='✅ 通过'; fi
-          if [[ "$SWIFT_RESULT" == success ]]; then swift_label='✅ 通过'; fi
           {
-            echo '### 组件逻辑与共享交互'
+            echo '## 跨平台组件验收'
+            if [[ "$UPDATE_BASELINES" == true ]]; then
+              echo '基准更新：拍摄两遍，稳定的候选图可从各平台附件下载。'
+            else
+              echo '日常回归：每个用例拍摄一遍。比对详情在各平台任务的 Summary，截图差异只在失败时上传。'
+            fi
             echo
-            echo "- $cmp_label CMP JVM Tabs 与 Popover（交互、焦点和动画测试）"
-            echo "- $swift_label SwiftUI Tabs 焦点与选择逻辑"
-          } | tee -a build/component-parity/report.md build/component-parity-report/report.md >> "$GITHUB_STEP_SUMMARY"
-          if [[ "$CMP_RESULT" != success || "$SWIFT_RESULT" != success ]]; then
-            {
-              printf '\n### 组件逻辑与共享交互失败\n\n'
-              if [[ "$CMP_RESULT" != success ]]; then echo '- ❌ CMP JVM Tabs 与 Popover'; fi
-              if [[ "$SWIFT_RESULT" != success ]]; then echo '- ❌ SwiftUI Tabs 焦点与选择逻辑'; fi
-              printf '\n[查看 Actions 任务日志](%s/%s/actions/runs/%s)\n' \
-                "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
-            } | tee -a build/component-parity/failures.md build/component-parity-report/failures.md
-          fi
-          [[ "$result" == 0 && "$CAPTURE_RESULT" == success && "$CMP_RESULT" == success && "$SWIFT_RESULT" == success ]]
-      - uses: actions/upload-artifact@v4
-        id: report-artifact
-        if: always()
-        with:
-          name: component-parity-report
-          retention-days: 7
-          path: build/component-parity-report/
-      - name: Link to the report bundle
-        if: always() && steps.report-artifact.outputs.artifact-url != ''
-        env:
-          REPORT_URL: ${{ steps.report-artifact.outputs.artifact-url }}
-        run: printf '\n[下载总报告、失败报告和截图](%s)\n' "$REPORT_URL" >> "$GITHUB_STEP_SUMMARY"
+            echo "- 各平台截图：$CAPTURE_RESULT"
+            echo "- CMP JVM Tabs 与 Popover 交互：$CMP_RESULT"
+            echo "- SwiftUI Tabs 焦点与选择逻辑：$SWIFT_RESULT"
+          } >> "$GITHUB_STEP_SUMMARY"
+          [[ "$CAPTURE_RESULT" == success && "$CMP_RESULT" == success && "$SWIFT_RESULT" == success ]]
