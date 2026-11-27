@@ -366,7 +366,7 @@ private struct PopoverScreenshotFixture: View {
         let shape = RoundedRectangle(cornerRadius: radius)
         let mutedTrigger = open.wrappedValue && (item.variant != .default || item.status != .open)
         let fill = dark ? (mutedTrigger ? grey(28) : palette.novaDarkOutlineFill) : (open.wrappedValue ? grey(245) : .white)
-        Button {
+        return Button {
             open.wrappedValue.toggle()
         } label: {
             Text(title)
@@ -502,7 +502,7 @@ private struct PopoverAuditTextField: UIViewRepresentable {
         if field.text != value { field.text = value }
     }
 
-    final class Coordinator: NSObject {
+    @MainActor final class Coordinator: NSObject {
         var value: Binding<String>
         init(value: Binding<String>) { self.value = value }
 
