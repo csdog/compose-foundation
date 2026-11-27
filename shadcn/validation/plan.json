@@ -20,6 +20,24 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "alert-dialog": {
+      "title": "Alert Dialog",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "default", "status": "open", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/alert-dialog-demo.tsx",
+      "visual": "compare the trigger and centered confirmation panel with its dimmed backdrop and footer",
+      "behavior": "focus cancel, keep the dialog open on outside clicks, and dismiss once per selected action",
+      "accessibility": "hide background controls while presenting and expose heading and action roles",
+      "motion": "static settled frames"
+    },
     "tooltip": {
       "title": "Tooltip",
       "variant": "default",

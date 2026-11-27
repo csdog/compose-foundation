@@ -836,6 +836,28 @@ jobs:
           open -n -W --stdout "$log" --stderr "$log" "$app"
           cat "$log"
           grep -q '^PASS:' "$log"
+      - name: Verify Alert Dialog keyboard and pointer dismissal on macOS
+        if: contains(needs.baseline.outputs.matrix, '"alert-dialog"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          app="$RUNNER_TEMP/AlertDialogAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string AlertDialogAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.alert-dialog-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationTheme.swift" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationButtonStyle.swift" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationAlertDialog.swift" \
+            "$swiftui/validation/MacAlertDialogAudit.swift" \
+            -o "$app/Contents/MacOS/AlertDialogAudit"
+          log="$RUNNER_TEMP/alert-dialog.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app"
+          cat "$log"
+          grep -q '^PASS:' "$log"
 
   report:
     name: Component parity report
