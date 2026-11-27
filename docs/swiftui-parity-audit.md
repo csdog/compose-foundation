@@ -140,6 +140,14 @@ iPhone 17 Pro（iOS 26.2）以 402 × 520 画布复拍八张深浅色图，全�
 
 异步 URL 初始化器使用系统 `AsyncImage`，适用于 iOS 15 和 macOS 12 起的版本。在 macOS 窗口分别验证本地图像、环回 HTTP 200 图像和 HTTP 404 后保留回退。iOS 实际远程加载、VoiceOver、RTL 和动态字体仍待单独验收。[macOS 验证](https://github.com/csdog/compose-foundation/actions/runs/46051515412/job/140683808277)
 
+### Item 默认、表面样式与尺寸
+
+对照 shadcn Base UI / Nova 的 `item-demo.tsx`、`item-variant.tsx` 和 `item-size.tsx`。默认示例保留单独操作以及整行可操作的验证提示，样式示例覆盖透明、描边和弱化背景。尺寸示例覆盖常规、小号和超小号。常规与小号的内边距在上游 Nova 中相同，超小号缩小内边距和说明字号。保留原有标题、说明、媒体和操作初始化器，显式 `variant` 可选择新表面样式。
+
+iPad mini（iPadOS 26.2）以 720 × 520 画布复拍六张深浅色图，逐字节一致。校准文字行高后，三组示例的外边界与参考最多相差 2 pt。弱化背景的取样颜色一致，浅色为 `#fafafa`，深色为 `#181818`。原生 SF Symbols 和字体光栅化仍有平台差异。[最终截图报告](https://github.com/csdog/compose-foundation/actions/runs/46053822322/artifacts/15225853235)
+
+macOS Swift Package 构建和 AppKit 点击回归通过。同一行的两个操作分别触发，切换 RTL 后命中区域随布局镜像，禁用一个操作时另一个仍可点击。iOS 实际触控、键盘、VoiceOver、动态字体和其他媒体组合待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46053822322/job/140691488790)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -177,7 +185,7 @@ iPhone 17 Pro（iOS 26.2）以 402 × 520 画布复拍八张深浅色图，全�
 | input | 原生单行输入支持独立占位文字、SecureField、错误和禁用状态。Nova 边框视觉高 32 pt，字段布局至少高 44 pt。数字等专用类型与 Compose 样式变体仍有差异。 |
 | input-group | 横向 leading/content/trailing slots。Compose 还支持上下 addon、组合焦点及明确的 input/textarea/button slots。 |
 | input-otp | 使用一个定长数字绑定和原生编辑字段，iOS 字段标记为一次性验证码。Nova 使用连续的 32 pt 格，可通过 `groupBreaks` 加入分隔符。字母数字模式及逐槽选区控制仍待补齐。 |
-| item | 支持媒体、标题、说明、操作。Compose 有尺寸、变体、群组和独立 header/footer。 |
+| item | 支持媒体、标题、说明、操作、三种表面样式和三种尺寸。群组、图片媒体尺寸和独立 header/footer 待对齐。 |
 | kbd | 显示单个键符及 themed 键帽。Compose 另有组合键分组 slot。 |
 | label | Nova 标签使用 14 pt Medium，支持禁用淡化。作为原生 Toggle 的内容时，文字和复选框使用同一绑定。独立表单标签的焦点关联待补齐。 |
 | marker | plain、separator、border 三种文本标记。缺少 Compose 的独立图标和内容 slots。 |
