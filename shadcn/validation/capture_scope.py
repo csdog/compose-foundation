@@ -11,35 +11,46 @@ RUNNERS = {
 }
 
 
-def capture_matrix(plan, component="", labels=None):
+def capture_matrix(plan, component="", labels=None, platform=""):
     components = plan["components"]
     platforms = {name: RUNNERS[name] for name, mode in plan["platforms"].items() if mode == "automated"}
+    supported = {
+        slug: set(platforms).intersection(config.get("platforms", platforms))
+        for slug, config in components.items()
+    }
+    selected = {name: set() for name in platforms}
     if labels is None:
         if component and component not in components:
             raise ValueError(f"Unknown component {component!r}. Enter the slug, for example popover.")
-        selected = {platform: {component} if component else set(components) for platform in platforms}
+        if platform not in ("", "all") and platform not in platforms:
+            raise ValueError(f"No automated capture for platform {platform!r}")
+        for slug in [component] if component else components:
+            for name in supported[slug]:
+                if platform in ("", "all", name):
+                    selected[name].add(slug)
     else:
-        selected = {platform: set() for platform in platforms}
         for label in labels:
             if not label.startswith("publish:"):
                 continue
             target = label.removeprefix("publish:")
-            if target.startswith("swiftui:"):
-                slug = target.removeprefix("swiftui:")
-                destinations = ("swiftui-ios",)
-            else:
-                slug = target
-                destinations = platforms
-            if slug not in components:
+            swiftui_only = target.startswith("swiftui:")
+            slug = target.removeprefix("swiftui:")
+            if slug not in supported:
                 raise ValueError(f"Unknown baseline publication label: {label!r}")
-            for platform in destinations:
-                selected[platform].add(slug)
+            destinations = supported[slug] & {"swiftui-ios"} if swiftui_only else supported[slug]
+            if not destinations:
+                raise ValueError(f"No automated capture for publication label {label!r}")
+            for name in destinations:
+                selected[name].add(slug)
 
-    return {"include": [
-        {"platform": platform, "runner": runner, "components": [slug for slug in components if slug in selected[platform]]}
-        for platform, runner in platforms.items()
-        if selected[platform]
-    ]}
+    include = [
+        {"platform": name, "runner": runner, "components": [slug for slug in components if slug in selected[name]]}
+        for name, runner in platforms.items()
+        if selected[name]
+    ]
+    if labels is None and not include:
+        raise ValueError(f"No automated cases for {component or 'the selected components'} on {platform or 'any platform'}")
+    return {"include": include}
 
 
 if __name__ == "__main__":
@@ -48,5 +59,5 @@ if __name__ == "__main__":
     if os.environ["GITHUB_EVENT_NAME"] == "pull_request_target":
         event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
         labels = [item["name"] for item in event["pull_request"]["labels"]]
-    matrix = capture_matrix(plan, os.environ.get("COMPONENT", ""), labels)
+    matrix = capture_matrix(plan, os.environ.get("COMPONENT", ""), labels, os.environ.get("CAPTURE_PLATFORM", ""))
     print(f"matrix={json.dumps(matrix, separators=(',', ':'))}")
