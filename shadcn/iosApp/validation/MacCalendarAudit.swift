@@ -3,7 +3,7 @@ import SwiftUI
 
 @MainActor
 private final class CalendarAuditState: ObservableObject {
-    @Published var selection: Date? = Self.date(11, 27)
+    @Published var selection: Date? = CalendarAuditState.date(11, 27)
 
     static let calendar: Calendar = {
         var value = Calendar(identifier: .gregorian)
