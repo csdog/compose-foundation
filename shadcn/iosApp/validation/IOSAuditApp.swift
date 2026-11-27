@@ -150,6 +150,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "collapsible": [
+                ("collapsible-default-initial", { AnyView(CollapsibleScreenshotFixture(expanded: false)) }),
+                ("collapsible-default-open", { AnyView(CollapsibleScreenshotFixture(expanded: true)) }),
+            ],
             "accordion": AccordionScreenshotFixture.Example.allCases.map { example in
                 ("accordion-\(example.rawValue)", { AnyView(AccordionScreenshotFixture(example: example)) })
             },
@@ -765,6 +769,68 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct CollapsibleScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    @State var expanded: Bool
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let palette = theme.palette(for: scheme)
+
+        return VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Order #4189").font(.custom("Geist-Medium", size: 14))
+                    .accessibilityAddTraits(.isHeader)
+                Spacer()
+                FoundationCollapsibleTrigger(isExpanded: $expanded) { _ in
+                    Image(systemName: "chevron.up.chevron.down").font(.system(size: 12))
+                }
+                .accessibilityLabel(Text("Toggle details"))
+                .buttonStyle(FoundationButtonStyle(.ghost, size: .icon))
+            }
+            .padding(.leading, 16)
+            .padding(.trailing, 10)
+
+            HStack {
+                Text("Status").foregroundColor(palette.mutedForeground)
+                Spacer()
+                Text("Shipped").font(.custom("Geist-Medium", size: 14))
+            }
+            .padding(.horizontal, 16)
+            .frame(height: 38)
+            .overlay(RoundedRectangle(cornerRadius: 6).strokeBorder(palette.border))
+
+            FoundationCollapsibleContent(isExpanded: expanded) {
+                VStack(spacing: 8) {
+                    detail("Shipping address", value: "100 Market St, San Francisco", palette: palette)
+                    detail("Items", value: "2x Studio Headphones", palette: palette)
+                }
+            }
+        }
+        .font(.custom("Geist-Regular", size: 14))
+        .foregroundColor(palette.foreground)
+        .foundationTheme(theme)
+        .frame(width: 350)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
+        .ignoresSafeArea()
+    }
+
+    private func detail(_ title: String, value: String, palette: FoundationPalette) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(title).font(.custom("Geist-Medium", size: 14))
+            Text(value).foregroundColor(palette.mutedForeground)
+        }
+        .padding(.horizontal, 16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(height: 58)
+        .overlay(RoundedRectangle(cornerRadius: 6).strokeBorder(palette.border))
     }
 }
 

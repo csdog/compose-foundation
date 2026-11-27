@@ -20,6 +20,23 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "collapsible": {
+      "title": "Collapsible",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520]},
+          {"variant": "default", "status": "open", "viewport": [402, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/collapsible-demo.tsx",
+      "visual": "compare the order heading, custom icon trigger, status and both expanded detail rows",
+      "behavior": "toggle the bound expansion while keeping the status visible",
+      "accessibility": "named button with expanded or collapsed value and hidden collapsed content",
+      "motion": "static settled frames"
+    },
     "accordion": {
       "title": "Accordion",
       "variant": "default",
