@@ -150,6 +150,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "alert-dialog": [
+                ("alert-dialog-default-initial", { AnyView(AlertDialogScreenshotFixture(isOpen: false)) }),
+                ("alert-dialog-default-open", { AnyView(AlertDialogScreenshotFixture(isOpen: true)) }),
+            ],
             "tooltip": [
                 ("tooltip-default-initial", { AnyView(TooltipScreenshotFixture(isOpen: false)) }),
                 ("tooltip-default-open", { AnyView(TooltipScreenshotFixture(isOpen: true)) }),
@@ -830,6 +834,37 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct AlertDialogScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    @State private var isOpen: Bool
+
+    init(isOpen: Bool) {
+        _isOpen = State(initialValue: isOpen)
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        return Button("Show Dialog") { isOpen = true }
+            .buttonStyle(FoundationButtonStyle(.outline))
+            .padding(.horizontal, 24)
+            .padding(.top, 18)
+            .frame(width: 720, height: 520, alignment: .topLeading)
+            .background(theme.palette(for: scheme).background)
+            .modifier(FoundationAlertDialog(
+                isPresented: $isOpen, title: "Are you absolutely sure?",
+                message: "This action cannot be undone. This will permanently delete your account from our servers.",
+                size: .regular, onConfirm: {}
+            ))
+            .foundationTheme(theme)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
     }
 }
 
