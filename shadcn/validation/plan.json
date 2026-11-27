@@ -35,6 +35,7 @@
       "variant": "default",
       "status": "initial",
       "reference": "apps/v4/examples/base/tabs-disabled.tsx",
+      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
       "visual": "review selected and disabled state against the reference",
       "behavior": "skip the disabled tab, select the next available tab and update the panel",
       "accessibility": "selected and disabled states, panel association and traversal order",

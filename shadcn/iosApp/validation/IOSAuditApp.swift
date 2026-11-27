@@ -137,10 +137,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         }
 
         let outputDirectory = try prepareOutputDirectory()
-        let popoverFont = names.contains("popover")
+        let parityFont = !names.isDisjoint(with: ["popover", "tabs"])
             ? Bundle.main.url(forResource: "geist_medium", withExtension: "ttf") : nil
-        if let popoverFont, !CTFontManagerRegisterFontsForURL(popoverFont as CFURL, .process, nil) {
-            throw CocoaError(.fileReadCorruptFile, userInfo: [NSFilePathErrorKey: popoverFont.path])
+        if let parityFont, !CTFontManagerRegisterFontsForURL(parityFont as CFURL, .process, nil) {
+            throw CocoaError(.fileReadCorruptFile, userInfo: [NSFilePathErrorKey: parityFont.path])
         }
         var count = 0
         for name in names.sorted() {
@@ -149,13 +149,18 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 let scheme: ColorScheme = dark ? .dark : .light
                 let palette = FoundationTheme().palette(for: scheme)
                 window.overrideUserInterfaceStyle = dark ? .dark : .light
-                let isPopover = name == "popover" && popoverFont != nil
-                let content = isPopover
-                    ? AnyView(PopoverInitialScreenshotFixture(dark: dark))
-                    : AnyView(fixture()
+                let useComparisonViewport = parityFont != nil && (name == "popover" || name == "tabs")
+                let content: AnyView
+                if useComparisonViewport && name == "popover" {
+                    content = AnyView(PopoverInitialScreenshotFixture(dark: dark))
+                } else if useComparisonViewport && name == "tabs" {
+                    content = AnyView(TabsInitialScreenshotFixture())
+                } else {
+                    content = AnyView(fixture()
                         .padding(16)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .background(palette.background))
+                }
                 let host = UIHostingController(rootView: content
                     .environment(\.colorScheme, scheme)
                     .environment(\.locale, Locale(identifier: "en_US")))
@@ -168,7 +173,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 let format = UIGraphicsImageRendererFormat()
                 format.scale = 1
                 var bounds = root.view.bounds
-                if isPopover {
+                if useComparisonViewport {
                     // Compare the shared viewport at one pixel per layout point.
                     bounds.size.height = min(bounds.height, 520)
                     format.preferredRange = .standard
@@ -242,5 +247,34 @@ private struct PopoverInitialScreenshotFixture: View {
             Text(label).frame(width: 84, alignment: .leading).accessibilityHidden(true)
             FoundationInput(label, text: value)
         }
+    }
+}
+
+private struct TabsInitialScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    @State private var selection = "home"
+
+    var body: some View {
+        let theme = novaTheme
+        FoundationTabs([
+            FoundationChoice("Home", value: "home"),
+            FoundationChoice("Disabled", value: "settings", isEnabled: false),
+        ], selection: $selection) { _ in
+            EmptyView()
+        }
+        .environment(\.font, .custom("Geist-Medium", size: 14))
+        .foundationTheme(theme)
+        .padding(.horizontal, 24)
+        // The 32-point rail is centered inside its 44-point touch targets.
+        .padding(.top, 18)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+
+    private var novaTheme: FoundationTheme {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        return FoundationTheme(preset: .nova, light: light)
     }
 }
