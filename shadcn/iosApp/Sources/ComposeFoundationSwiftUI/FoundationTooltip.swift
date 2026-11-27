@@ -61,10 +61,10 @@ public struct FoundationTooltip: ViewModifier {
             .accessibilityHidden(true)
             .allowsHitTesting(false)
             .opacity(presented.wrappedValue && isEnabled ? 1 : 0)
-            .alignmentGuide(.top) { $0[.bottom] }
-            .alignmentGuide(.bottom) { $0[.top] }
-            .alignmentGuide(.leading) { $0[.trailing] }
-            .alignmentGuide(.trailing) { $0[.leading] }
+            .alignmentGuide(.top) { $0.height }
+            .alignmentGuide(.bottom) { _ in 0 }
+            .alignmentGuide(.leading) { $0.width }
+            .alignmentGuide(.trailing) { _ in 0 }
 
         let trigger = content
             .accessibilityHint(Text(title))
