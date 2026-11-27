@@ -1,8 +1,6 @@
 name: Component parity
 
 on:
-  push:
-    branches: [codex/popover-baseline-pilot]
   pull_request:
     paths:
       - .github/workflows/component-parity.yml
@@ -92,7 +90,7 @@ jobs:
     timeout-minutes: 45
     env:
       PLATFORM: ${{ matrix.platform }}
-      UPDATE_BASELINES: ${{ inputs.update == 'review' || inputs.update == 'publish' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[update-baselines]')) }}
+      UPDATE_BASELINES: ${{ inputs.update == 'review' || inputs.update == 'publish' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -210,7 +208,7 @@ jobs:
         env:
           REQUIRE_BASELINES: ${{ inputs.require_baselines }}
           BASELINE_REVISION: ${{ needs.baseline.outputs.revision }}
-          COMPONENT: ${{ github.event_name == 'push' && 'popover' || inputs.component }}
+          COMPONENT: ${{ inputs.component }}
         run: |
           flags=()
           if [[ -n "$COMPONENT" ]]; then flags+=(--component "$COMPONENT"); fi
@@ -349,7 +347,7 @@ jobs:
     steps:
       - name: Summarize platform and interaction checks
         env:
-          UPDATE_MODE: ${{ (github.event_name == 'push' && contains(github.event.head_commit.message, '[update-baselines]')) && 'review' || inputs.update }}
+          UPDATE_MODE: ${{ inputs.update }}
           CAPTURE_RESULT: ${{ needs.capture.result }}
           CMP_RESULT: ${{ needs.cmp-behavior.result }}
           SWIFT_RESULT: ${{ needs.swift-logic.result }}
