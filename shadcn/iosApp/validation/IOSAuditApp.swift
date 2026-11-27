@@ -821,7 +821,7 @@ private struct EmptyScreenshotFixture: View {
         .foundationTheme(theme)
         .frame(width: 672)
         .padding(24)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
     }
