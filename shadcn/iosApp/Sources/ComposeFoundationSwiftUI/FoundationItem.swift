@@ -88,7 +88,8 @@ public struct FoundationItem<Media: View, Actions: View>: View {
             HStack(spacing: gap) {
                 textContent(
                     palette: palette, titleFont: .system(size: textSize, weight: .medium),
-                    descriptionFont: .system(size: textSize * (compact ? 12.0 / 14.0 : 1)), spacing: compact ? 0 : 4
+                    descriptionFont: .system(size: textSize * (compact ? 12.0 / 14.0 : 1)), spacing: compact ? 0 : 4,
+                    titleLineHeight: textSize * 20 / 14, descriptionLineHeight: textSize * (compact ? 16 : 20) / 14
                 )
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
@@ -103,12 +104,15 @@ public struct FoundationItem<Media: View, Actions: View>: View {
     }
 
     private func textContent(
-        palette: FoundationPalette, titleFont: Font, descriptionFont: Font, spacing: CGFloat
+        palette: FoundationPalette, titleFont: Font, descriptionFont: Font, spacing: CGFloat,
+        titleLineHeight: CGFloat? = nil, descriptionLineHeight: CGFloat? = nil
     ) -> some View {
         VStack(alignment: .leading, spacing: spacing) {
             Text(title).font(titleFont).foregroundColor(palette.foreground)
+                .frame(minHeight: titleLineHeight)
             if let description {
                 Text(description).font(descriptionFont).foregroundColor(palette.mutedForeground)
+                    .frame(minHeight: descriptionLineHeight)
             }
         }
     }

@@ -807,7 +807,8 @@ private struct ItemScreenshotFixture: View {
                 }
                 Button {} label: {
                     FoundationItem("Your profile has been verified.", variant: .outline, size: .small) {
-                        Image(systemName: "checkmark.seal").font(.system(size: 20)).accessibilityHidden(true)
+                        Image(systemName: "checkmark.seal").font(.system(size: 20)).frame(width: 20, height: 20)
+                            .accessibilityHidden(true)
                     } actions: {
                         Image(systemName: "chevron.forward").font(.system(size: 11)).frame(width: 16)
                             .accessibilityHidden(true)
