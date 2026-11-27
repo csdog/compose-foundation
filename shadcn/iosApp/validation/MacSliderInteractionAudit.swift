@@ -45,7 +45,7 @@ enum MacSliderInteractionAudit {
             try? await Task.sleep(for: .milliseconds(400))
             guard window.isKeyWindow else { fail("Window did not receive keyboard focus") }
 
-            func expect(_ value: Double, after action: String) {
+            @MainActor func expect(_ value: Double, after action: String) {
                 guard result.value == value else {
                     fail("\(action): expected \(value), got \(result.value)")
                 }
