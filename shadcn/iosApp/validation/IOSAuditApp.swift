@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "item": ItemScreenshotFixture.Example.allCases.map { example in
+                ("item-\(example.rawValue)-initial", { AnyView(ItemScreenshotFixture(example: example)) })
+            },
             "avatar": AvatarScreenshotFixture.Example.allCases.map { example in
                 ("avatar-\(example.rawValue)-initial", { AnyView(AvatarScreenshotFixture(example: example)) })
             },
@@ -779,6 +782,66 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct ItemScreenshotFixture: View {
+    enum Example: String, CaseIterable { case `default`, variant, size }
+
+    @Environment(\.colorScheme) private var scheme
+    let example: Example
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+
+        return VStack(spacing: 24) {
+            switch example {
+            case .default:
+                FoundationItem("Basic Item", description: "A simple item with title and description.", variant: .outline) {
+                    EmptyView()
+                } actions: {
+                    Button("Action") {}
+                        .buttonStyle(FoundationButtonStyle(.outline, size: .small))
+                }
+                Button {} label: {
+                    FoundationItem("Your profile has been verified.", variant: .outline, size: .small) {
+                        Image(systemName: "checkmark.seal").font(.system(size: 20)).accessibilityHidden(true)
+                    } actions: {
+                        Image(systemName: "chevron.forward").font(.system(size: 11)).frame(width: 16)
+                            .accessibilityHidden(true)
+                    }
+                }
+                .buttonStyle(PlainButtonStyle())
+            case .variant:
+                item("Default Variant", "Transparent background with no border.", variant: .standard)
+                item("Outline Variant", "Outlined style with a visible border.", variant: .outline)
+                item("Muted Variant", "Muted background for secondary content.", variant: .muted)
+            case .size:
+                item("Default Size", "The standard size for most use cases.", variant: .outline)
+                item("Small Size", "A compact size for dense layouts.", variant: .outline, size: .small)
+                item("Extra Small Size", "The most compact size available.", variant: .outline, size: .extraSmall)
+            }
+        }
+        .foregroundColor(theme.palette(for: scheme).foreground)
+        .foundationTheme(theme)
+        .frame(width: 448)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+
+    private func item(
+        _ title: String, _ description: String, variant: FoundationItemVariant, size: FoundationItemSize = .regular
+    ) -> some View {
+        FoundationItem(title, description: description, variant: variant, size: size) {
+            Image(systemName: "tray").font(.system(size: 16)).frame(width: 16, height: 16)
+                .accessibilityHidden(true)
+        } actions: {
+            EmptyView()
+        }
     }
 }
 
