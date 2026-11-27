@@ -4,6 +4,13 @@ import SwiftUI
 @MainActor
 private final class HoverCardResult: ObservableObject {
     @Published var presented = false
+    let interaction = FoundationHoverCardInteraction()
+
+    var presentation: Binding<Bool> { Binding(get: { self.presented }, set: { self.presented = $0 }) }
+
+    func hover(_ inside: Bool, trigger: Bool) {
+        interaction.pointerChanged(inside, isTrigger: trigger, presented: presentation, closeDelay: 100_000_000)
+    }
 }
 
 private struct HoverCardProbe: View {
@@ -12,8 +19,7 @@ private struct HoverCardProbe: View {
     var body: some View {
         Text("Hover Here")
             .frame(width: 100, height: 44)
-            .contentShape(Rectangle())
-            .modifier(FoundationHoverCard(isPresented: $state.presented) {
+            .modifier(FoundationHoverCard(presentation: state.presentation, interaction: state.interaction) {
                 Text("Profile card").frame(height: 60)
             })
             .foundationTheme(FoundationTheme(preset: .nova))
@@ -29,7 +35,6 @@ enum MacHoverCardAudit {
         let state = HoverCardResult()
         let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 420, height: 330),
                               styleMask: [.titled, .closable], backing: .buffered, defer: false)
-        window.acceptsMouseMovedEvents = true
         window.contentView = NSHostingView(rootView: HoverCardProbe(state: state))
         window.center()
         window.makeKeyAndOrderFront(nil)
@@ -38,36 +43,32 @@ enum MacHoverCardAudit {
             app.activate()
             NSRunningApplication.current.activate(options: [.activateAllWindows])
             window.makeKeyAndOrderFront(nil)
-            let outside = window.convertPoint(toScreen: NSPoint(x: 25, y: 25))
-            let trigger = window.convertPoint(toScreen: NSPoint(x: 210, y: 165))
-            move(to: outside)
             try? await Task.sleep(for: .milliseconds(380))
             require(window.isKeyWindow && !state.presented, "The parent starts key with no card")
 
-            move(to: trigger)
+            state.hover(true, trigger: true)
+            state.hover(false, trigger: true)
+            try? await Task.sleep(for: .milliseconds(300))
+            require(!state.presented, "Leaving early cancels delayed open")
+
+            state.hover(true, trigger: true)
             guard await waitUntil({ state.presented && window.childWindows?.first != nil }),
-                  let card = window.childWindows?.first else { fail("Hovering over the trigger did not open a card") }
+                  let card = window.childWindows?.first else { fail("The trigger hover handler did not open a card") }
             require(window.isKeyWindow && !card.isKeyWindow, "Pointer hover must keep the parent key")
 
-            move(to: NSPoint(x: card.frame.midX, y: card.frame.midY))
-            try? await Task.sleep(for: .milliseconds(300))
-            require(state.presented && card.isVisible && window.isKeyWindow, "The card remains open under its pointer")
+            state.hover(false, trigger: true)
+            try? await Task.sleep(for: .milliseconds(20))
+            state.hover(true, trigger: false)
+            try? await Task.sleep(for: .milliseconds(200))
+            require(state.presented && card.isVisible && window.isKeyWindow, "Entering the card cancels delayed close")
 
-            move(to: outside)
+            state.hover(false, trigger: false)
             require(await waitUntil({ !state.presented && window.childWindows?.isEmpty != false }),
-                    "Moving out of both regions dismisses the card")
-            print("PASS: Hover Card opens on pointer entry, remains open across the gap, and leaves the parent key")
+                    "Leaving the card dismisses it")
+            print("PASS: Hover Card handlers cancel stale transitions and preserve the parent window's key status")
             exit(0)
         }
         app.run()
-    }
-
-    private static func move(to point: NSPoint) {
-        guard let top = NSScreen.screens.first?.frame.maxY else { fail("A display is required") }
-        let location = CGPoint(x: point.x, y: top - point.y)
-        CGWarpMouseCursorPosition(location)
-        CGEvent(mouseEventSource: nil, mouseType: .mouseMoved, mouseCursorPosition: location, mouseButton: .left)?
-            .post(tap: .cghidEventTap)
     }
 
     private static func waitUntil(_ condition: () -> Bool) async -> Bool {
