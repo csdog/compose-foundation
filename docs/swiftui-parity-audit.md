@@ -34,6 +34,12 @@ Kbd 覆盖四个修饰键与 Ctrl + B 两行。Skeleton 覆盖头像和两条文
 
 官方示例在 500 ms 后从 13% 更新到 66%，归档参考图为更新后的状态。SwiftUI Nova 对照完整的 403.2 pt 宽进度条，在 iPhone 17 Pro Max（iOS 26.2）用 440 × 520 共用画布采集。深浅色各拍两遍，PNG 逐字节一致。原有 38 张 iPhone 17 Pro 截图与上一轮逐字节一致。圆角边缘及轨道配色有像素差异。macOS Swift Package 构建通过。进度变化过程及 RTL 待单独验收。[Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46000170133/artifacts/15198731356)
 
+### Switch 关闭、开启和禁用态
+
+对照 Nova 的 `switch-demo.tsx` 和 `switch-disabled.tsx`，每张图保留完整轨道、滑块及标签。最终在 iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集，浅色和深色各三个用例，六张 PNG 与各自复拍逐字节一致。禁用轨道采样点与上游相差一个灰阶，滑块中心采样值一致。字体光栅化与控件轮廓仍有细微像素差异。[最终 Switch Review](https://github.com/csdog/compose-foundation/actions/runs/46006892307/artifacts/15202264774)
+
+整批 Review 验证此前的 40 张原图未变。末次调整仅处理 Nova Switch 的禁用外观，哪一平台使用哪张截图仍由原采集计划决定。最终 macOS Swift Package 构建和 Tabs 导航回归通过。实际触控、硬件键盘、VoiceOver、RTL 和动效仍待单独验收。[整批 Review](https://github.com/csdog/compose-foundation/actions/runs/46005110796) · [最终验证](https://github.com/csdog/compose-foundation/actions/runs/46006892307)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -96,7 +102,7 @@ Kbd 覆盖四个修饰键与 Ctrl + B 两行。Skeleton 覆盖头像和两条文
 | slider | 包装系统 Slider，支持范围和步长。Compose 的轨道、滑块外观、纵向布局和更多手势参数未移植。 |
 | spinner | 系统不定进度控件及无障碍标签。Compose 提供原有旋转外观和 size 参数。 |
 | stepper | 支持当前、已完成状态和点击回调。Compose 的横向排列、连接线与描述 slots 未移植。 |
-| switch | 原生 SwiftUI 开关，使用主题 tint；尺寸和交互由平台决定。Compose 提供专有 size 和轨道样式。 |
+| switch | Nova 使用 32 × 18.4 pt 轨道、16 pt 滑块和至少 44 pt 高的触控区域。iOS 15、macOS 12 起使用系统 Toggle 提供无障碍语义，较早系统提供按钮及开关状态。其余预设使用原生 SwiftUI Switch。小尺寸和组合字段仍待对照。 |
 | table | 支持标题、数据行、列宽、排序与水平滚动。Compose 有任意内容单元格、caption/footer 和独立表结构 slots。 |
 | tabs | 支持选择绑定、禁用、横向 tabs 与内容切换。iOS 17 / macOS 14 起提供左右键、Home / End、禁用项跳过，以及自动或手动激活。iOS 26.2 模拟器已验证 LTR、RTL、跨组 Tab、长列表滚动、自动激活及手动模式的独立焦点与提交。macOS 15.6.1 已验证自动模式跳过禁用项、跨组 Tab 和手动激活。Compose 另有纵向、list variant 和独立焦点移动 API。 |
 | text | 支持标题、headline、正文、caption 和 muted 文本。Compose 有更多主题字体角色及自定义内容和样式参数。 |
