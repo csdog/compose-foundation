@@ -64,6 +64,14 @@ Nova 示例覆盖六位填满、四位空白及三加三禁用。每张图保留
 
 iPhone 17 Pro（iOS 26.2）使用 402 × 520 画布采集深浅色六张新图，复拍逐字节一致，原有 68 张图与上一轮逐字节一致。整体可见边界与参考最多相差 2 px。macOS Swift Package 构建和 Tabs 导航回归通过。实际输入、粘贴、系统自动填充、焦点态和 VoiceOver 待单独验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46019689625/artifacts/15209185259)
 
+### Slider 默认、步进、禁用和 RTL
+
+Nova 单值 Slider 的完整 320 pt 轨道对照 75、76、禁用 50 和 RTL 75。轨道高 4 pt，滑块直径 12 pt，控件交互区域高 44 pt。shadcn 参考图从 x=159 裁成 402 × 520，完整保留轨道和滑块。
+
+iPhone 17 Pro（iOS 26.2）深浅色共八张新图，复拍逐字节一致。原有 74 张图与上一轮逐字节一致。75 到 76 的滑块移动实测为 3 pt。RTL 轨道从右向左填充。上游 RTL 参考的滑块中心位于填充起点左侧约 12 CSS px，SwiftUI 的滑块中心与填充起点重合。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46022866497/artifacts/15212334824)
+
+macOS 窗口通过 AppKit 事件验证两种方向的点击、按住拖动、四个方向键、Home/End 和禁用阻止绑定写入。数值断言覆盖范围夹取、步长取整和极小步长。iOS 实际触控、硬件键盘和 VoiceOver 待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46022866497/job/140588878349)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -123,7 +131,7 @@ iPhone 17 Pro（iOS 26.2）使用 402 × 520 画布采集深浅色六张新图�
 | shimmer | 支持开关、穿过内容的光带、减少动态效果。Compose 另有文本遮罩及可调颜色、宽度、方向、时序。 |
 | sidebar | 可开关侧栏，宽容器并排、窄容器遮罩。Compose 另有侧栏方位、collapsible/rail 策略、菜单 slots 和键盘快捷键。 |
 | skeleton | 支持静态主题占位圆角。Compose 默认包含 pulse 动画。 |
-| slider | 包装系统 Slider，支持范围和步长。Compose 的轨道、滑块外观、纵向布局和更多手势参数未移植。 |
+| slider | 支持单值范围和步长。iOS 17、macOS 14 起，Nova 使用 4 pt 轨道、12 pt 滑块与 RTL 方向，系统提供可调整无障碍语义。较早系统继续用原生 Slider。纵向和双滑块范围仍待补齐。 |
 | spinner | 系统不定进度控件及无障碍标签。Compose 提供原有旋转外观和 size 参数。 |
 | stepper | 支持当前、已完成状态和点击回调。Compose 的横向排列、连接线与描述 slots 未移植。 |
 | switch | Nova 使用 32 × 18.4 pt 轨道、16 pt 滑块和至少 44 pt 高的触控区域。iOS 15、macOS 12 起使用系统 Toggle 提供无障碍语义，较早系统提供按钮及开关状态。其余预设使用原生 SwiftUI Switch。小尺寸和组合字段仍待对照。 |
