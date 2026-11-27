@@ -78,6 +78,12 @@ Toggle 对照完整描边书签的关闭和选中态。Toggle Group 对照 Bold�
 
 iPhone 17 Pro（iOS 26.2）深浅色共八张新图，与复拍逐字节一致。原有 82 张图也与上一轮一致，外边界与 shadcn 参考相差最多 2 px。macOS 窗口通过 AppKit 鼠标事件验证单按钮切换、单选替换、多选保留、最后一项必选及单项和整组禁用。实际 iOS 触控、硬件键盘、VoiceOver 和组内方向键导航仍待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46028364880/artifacts/15214950117) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46028364880/job/140605804826)
 
+### Button Group 三种尺寸和纵向布局
+
+对照 Nova 的 `button-group-size.tsx` 和 `button-group-orientation.tsx`。横向图保留 Small、Default、Large 三排共十二个按钮，纵向图保留完整的加减组。相邻按钮共用一道接缝，只有整组的外角保留圆角。SwiftUI 的组内图标按钮宽度至少 44 pt，纵向组每项高 44 pt。上游纵向示例每项为 32 CSS px。
+
+iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集四张深浅色图，复拍逐字节一致。包含独立 Button 在内的原有 90 张图与上一轮逐字节一致。macOS 窗口回归分别点按横向和纵向接缝两侧，验证只触发对应按钮，且禁用 Next 后 Back 仍可操作。iOS 实际触控、键盘、VoiceOver、RTL 和混合子控件的布局仍待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46031332393/artifacts/15214938905) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46031332393/job/140615958625)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -92,7 +98,7 @@ iPhone 17 Pro（iOS 26.2）深浅色共八张新图，与复拍逐字节一致�
 | breadcrumb | 支持水平路径、链接、当前页和分隔符。缺少可配置分隔符、ellipsis 与自定义页面 slot。 |
 | bubble | 支持 incoming、outgoing、muted 内容气泡。缺少气泡组及定位在气泡边缘的 reactions。 |
 | button | 六种颜色变体、禁用、按压反馈和内容 slot。Compose 另有尺寸、图标位置、焦点环和多种按压动画。 |
-| button-group | 支持纵向和横向布局。Compose 会合并邻接圆角、协调子项焦点层级，并提供分隔符与文本项。 |
+| button-group | 支持纵向和横向布局。iOS 18、macOS 15 起，Nova 的 FoundationButtonStyle 子项合并相邻圆角和边框。分隔符、文本项及子项焦点层级仍待对齐。 |
 | calendar | 支持本地化单月和连续多月，窄布局纵向排列，宽布局并排。支持日期单选、区间、多选、月份和年份菜单。日期上下限约束菜单和翻页，区间跨月时保留中间日期的选中样式。Compose 另有独立网格 slots。 |
 | card | 支持主题背景、边框和内容。Compose 的 header/footer/image/action slots、尺寸与卡片变体需由 SwiftUI 调用方组装。 |
 | carousel | 当前页和相邻页随横向拖动连续移动，松手后吸附到当前或相邻页。支持 RTL、前后按钮、页码无障碍调节和减少动态效果。视口高度由当前页决定。Compose 另有纵向模式、部分页宽及 dots API。 |

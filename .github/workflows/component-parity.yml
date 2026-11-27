@@ -460,6 +460,29 @@ jobs:
           cat "$log"
           grep -q '^PASS:' "$log"
 
+      - name: Verify Nova Button Group hit regions on macOS
+        if: contains(needs.baseline.outputs.matrix, '"button-group"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          app="$RUNNER_TEMP/ButtonGroupAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string ButtonGroupAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.button-group-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos15.0" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationTheme.swift" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationButtonStyle.swift" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationButtonGroup.swift" \
+            "$swiftui/validation/MacButtonGroupInteractionAudit.swift" \
+            -o "$app/Contents/MacOS/ButtonGroupAudit"
+          log="$RUNNER_TEMP/button-group.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app"
+          cat "$log"
+          grep -q '^PASS:' "$log"
+
   report:
     name: Component parity report
     needs: [baseline, capture, cmp-behavior, swift-logic, publish]

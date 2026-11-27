@@ -19,6 +19,7 @@ SWIFT_FILENAMES = {
     "switch": "FoundationSwitchStyle.swift",
 }
 SWIFT_SUPPORT_FILES = {
+    "button-group": ("FoundationButtonStyle.swift",),
     "calendar": ("FoundationCalendarSelection.swift", "FoundationCalendarNavigation.swift"),
     "dialog": ("FoundationPresentationHeader.swift",),
     "drawer": ("FoundationPresentationHeader.swift",),
