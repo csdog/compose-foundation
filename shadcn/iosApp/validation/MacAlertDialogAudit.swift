@@ -30,7 +30,6 @@ private struct AlertDialogAuditFixture: View {
         ))
         .foundationTheme(FoundationTheme(preset: .nova))
         .environment(\.colorScheme, .light)
-        .environment(\.accessibilityReduceMotion, true)
     }
 }
 

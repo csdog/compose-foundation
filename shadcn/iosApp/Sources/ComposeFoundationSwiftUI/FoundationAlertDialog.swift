@@ -71,7 +71,8 @@ public struct FoundationAlertDialog: ViewModifier {
                 .disabled(isPresented)
                 .allowsHitTesting(!isPresented)
                 .accessibilityHidden(isPresented)
-                .blur(radius: isPresented && !reduceTransparency ? 4 : 0, opaque: true)
+                .compositingGroup()
+                .blur(radius: isPresented && !reduceTransparency ? 4 : 0)
                 .overlay(Group {
                     if isPresented {
                         GeometryReader { geometry in
