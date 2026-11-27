@@ -144,6 +144,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "kbd": { AnyView(StatusInitialScreenshotFixture(example: .kbd)) },
             "skeleton": { AnyView(StatusInitialScreenshotFixture(example: .skeleton)) },
             "spinner": { AnyView(StatusInitialScreenshotFixture(example: .spinner)) },
+            "progress": { AnyView(StatusInitialScreenshotFixture(example: .progress)) },
             "tabs": { AnyView(TabsInitialScreenshotFixture()) },
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
@@ -663,7 +664,7 @@ private struct SeparatorInitialScreenshotFixture: View {
 }
 
 private struct StatusInitialScreenshotFixture: View {
-    enum Example { case kbd, skeleton, spinner }
+    enum Example { case kbd, skeleton, spinner, progress }
 
     let example: Example
     @Environment(\.colorScheme) private var scheme
@@ -671,6 +672,7 @@ private struct StatusInitialScreenshotFixture: View {
     var body: some View {
         var light = FoundationPalette.neutralLight
         light.foreground = .black
+        light.primary = .black
         let theme = FoundationTheme(preset: .nova, light: light)
         let palette = theme.palette(for: scheme)
         return Group {
@@ -696,6 +698,9 @@ private struct StatusInitialScreenshotFixture: View {
                         FoundationSkeleton().frame(width: 200, height: 16)
                     }
                 }
+            case .progress:
+                FoundationProgress(value: 0.66)
+                    .frame(width: 403.2)
             case .spinner:
                 HStack(spacing: 10) {
                     FoundationSpinner(accessibilityLabel: "Processing payment", animates: false)
@@ -712,7 +717,8 @@ private struct StatusInitialScreenshotFixture: View {
         }
         .foregroundColor(palette.foreground)
         .foundationTheme(theme)
-        .padding(24)
+        .padding([.leading, .top, .bottom], 24)
+        .padding(.trailing, example == .progress ? 0 : 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()

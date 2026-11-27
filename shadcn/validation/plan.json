@@ -107,6 +107,19 @@
       "accessibility": "review native semantics",
       "motion": "verify independently of static capture"
     },
+    "progress": {
+      "title": "Progress",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPhone-17-Pro-Max",
+      "reference": "apps/v4/examples/base/progress-demo.tsx",
+      "shadcnComparisonViewport": {"swiftui-ios": [440, 520]},
+      "visual": "compare the complete 403-point track at 66 percent",
+      "behavior": "read the percentage from the supplied value",
+      "accessibility": "progress label and percentage value",
+      "motion": "static settled frame"
+    },
     "popover": {
       "title": "Popover",
       "variant": "default",

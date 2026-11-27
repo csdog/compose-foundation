@@ -16,15 +16,22 @@ public struct FoundationProgress: View {
 
     public var body: some View {
         let palette = theme.palette(for: colorScheme)
+        let nova = theme.preset == .nova
 
-        GeometryReader { geometry in
+        return GeometryReader { geometry in
             ZStack(alignment: .leading) {
                 Capsule().fill(palette.secondary)
-                Capsule().fill(palette.primary)
-                    .frame(width: geometry.size.width * fraction)
+                if nova {
+                    Rectangle().fill(palette.primary)
+                        .frame(width: geometry.size.width * fraction)
+                } else {
+                    Capsule().fill(palette.primary)
+                        .frame(width: geometry.size.width * fraction)
+                }
             }
         }
-        .frame(height: 6)
+        .frame(height: nova ? 4 : 6)
+        .clipShape(Capsule())
         .animation(reduceMotion ? nil : .easeInOut(duration: theme.preset?.metrics.transition ?? 0.15), value: fraction)
         .accessibilityLabel(Text(label))
         .accessibilityValue(Text(NumberFormatter.localizedString(from: NSNumber(value: fraction), number: .percent)))

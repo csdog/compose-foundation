@@ -55,18 +55,22 @@ if [[ "$platform" == swiftui-ios ]]; then
   cp "$registry" "$app/registry.json"
   cp app/shared/src/commonMain/composeResources/font/geist_{medium,regular}.ttf "$app/"
   cp "$plan" "$app/parity-plan.json"
-  audit_components=()
-  for component in "${components[@]}"; do
-    audit_components+=("--audit-component=$component")
-  done
   xcrun --sdk iphonesimulator swiftc -sdk "$sdk" -parse-as-library -swift-version 6 \
     -target "$(uname -m)-apple-ios14.0-simulator" \
     "$swiftui"/Sources/ComposeFoundationSwiftUI/*.swift \
     "$swiftui"/validation/{AuditFixtures,IOSAuditApp}.swift -o "$app/ComposeFoundationAudit"
-  runtime='com.apple.CoreSimulator.SimRuntime.iOS-26-2'
-  type='com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro'
+fi
+
+capture_ios_group() {
+  local type="com.apple.CoreSimulator.SimDeviceType.$1"
+  shift
+  local runtime='com.apple.CoreSimulator.SimRuntime.iOS-26-2'
+  local -a audit_components=()
+  local component pass container mobile_output attempt
+  for component in "$@"; do
+    audit_components+=("--audit-component=$component")
+  done
   device="$(xcrun simctl create 'Compose Foundation screenshots' "$type" "$runtime")"
-  trap 'xcrun simctl delete "$device" || true; rm -rf "$work"' EXIT
   printf '%s %s\n' "$runtime" "$type"
   xcrun simctl boot "$device"
   xcrun simctl bootstatus "$device" -b
@@ -76,6 +80,54 @@ if [[ "$platform" == swiftui-ios ]]; then
   xcrun simctl spawn "$device" defaults write com.apple.Accessibility ReduceMotionEnabled -bool YES
   xcrun simctl install "$device" "$app"
   container="$(xcrun simctl get_app_container "$device" "$bundle" data)"
+  mobile_output="$container/Documents/ParityAudit"
+  for pass in "${passes[@]}"; do
+    mkdir -p "$work/$pass"
+    rm -rf "$mobile_output"
+    xcrun simctl launch --terminate-running-process "$device" "$bundle" \
+      -AppleLanguages '(en)' -AppleLocale en_US "${audit_components[@]}"
+    for ((attempt = 0; attempt < 180; attempt++)); do
+      [[ ! -s "$mobile_output/result.txt" ]] || break
+      sleep 1
+    done
+    if ! grep '^PASS ' "$mobile_output/result.txt"; then
+      if [[ -f "$mobile_output/result.txt" ]]; then
+        cat "$mobile_output/result.txt" >&2
+      else
+        echo "iOS audit did not finish before its deadline" >&2
+      fi
+      return 1
+    fi
+    cat "$mobile_output/result.txt" >> "$output/$pass-render.txt"
+    cp "$mobile_output"/*.png "$work/$pass/"
+  done
+  xcrun simctl delete "$device"
+  device=''
+}
+
+if [[ "$platform" == swiftui-ios ]]; then
+  device=''
+  trap 'if [[ -n "$device" ]]; then xcrun simctl delete "$device" || true; fi; rm -rf "$work"' EXIT
+  groups="$(python3 - "$plan" "${components[@]}" <<'PYTHON'
+import json
+import sys
+
+components = json.load(open(sys.argv[1]))["components"]
+groups = {}
+for component in sys.argv[2:]:
+    device = components[component].get("swiftuiDevice", "iPhone-17-Pro")
+    groups.setdefault(device, []).append(component)
+for device, slugs in groups.items():
+    print(device, *slugs)
+PYTHON
+)"
+  for pass in "${passes[@]}"; do
+    : > "$output/$pass-render.txt"
+  done
+  while read -r device_type group; do
+    read -ra slugs <<< "$group"
+    capture_ios_group "$device_type" "${slugs[@]}"
+  done <<< "$groups"
 fi
 
 capture_status=0
@@ -101,24 +153,6 @@ for pass in "${passes[@]}"; do
           --tests '*PopoverNovaScreenshotTest' --rerun --console=plain || capture_status=1
       ;;
     swiftui-ios)
-      mobile_output="$container/Documents/ParityAudit"
-      rm -rf "$mobile_output"
-      xcrun simctl launch --terminate-running-process "$device" "$bundle" \
-        -AppleLanguages '(en)' -AppleLocale en_US "${audit_components[@]}"
-      for ((attempt = 0; attempt < 180; attempt++)); do
-        [[ ! -s "$mobile_output/result.txt" ]] || break
-        sleep 1
-      done
-      if ! grep '^PASS ' "$mobile_output/result.txt"; then
-        if [[ -f "$mobile_output/result.txt" ]]; then
-          cat "$mobile_output/result.txt" >&2
-        else
-          echo "iOS audit did not finish before its deadline" >&2
-        fi
-        exit 1
-      fi
-      cp "$mobile_output/result.txt" "$output/$pass-render.txt"
-      cp "$mobile_output"/*.png "$work/$pass/"
       python3 - "$work/$pass" <<'PYTHON' || capture_status=1
 from pathlib import Path
 import sys
