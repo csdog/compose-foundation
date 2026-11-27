@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "input-group": InputGroupScreenshotFixture.Example.allCases.map { example in
+                ("input-group-\(example.rawValue)-initial", { AnyView(InputGroupScreenshotFixture(example: example)) })
+            },
             "pagination": PaginationScreenshotFixture.Example.allCases.map { example in
                 ("pagination-\(example.rawValue)-initial", { AnyView(PaginationScreenshotFixture(example: example)) })
             },
@@ -820,6 +823,128 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct InputGroupScreenshotFixture: View {
+    enum Example: String, CaseIterable { case `default`, blockStart = "block-start", blockEnd = "block-end" }
+
+    @Environment(\.colorScheme) private var scheme
+    @State private var input = ""
+    @State private var message = ""
+    let example: Example
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let palette = theme.palette(for: scheme)
+        return Group {
+            if example == .default {
+                FoundationInputGroup {
+                    textField("Search...", palette: palette)
+                } leading: {
+                    Image(systemName: "magnifyingglass").font(.system(size: 14)).accessibilityHidden(true)
+                } trailing: {
+                    Text("12 results").font(.custom("Geist-Medium", size: 14))
+                }
+                .frame(width: 320)
+                .padding(.top, 18)
+            } else {
+                blockExamples(palette: palette)
+                    .frame(width: 384)
+                    .padding(.top, 24)
+            }
+        }
+        .foregroundColor(palette.foreground)
+        .foundationTheme(theme)
+        .padding(.leading, 24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
+        .ignoresSafeArea()
+    }
+
+    private func textField(_ placeholder: String, palette: FoundationPalette) -> some View {
+        Group {
+            if #available(iOS 15, *) {
+                TextField(placeholder, text: $input, prompt: Text(placeholder).foregroundColor(palette.mutedForeground))
+            } else {
+                TextField(placeholder, text: $input)
+            }
+        }
+        .textFieldStyle(.plain)
+        .font(.custom("Geist-Regular", size: 16))
+        .frame(minHeight: 44)
+    }
+
+    private func blockExamples(palette: FoundationPalette) -> some View {
+        let above = example == .blockStart
+        return VStack(spacing: 24) {
+            field("Input", description: "\(above ? "Header positioned above" : "Footer positioned below") the input.", palette: palette) {
+                FoundationInputGroup(axis: .vertical) {
+                    textField(above ? "Enter your name" : "Enter amount", palette: palette)
+                } leading: {
+                    if above { Text("Full Name").font(.custom("Geist-Medium", size: 14)) }
+                } trailing: {
+                    if !above { Text("USD").font(.custom("Geist-Medium", size: 14)) }
+                }
+            }
+            field("Textarea", description: "\(above ? "Header positioned above" : "Footer positioned below") the textarea.", palette: palette) {
+                FoundationInputGroup(axis: .vertical) {
+                    editor(above ? "console.log('Hello, world!');" : "Write a comment...", monospaced: above, palette: palette)
+                } leading: {
+                    if above {
+                        HStack(spacing: 8) {
+                            Image(systemName: "doc.badge.gearshape").accessibilityHidden(true)
+                            Text("script.js").font(.system(size: 14, design: .monospaced))
+                            Spacer()
+                            Button {} label: { Image(systemName: "doc.on.doc").foregroundColor(palette.mutedForeground) }
+                                .accessibilityLabel(Text("Copy"))
+                                .buttonStyle(FoundationButtonStyle(.ghost, size: .iconExtraSmall))
+                        }
+                    }
+                } trailing: {
+                    if !above {
+                        HStack(spacing: 8) {
+                            Text("0/280").font(.custom("Geist-Medium", size: 14))
+                            Spacer()
+                            Button("Post") {}
+                                .buttonStyle(FoundationButtonStyle(.primary, size: .small))
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private func field<Content: View>(
+        _ title: String, description: String, palette: FoundationPalette, @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title).font(.custom("Geist-Medium", size: 14))
+            content()
+            Text(description).font(.custom("Geist-Regular", size: 14)).foregroundColor(palette.mutedForeground)
+        }
+    }
+
+    private func editor(_ placeholder: String, monospaced: Bool, palette: FoundationPalette) -> some View {
+        let font: Font = monospaced ? .system(size: 14, design: .monospaced) : .custom("Geist-Regular", size: 16)
+        return Group {
+            if #available(iOS 16, *) { TextEditor(text: $message).scrollContentBackground(.hidden) }
+            else { TextEditor(text: $message) }
+        }
+        .font(font)
+        .accessibilityLabel(Text(placeholder))
+        .frame(height: 64)
+        .overlay(Group {
+            if message.isEmpty {
+                Text(placeholder).font(font).foregroundColor(palette.mutedForeground)
+                    .padding(.top, 8)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+            }
+        }, alignment: .topLeading)
     }
 }
 

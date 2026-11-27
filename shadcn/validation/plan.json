@@ -20,6 +20,25 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "input-group": {
+      "title": "Input Group",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPhone-17-Pro-Max",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [440, 520]},
+          {"variant": "block-start", "status": "initial", "viewport": [440, 520]},
+          {"variant": "block-end", "status": "initial", "viewport": [440, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/input-group-demo.tsx",
+      "visual": "compare inline search addons and complete above and below editor examples",
+      "behavior": "reflect editor focus in the shared border while preserving independent addon actions",
+      "accessibility": "native editor and addon controls retain their own names and roles",
+      "motion": "static initial frames"
+    },
     "hover-card": {
       "title": "Hover Card",
       "variant": "default",
