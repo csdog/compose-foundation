@@ -876,7 +876,7 @@ jobs:
             "$sources"/Foundation{Theme,ButtonStyle,PresentationHeader,Drawer,Dialog,Sheet}.swift \
             "$swiftui/validation/MacPresentationFocusAudit.swift" \
             -o "$app/Contents/MacOS/PresentationFocusAudit"
-          for kind in drawer drawer-nova drawer-rhea dialog dialog-centered sheet sheet-trailing sheet-leading sheet-top sheet-bottom; do
+          for kind in drawer drawer-nova drawer-rhea dialog dialog-centered sheet sheet-trailing sheet-leading sheet-top sheet-bottom sheet-rtl; do
             log="$RUNNER_TEMP/presentation-$kind.log"
             open -n -W --stdout "$log" --stderr "$log" "$app" --args "$kind"
             cat "$log"

@@ -19,6 +19,7 @@ private enum PresentationKind: String {
     case sheetLeading = "sheet-leading"
     case sheetTop = "sheet-top"
     case sheetBottom = "sheet-bottom"
+    case sheetRTL = "sheet-rtl"
 
     var sheetEdge: Edge {
         switch self {
@@ -63,7 +64,7 @@ private struct PresentationProbe: View {
                     .textFieldStyle(.plain)
                     .frame(height: 44)
             })
-        case .sheetTrailing, .sheetLeading, .sheetTop, .sheetBottom:
+        case .sheetTrailing, .sheetLeading, .sheetTop, .sheetBottom, .sheetRTL:
             trigger.modifier(FoundationSheet(
                 isPresented: $state.presented, title: "Audit sheet", description: "An edge presentation",
                 side: kind.sheetEdge, onDismiss: dismissed
@@ -71,7 +72,8 @@ private struct PresentationProbe: View {
                 TextField("Name", text: $state.name)
                     .textFieldStyle(.plain)
                     .frame(height: 44)
-            })
+            }.maximumPanelHeight(kind == .sheetTop || kind == .sheetBottom ? 220 : 330))
+            .environment(\.layoutDirection, kind == .sheetRTL ? .rightToLeft : .leftToRight)
         case .sheet:
             trigger.modifier(FoundationSheet(isPresented: $state.presented, title: "Audit sheet", onDismiss: dismissed) {
                 content

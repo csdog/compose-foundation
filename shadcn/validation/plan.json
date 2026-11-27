@@ -29,11 +29,17 @@
       "platformCases": {
         "swiftui-ios": [
           {"variant": "default", "status": "initial", "viewport": [720, 520]},
-          {"variant": "default", "status": "open", "viewport": [720, 520]}
+          {"variant": "default", "status": "open", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "open", "viewport": [720, 520]},
+          {"variant": "side", "status": "initial", "viewport": [720, 520]},
+          {"variant": "side", "status": "open", "viewport": [720, 520]},
+          {"variant": "side-bottom", "status": "open", "viewport": [720, 520]},
+          {"variant": "side-left", "status": "open", "viewport": [720, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/sheet-demo.tsx",
-      "visual": "compare the trailing Edit profile sheet with its fields and fixed footer",
+      "visual": "compare the Edit profile sheet, Arabic RTL and the top, bottom and left panels",
       "behavior": "close from Return, Escape or the backdrop and restore the triggering control",
       "accessibility": "preserve heading and native field labels while hiding the background",
       "motion": "static settled frames"

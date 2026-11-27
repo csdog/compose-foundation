@@ -18,6 +18,7 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
     private let onDismiss: () -> Void
     private let footer: AnyView?
     private let sheetContent: () -> SheetContent
+    private var panelHeightLimit: CGFloat?
 
     public init(
         isPresented: Binding<Bool>,
@@ -77,6 +78,13 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
         self.sheetContent = content
     }
 
+    /// Caps an edge presentation's height. Its body scrolls when content exceeds the available space.
+    public func maximumPanelHeight(_ height: CGFloat) -> Self {
+        var sheet = self
+        sheet.panelHeightLimit = height.isFinite && height > 0 ? height : nil
+        return sheet
+    }
+
     @ViewBuilder
     public func body(content: Content) -> some View {
         let palette = theme.palette(for: colorScheme)
@@ -131,8 +139,10 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
         let edgeWidth = size.width * 0.75
         let width = horizontal ? (size.width >= 640 ? min(edgeWidth, 384) : edgeWidth) : size.width
 
+        let height = min(size.height, panelHeightLimit ?? size.height)
         return styledPanel(palette, fullHeight: horizontal)
-            .frame(width: max(1, width), height: horizontal ? size.height : nil)
+            .frame(width: max(1, width), height: horizontal ? height : nil)
+            .frame(maxHeight: horizontal ? nil : height)
             .background(palette.card)
             .overlay(
                 Rectangle().fill(palette.border)
