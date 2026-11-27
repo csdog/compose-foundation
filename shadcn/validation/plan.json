@@ -20,6 +20,24 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "drawer": {
+      "title": "Drawer",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "default", "status": "open", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/drawer-demo.tsx",
+      "visual": "compare the Rhea delivery drawer, its handle, body and pinned actions",
+      "behavior": "preserve initial close focus, Escape, background dismissal and drag-to-close",
+      "accessibility": "hide obscured controls and preserve the heading and close action",
+      "motion": "static settled frames"
+    },
     "alert-dialog": {
       "title": "Alert Dialog",
       "variant": "default",

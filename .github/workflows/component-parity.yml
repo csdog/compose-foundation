@@ -859,6 +859,30 @@ jobs:
           cat "$log"
           grep -q '^PASS:' "$log"
 
+      - name: Verify Drawer, Dialog and Sheet focus on macOS
+        if: contains(needs.baseline.outputs.matrix, '"drawer"')
+        timeout-minutes: 4
+        run: |
+          swiftui=shadcn/iosApp
+          sources="$swiftui/Sources/ComposeFoundationSwiftUI"
+          app="$RUNNER_TEMP/PresentationFocusAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string PresentationFocusAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.presentation-focus-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$sources"/Foundation{Theme,ButtonStyle,PresentationHeader,Drawer,Dialog,Sheet}.swift \
+            "$swiftui/validation/MacPresentationFocusAudit.swift" \
+            -o "$app/Contents/MacOS/PresentationFocusAudit"
+          for kind in drawer drawer-nova drawer-rhea dialog sheet; do
+            log="$RUNNER_TEMP/presentation-$kind.log"
+            open -n -W --stdout "$log" --stderr "$log" "$app" --args "$kind"
+            cat "$log"
+            test "$(grep -c '^PASS:' "$log")" -eq 2
+          done
+
   report:
     name: Component parity report
     needs: [baseline, capture, cmp-behavior, swift-logic, publish]
