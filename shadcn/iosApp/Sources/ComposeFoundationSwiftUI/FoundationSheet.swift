@@ -112,6 +112,7 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
                     .accessibilityHidden(true),
                 alignment: borderAlignment(for: edge)
             )
+            .compositingGroup()
             .shadow(color: .black.opacity(0.12), radius: 8)
             .transition(.move(edge: edge))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: panelAlignment(for: edge))

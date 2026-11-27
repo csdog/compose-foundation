@@ -29,6 +29,7 @@ struct FoundationModalOverlay<Panel: View>: ViewModifier {
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
+                    .transition(.opacity)
                     .onDisappear {
                         guard !isPresented else { return }
                         DispatchQueue.main.async {
