@@ -19,6 +19,8 @@ PLATFORM_TITLES = {
     "cmp-desktop": "Compose Desktop",
 }
 TABLE = "| 组件 | 本端截图 | shadcn 视觉基准 |\n| --- | --- | --- |"
+NUMBERED_TABLE = "| 序号 | 组件 | 本端截图 | shadcn 视觉基准 |\n| ---: | --- | --- | --- |"
+ROW_NUMBER = re.compile(r"^\| (\d+) (?=\| )")
 INTRO = "shadcn 是默认视觉基准。本端截图发布后与同状态的 shadcn 示例并列。"
 FIRST_CELL = re.compile(r"^\| (?:\[([^\]]+)\]\([^)]*\)|([^|]+?)) \|")
 
@@ -64,7 +66,7 @@ def case_label(case, planned_variant, label_variant=False):
     return case
 
 
-def update_component(root, index, platform_title, component, title, cases, variant):
+def update_component(root, index, platform_title, component, title, cases, variant, numbered):
     page = index.parent / component / "Index.md"
     reference_page = root / "shadcn" / component / "Index.md"
     reference_cases = screenshots(reference_page.parent, component)
@@ -100,11 +102,14 @@ def update_component(root, index, platform_title, component, title, cases, varia
     intro = "按截图变体、状态与主题对照。" if multiple_cases else f"对照状态为{case_label(first_case, variant)}。"
     if reference_page.is_file():
         intro += " " + link(page, reference_page, "shadcn 示例和采集记录")
-    content = "\n".join([
-        f"# {title}", "", intro, "",
-        f"| {'变体、状态与主题' if multiple_cases else '主题'} | {platform_title} | shadcn 视觉基准 |",
-        "| --- | --- | --- |", *detail_rows, "",
-    ])
+    state_header = "变体、状态与主题" if multiple_cases else "主题"
+    header = f"| {state_header} | {platform_title} | shadcn 视觉基准 |"
+    separator = "| --- | --- | --- |"
+    if numbered:
+        header = "| 序号 " + header
+        separator = "| ---: " + separator
+        detail_rows = [f"| {number} " + row for number, row in enumerate(detail_rows, 1)]
+    content = "\n".join([f"# {title}", "", intro, "", header, separator, *detail_rows, ""])
     write_page(root, page, content)
     title_link = f"[{title}](./{component}/Index.md)"
     return f"| {title_link} | {'<br>'.join(local_links)} | {'<br>'.join(upstream_links)} |"
@@ -117,8 +122,12 @@ def update_platform(root, plan, platform):
     index = directory / "Index.md"
     platform_title = PLATFORM_TITLES.get(platform, platform)
     shadcn_index = root / "shadcn/Index.md"
+    table = TABLE
     if index.is_file():
-        before, separator, after = index.read_text(encoding="utf-8").partition(TABLE)
+        existing = index.read_text(encoding="utf-8")
+        if NUMBERED_TABLE in existing:
+            table = NUMBERED_TABLE
+        before, separator, after = existing.partition(table)
         if not separator:
             raise ValueError(f"Missing screenshot table in {index.relative_to(root)}")
     else:
@@ -132,25 +141,32 @@ def update_platform(root, plan, platform):
     while remaining and remaining[0].startswith("| "):
         rows.append(remaining.pop(0))
 
+    numbered = table == NUMBERED_TABLE
+    next_number = 1 + max((int(number.group(1)) for row in rows if (number := ROW_NUMBER.match(row))), default=0)
     for component, item in plan["components"].items():
         cases = screenshots(directory / component, component)
         if not cases:
             continue
         title = item["title"]
         key = title.casefold()
-        row = update_component(root, index, platform_title, component, title, cases, item["variant"])
+        row = update_component(root, index, platform_title, component, title, cases, item["variant"], numbered)
         for position, existing in enumerate(rows):
-            match = FIRST_CELL.match(existing)
+            number = ROW_NUMBER.match(existing) if numbered else None
+            cells = existing[number.end():] if number else existing
+            match = FIRST_CELL.match(cells)
             if not match:
                 continue
             existing_title = (match[1] or match[2]).casefold()
-            if existing_title == key or f"](./{component}/Index.md)" in existing:
-                rows[position] = row
+            if existing_title == key or f"](./{component}/Index.md)" in cells:
+                rows[position] = number.group() + row if number else row
                 break
         else:
+            if numbered:
+                row = f"| {next_number} " + row
+                next_number += 1
             rows.append(row)
 
-    start = before + TABLE + "\n"
+    start = before + table + "\n"
     write_page(root, index, start + "\n".join([*rows, *remaining]))
 
 
