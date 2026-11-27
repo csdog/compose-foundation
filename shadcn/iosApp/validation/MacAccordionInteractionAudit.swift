@@ -57,6 +57,7 @@ enum MacAccordionInteractionAudit {
             try? await Task.sleep(for: .milliseconds(400))
             require(window.isKeyWindow, "The audit window needs focus")
 
+            @MainActor
             func expect(_ values: Set<Int>, writes: Int, after topOffset: CGFloat) async {
                 await click(topOffset: topOffset, window: window)
                 require(result.expanded == values && result.writes == writes,
