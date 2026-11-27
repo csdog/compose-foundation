@@ -45,6 +45,7 @@
       "variant": "default",
       "status": "initial",
       "platformStatus": {"cmp-desktop": "open"},
+      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
       "reference": "apps/v4/examples/base/popover-demo.tsx",
       "visual": "review trigger and panel chrome; the CMP Desktop open fixture omits the upstream form, which needs its own capture",
       "behavior": "open, dismiss and return focus to the trigger",
