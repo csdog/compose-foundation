@@ -3,6 +3,7 @@ import SwiftUI
 public struct FoundationKbd: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.font) private var labelFont
 
     private let key: String
 
@@ -12,14 +13,17 @@ public struct FoundationKbd: View {
 
     public var body: some View {
         let palette = theme.palette(for: colorScheme)
+        let nova = theme.preset == .nova
         let shape = RoundedRectangle(cornerRadius: theme.cornerRadius / 2)
+        let font = nova ? labelFont ?? .system(size: 12, weight: .medium) : .system(.caption, design: .monospaced).weight(.medium)
 
-        Text(key)
-            .font(.system(.caption, design: .monospaced).weight(.medium))
+        return Text(key)
+            .font(font)
             .foregroundColor(palette.mutedForeground)
-            .padding(.horizontal, 5)
-            .padding(.vertical, 3)
+            .padding(.horizontal, nova ? 4 : 5)
+            .padding(.vertical, nova ? 0 : 3)
+            .frame(minWidth: nova ? 20 : nil, minHeight: nova ? 20 : nil)
             .background(shape.fill(palette.secondary))
-            .overlay(shape.strokeBorder(palette.border))
+            .overlay(shape.strokeBorder(nova ? .clear : palette.border))
     }
 }

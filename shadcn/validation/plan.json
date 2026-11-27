@@ -68,6 +68,45 @@
       "accessibility": "decorative separator is hidden",
       "motion": "static reference"
     },
+    "kbd": {
+      "title": "Kbd",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "reference": "apps/v4/examples/base/kbd-demo.tsx",
+      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
+      "shadcnComparisonOrigin": {"swiftui-ios": [159, 0]},
+      "visual": "review the modifier strip and Ctrl + B combination",
+      "behavior": "static screenshot",
+      "accessibility": "review native semantics",
+      "motion": "verify independently of static capture"
+    },
+    "skeleton": {
+      "title": "Skeleton",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "reference": "apps/v4/examples/base/skeleton-demo.tsx",
+      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
+      "shadcnComparisonOrigin": {"swiftui-ios": [0, 0]},
+      "visual": "review the avatar placeholder and both text placeholders",
+      "behavior": "static screenshot",
+      "accessibility": "review native semantics",
+      "motion": "verify independently of static capture"
+    },
+    "spinner": {
+      "title": "Spinner",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "reference": "apps/v4/examples/base/spinner-demo.tsx",
+      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
+      "shadcnComparisonOrigin": {"swiftui-ios": [0, 0]},
+      "visual": "review the progress ring and full payment row",
+      "behavior": "static screenshot",
+      "accessibility": "review native semantics",
+      "motion": "verify independently of static capture"
+    },
     "popover": {
       "title": "Popover",
       "variant": "default",

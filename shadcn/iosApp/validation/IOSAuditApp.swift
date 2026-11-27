@@ -141,6 +141,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "badge": { AnyView(BadgeInitialScreenshotFixture()) },
             "button": { AnyView(ButtonInitialScreenshotFixture()) },
             "separator": { AnyView(SeparatorInitialScreenshotFixture()) },
+            "kbd": { AnyView(StatusInitialScreenshotFixture(example: .kbd)) },
+            "skeleton": { AnyView(StatusInitialScreenshotFixture(example: .skeleton)) },
+            "spinner": { AnyView(StatusInitialScreenshotFixture(example: .spinner)) },
             "tabs": { AnyView(TabsInitialScreenshotFixture()) },
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
@@ -653,6 +656,63 @@ private struct SeparatorInitialScreenshotFixture: View {
         .foundationTheme(theme)
         .padding(.leading, 18)
         .padding(.top, 24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct StatusInitialScreenshotFixture: View {
+    enum Example { case kbd, skeleton, spinner }
+
+    let example: Example
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let palette = theme.palette(for: scheme)
+        return Group {
+            switch example {
+            case .kbd:
+                VStack(spacing: 18) {
+                    HStack(spacing: 4) {
+                        ForEach(["⌘", "⇧", "⌥", "⌃"], id: \.self) { FoundationKbd($0) }
+                    }
+                    HStack(spacing: 4) {
+                        FoundationKbd("Ctrl")
+                        Text("+").font(.custom("Geist-Regular", size: 14))
+                        FoundationKbd("B")
+                    }
+                }
+                .environment(\.font, .custom("Geist-Medium", size: 12))
+                .frame(maxWidth: .infinity)
+            case .skeleton:
+                HStack(spacing: 16) {
+                    FoundationSkeleton(cornerRadius: 24).frame(width: 48, height: 48)
+                    VStack(alignment: .leading, spacing: 8) {
+                        FoundationSkeleton().frame(width: 250, height: 16)
+                        FoundationSkeleton().frame(width: 200, height: 16)
+                    }
+                }
+            case .spinner:
+                HStack(spacing: 10) {
+                    FoundationSpinner(accessibilityLabel: "Processing payment", animates: false)
+                    Text("Processing payment...")
+                        .font(.custom("Geist-Medium", size: 14))
+                    Spacer(minLength: 0)
+                    Text("$100.00")
+                        .font(.custom("Geist-Regular", size: 14).monospacedDigit())
+                }
+                .padding(.horizontal, 13)
+                .frame(width: 320, height: 42)
+                .background(RoundedRectangle(cornerRadius: 16).fill(palette.secondary.opacity(0.5)))
+            }
+        }
+        .foregroundColor(palette.foreground)
+        .foundationTheme(theme)
+        .padding(24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()

@@ -11,7 +11,8 @@ public struct FoundationSkeleton: View {
     }
 
     public var body: some View {
-        RoundedRectangle(cornerRadius: radius ?? theme.cornerRadius)
+        let defaultRadius = theme.preset == .nova ? max(0, theme.cornerRadius - 2) : theme.cornerRadius
+        return RoundedRectangle(cornerRadius: radius ?? defaultRadius)
             .fill(theme.palette(for: colorScheme).secondary)
             .accessibilityHidden(true)
     }
