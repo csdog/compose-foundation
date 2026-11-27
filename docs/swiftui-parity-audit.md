@@ -124,6 +124,14 @@ iPad mini（iPadOS 26.2）的四张深浅色图在 720 × 520 画布上复拍逐
 
 macOS Swift Package 构建和 AppKit 点击回归通过。虚线边框内两个按钮可分别操作，禁用其中一个时另一个仍能响应。iOS 触控、硬件键盘、VoiceOver、RTL 和动态字体待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46048600511/job/140674068424)
 
+### Breadcrumb 省略菜单与分隔符
+
+对照 shadcn Base UI / Nova 的 `breadcrumb-demo.tsx`、`breadcrumb-ellipsis.tsx` 和 `breadcrumb-separator.tsx`。保留完整 Home、Components 和当前页路径。使用 `Entry.ellipsis(id:title:items:)` 可放入原生菜单，传入空列表时显示静态省略标记。`separatorSymbol` 和 `separatorSize` 可替换分隔符图形与字号。分隔符不进入无障碍树，末项保留静态文本并报告当前页。原有 `FoundationBreadcrumb([Entry])` 调用仍可用。
+
+iPhone 17 Pro（iOS 26.2）的六张深浅色图以 402 × 520 画布复拍，逐字节一致。三组布局的完整路径均可见。Nova 链接和菜单触发器保留至少 44 pt 的操作区域。默认样例的末项右沿比 shadcn 远 24–25 pt，静态省略与圆点分隔样例的末项右沿远 8–9 pt。两端的圆点和箭头形状仍有差异。[Breadcrumb 截图报告](https://github.com/csdog/compose-foundation/actions/runs/46049871562/artifacts/15224985937)
+
+macOS Swift Package 构建与 AppKit 点击回归通过。Home 和 Components 可独立触发，点分隔符不触发动作，末项即使带有回调也保持静态。菜单打开和选择、iOS 实际触控、硬件键盘、VoiceOver 及 RTL 待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46049871562/job/140678364299)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -135,7 +143,7 @@ macOS Swift Package 构建和 AppKit 点击回归通过。虚线边框内两个�
 | attachment | 有上传进度、处理、失败和完成状态，并支持移除。缺少 Compose 的尺寸、纵向布局、附件组与预览触发器。 |
 | avatar | 支持本地 `Image` 和姓名首字母回退。缺少内建异步 URL 加载、错误状态、徽标和头像组。 |
 | badge | 支持 primary、secondary、outline、destructive。缺少 Compose 的 ghost/link 样式与图标位置参数。 |
-| breadcrumb | 支持水平路径、链接、当前页和分隔符。缺少可配置分隔符、ellipsis 与自定义页面 slot。 |
+| breadcrumb | 支持水平路径、链接、当前页、自定义分隔符以及静态与菜单式省略项。自定义页面 slot 和其余示例待对齐。 |
 | bubble | 支持 incoming、outgoing、muted 内容气泡。缺少气泡组及定位在气泡边缘的 reactions。 |
 | button | 六种颜色变体、禁用、按压反馈和内容 slot。Compose 另有尺寸、图标位置、焦点环和多种按压动画。 |
 | button-group | 支持纵向和横向布局。iOS 18、macOS 15 起，Nova 的 FoundationButtonStyle 子项合并相邻圆角和边框。分隔符、文本项及子项焦点层级仍待对齐。 |
