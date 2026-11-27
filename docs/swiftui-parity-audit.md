@@ -108,6 +108,14 @@ macOS 实际窗口通过 AppKit 点击验证整行命中、单开时替换原面
 
 日常 iOS 回归仍报告 `popover-default-initial-dark.png` 与已发布原生基准有 3,107 个像素不同。父 PR #20 的同一用例也是 3,107，Accordion 新用例因等待发布基准而标为待验。[日常 iOS 回归](https://github.com/csdog/compose-foundation/actions/runs/46042899384/job/140654967723) · [父 PR 的回归](https://github.com/csdog/compose-foundation/actions/runs/46042184550/job/140652502470)
 
+### Collapsible 订单详情
+
+对照 shadcn Base UI / Nova 的 `collapsible-demo.tsx`。标题右侧的图标按钮独立切换展开状态，订单状态始终可见，配送地址和商品信息只在展开时装入布局。`FoundationCollapsibleTrigger(isExpanded: $expanded)` 接收自定义标签，可用 `buttonStyle` 设置外观，图标按钮需要提供可访问名称。`FoundationCollapsibleContent(isExpanded: expanded)` 放在详情应出现的位置。原有带字符串标题的 `FoundationCollapsible` 继续使用系统 DisclosureGroup。
+
+iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集收起、展开的四张深浅色图，复拍逐字节一致。两端画布背景颜色一致。原生图保留 44 pt 的触控区域，两种状态的内容下沿均比参考低 13–14 pt。shadcn 展开图在触发按钮上保留了鼠标悬停底色，iOS 截图为静止触屏状态。[Collapsible 截图报告](https://github.com/csdog/compose-foundation/actions/runs/46046834807/artifacts/15222433755)
+
+macOS 实际窗口回归已验证开关各写入绑定一次、关闭的面板无法接收点击、展开始终可由外部状态控制，以及禁用触发按钮时已展开的内容仍可操作。iOS 触控、键盘、VoiceOver、RTL 和其余布局待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46046834807/job/140668144649)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -130,7 +138,7 @@ macOS 实际窗口通过 AppKit 点击验证整行命中、单开时替换原面
 | checkbox | 支持未选中、已选中和部分选中。部分选中使用减号、独立无障碍值和点按转全选。Nova 使用 16 pt 标记、深色未选中底色和首行文字对齐。Bool ToggleStyle 和 SwiftUI 混合状态均受支持。 |
 | chip | 可切换选中状态，支持内容标签和选中语义。缺少 Compose 的独立 chip 样式变体。 |
 | code-block | 支持横向滚动、语言标签和行号。缺少复制按钮、行状态、页脚和操作栏。 |
-| collapsible | 原生 DisclosureGroup 与展开绑定。Compose 的自定义 trigger slot、状态联动与展开动画参数未移植。 |
+| collapsible | 保留原生 DisclosureGroup，支持可单独摆放的按钮和内容 slots、共享展开状态和自定义标签。展开动画由调用方决定。 |
 | combobox | 支持搜索、空态、禁用选项、分组、单选和可移除的多选 chips。iOS 模拟器和 macOS 已验证方向键跨组、跳过禁用项、Return 选择、Escape 关闭、多选、移除 chips 和搜索隐藏空分组。iOS 平铺模式此前还验证了软键盘提交和 VoiceOver 朗读。 |
 | command | 支持分组过滤、空态、禁用项和回车选择首个可用结果。缺少对话框、加载状态、footer 和逐项快捷键。 |
 | context-menu | 使用系统右键或长按菜单。调用方可传入系统菜单视图，Compose 的位置、portal、子菜单和条目 DSL 有独立 API。 |
