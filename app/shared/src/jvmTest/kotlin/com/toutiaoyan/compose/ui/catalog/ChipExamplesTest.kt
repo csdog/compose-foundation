@@ -65,7 +65,7 @@ class ChipExamplesTest(private val width: Int, private val dark: Boolean) {
                             .testTag("preview"),
                         contentAlignment = Alignment.Center,
                     ) {
-                        key(index) { chipDoc.examples[index].preview() }
+                        key(index) { chipDoc.examples[index].RenderPreview() }
                     }
                 }
             }
@@ -80,7 +80,7 @@ class ChipExamplesTest(private val width: Int, private val dark: Boolean) {
         val selectable = chipDoc.examples.single { it.title == "Selectable" }
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                selectable.preview()
+                selectable.RenderPreview()
             }
         }
         val chip = rule.onNodeWithText("Kotlin")
@@ -100,8 +100,8 @@ class ChipExamplesTest(private val width: Int, private val dark: Boolean) {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
                 androidx.compose.foundation.layout.Column {
-                    disabled.preview()
-                    icon.preview()
+                    disabled.RenderPreview()
+                    icon.RenderPreview()
                 }
             }
         }

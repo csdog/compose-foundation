@@ -212,7 +212,7 @@ class ButtonGroupExamplesTest(
                     Box(
                         Modifier.requiredSize((if (width < 768) 325 else 638).dp, 600.dp),
                     ) {
-                        key(index.value) { buttonGroupDoc.examples[index.value].preview() }
+                        key(index.value) { buttonGroupDoc.examples[index.value].RenderPreview() }
                     }
                 }
             }

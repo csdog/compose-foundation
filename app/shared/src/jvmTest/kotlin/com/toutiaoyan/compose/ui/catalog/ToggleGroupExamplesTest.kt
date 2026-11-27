@@ -33,7 +33,7 @@ class ToggleGroupExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(720.dp).height(720.dp), contentAlignment = Alignment.TopCenter) {
-                        toggleGroupDoc.examples.single { it.title == title }.preview()
+                        toggleGroupDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }
@@ -167,7 +167,7 @@ class ToggleGroupExamplesTest {
             Theme(preset = StylePreset.Nova, isDark = dark.value, minTouchTarget = null) {
                 muted = currentTheme.colors.muted
                 mono = catalogMonoFontFamily()
-                toggleGroupDoc.examples.single { it.title == "Custom" }.preview()
+                toggleGroupDoc.examples.single { it.title == "Custom" }.RenderPreview()
             }
         }
         listOf(false, true, false).forEach { isDark ->
@@ -261,7 +261,7 @@ class ToggleGroupExamplesTest {
                             code = example.code,
                             previewPadding = example.previewPadding,
                             hideCode = true,
-                            preview = example.preview,
+                            preview = { example.RenderPreview() },
                         )
                     }
                 }

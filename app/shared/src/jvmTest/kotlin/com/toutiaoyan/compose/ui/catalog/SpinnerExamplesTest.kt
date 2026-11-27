@@ -27,7 +27,7 @@ class SpinnerExamplesTest {
     private fun show(name: String) {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                Box(Modifier.width(480.dp)) { spinnerDoc.examples.single { it.title == name }.preview() }
+                Box(Modifier.width(480.dp)) { spinnerDoc.examples.single { it.title == name }.RenderPreview() }
             }
         }
     }

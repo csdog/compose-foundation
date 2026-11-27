@@ -38,7 +38,7 @@ class ButtonExamplesTest(private val width: Int, private val dark: Boolean) {
                         ).padding(if (index == 14) 0.dp else 40.dp),
                         contentAlignment = Alignment.Center,
                     ) {
-                        key(index) { buttonDoc.examples[index].preview() }
+                        key(index) { buttonDoc.examples[index].RenderPreview() }
                     }
                 }
             }
@@ -132,7 +132,7 @@ class ButtonExamplesTest(private val width: Int, private val dark: Boolean) {
                 ) {
                     Box(
                         Modifier.requiredSize((if (width < 768) width - 65 else 638).dp, 400.dp),
-                    ) { buttonDoc.examples.last().preview() }
+                    ) { buttonDoc.examples.last().RenderPreview() }
                 }
             }
         }

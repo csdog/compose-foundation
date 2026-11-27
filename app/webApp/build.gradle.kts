@@ -62,18 +62,3 @@ generateCatalogShortcutFont.configure {
 kotlin.sourceSets.matching { it.name == "webMain" }.configureEach {
     kotlin.srcDir(generateCatalogShortcutFont)
 }
-
-// The baseline Compose plugin recognizes only module UI dependencies, not our Web composite.
-afterEvaluate {
-    tasks.named("unpackSkikoWasmRuntime") {
-        setOnlyIf { true }
-    }
-}
-kotlin.js().compilations.configureEach {
-    binaries.configureEach {
-        linkSyncTask.configure {
-            dependsOn("unpackSkikoWasmRuntime")
-            from.from(layout.buildDirectory.dir("compose/skiko-for-web-runtime"))
-        }
-    }
-}

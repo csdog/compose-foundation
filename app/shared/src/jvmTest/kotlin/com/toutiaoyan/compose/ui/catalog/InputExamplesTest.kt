@@ -28,7 +28,7 @@ class InputExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null, fontFamily = catalogFontFamily()) {
                 Box(Modifier.width(width.dp)) {
-                    inputDoc.examples.single { it.title == title }.preview()
+                    inputDoc.examples.single { it.title == title }.RenderPreview()
                 }
             }
         }
@@ -155,7 +155,7 @@ class InputExamplesTest {
             CompositionLocalProvider(LocalFilePicker provides picker) {
                 Theme(preset = StylePreset.Nova) {
                     Box(Modifier.width(640.dp)) {
-                        inputDoc.examples.single { it.title == "File" }.preview()
+                        inputDoc.examples.single { it.title == "File" }.RenderPreview()
                     }
                 }
             }
@@ -223,7 +223,7 @@ class InputExamplesTest {
         rule.setContent {
             CompositionLocalProvider(LocalFilePicker provides picker.value) {
                 Theme(preset = StylePreset.Nova) {
-                    inputDoc.examples.single { it.title == "File" }.preview()
+                    inputDoc.examples.single { it.title == "File" }.RenderPreview()
                 }
             }
         }

@@ -71,7 +71,7 @@ class SheetExamplesTest(private val viewport: Int, private val dark: Boolean) {
                         if (language != null) {
                             SheetRtlRecipe(language)
                         } else {
-                            sheetDoc.examples.single { it.title == title }.preview()
+                            sheetDoc.examples.single { it.title == title }.RenderPreview()
                         }
                     }
                 }

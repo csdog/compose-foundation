@@ -21,7 +21,7 @@ class HoverCardExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(800.dp).height(650.dp), contentAlignment = Alignment.Center) {
-                        hoverCardDoc.examples.single { it.title == title }.preview()
+                        hoverCardDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

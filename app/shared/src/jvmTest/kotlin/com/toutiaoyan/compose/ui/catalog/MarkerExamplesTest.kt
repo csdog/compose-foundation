@@ -36,7 +36,7 @@ class MarkerExamplesTest {
                 ) {
                     OverlayHost {
                         Box(Modifier.width(560.dp).height(600.dp), contentAlignment = Alignment.Center) {
-                            markerDoc.examples.single { it.title == title }.preview()
+                            markerDoc.examples.single { it.title == title }.RenderPreview()
                         }
                     }
                 }

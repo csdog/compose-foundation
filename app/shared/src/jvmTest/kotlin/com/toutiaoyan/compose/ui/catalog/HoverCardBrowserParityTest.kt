@@ -55,7 +55,7 @@ class HoverCardBrowserParityTest(private val width: Int, private val dark: Boole
                                 Modifier.fillMaxWidth().padding(if (title == "Sides") 40.dp else 0.dp),
                                 contentAlignment = Alignment.Center,
                             ) {
-                                hoverCardDoc.examples.single { it.title == title }.preview()
+                                hoverCardDoc.examples.single { it.title == title }.RenderPreview()
                             }
                         }
                     }

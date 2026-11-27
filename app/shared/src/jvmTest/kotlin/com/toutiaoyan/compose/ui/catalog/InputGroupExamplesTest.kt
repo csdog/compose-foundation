@@ -124,7 +124,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
         rule.setContent {
             CompositionLocalProvider(LocalClipboard provides clipboard) {
                 Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
-                    inputGroupDoc.examples.single { it.title == "Button" }.preview()
+                    inputGroupDoc.examples.single { it.title == "Button" }.RenderPreview()
                 }
             }
         }
@@ -136,7 +136,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
     @Test fun dropdownButtonsOpenTheirOwnMenusAndCloseOnSelection() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
-                inputGroupDoc.examples.single { it.title == "Dropdown" }.preview()
+                inputGroupDoc.examples.single { it.title == "Dropdown" }.RenderPreview()
             }
         }
         val settings = rule.onNodeWithText("Settings")
@@ -157,7 +157,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
     @Test fun dropdownArrowAndActivationKeysFocusTheExpectedRowAndRestoreTheTrigger() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
-                inputGroupDoc.examples.single { it.title == "Dropdown" }.preview()
+                inputGroupDoc.examples.single { it.title == "Dropdown" }.RenderPreview()
             }
         }
         val more = rule.onNodeWithContentDescription("More")
@@ -177,7 +177,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
     @Test fun informationButtonOpensTheSecurityPopover() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
-                inputGroupDoc.examples.single { it.title == "Button" }.preview()
+                inputGroupDoc.examples.single { it.title == "Button" }.RenderPreview()
             }
         }
         rule.onNodeWithContentDescription("Info").performClick()
@@ -192,7 +192,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
                 Box(Modifier.requiredSize((if (width < 768) 245 else 384).dp, 300.dp)) {
-                    inputGroupDoc.examples.single { it.title == "Button" }.preview()
+                    inputGroupDoc.examples.single { it.title == "Button" }.RenderPreview()
                 }
             }
         }
@@ -208,7 +208,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
     @Test fun codeTextareaPreservesOfficialMinimumHeight() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
-                inputGroupDoc.examples.single { it.title == "Textarea" }.preview()
+                inputGroupDoc.examples.single { it.title == "Textarea" }.RenderPreview()
             }
         }
         // The editable semantics excludes the control's 8.dp top and bottom content padding.
@@ -218,7 +218,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
     @Test fun favoriteSelectionUsesTheOfficialBlue() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
-                inputGroupDoc.examples.single { it.title == "Button" }.preview()
+                inputGroupDoc.examples.single { it.title == "Button" }.RenderPreview()
             }
         }
         val favorite = rule.onNodeWithContentDescription("Favorite")
@@ -240,7 +240,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
                 val colors = currentTheme.colors
                 val background = if (dark) colors.input.copy(alpha = colors.input.alpha * .3f) else Color.Transparent
                 border = colors.border.compositeOver(background)
-                inputGroupDoc.examples.single { it.title == "Textarea" }.preview()
+                inputGroupDoc.examples.single { it.title == "Textarea" }.RenderPreview()
             }
         }
         val header = rule.onNodeWithTag("input-group-code-header").captureToImage().toPixelMap()
@@ -262,7 +262,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
                 secondary = currentTheme.colors.secondary
-                inputGroupDoc.examples.single { it.title == "Button" }.preview()
+                inputGroupDoc.examples.single { it.title == "Button" }.RenderPreview()
             }
         }
         val pixels = rule.onNodeWithContentDescription("Info").captureToImage().toPixelMap()
@@ -278,7 +278,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
                 Box(Modifier.requiredSize((if (width < 768) 245 else 384).dp, 300.dp).testTag("recipe")) {
-                    inputGroupDoc.examples.single { it.title == "Button" }.preview()
+                    inputGroupDoc.examples.single { it.title == "Button" }.RenderPreview()
                 }
             }
         }
@@ -292,7 +292,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
                 Box(Modifier.requiredSize((if (width < 768) 245 else 384).dp, 100.dp).testTag("recipe")) {
-                    inputGroupDoc.examples.single { it.title == "Kbd" }.preview()
+                    inputGroupDoc.examples.single { it.title == "Kbd" }.RenderPreview()
                 }
             }
         }
@@ -305,7 +305,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
     @Test fun codeHeaderUsesMediumMonospaceTypography() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
-                inputGroupDoc.examples.single { it.title == "Textarea" }.preview()
+                inputGroupDoc.examples.single { it.title == "Textarea" }.RenderPreview()
             }
         }
         val layouts = mutableListOf<TextLayoutResult>()
@@ -331,7 +331,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
                             .testTag("preview"),
                         contentAlignment = Alignment.Center,
                     ) {
-                        key(index) { inputGroupDoc.examples[index].preview() }
+                        key(index) { inputGroupDoc.examples[index].RenderPreview() }
                     }
                 }
             }
@@ -346,7 +346,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
     @Test fun demoAddonContentAndBlockEndFooterRender() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                inputGroupDoc.examples.single { it.title == "Default" }.preview()
+                inputGroupDoc.examples.single { it.title == "Default" }.RenderPreview()
             }
         }
         rule.onNodeWithText("Search...").assertExists()
@@ -357,7 +357,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
     @Test fun blockEndTextareaShowsCountAndPostAction() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                inputGroupDoc.examples.single { it.title == "block-end" }.preview()
+                inputGroupDoc.examples.single { it.title == "block-end" }.RenderPreview()
             }
         }
         rule.onNodeWithText("USD").assertExists()
@@ -369,7 +369,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
     @Test fun spinnerRecipeExposesAllFourLoadingIndicators() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                inputGroupDoc.examples.single { it.title == "Spinner" }.preview()
+                inputGroupDoc.examples.single { it.title == "Spinner" }.RenderPreview()
             }
         }
         rule.onAllNodesWithContentDescription("Loading").assertCountEquals(4)
@@ -378,7 +378,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
     @Test fun kbdRecipeRendersTheShortcut() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                inputGroupDoc.examples.single { it.title == "Kbd" }.preview()
+                inputGroupDoc.examples.single { it.title == "Kbd" }.RenderPreview()
             }
         }
         rule.onNodeWithText("⌘K").assertExists()
@@ -405,7 +405,7 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
     @Test fun rtlPreviewSwitchesLanguages() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                inputGroupDoc.examples.single { it.title == "RTL" }.preview()
+                inputGroupDoc.examples.single { it.title == "RTL" }.RenderPreview()
             }
         }
         rule.onNodeWithText("١٢ نتيجة").assertExists()

@@ -70,7 +70,7 @@ class ProgressExamplesTest(private val viewport: Int, private val dark: Boolean)
                         contentAlignment =
                             Alignment.Center,
                     ) {
-                        progressDoc.examples.single { it.title == title }.preview()
+                        progressDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

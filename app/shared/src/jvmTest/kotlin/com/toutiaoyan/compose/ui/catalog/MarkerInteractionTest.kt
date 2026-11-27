@@ -52,7 +52,7 @@ class MarkerInteractionTest(private val width: Int, private val dark: Boolean) {
                 ) {
                     OverlayHost {
                         Box(Modifier.width((if (width < 640) 325 else 638).dp).padding(40.dp)) {
-                            markerDoc.examples.single { it.title == "Links and Buttons" }.preview()
+                            markerDoc.examples.single { it.title == "Links and Buttons" }.RenderPreview()
                         }
                     }
                 }

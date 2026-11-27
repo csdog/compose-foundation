@@ -27,7 +27,7 @@ class CommandExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(720.dp).height(720.dp), contentAlignment = Alignment.TopCenter) {
-                        commandDoc.examples.single { it.title == title }.preview()
+                        commandDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

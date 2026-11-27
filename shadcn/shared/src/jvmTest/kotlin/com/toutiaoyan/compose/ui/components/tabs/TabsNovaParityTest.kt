@@ -14,7 +14,7 @@ import kotlin.test.assertEquals
 
 class TabsNovaParityTest : ScreenshotTest() {
     @Test fun novaTriggerUsesSixByTwoPaddingAndOnePixelTransparentBorder() {
-        setThemedContent(stylePreset = StylePreset.Nova) {
+        setThemedContent(stylePreset = StylePreset.Nova, useMinimumTouchTarget = false) {
             Tabs(value = "account") {
                 TabsList {
                     TabsTrigger("account", label = "Account", modifier = Modifier.testTag("trigger"))

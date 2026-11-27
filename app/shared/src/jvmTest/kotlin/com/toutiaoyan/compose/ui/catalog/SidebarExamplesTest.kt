@@ -37,7 +37,7 @@ class SidebarExamplesTest {
             CompositionLocalProvider(LocalWindowInfo provides window) {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null, fontFamily = catalogFontFamily()) {
                     Box(Modifier.fillMaxSize()) {
-                        sidebarDoc.examples.single { it.title == title }.preview()
+                        sidebarDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

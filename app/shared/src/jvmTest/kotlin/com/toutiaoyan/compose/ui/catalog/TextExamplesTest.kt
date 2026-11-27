@@ -48,7 +48,7 @@ class TextExamplesTest {
 
     @Test fun variantsPreviewRendersEveryTypeScaleEntry() {
         val example = textDoc.examples.single { it.title == "Variants" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         listOf(
             "DisplayLarge", "DisplayMedium", "TitleLarge", "TitleMedium", "TitleSmall",
             "BodyLarge", "BodyMedium", "BodySmall", "LabelLarge", "LabelSmall",
@@ -59,7 +59,7 @@ class TextExamplesTest {
 
     @Test fun mutedPreviewKeepsMutedCopy() {
         val example = textDoc.examples.single { it.title == "Muted" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Muted body").assertIsDisplayed()
     }
 

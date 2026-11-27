@@ -116,7 +116,7 @@ class InputOTPExamplesTest(private val width: Int, private val dark: Boolean) {
                             .testTag("preview"),
                         contentAlignment = Alignment.Center,
                     ) {
-                        key(index) { inputOTPDoc.examples[index].preview() }
+                        key(index) { inputOTPDoc.examples[index].RenderPreview() }
                     }
                 }
             }
@@ -132,7 +132,7 @@ class InputOTPExamplesTest(private val width: Int, private val dark: Boolean) {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
                 Box(Modifier.requiredSize(560.dp, 600.dp)) {
-                    inputOTPDoc.examples.single { it.title == "Form" }.preview()
+                    inputOTPDoc.examples.single { it.title == "Form" }.RenderPreview()
                 }
             }
         }
@@ -148,7 +148,7 @@ class InputOTPExamplesTest(private val width: Int, private val dark: Boolean) {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
                 Box(Modifier.requiredSize(availableWidth.dp, 620.dp)) {
-                    inputOTPDoc.examples.single { it.title == "Form" }.preview()
+                    inputOTPDoc.examples.single { it.title == "Form" }.RenderPreview()
                 }
             }
         }
@@ -173,7 +173,7 @@ class InputOTPExamplesTest(private val width: Int, private val dark: Boolean) {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
                 Box(Modifier.requiredSize(availableWidth.dp, 300.dp)) {
-                    key(title) { inputOTPDoc.examples.single { it.title == title }.preview() }
+                    key(title) { inputOTPDoc.examples.single { it.title == title }.RenderPreview() }
                 }
             }
         }
@@ -195,7 +195,7 @@ class InputOTPExamplesTest(private val width: Int, private val dark: Boolean) {
     @Test fun patternLabelNamesAndFocusesTheEditableSemanticsNode() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
-                inputOTPDoc.examples.single { it.title == "Pattern" }.preview()
+                inputOTPDoc.examples.single { it.title == "Pattern" }.RenderPreview()
             }
         }
         rule.onNodeWithText("Digits Only").performClick()

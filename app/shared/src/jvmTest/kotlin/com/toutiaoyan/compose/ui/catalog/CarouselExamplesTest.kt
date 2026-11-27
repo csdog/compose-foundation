@@ -34,7 +34,7 @@ class CarouselExamplesTest {
                     Box(
                         Modifier.width(560.dp).height(600.dp),
                         contentAlignment = Alignment.Center,
-                    ) { carouselDoc.examples.single { it.title == title }.preview() }
+                    ) { carouselDoc.examples.single { it.title == title }.RenderPreview() }
                 }
             }
         }

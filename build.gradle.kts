@@ -1,4 +1,6 @@
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
@@ -116,6 +118,46 @@ subprojects {
                     requested.group == "org.jetbrains.skiko" &&
                         requested.name in setOf("skiko", "skiko-js", "skiko-wasm-js") ->
                         useVersion("0.156.0")
+                }
+            }
+        }
+    }
+}
+
+// Compose 1.12.2 does not recognize our substituted Web UI dependency when
+// deciding whether to unpack the Skiko runtime. Both the catalog and the Web
+// test bundles need the same runtime assets.
+val webUiProjects = setOf(":app:webApp", ":app:shared", ":shadcn:core", ":tailwind-core")
+subprojects {
+    if (path in webUiProjects) {
+        val skikoRuntime = layout.buildDirectory.dir("compose/skiko-for-web-runtime")
+        val webpackRules = rootProject.file("app/webApp/webpack.config.d")
+        gradle.projectsEvaluated {
+            tasks.named("unpackSkikoWasmRuntime") {
+                setOnlyIf { true }
+            }
+        }
+        afterEvaluate {
+            val multiplatform = extensions.getByType<KotlinMultiplatformExtension>()
+            val js = multiplatform.js()
+            js.compilations.configureEach {
+                binaries.configureEach {
+                    linkSyncTask.configure {
+                        dependsOn("unpackSkikoWasmRuntime")
+                        from.from(skikoRuntime)
+                    }
+                }
+            }
+            @OptIn(ExperimentalWasmDsl::class)
+            val wasm = multiplatform.wasmJs()
+            listOf(js, wasm).forEach { target ->
+                target.browser {
+                    testTask {
+                        useKarma {
+                            useChromeHeadless()
+                            webpackConfig.configDirectory = webpackRules
+                        }
+                    }
                 }
             }
         }

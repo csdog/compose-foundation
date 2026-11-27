@@ -70,7 +70,7 @@ class TableExamplesTest(private val viewport: Int, private val dark: Boolean) {
                         if (title == "API") {
                             ApiReference(listOf(ApiProperty("onValueChange", "(String) -> Unit", "{}")))
                         } else {
-                            tableDoc.examples.single { it.title == title }.preview()
+                            tableDoc.examples.single { it.title == title }.RenderPreview()
                         }
                     }
                 }
@@ -119,18 +119,23 @@ class TableExamplesTest(private val viewport: Int, private val dark: Boolean) {
     @Test fun defaultHasAllSevenInvoicesAndSourceFooter() {
         show("Default")
         repeat(7) { rule.onNodeWithText("INV00${it + 1}").assertIsDisplayed() }
-        rule.onNodeWithText("$2,500.00").assertIsDisplayed()
         val captionText = rule.onNodeWithText("A list of your recent invoices.").fetchSemanticsNode().boundsInRoot
         assertEquals(bounds("table-total").bottom + 16f, captionText.top, .1f)
         capture("default")
+        assertTotalVisible()
     }
 
     @Test fun footerRecipeHasThreeInvoicesButKeepsSourceTotal() {
         show("Footer")
         rule.onNodeWithText("INV003").assertIsDisplayed()
         rule.onNodeWithText("INV004").assertDoesNotExist()
-        rule.onNodeWithText("$2,500.00").assertIsDisplayed()
         capture("footer")
+        assertTotalVisible()
+    }
+
+    private fun assertTotalVisible() {
+        rule.mainClock.autoAdvance = true
+        rule.onNodeWithText("$2,500.00").performScrollTo().assertIsDisplayed()
     }
 
     @Test fun actionsUseRealMenusAndDismissAfterSelection() {

@@ -56,7 +56,7 @@ class NavigationMenuResponsiveTest {
                 }
             CompositionLocalProvider(LocalWindowInfo provides window) {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null) {
-                    Box(Modifier.width(800.dp).height(600.dp)) { navigationMenuDoc.examples.first().preview() }
+                    Box(Modifier.width(800.dp).height(600.dp)) { navigationMenuDoc.examples.first().RenderPreview() }
                 }
             }
         }

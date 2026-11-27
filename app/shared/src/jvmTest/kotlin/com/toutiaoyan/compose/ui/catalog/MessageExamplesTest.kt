@@ -29,7 +29,7 @@ class MessageExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(560.dp).height(1000.dp), contentAlignment = Alignment.TopCenter) {
-                        messageDoc.examples.single { it.title == title }.preview()
+                        messageDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

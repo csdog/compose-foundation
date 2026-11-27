@@ -39,7 +39,7 @@ class TextareaExamplesTest {
 
     @Test fun fieldRecipeRendersLabelDescriptionAndTextarea() {
         val example = textareaDoc.examples.single { it.title == "Field" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Message").assertIsDisplayed()
         rule.onNodeWithText("Enter your message below.").assertIsDisplayed()
         rule.onAllNodes(hasSetTextAction()).assertCountEquals(1)
@@ -47,27 +47,27 @@ class TextareaExamplesTest {
 
     @Test fun disabledRecipeDisablesTheTextarea() {
         val example = textareaDoc.examples.single { it.title == "Disabled" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onAllNodes(hasSetTextAction()).assertCountEquals(0)
         rule.onNodeWithText("Type your message here.").assertExists()
     }
 
     @Test fun invalidRecipeShowsTheErrorDescription() {
         val example = textareaDoc.examples.single { it.title == "Invalid" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Please enter a valid message.").assertIsDisplayed()
         rule.onAllNodes(hasSetTextAction()).assertCountEquals(1)
     }
 
     @Test fun buttonRecipePairsTextareaWithSubmit() {
         val example = textareaDoc.examples.single { it.title == "Button" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Send message").assertIsDisplayed()
     }
 
     @Test fun rtlRecipeStartsWithArabicCopy() {
         val example = textareaDoc.examples.single { it.title == "RTL" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("التعليقات").assertExists()
         rule.onNodeWithText("شاركنا أفكارك حول خدمتنا.").assertExists()
     }

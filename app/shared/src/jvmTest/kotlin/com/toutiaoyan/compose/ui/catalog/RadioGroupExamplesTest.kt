@@ -29,7 +29,7 @@ class RadioGroupExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 Box(Modifier.width(560.dp).verticalScroll(rememberScrollState())) {
-                    radioGroupDoc.examples.single { it.title == title }.preview()
+                    radioGroupDoc.examples.single { it.title == title }.RenderPreview()
                 }
             }
         }

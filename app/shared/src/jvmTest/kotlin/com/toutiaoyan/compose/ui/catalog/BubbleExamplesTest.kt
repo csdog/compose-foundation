@@ -30,7 +30,7 @@ class BubbleExamplesTest {
                 OverlayHost {
                     Box(
                         Modifier.width(384.dp),
-                    ) { bubbleDoc.examples.single { it.title == title }.preview() }
+                    ) { bubbleDoc.examples.single { it.title == title }.RenderPreview() }
                 }
             }
         }
@@ -70,7 +70,7 @@ class BubbleExamplesTest {
                             .verticalScroll(rememberScrollState())
                             .testTag("variants-preview"),
                     ) {
-                        bubbleDoc.examples.single { it.title == "Variants" }.preview()
+                        bubbleDoc.examples.single { it.title == "Variants" }.RenderPreview()
                     }
                 }
             }
@@ -146,7 +146,7 @@ class BubbleExamplesTest {
                     OverlayHost {
                         CatalogToastHost {
                             Box(Modifier.width(384.dp)) {
-                                bubbleDoc.examples.single { it.title == "Links and Buttons" }.preview()
+                                bubbleDoc.examples.single { it.title == "Links and Buttons" }.RenderPreview()
                             }
                         }
                     }

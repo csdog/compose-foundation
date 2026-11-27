@@ -63,7 +63,7 @@ class PopoverExamplesTest(private val viewport: Int, private val dark: Boolean) 
                             .background(currentTheme.colors.background).padding(24.dp),
                         contentAlignment = Alignment.Center,
                     ) {
-                        popoverDoc.examples.single { it.title == title }.preview()
+                        popoverDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

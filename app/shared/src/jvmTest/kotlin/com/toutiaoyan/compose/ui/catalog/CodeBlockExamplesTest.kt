@@ -34,7 +34,7 @@ class CodeBlockExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 Box(Modifier.width(560.dp).verticalScroll(rememberScrollState())) {
-                    codeBlockDoc.examples.single { it.title == title }.preview()
+                    codeBlockDoc.examples.single { it.title == title }.RenderPreview()
                 }
             }
         }
@@ -158,7 +158,7 @@ class CodeBlockExamplesTest {
         rule.setContent {
             CompositionLocalProvider(LocalTextDownloader provides { value, name -> downloaded = value to name }) {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null) {
-                    codeBlockDoc.examples.single { it.title == title }.preview()
+                    codeBlockDoc.examples.single { it.title == title }.RenderPreview()
                 }
             }
         }
@@ -204,7 +204,7 @@ class CodeBlockExamplesTest {
     @Test fun unsupportedDownloadIsDisabledAndLabelled() {
         rule.setContent {
             CompositionLocalProvider(LocalTextDownloader provides null) {
-                Theme(preset = StylePreset.Nova) { codeBlockDoc.examples.first().preview() }
+                Theme(preset = StylePreset.Nova) { codeBlockDoc.examples.first().RenderPreview() }
             }
         }
         rule.onNodeWithContentDescription("Download unavailable on this platform").assertIsNotEnabled()
@@ -216,7 +216,7 @@ class CodeBlockExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null, isDark = dark.value) {
                 expected = currentTheme.colors.background
-                codeBlockDoc.examples.single { it.title == "Floating Actions" }.preview()
+                codeBlockDoc.examples.single { it.title == "Floating Actions" }.RenderPreview()
             }
         }
         rule.onNodeWithContentDescription("Copy").requestFocus()

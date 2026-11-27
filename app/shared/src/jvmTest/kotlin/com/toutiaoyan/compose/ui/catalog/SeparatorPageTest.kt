@@ -48,7 +48,7 @@ class SeparatorPageTest(private val width: Int, private val dark: Boolean) {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = fonts[0]) {
                 OverlayHost {
                     Box(Modifier.width((if (width < 640) 325 else 638).dp)) {
-                        separatorDoc.examples.single { it.title == "RTL" }.preview()
+                        separatorDoc.examples.single { it.title == "RTL" }.RenderPreview()
                     }
                 }
             }
@@ -98,7 +98,7 @@ class SeparatorBreakpointTest(private val viewport: Int) {
         rule.setContent {
             CompositionLocalProvider(LocalCatalogViewportWidth provides viewport.dp) {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                    Box(Modifier.width(500.dp)) { separatorDoc.examples.single { it.title == "Menu" }.preview() }
+                    Box(Modifier.width(500.dp)) { separatorDoc.examples.single { it.title == "Menu" }.RenderPreview() }
                 }
             }
         }

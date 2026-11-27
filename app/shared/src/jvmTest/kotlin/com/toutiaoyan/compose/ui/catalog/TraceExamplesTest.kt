@@ -37,7 +37,7 @@ class TraceExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(480.dp).height(720.dp)) {
-                        traceDoc.examples.single { it.title == title }.preview()
+                        traceDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

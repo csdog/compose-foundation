@@ -24,7 +24,7 @@ class KbdViewportTest(private val width: Int, private val dark: Boolean) {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
                 OverlayHost {
                     Box(Modifier.width((if (width < 640) 325 else 638).dp)) {
-                        kbdDoc.examples.single { it.title == "RTL" }.preview()
+                        kbdDoc.examples.single { it.title == "RTL" }.RenderPreview()
                     }
                 }
             }

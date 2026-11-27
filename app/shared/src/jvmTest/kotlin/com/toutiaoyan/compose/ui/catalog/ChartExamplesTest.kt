@@ -88,7 +88,7 @@ class ChartExamplesTest(private val viewport: Int, private val dark: Boolean) {
                             contentAlignment =
                                 Alignment.Center,
                         ) {
-                            chartDoc.examples.single { it.title == title }.preview()
+                            chartDoc.examples.single { it.title == title }.RenderPreview()
                         }
                     }
                 }

@@ -31,7 +31,7 @@ class FieldExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null, fontFamily = catalogFontFamily()) {
                 Box(Modifier.width(width.dp)) {
-                    fieldDoc.examples.single { it.title == title }.preview()
+                    fieldDoc.examples.single { it.title == title }.RenderPreview()
                 }
             }
         }

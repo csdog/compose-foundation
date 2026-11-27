@@ -67,7 +67,7 @@ class ScrollAreaExamplesTest(private val viewport: Int, private val dark: Boolea
                         contentAlignment =
                             Alignment.Center,
                     ) {
-                        scrollAreaDoc.examples.single { it.title == title }.preview()
+                        scrollAreaDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

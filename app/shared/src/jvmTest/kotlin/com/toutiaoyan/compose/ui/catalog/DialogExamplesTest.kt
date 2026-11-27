@@ -31,7 +31,7 @@ class DialogExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(560.dp).height(600.dp)) {
-                        dialogDoc.examples.single { it.title == title }.preview()
+                        dialogDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }
@@ -153,7 +153,7 @@ class DialogExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 CompositionLocalProvider(LocalWindowInfo provides window) {
-                    OverlayHost { dialogDoc.examples.single { it.title == "Scrollable Content" }.preview() }
+                    OverlayHost { dialogDoc.examples.single { it.title == "Scrollable Content" }.RenderPreview() }
                 }
             }
         }

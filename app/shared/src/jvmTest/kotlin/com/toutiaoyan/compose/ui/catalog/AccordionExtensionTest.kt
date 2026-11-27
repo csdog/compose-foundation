@@ -74,7 +74,7 @@ class AccordionExtensionTest(private val viewport: Int, private val dark: Boolea
                                 384.dp
                             },
                         ).testTag("extension-scene"),
-                    ) { example.preview() }
+                    ) { example.RenderPreview() }
                 }
             }
         }

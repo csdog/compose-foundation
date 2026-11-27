@@ -76,7 +76,7 @@ class ChartPreviewFrameTest(private val viewport: Int, private val dark: Boolean
                 previewPadding = example.previewPadding,
                 previewHeight = example.previewHeight,
                 desktopPreviewInsetStart = example.desktopPreviewInsetStart,
-                preview = example.preview,
+                preview = { example.RenderPreview() },
             )
         }
         val frame = rule.onNodeWithTag("preview-frame").fetchSemanticsNode().boundsInRoot

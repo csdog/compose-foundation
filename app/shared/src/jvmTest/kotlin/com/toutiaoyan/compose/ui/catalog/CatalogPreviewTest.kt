@@ -63,7 +63,7 @@ class CatalogPreviewTest {
         rule.setContent {
             Theme(
                 minTouchTarget = null,
-            ) { inputDoc.examples.single { it.title == "Kotlin extension: Autofocus" }.preview() }
+            ) { inputDoc.examples.single { it.title == "Kotlin extension: Autofocus" }.RenderPreview() }
         }
         rule.onAllNodes(isFocused()).assertCountEquals(0)
         rule.onNodeWithText("Try autofocus").performClick()
@@ -74,7 +74,7 @@ class CatalogPreviewTest {
         rule.setContent {
             Theme(
                 minTouchTarget = null,
-            ) { textareaDoc.examples.single { it.title == "Kotlin extension: Autofocus" }.preview() }
+            ) { textareaDoc.examples.single { it.title == "Kotlin extension: Autofocus" }.RenderPreview() }
         }
         rule.onAllNodes(isFocused()).assertCountEquals(0)
         rule.onNodeWithText("Try autofocus").performClick()
@@ -82,7 +82,7 @@ class CatalogPreviewTest {
     }
 
     @Test fun apiKeyPreviewUsesPasswordSemantics() {
-        rule.setContent { Theme { inputDoc.examples.first().preview() } }
+        rule.setContent { Theme { inputDoc.examples.first().RenderPreview() } }
         rule.onNode(hasSetTextAction()).assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Password))
     }
 }

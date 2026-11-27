@@ -58,7 +58,7 @@ class AccordionPreviewFrameTest(private val title: String, private val viewport:
                         previewHeight = example.previewHeight,
                         previewVerticalAlignment = example.previewVerticalAlignment,
                         previewPadding = example.previewPadding,
-                    ) { Box(Modifier.testTag("content")) { example.preview() } }
+                    ) { Box(Modifier.testTag("content")) { example.RenderPreview() } }
                 }
             }
         }

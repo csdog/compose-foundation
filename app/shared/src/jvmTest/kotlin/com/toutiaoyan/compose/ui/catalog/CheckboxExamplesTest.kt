@@ -22,7 +22,7 @@ class CheckboxExamplesTest {
     private fun show(name: String) {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                Box(Modifier.width(480.dp)) { checkboxDoc.examples.single { it.title == name }.preview() }
+                Box(Modifier.width(480.dp)) { checkboxDoc.examples.single { it.title == name }.RenderPreview() }
             }
         }
     }

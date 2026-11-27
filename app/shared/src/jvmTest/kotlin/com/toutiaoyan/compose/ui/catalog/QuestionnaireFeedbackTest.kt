@@ -151,7 +151,7 @@ class QuestionnaireFeedbackTest(
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 Box(Modifier.width(560.dp).verticalScroll(rememberScrollState())) {
-                    questionnaireDoc.examples.single { it.title == recipe }.preview()
+                    questionnaireDoc.examples.single { it.title == recipe }.RenderPreview()
                 }
             }
         }

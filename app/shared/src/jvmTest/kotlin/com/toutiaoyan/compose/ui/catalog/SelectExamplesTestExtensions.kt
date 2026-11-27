@@ -28,7 +28,7 @@ class SelectExamplesTestExtensions(private val title: String) {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(560.dp).height(600.dp)) {
-                        selectDoc.examples.single { it.title == title }.preview()
+                        selectDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

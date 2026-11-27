@@ -29,7 +29,7 @@ class DatePickerExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(720.dp).height(760.dp), contentAlignment = Alignment.TopCenter) {
-                        datePickerDoc.examples.single { it.title == title }.preview()
+                        datePickerDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

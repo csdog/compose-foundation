@@ -59,7 +59,7 @@ class AttachmentExamplesTest {
             Theme(preset = StylePreset.Nova, fontFamily = catalogFontFamily(), isDark = dark, minTouchTarget = null) {
                 OverlayHost {
                     Column(Modifier.width(384.dp)) {
-                        attachmentDoc.examples.single { it.title == "Trigger" }.preview()
+                        attachmentDoc.examples.single { it.title == "Trigger" }.RenderPreview()
                         Box(Modifier.background(currentTheme.colors.muted).testTag("old glyph")) {
                             Image(
                                 Lucide.FileSearch,
@@ -114,7 +114,7 @@ class AttachmentExamplesTest {
                 OverlayHost {
                     Box(
                         Modifier.width(384.dp),
-                    ) { attachmentDoc.examples.single { it.title == "Trigger" }.preview() }
+                    ) { attachmentDoc.examples.single { it.title == "Trigger" }.RenderPreview() }
                 }
             }
         }
@@ -135,7 +135,7 @@ class AttachmentExamplesTest {
         var dark by mutableStateOf(false)
         rule.setContent {
             Theme(preset = StylePreset.Nova, fontFamily = catalogFontFamily(), isDark = dark, minTouchTarget = null) {
-                Box(Modifier.width(width)) { attachmentDoc.examples.first().preview() }
+                Box(Modifier.width(width)) { attachmentDoc.examples.first().RenderPreview() }
             }
         }
         for ((w, night) in listOf(638.dp to false, 340.dp to false, 340.dp to true, 638.dp to true)) {
@@ -170,7 +170,7 @@ class AttachmentExamplesTest {
             Theme(preset = StylePreset.Nova, fontFamily = catalogFontFamily(), isDark = dark, minTouchTarget = null) {
                 error = currentTheme.colors.destructive
                 card = currentTheme.colors.card
-                Box(Modifier.width(width)) { attachmentDoc.examples.single { it.title == "States" }.preview() }
+                Box(Modifier.width(width)) { attachmentDoc.examples.single { it.title == "States" }.RenderPreview() }
             }
         }
         for ((w, night) in listOf(340.dp to false, 638.dp to false, 638.dp to true, 340.dp to true)) {
@@ -215,7 +215,9 @@ class AttachmentExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, fontFamily = catalogFontFamily(), minTouchTarget = null) {
                 CompositionLocalProvider(LocalUriHandler provides handler) {
-                    Box(Modifier.width(638.dp)) { attachmentDoc.examples.single { it.title == "Image" }.preview() }
+                    Box(Modifier.width(638.dp)) {
+                        attachmentDoc.examples.single { it.title == "Image" }.RenderPreview()
+                    }
                 }
             }
         }
@@ -234,7 +236,7 @@ class AttachmentExamplesTest {
                 OverlayHost {
                     Box(
                         Modifier.width(638.dp),
-                    ) { attachmentDoc.examples.single { it.title == "Trigger" }.preview() }
+                    ) { attachmentDoc.examples.single { it.title == "Trigger" }.RenderPreview() }
                 }
             }
         }
@@ -268,7 +270,7 @@ class AttachmentExamplesTest {
                         minPreviewHeight = example.minPreviewHeight,
                         previewPadding = example.previewPadding,
                         previewBackground = example.previewBackground,
-                        preview = example.preview,
+                        preview = { example.RenderPreview() },
                     )
                 }
             }
@@ -286,7 +288,7 @@ class AttachmentExamplesTest {
     @Test fun sizeRecipeInherits14Then12SpLabels() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, fontFamily = catalogFontFamily(), minTouchTarget = null) {
-                Box(Modifier.width(340.dp)) { attachmentDoc.examples.single { it.title == "Sizes" }.preview() }
+                Box(Modifier.width(340.dp)) { attachmentDoc.examples.single { it.title == "Sizes" }.RenderPreview() }
             }
         }
         for ((title, expected) in listOf(

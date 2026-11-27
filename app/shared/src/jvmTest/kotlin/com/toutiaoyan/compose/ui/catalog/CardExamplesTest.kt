@@ -57,7 +57,7 @@ class CardExamplesTest(private val width: Int, private val dark: Boolean) {
                                 Modifier.fillMaxWidth().padding(if (index == 5) 0.dp else 40.dp),
                                 contentAlignment = Alignment.Center,
                             ) {
-                                key(index) { cardDoc.examples[index].preview() }
+                                key(index) { cardDoc.examples[index].RenderPreview() }
                             }
                         }
                     }
@@ -251,7 +251,7 @@ class CardExamplesTest(private val width: Int, private val dark: Boolean) {
                             modifier = Modifier.width(if (width < 640) 327.dp else 640.dp).testTag("preview"),
                             previewHeight = example.previewHeight,
                             previewPadding = 0.dp,
-                            preview = example.preview,
+                            preview = { example.RenderPreview() },
                         )
                     }
                 }

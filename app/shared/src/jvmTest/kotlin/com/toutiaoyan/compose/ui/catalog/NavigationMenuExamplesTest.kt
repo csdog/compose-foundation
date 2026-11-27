@@ -94,7 +94,7 @@ class NavigationMenuExamplesTest(private val viewport: Int, private val dark: Bo
                         contentAlignment =
                             Alignment.TopCenter,
                     ) {
-                        navigationMenuDoc.examples.single { it.title == title }.preview()
+                        navigationMenuDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

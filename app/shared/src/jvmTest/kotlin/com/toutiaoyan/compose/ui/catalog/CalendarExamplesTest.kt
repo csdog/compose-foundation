@@ -24,7 +24,7 @@ class CalendarExamplesTest {
                 OverlayHost {
                     Box(
                         Modifier.width(384.dp),
-                    ) { calendarDoc.examples.single { it.title == title }.preview() }
+                    ) { calendarDoc.examples.single { it.title == title }.RenderPreview() }
                 }
             }
         }

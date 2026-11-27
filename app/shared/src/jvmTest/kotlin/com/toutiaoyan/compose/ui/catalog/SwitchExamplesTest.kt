@@ -27,7 +27,7 @@ class SwitchExamplesTest {
 
     @Test fun defaultRecipeTogglesFromTheLabel() {
         val example = switchDoc.examples.single { it.title == "Default" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onAllNodes(isToggleable()).assertCountEquals(1)
         rule.onNode(isToggleable()).assertIsOff()
         rule.onNodeWithText("Airplane Mode").performClick()
@@ -37,7 +37,7 @@ class SwitchExamplesTest {
 
     @Test fun descriptionRecipeRendersTheOfficialCopy() {
         val example = switchDoc.examples.single { it.title == "Description" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Share across devices").assertIsDisplayed()
         rule.onNodeWithText("Focus is shared across devices", substring = true).assertIsDisplayed()
         rule.onAllNodes(isToggleable()).assertCountEquals(1)
@@ -45,7 +45,7 @@ class SwitchExamplesTest {
 
     @Test fun choiceCardRowTogglesItsSwitch() {
         val example = switchDoc.examples.single { it.title == "Choice Card" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onAllNodes(isToggleable()).assertCountEquals(2)
         rule.onNodeWithText("Enable notifications").performClick()
         rule.waitForIdle()
@@ -54,21 +54,21 @@ class SwitchExamplesTest {
 
     @Test fun disabledRecipeCannotBeToggled() {
         val example = switchDoc.examples.single { it.title == "Disabled" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNode(isToggleable()).assertIsNotEnabled()
         rule.onNodeWithText("Disabled").assertIsDisplayed()
     }
 
     @Test fun invalidRecipeShowsTheTermsCopy() {
         val example = switchDoc.examples.single { it.title == "Invalid" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Accept terms and conditions").assertIsDisplayed()
         rule.onNodeWithText("You must accept the terms and conditions to continue.").assertIsDisplayed()
     }
 
     @Test fun rtlRecipeStartsWithArabicCopy() {
         val example = switchDoc.examples.single { it.title == "RTL" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("المشاركة عبر الأجهزة").assertExists()
     }
 
@@ -88,7 +88,7 @@ class SwitchExamplesTest {
         label: String,
     ) {
         val example = switchDoc.examples.single { it.title == title }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNode(isToggleable()).assertIsOff()
         rule.onNodeWithText(label).performClick()
         rule.onNode(isToggleable()).assertIsOn().assertIsFocused()
@@ -104,7 +104,7 @@ class SwitchExamplesTest {
 
     @Test fun bothSizesToggleIndependentlyFromControlAndLabel() {
         val example = switchDoc.examples.single { it.title == "Size" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         val nodes = rule.onAllNodes(isToggleable())
         nodes[0].performClick().assertIsOn()
         nodes[1].assertIsOff()
