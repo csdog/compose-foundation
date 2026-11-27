@@ -6,7 +6,7 @@ public struct FoundationInput: View {
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.font) private var font
     @ScaledMetric(relativeTo: .subheadline) private var novaFieldHeight: CGFloat = 32
-    @ScaledMetric(relativeTo: .subheadline) private var novaFontSize: CGFloat = 14
+    @ScaledMetric(relativeTo: .body) private var novaFontSize: CGFloat = 16
     @State private var isEditing = false
     @Binding private var text: String
 
@@ -51,7 +51,7 @@ public struct FoundationInput: View {
             .font(nova ? (font ?? .system(size: novaFontSize)) : theme.font(.body))
             .foregroundColor(palette.foreground)
             .accessibilityLabel(Text(title))
-            .padding(.horizontal, theme.preset?.metrics.inputPadding ?? 12)
+            .padding(.horizontal, (theme.preset?.metrics.inputPadding ?? 12) + (nova ? 1 : 0))
             .padding(.vertical, nova ? 0 : 6)
             .frame(minHeight: nova ? max(44, fieldHeight) : 44)
             .background(shape.fill(underlined ? Color.clear : fill).frame(height: nova ? fieldHeight : nil))

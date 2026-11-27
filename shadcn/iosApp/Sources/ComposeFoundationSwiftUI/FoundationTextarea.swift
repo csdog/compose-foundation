@@ -4,7 +4,7 @@ public struct FoundationTextarea: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.font) private var font
-    @ScaledMetric(relativeTo: .subheadline) private var novaFontSize: CGFloat = 14
+    @ScaledMetric(relativeTo: .body) private var novaFontSize: CGFloat = 16
     @Binding private var text: String
 
     private let title: String
@@ -27,9 +27,10 @@ public struct FoundationTextarea: View {
         let shape = RoundedRectangle(cornerRadius: theme.cornerRadius)
         let nova = theme.preset == .nova
         let fill = nova ? (colorScheme == .dark ? palette.novaDarkOutlineFill : .clear) : palette.card
+        let editorFont = nova ? (font ?? .system(size: novaFontSize)) : theme.font(.body)
 
         editor(hideBackground: nova)
-            .font(nova ? (font ?? .system(size: novaFontSize)) : theme.font(.body))
+            .font(editorFont)
             .foregroundColor(palette.foreground)
             .frame(minHeight: nova ? 64 : 80)
             .padding(nova ? .horizontal : .all, 5)
@@ -38,10 +39,10 @@ public struct FoundationTextarea: View {
                 Group {
                     if text.isEmpty && !placeholder.isEmpty {
                         Text(placeholder)
-                            .font(nova ? (font ?? .system(size: novaFontSize)) : theme.font(.body))
+                            .font(editorFont)
                             .foregroundColor(palette.mutedForeground)
                             .padding(.leading, 11)
-                            .padding(.top, nova ? 8 : 13)
+                            .padding(.top, nova ? 10 : 13)
                             .allowsHitTesting(false)
                             .accessibilityHidden(true)
                     }

@@ -751,19 +751,23 @@ private struct TextFieldScreenshotFixture: View {
             case .input:
                 fieldLabel("API Key")
                 FoundationInput("API Key", text: $value, placeholder: "sk-...", secure: true)
+                    .font(fieldFont)
                     .padding(.top, 2)
                 description("Your API key is encrypted and stored securely.", palette: palette)
                     .padding(.top, 3)
             case .basicInput:
                 FoundationInput("Text", text: $value, placeholder: "Enter text")
+                    .font(fieldFont)
             case .textarea:
                 FoundationTextarea("Message", text: $value, placeholder: "Type your message here.")
+                    .font(fieldFont)
                     .frame(height: 64)
             case .textareaField:
                 fieldLabel("Message")
                 description("Enter your message below.", palette: palette)
                     .padding(.top, 5)
                 FoundationTextarea("Message", text: $value, placeholder: "Type your message here.")
+                    .font(fieldFont)
                     .frame(height: 64)
                     .padding(.top, 8)
             }
@@ -782,6 +786,8 @@ private struct TextFieldScreenshotFixture: View {
     private func fieldLabel(_ title: String) -> some View {
         Text(title).font(.custom("Geist-Medium", size: 14)).frame(height: 19)
     }
+
+    private var fieldFont: Font { .custom("Geist-Regular", size: 16) }
 
     private func description(_ text: String, palette: FoundationPalette) -> some View {
         Text(text).foregroundColor(palette.mutedForeground).frame(height: 20)
