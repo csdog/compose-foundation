@@ -150,6 +150,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "sheet": [
+                ("sheet-default-initial", { AnyView(SheetScreenshotFixture(isOpen: false)) }),
+                ("sheet-default-open", { AnyView(SheetScreenshotFixture(isOpen: true)) }),
+            ],
             "dialog": [
                 ("dialog-default-initial", { AnyView(DialogScreenshotFixture(isOpen: false)) }),
                 ("dialog-default-open", { AnyView(DialogScreenshotFixture(isOpen: true)) }),
@@ -850,6 +854,67 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct SheetScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    @State private var isOpen: Bool
+    @State private var name = "Pedro Duarte"
+    @State private var username = "@peduarte"
+
+    init(isOpen: Bool) {
+        _isOpen = State(initialValue: isOpen)
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let palette = theme.palette(for: scheme)
+
+        return Button("Open") { isOpen = true }
+            .buttonStyle(FoundationButtonStyle(.outline))
+            .padding(.top, 18)
+            .padding(.horizontal, 24)
+            .frame(width: 720, height: 520, alignment: .topLeading)
+            .background(palette.background)
+            .modifier(FoundationSheet(
+                isPresented: $isOpen, title: "Edit profile",
+                description: "Make changes to your profile here. Click save when you're done.", side: .trailing
+            ) {
+                VStack(spacing: 8) {
+                    Button {
+                        isOpen = false
+                    } label: {
+                        Text("Save changes").frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(FoundationButtonStyle(.primary))
+                    Button {
+                        isOpen = false
+                    } label: {
+                        Text("Close").frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(FoundationButtonStyle(.outline))
+                }
+            } content: {
+                VStack(alignment: .leading, spacing: 24) {
+                    FoundationField("Name") {
+                        FoundationInput("Name", text: $name)
+                            .font(.custom("Geist-Regular", size: 16))
+                    }
+                    FoundationField("Username") {
+                        FoundationInput("Username", text: $username)
+                            .font(.custom("Geist-Regular", size: 16))
+                    }
+                }
+                .font(.custom("Geist-Regular", size: 14))
+            })
+            .foundationTheme(theme)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(palette.background)
+            .ignoresSafeArea()
     }
 }
 

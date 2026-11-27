@@ -15,6 +15,19 @@ private enum PresentationKind: String {
     case drawerNova = "drawer-nova"
     case drawerRhea = "drawer-rhea"
     case dialogCentered = "dialog-centered"
+    case sheetTrailing = "sheet-trailing"
+    case sheetLeading = "sheet-leading"
+    case sheetTop = "sheet-top"
+    case sheetBottom = "sheet-bottom"
+
+    var sheetEdge: Edge {
+        switch self {
+        case .sheetLeading: return .leading
+        case .sheetTop: return .top
+        case .sheetBottom: return .bottom
+        default: return .trailing
+        }
+    }
 }
 
 @available(macOS 14, *)
@@ -45,6 +58,15 @@ private struct PresentationProbe: View {
             trigger.modifier(FoundationDialog(
                 isPresented: $state.presented, title: "Audit dialog", description: "A centered layout",
                 presentation: .centered, onDismiss: dismissed
+            ) {
+                TextField("Name", text: $state.name)
+                    .textFieldStyle(.plain)
+                    .frame(height: 44)
+            })
+        case .sheetTrailing, .sheetLeading, .sheetTop, .sheetBottom:
+            trigger.modifier(FoundationSheet(
+                isPresented: $state.presented, title: "Audit sheet", description: "An edge presentation",
+                side: kind.sheetEdge, onDismiss: dismissed
             ) {
                 TextField("Name", text: $state.name)
                     .textFieldStyle(.plain)
@@ -130,21 +152,22 @@ struct MacPresentationFocusAudit {
             }
             guard state.backgroundActivations == 0 else { fail("Keyboard activated background content", state) }
             print("PASS: \(kind.rawValue) Escape dismisses the reopened presentation and restores the trigger")
-            if kind == .dialogCentered {
+            if kind == .dialogCentered || kind == .sheetTrailing {
                 press(2, "d", app: app)
-                guard await waitUntil({ state.presented }) else { fail("Could not reopen the centered dialog", state) }
+                guard await waitUntil({ state.presented }) else { fail("Could not reopen the presentation", state) }
                 try? await Task.sleep(for: .milliseconds(300))
-                click(NSPoint(x: 85, y: 134), app: app)
+                let field = kind == .dialogCentered ? NSPoint(x: 85, y: 134) : NSPoint(x: 205, y: 225)
+                click(field, app: app)
                 try? await Task.sleep(for: .milliseconds(120))
                 press(0, "a", app: app)
                 guard await waitUntil({ state.presented && state.name.contains("a") }) else {
-                    fail("The centered form did not accept typed text", state)
+                    fail("The form did not accept typed text", state)
                 }
                 click(NSPoint(x: 10, y: 10), app: app)
                 guard await waitUntil({ !state.presented && state.dismissals == 3 && state.triggerFocused }) else {
-                    fail("The centered backdrop did not dismiss and restore the trigger", state)
+                    fail("The backdrop did not dismiss and restore the trigger", state)
                 }
-                print("PASS: Centered Dialog accepts form input and backdrop dismissal")
+                print("PASS: \(kind.rawValue) accepts form input and backdrop dismissal")
             }
             exit(0)
         }
@@ -170,7 +193,7 @@ struct MacPresentationFocusAudit {
 
     @MainActor
     private static func fail(_ message: String, _ state: PresentationResult) -> Never {
-        print("FAIL \(message): presented=\(state.presented), triggerFocused=\(state.triggerFocused), dismissals=\(state.dismissals)")
+        print("FAIL \(message): presented=\(state.presented), triggerFocused=\(state.triggerFocused), dismissals=\(state.dismissals), firstResponder=\(String(describing: NSApp.keyWindow?.firstResponder))")
         exit(1)
     }
 
