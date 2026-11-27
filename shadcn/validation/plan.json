@@ -138,6 +138,35 @@
       "accessibility": "field label and secure entry where applicable",
       "motion": "static settled frames"
     },
+    "label": {
+      "title": "Label",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "reference": "apps/v4/examples/base/label-demo.tsx",
+      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
+      "visual": "compare the complete checkbox and terms label",
+      "behavior": "the label is part of the bound native checkbox",
+      "accessibility": "a named checkbox with a checked value",
+      "motion": "static settled frames"
+    },
+    "field": {
+      "title": "Field",
+      "variant": "input",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "input", "status": "initial", "viewport": [402, 520]},
+          {"variant": "textarea", "status": "initial", "viewport": [402, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/field-input.tsx",
+      "visual": "compare both input fields and the complete feedback textarea",
+      "behavior": "support descriptions before and after content",
+      "accessibility": "named editors and readable descriptions",
+      "motion": "static settled frames"
+    },
     "button-group": {
       "title": "Button Group",
       "variant": "size",
