@@ -120,6 +120,42 @@
       "accessibility": "progress label and percentage value",
       "motion": "static settled frame"
     },
+    "input": {
+      "title": "Input",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "basic", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/input-demo.tsx",
+      "visual": "compare the complete secure API Key field and standalone email field",
+      "behavior": "bind input text and use native secure entry for the API Key field",
+      "accessibility": "field label and secure entry where applicable",
+      "motion": "static settled frames"
+    },
+    "textarea": {
+      "title": "Textarea",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "field", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/textarea-demo.tsx",
+      "visual": "compare the complete editor, placeholder, label and helper text",
+      "behavior": "bind multiline text",
+      "accessibility": "named multiline editor",
+      "motion": "static settled frames"
+    },
     "radio-group": {
       "title": "Radio Group",
       "variant": "default",

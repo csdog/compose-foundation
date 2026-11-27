@@ -158,6 +158,14 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "radio-group": RadioGroupScreenshotFixture.Example.allCases.map { example in
                 ("radio-group-\(example.rawValue)", { AnyView(RadioGroupScreenshotFixture(example: example)) })
             },
+            "input": [
+                ("input-default-initial", { AnyView(TextFieldScreenshotFixture(example: .input)) }),
+                ("input-basic-initial", { AnyView(TextFieldScreenshotFixture(example: .basicInput)) }),
+            ],
+            "textarea": [
+                ("textarea-default-initial", { AnyView(TextFieldScreenshotFixture(example: .textarea)) }),
+                ("textarea-field-initial", { AnyView(TextFieldScreenshotFixture(example: .textareaField)) }),
+            ],
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
         let useComparisonFixtures = !names.isDisjoint(with: Set(comparisonFixtures.keys).union(variantFixtures.keys))
@@ -165,6 +173,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         if useComparisonFixtures || !popoverCases.isEmpty {
             try registerParityFonts()
         }
+        let viewports = useComparisonFixtures ? try loadComparisonViewports() : [:]
         var count = 0
         for name in names.sorted() {
             if name == "popover", !popoverCases.isEmpty {
@@ -206,7 +215,17 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                     format.scale = 1
                     var bounds = root.view.bounds
                     if comparison != nil {
-                        bounds.size.height = min(bounds.height, 520)
+                        if let viewport = viewports[filename] {
+                            guard viewport.count == 2, viewport[0] > 0, viewport[1] > 0,
+                                  CGFloat(viewport[0]) <= bounds.width, CGFloat(viewport[1]) <= bounds.height else {
+                                throw CocoaError(.fileWriteUnknown, userInfo: [
+                                    NSLocalizedDescriptionKey: "Viewport \(viewport) does not fit \(bounds.size) for \(filename)",
+                                ])
+                            }
+                            bounds.size = CGSize(width: viewport[0], height: viewport[1])
+                        } else {
+                            bounds.size.height = min(bounds.height, 520)
+                        }
                         format.preferredRange = .standard
                         format.opaque = true
                     }
@@ -237,6 +256,35 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 throw CocoaError(.fileReadCorruptFile, userInfo: [NSFilePathErrorKey: name])
             }
         }
+    }
+
+    private func loadComparisonViewports() throws -> [String: [Int]] {
+        guard let manifest = Bundle.main.url(forResource: "parity-plan", withExtension: "json") else {
+            return [:]
+        }
+        struct Plan: Decodable {
+            struct Component: Decodable {
+                struct Variant: Decodable {
+                    let variant: String
+                    let status: String
+                    let viewport: [Int]?
+                }
+                let shadcnComparisonViewport: [String: [Int]]?
+                let platformCases: [String: [Variant]]?
+            }
+            let components: [String: Component]
+        }
+        let plan = try JSONDecoder().decode(Plan.self, from: Data(contentsOf: manifest))
+        var viewports: [String: [Int]] = [:]
+        for (component, config) in plan.components {
+            if let viewport = config.shadcnComparisonViewport?["swiftui-ios"] {
+                viewports[component] = viewport
+            }
+            for item in config.platformCases?["swiftui-ios"] ?? [] {
+                viewports["\(component)-\(item.variant)-\(item.status)"] = item.viewport
+            }
+        }
+        return viewports
     }
 
     private func loadPopoverCases() throws -> [PopoverAuditCase] {
@@ -683,6 +731,60 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct TextFieldScreenshotFixture: View {
+    enum Example { case input, basicInput, textarea, textareaField }
+
+    let example: Example
+    @State private var value = ""
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let palette = theme.palette(for: scheme)
+        return VStack(alignment: .leading, spacing: 0) {
+            switch example {
+            case .input:
+                fieldLabel("API Key")
+                FoundationInput("API Key", text: $value, placeholder: "sk-...", secure: true)
+                    .padding(.top, 2)
+                description("Your API key is encrypted and stored securely.", palette: palette)
+                    .padding(.top, 3)
+            case .basicInput:
+                FoundationInput("Email", text: $value)
+            case .textarea:
+                FoundationTextarea("Message", text: $value, placeholder: "Type your message here.")
+                    .frame(height: 64)
+            case .textareaField:
+                fieldLabel("Message")
+                description("Enter your message below.", palette: palette)
+                    .padding(.top, 5)
+                FoundationTextarea("Message", text: $value, placeholder: "Type your message here.")
+                    .frame(height: 64)
+                    .padding(.top, 8)
+            }
+        }
+        .font(.custom("Geist-Regular", size: 14))
+        .foregroundColor(palette.foreground)
+        .foundationTheme(theme)
+        .frame(width: 672, alignment: .leading)
+        .padding(.leading, 24)
+        .padding(.top, example == .basicInput ? 18 : 24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
+        .ignoresSafeArea()
+    }
+
+    private func fieldLabel(_ title: String) -> some View {
+        Text(title).font(.custom("Geist-Medium", size: 14)).frame(height: 19)
+    }
+
+    private func description(_ text: String, palette: FoundationPalette) -> some View {
+        Text(text).foregroundColor(palette.mutedForeground).frame(height: 20)
     }
 }
 
