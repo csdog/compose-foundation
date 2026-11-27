@@ -802,6 +802,7 @@ private struct ToggleScreenshotFixture: View {
     }
 }
 
+// Reference glyphs are drawn on Lucide's 24-point grid.
 private enum ToggleScreenshotIcon: Shape, Hashable {
     case bookmark, bold, italic, underline
 
