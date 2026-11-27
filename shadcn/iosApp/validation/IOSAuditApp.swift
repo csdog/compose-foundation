@@ -755,7 +755,7 @@ private struct TextFieldScreenshotFixture: View {
                 description("Your API key is encrypted and stored securely.", palette: palette)
                     .padding(.top, 3)
             case .basicInput:
-                FoundationInput("Email", text: $value)
+                FoundationInput("Text", text: $value, placeholder: "Enter text")
             case .textarea:
                 FoundationTextarea("Message", text: $value, placeholder: "Type your message here.")
                     .frame(height: 64)
