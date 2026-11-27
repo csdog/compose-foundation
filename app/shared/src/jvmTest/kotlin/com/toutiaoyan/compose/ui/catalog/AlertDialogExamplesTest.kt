@@ -24,7 +24,7 @@ class AlertDialogExamplesTest {
         var current by mutableStateOf("Default")
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
-                key(current) { alertDialogDoc.examples.single { it.title == current }.preview() }
+                key(current) { alertDialogDoc.examples.single { it.title == current }.RenderPreview() }
             }
         }
 
@@ -57,7 +57,7 @@ class AlertDialogExamplesTest {
     @Test fun rtlPreviewChangesLanguageAndBothDialogSizesUseTranslation() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
-                alertDialogDoc.examples.single { it.title == "RTL" }.preview()
+                alertDialogDoc.examples.single { it.title == "RTL" }.RenderPreview()
             }
         }
 
@@ -130,7 +130,7 @@ class AlertDialogExamplesTest {
         rule.setContent {
             CompositionLocalProvider(LocalDocNavigation provides navigation) {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null) {
-                    alertDialogDoc.examples.single { it.title == "Destructive" }.preview()
+                    alertDialogDoc.examples.single { it.title == "Destructive" }.RenderPreview()
                 }
             }
         }
@@ -158,7 +158,7 @@ class AlertDialogExamplesTest {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
                 val colors = currentTheme.colors
                 expected = colors.destructive.copy(alpha = if (dark) .2f else .1f).compositeOver(colors.popover)
-                alertDialogDoc.examples.single { it.title == "Destructive" }.preview()
+                alertDialogDoc.examples.single { it.title == "Destructive" }.RenderPreview()
             }
         }
         rule.onNodeWithText("Delete Chat").performClick()

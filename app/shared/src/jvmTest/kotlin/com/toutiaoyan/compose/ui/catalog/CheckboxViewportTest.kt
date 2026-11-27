@@ -33,7 +33,7 @@ class CheckboxViewportTest(private val width: Int, private val dark: Boolean) {
                         val example = checkboxDoc.examples.single { it.title == name }
                         Box(Modifier.width((if (width < 640) 325 else 638).dp).testTag("preview")) {
                             Box(Modifier.padding(example.previewPadding)) {
-                                example.preview()
+                                example.RenderPreview()
                             }
                         }
                     }

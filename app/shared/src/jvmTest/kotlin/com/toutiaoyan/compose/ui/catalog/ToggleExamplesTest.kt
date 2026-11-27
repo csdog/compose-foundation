@@ -24,7 +24,7 @@ class ToggleExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(560.dp).height(400.dp)) {
-                        toggleDoc.examples.single { it.title == title }.preview()
+                        toggleDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

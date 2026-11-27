@@ -52,7 +52,7 @@ class AlertExamplesTest {
     @Test fun colorsExampleUpdatesActualTitleColorWhenThemeChanges() {
         var dark by mutableStateOf(false)
         val example = alertDoc.examples.single { it.title == "Custom Colors" }
-        rule.setContent { Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) { example.RenderPreview() } }
 
         fun assertColor(expected: androidx.compose.ui.graphics.Color) {
             val pixels = rule.onNodeWithText("Your subscription will expire in 3 days.").captureToImage().toPixelMap()
@@ -82,7 +82,7 @@ class AlertExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = true, minTouchTarget = null) {
                 expected = com.toutiaoyan.compose.ui.theme.currentTheme.colors.cardForeground
-                example.preview()
+                example.RenderPreview()
             }
         }
         repeat(12) {
@@ -103,7 +103,7 @@ class AlertExamplesTest {
 
     @Test fun rtlExampleSelectsEnglishAndUpdatesRealContent() {
         val example = alertDoc.examples.single { it.title == "RTL" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("تم الدفع بنجاح").assertIsDisplayed()
         rule.onNodeWithText("Arabic (العربية)").performClick()
         rule.onNodeWithText("English").performClick()
@@ -115,7 +115,7 @@ class AlertExamplesTest {
 
     @Test fun rtlToolbarIsSeparateAndTranslationPopoverClosesWithEscape() {
         val example = alertDoc.examples.single { it.title == "RTL" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithContentDescription("Preview language").assertWidthIsEqualTo(144.dp).assertHeightIsEqualTo(28.dp)
         rule.onNodeWithTag("rtl-preview-toolbar").assertHeightIsEqualTo(63.dp)
         val toolbar = rule.onNodeWithTag("rtl-preview-toolbar").fetchSemanticsNode().boundsInRoot
@@ -137,7 +137,7 @@ class AlertExamplesTest {
         val example = alertDoc.examples.single { it.title == "Kotlin extension: Multiple actions" }
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
-                Box(Modifier.width(292.dp)) { example.preview() }
+                Box(Modifier.width(292.dp)) { example.RenderPreview() }
             }
         }
 

@@ -22,7 +22,7 @@ class MenubarExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(600.dp).height(700.dp), contentAlignment = Alignment.Center) {
-                        menubarDoc.examples.single { it.title == title }.preview()
+                        menubarDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

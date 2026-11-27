@@ -104,7 +104,7 @@ class ComboboxExamplesTest(private val width: Int, private val dark: Boolean) {
                             .testTag("preview"),
                         contentAlignment = Alignment.Center,
                     ) {
-                        key(index) { comboboxDoc.examples[index].preview() }
+                        key(index) { comboboxDoc.examples[index].RenderPreview() }
                     }
                 }
             }
@@ -120,7 +120,7 @@ class ComboboxExamplesTest(private val width: Int, private val dark: Boolean) {
         val basic = comboboxDoc.examples.single { it.title == "Basic" }
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                basic.preview()
+                basic.RenderPreview()
             }
         }
         rule.onNodeWithText("Select a framework").assertExists()

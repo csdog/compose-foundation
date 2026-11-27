@@ -40,7 +40,7 @@ class BadgeExamplesTest(private val width: Int, private val dark: Boolean) {
                             .padding(if (index == 6) 0.dp else 40.dp).testTag("preview"),
                         contentAlignment = Alignment.Center,
                     ) {
-                        key(index) { badgeDoc.examples[index].preview() }
+                        key(index) { badgeDoc.examples[index].RenderPreview() }
                     }
                 }
             }
@@ -120,7 +120,7 @@ class BadgeExamplesTest(private val width: Int, private val dark: Boolean) {
             }
         rule.setContent {
             CompositionLocalProvider(LocalDocNavigation provides host) {
-                Theme(preset = StylePreset.Nova, isDark = dark) { badgeDoc.examples[4].preview() }
+                Theme(preset = StylePreset.Nova, isDark = dark) { badgeDoc.examples[4].RenderPreview() }
             }
         }
         rule.onNodeWithTag("badge-link").performClick()
@@ -136,7 +136,7 @@ class BadgeExamplesTest(private val width: Int, private val dark: Boolean) {
             )
         rule.setContent {
             CompositionLocalProvider(LocalDocHeadingLinks provides headings) {
-                Theme(preset = StylePreset.Nova, isDark = dark) { badgeDoc.examples[4].preview() }
+                Theme(preset = StylePreset.Nova, isDark = dark) { badgeDoc.examples[4].RenderPreview() }
             }
         }
         rule.onNodeWithTag("badge-link").performClick()

@@ -80,7 +80,7 @@ class ScrollFadeExamplesTest(private val viewport: Int, private val dark: Boolea
                         contentAlignment =
                             Alignment.Center,
                     ) {
-                        scrollFadeDoc.examples.single { it.title == title }.preview()
+                        scrollFadeDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

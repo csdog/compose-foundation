@@ -112,7 +112,7 @@ class ContextMenuExamplesTest(private val width: Int, private val dark: Boolean)
                             .testTag("preview"),
                         contentAlignment = Alignment.Center,
                     ) {
-                        key(index) { contextMenuDoc.examples[index].preview() }
+                        key(index) { contextMenuDoc.examples[index].RenderPreview() }
                     }
                 }
             }
@@ -128,7 +128,7 @@ class ContextMenuExamplesTest(private val width: Int, private val dark: Boolean)
         val sides = contextMenuDoc.examples.single { it.title == "Sides" }
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                sides.preview()
+                sides.RenderPreview()
             }
         }
         rule.onNodeWithText("Right click (top)").assertExists()
@@ -141,7 +141,7 @@ class ContextMenuExamplesTest(private val width: Int, private val dark: Boolean)
         val rtl = contextMenuDoc.examples.single { it.title == "RTL" }
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                rtl.preview()
+                rtl.RenderPreview()
             }
         }
         rule.onNodeWithText("انقر بزر الماوس الأيمن هنا").assertExists()
@@ -156,7 +156,7 @@ class ContextMenuExamplesTest(private val width: Int, private val dark: Boolean)
     @Test fun rtlFullUrlsTogglePersistsAfterReopeningTheMenu() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
-                contextMenuDoc.examples.single { it.title == "RTL" }.preview()
+                contextMenuDoc.examples.single { it.title == "RTL" }.RenderPreview()
             }
         }
 

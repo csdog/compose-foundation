@@ -64,7 +64,7 @@ class QuestionnaireExamplesTest(private val viewport: Int, private val dark: Boo
                         contentAlignment =
                             Alignment.Center,
                     ) {
-                        questionnaireDoc.examples.first().preview()
+                        questionnaireDoc.examples.first().RenderPreview()
                     }
                 }
             }

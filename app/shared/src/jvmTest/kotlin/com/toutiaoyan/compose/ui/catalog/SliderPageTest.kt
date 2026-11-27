@@ -28,7 +28,7 @@ class SliderPageTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 Box(Modifier.width(560.dp).verticalScroll(rememberScrollState())) {
-                    sliderDoc.examples.single { it.title == title }.preview()
+                    sliderDoc.examples.single { it.title == title }.RenderPreview()
                 }
             }
         }

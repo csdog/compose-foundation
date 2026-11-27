@@ -47,7 +47,7 @@ class AccordionRtlPreviewTest(private val viewport: Int, private val dark: Boole
                         modifier = Modifier.width(if (viewport == 390) 327.dp else 640.dp).testTag("frame"),
                         minPreviewHeight = example.minPreviewHeight,
                         previewPadding = example.previewPadding,
-                        preview = example.preview,
+                        preview = { example.RenderPreview() },
                     )
                 }
             }

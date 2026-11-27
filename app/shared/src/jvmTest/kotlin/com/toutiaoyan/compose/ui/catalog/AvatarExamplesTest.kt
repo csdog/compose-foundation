@@ -22,7 +22,7 @@ class AvatarExamplesTest {
     @Test fun defaultUsesRealImagesAndCount() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
-                Box(Modifier.width(260.dp)) { avatarDoc.examples.first().preview() }
+                Box(Modifier.width(260.dp)) { avatarDoc.examples.first().RenderPreview() }
             }
         }
         rule.onAllNodesWithContentDescription("@shadcn").assertCountEquals(2)
@@ -35,7 +35,7 @@ class AvatarExamplesTest {
     @Test fun dropdownOpensSelectsAndDismissesWithEscape() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
-                OverlayHost { avatarDoc.examples.single { it.title == "Dropdown" }.preview() }
+                OverlayHost { avatarDoc.examples.single { it.title == "Dropdown" }.RenderPreview() }
             }
         }
         rule.onNodeWithContentDescription("Open user menu").performClick()
@@ -72,7 +72,7 @@ class AvatarExamplesTest {
                 OverlayHost {
                     Box(
                         Modifier.width(340.dp),
-                    ) { avatarDoc.examples.single { it.title == "RTL" }.preview() }
+                    ) { avatarDoc.examples.single { it.title == "RTL" }.RenderPreview() }
                 }
             }
         }
@@ -159,7 +159,7 @@ class AvatarExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 Box(Modifier.width(120.dp)) {
-                    avatarDoc.examples.single { it.title == "Badge" }.preview()
+                    avatarDoc.examples.single { it.title == "Badge" }.RenderPreview()
                 }
             }
         }

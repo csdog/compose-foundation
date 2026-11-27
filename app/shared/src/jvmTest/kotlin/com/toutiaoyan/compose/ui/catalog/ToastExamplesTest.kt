@@ -86,7 +86,7 @@ class ToastExamplesTest(private val viewport: Int, private val dark: Boolean) {
                         SideEffect { state = manager }
                         Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
                             Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
-                                toastDoc.examples.single { it.title == title }.preview()
+                                toastDoc.examples.single { it.title == title }.RenderPreview()
                             }
                         }
                     }

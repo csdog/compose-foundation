@@ -90,7 +90,7 @@ class CollapsibleExamplesTest {
     @Test
     fun defaultPreviewOpensAndClosesTheOrderDetails() {
         val example = collapsibleDoc.examples.first()
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Order #4189").assertIsDisplayed()
         rule.onNodeWithText("Status").assertIsDisplayed()
         rule.onNodeWithText("Shipping address").assertDoesNotExist()
@@ -109,7 +109,7 @@ class CollapsibleExamplesTest {
     @Test
     fun basicPreviewRevealsPanelContentAndLearnMoreButton() {
         val example = collapsibleDoc.examples.single { it.title == "Basic" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Product details").assertIsDisplayed()
         rule.onNodeWithText("This panel can be expanded", substring = true).assertDoesNotExist()
 
@@ -122,7 +122,7 @@ class CollapsibleExamplesTest {
     @Test
     fun settingsPanelRevealsTheHiddenRadiusFields() {
         val example = collapsibleDoc.examples.single { it.title == "Settings Panel" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Radius").assertIsDisplayed()
         rule.onNodeWithText("Set the corner radius of the element.").assertIsDisplayed()
         rule.onAllNodes(hasSetTextAction()).assertCountEquals(2)
@@ -135,7 +135,7 @@ class CollapsibleExamplesTest {
     @Test
     fun settingsRadiusFieldsKeepAccessibleNamesWhenExpanded() {
         val example = collapsibleDoc.examples.single { it.title == "Settings Panel" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onAllNodes(hasSetTextAction() and hasContentDescription("Radius X")).assertCountEquals(1)
         rule.onAllNodes(hasSetTextAction() and hasContentDescription("Radius Y")).assertCountEquals(1)
 
@@ -152,7 +152,7 @@ class CollapsibleExamplesTest {
     @Test
     fun fileTreeExpandsNestedFolders() {
         val example = collapsibleDoc.examples.single { it.title == "File Tree" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Explorer").assertExists()
         rule.onNodeWithText("components").assertExists()
         rule.onNodeWithText("login-form.tsx").assertDoesNotExist()
@@ -170,7 +170,7 @@ class CollapsibleExamplesTest {
     @Test
     fun rtlPreviewStartsWithArabicOrderCopy() {
         val example = collapsibleDoc.examples.single { it.title == "RTL" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("الطلب #4189").assertExists()
         rule.onNodeWithText("الحالة").assertExists()
         rule.onNodeWithText("تم الشحن").assertExists()

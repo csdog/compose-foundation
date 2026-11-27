@@ -33,7 +33,7 @@ class SpinnerViewportTest(private val width: Int, private val dark: Boolean) {
                 OverlayHost {
                     Box(Modifier.width((if (width < 640) 325 else 638).dp)) {
                         Box(Modifier.padding(if (name == "RTL") 0.dp else 40.dp)) {
-                            spinnerDoc.examples.single { it.title == name }.preview()
+                            spinnerDoc.examples.single { it.title == name }.RenderPreview()
                         }
                     }
                 }

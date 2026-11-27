@@ -22,7 +22,7 @@ class KbdExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(560.dp).height(500.dp), contentAlignment = Alignment.Center) {
-                        kbdDoc.examples.single { it.title == title }.preview()
+                        kbdDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

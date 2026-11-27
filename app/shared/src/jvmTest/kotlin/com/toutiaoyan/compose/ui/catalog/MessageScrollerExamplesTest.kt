@@ -25,7 +25,7 @@ class MessageScrollerExamplesTest {
                     Box(Modifier.width(600.dp).height(800.dp), contentAlignment = Alignment.TopCenter) {
                         messageScrollerDoc.examples
                             .single { it.title == "Kotlin extension: Provider controls (Kotlin)" }
-                            .preview()
+                            .RenderPreview()
                     }
                 }
             }
@@ -69,7 +69,7 @@ class MessageScrollerExamplesTest {
                     Box(Modifier.width(432.dp).height(720.dp)) {
                         messageScrollerDoc.examples.single {
                             it.title == "Kotlin extension: Chat panel with streaming replies"
-                        }.preview()
+                        }.RenderPreview()
                     }
                 }
             }
@@ -103,7 +103,7 @@ class MessageScrollerExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(432.dp).height(720.dp)) {
-                        messageScrollerDoc.examples.first().preview()
+                        messageScrollerDoc.examples.first().RenderPreview()
                     }
                 }
             }

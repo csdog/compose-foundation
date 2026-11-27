@@ -65,7 +65,7 @@ class SeparatorExamplesTest(private val viewport: Int, private val dark: Boolean
                         contentAlignment =
                             Alignment.Center,
                     ) {
-                        separatorDoc.examples.single { it.title == title }.preview()
+                        separatorDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

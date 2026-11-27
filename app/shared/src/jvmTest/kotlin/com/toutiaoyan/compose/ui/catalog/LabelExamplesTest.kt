@@ -28,7 +28,7 @@ class LabelExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(720.dp).height(980.dp), contentAlignment = Alignment.TopCenter) {
-                        labelDoc.examples.single { it.title == title }.preview()
+                        labelDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

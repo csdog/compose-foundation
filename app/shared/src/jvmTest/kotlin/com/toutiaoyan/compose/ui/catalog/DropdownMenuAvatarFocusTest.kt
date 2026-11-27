@@ -40,7 +40,7 @@ class DropdownMenuAvatarFocusTest {
                         verticalArrangement = Arrangement.spacedBy(24.dp),
                     ) {
                         Button("Before", onClick = {})
-                        dropdownMenuDoc.examples.single { it.title == "Avatar" }.preview()
+                        dropdownMenuDoc.examples.single { it.title == "Avatar" }.RenderPreview()
                         Button("After", onClick = {})
                     }
                 }

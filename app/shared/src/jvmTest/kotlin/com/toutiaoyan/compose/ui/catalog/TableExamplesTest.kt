@@ -70,7 +70,7 @@ class TableExamplesTest(private val viewport: Int, private val dark: Boolean) {
                         if (title == "API") {
                             ApiReference(listOf(ApiProperty("onValueChange", "(String) -> Unit", "{}")))
                         } else {
-                            tableDoc.examples.single { it.title == title }.preview()
+                            tableDoc.examples.single { it.title == title }.RenderPreview()
                         }
                     }
                 }

@@ -63,7 +63,7 @@ class EmptyBrowserParityTest(private val width: Int, private val dark: Boolean) 
                             ),
                             contentAlignment = Alignment.Center,
                         ) {
-                            emptyDoc.examples.single { it.title == title }.preview()
+                            emptyDoc.examples.single { it.title == title }.RenderPreview()
                         }
                     }
                 }

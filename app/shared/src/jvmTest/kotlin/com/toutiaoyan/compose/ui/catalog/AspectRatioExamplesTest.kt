@@ -73,7 +73,7 @@ class AspectRatioExamplesTest {
                 minTouchTarget = null,
             ) {
                 OverlayHost {
-                    Box(Modifier.width(width)) { aspectRatioDoc.examples.single { it.title == "RTL" }.preview() }
+                    Box(Modifier.width(width)) { aspectRatioDoc.examples.single { it.title == "RTL" }.RenderPreview() }
                 }
             }
         }
@@ -149,7 +149,7 @@ class AspectRatioExamplesTest {
                     PreviewCodeSection(
                         code = example.code,
                         previewPadding = example.previewPadding,
-                        preview = example.preview,
+                        preview = { example.RenderPreview() },
                     )
                 }
             }
@@ -163,7 +163,7 @@ class AspectRatioExamplesTest {
         var title by mutableStateOf("Default")
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
-                Box(Modifier.width(width)) { aspectRatioDoc.examples.single { it.title == title }.preview() }
+                Box(Modifier.width(width)) { aspectRatioDoc.examples.single { it.title == title }.RenderPreview() }
             }
         }
 
@@ -188,7 +188,7 @@ class AspectRatioExamplesTest {
         var dark by mutableStateOf(false)
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
-                Box(Modifier.width(640.dp)) { aspectRatioDoc.examples.first().preview() }
+                Box(Modifier.width(640.dp)) { aspectRatioDoc.examples.first().RenderPreview() }
             }
         }
 
@@ -229,7 +229,7 @@ class AspectRatioExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
-                    Box(Modifier.width(640.dp)) { aspectRatioDoc.examples.single { it.title == "RTL" }.preview() }
+                    Box(Modifier.width(640.dp)) { aspectRatioDoc.examples.single { it.title == "RTL" }.RenderPreview() }
                 }
             }
         }

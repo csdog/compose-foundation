@@ -54,7 +54,7 @@ class ProgressPageLayoutTest(private val viewport: Int, private val dark: Boolea
                         Modifier.width((if (viewport == 390) 325 else 638).dp).heightIn(min = example.minPreviewHeight)
                             .padding(example.previewPadding),
                         contentAlignment = Alignment.Center,
-                    ) { example.preview() }
+                    ) { example.RenderPreview() }
                 }
             }
         }

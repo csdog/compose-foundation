@@ -84,7 +84,7 @@ class PaginationExamplesTest(private val viewport: Int, private val dark: Boolea
                         contentAlignment =
                             Alignment.TopCenter,
                     ) {
-                        paginationDoc.examples.single { it.title == title }.preview()
+                        paginationDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

@@ -18,7 +18,7 @@ class AccordionExamplesTest {
 
     @Test fun basicRendersActualQuestionsAndSwitchesAnswer() {
         val example = accordionDoc.examples.single { it.title == "Basic" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("How do I reset my password?").assertIsDisplayed()
         rule.onNodeWithText("Can I change my subscription plan?").performClick()
         rule.waitForIdle()
@@ -28,7 +28,7 @@ class AccordionExamplesTest {
 
     @Test fun multipleKeepsBothRealAnswersOpen() {
         val example = accordionDoc.examples.single { it.title == "Multiple" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Manage how you receive", substring = true).assertIsDisplayed()
         rule.onNodeWithText("Privacy & Security").performClick()
         rule.waitForIdle()

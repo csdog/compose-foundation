@@ -33,7 +33,7 @@ class DrawerExamplesTest {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                     OverlayHost {
                         Box(Modifier.width(560.dp).height(600.dp)) {
-                            drawerDoc.examples.single { it.title == title }.preview()
+                            drawerDoc.examples.single { it.title == title }.RenderPreview()
                         }
                     }
                 }

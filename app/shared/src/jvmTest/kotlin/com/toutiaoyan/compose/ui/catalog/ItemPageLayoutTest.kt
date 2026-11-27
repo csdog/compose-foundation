@@ -38,7 +38,7 @@ class ItemPageLayoutTest(private val phone: Boolean, private val dark: Boolean) 
                         Modifier.width((if (phone) 325 else 638).dp).heightIn(min = example.minPreviewHeight)
                             .padding(example.previewPadding),
                         contentAlignment = Alignment.Center,
-                    ) { example.preview() }
+                    ) { example.RenderPreview() }
                 }
             }
         }

@@ -67,7 +67,7 @@ class TabsExamplesTest(private val viewport: Int, private val dark: Boolean) {
                         contentAlignment = Alignment.Center,
                     ) {
                         Box(Modifier.testTag("tabs-capture").padding(bottom = 8.dp)) {
-                            tabsDoc.examples.single { it.title == title }.preview()
+                            tabsDoc.examples.single { it.title == title }.RenderPreview()
                         }
                     }
                 }

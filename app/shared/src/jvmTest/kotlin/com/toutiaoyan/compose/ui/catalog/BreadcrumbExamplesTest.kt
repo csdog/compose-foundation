@@ -54,7 +54,7 @@ class BreadcrumbExamplesTest {
             Theme(
                 preset = StylePreset.Nova,
                 minTouchTarget = null,
-            ) { OverlayHost { breadcrumbDoc.examples.first().preview() } }
+            ) { OverlayHost { breadcrumbDoc.examples.first().RenderPreview() } }
         }
         rule.onNodeWithContentDescription("Toggle menu").performClick()
         rule.onNodeWithText("Documentation").assertIsDisplayed()
@@ -78,7 +78,7 @@ class BreadcrumbExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 CompositionLocalProvider(LocalDocNavigation provides nav) {
-                    breadcrumbDoc.examples.single { it.title == "Link component" }.preview()
+                    breadcrumbDoc.examples.single { it.title == "Link component" }.RenderPreview()
                 }
             }
         }
@@ -101,7 +101,7 @@ class BreadcrumbExamplesTest {
                             }
                         },
                 ) {
-                    breadcrumbDoc.examples.single { it.title == "Custom separator" }.preview()
+                    breadcrumbDoc.examples.single { it.title == "Custom separator" }.RenderPreview()
                 }
             }
         }
@@ -126,7 +126,7 @@ class BreadcrumbExamplesTest {
                                 visited += uri
                             }
                         },
-                ) { example.preview() }
+                ) { example.RenderPreview() }
             }
         }
         rule.onNodeWithText("Home").performClick()
@@ -140,7 +140,7 @@ class BreadcrumbExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
-                    Box(Modifier.width(340.dp)) { breadcrumbDoc.examples.single { it.title == "RTL" }.preview() }
+                    Box(Modifier.width(340.dp)) { breadcrumbDoc.examples.single { it.title == "RTL" }.RenderPreview() }
                 }
             }
         }

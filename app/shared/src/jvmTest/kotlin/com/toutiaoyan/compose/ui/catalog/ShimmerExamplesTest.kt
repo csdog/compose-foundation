@@ -64,7 +64,7 @@ class ShimmerExamplesTest(private val viewport: Int, private val dark: Boolean) 
                         Modifier.width(minOf(viewport, 640).dp).height(320.dp)
                             .background(currentTheme.colors.background).padding(24.dp),
                         contentAlignment = Alignment.Center,
-                    ) { shimmerDoc.examples.single { it.title == title }.preview() }
+                    ) { shimmerDoc.examples.single { it.title == title }.RenderPreview() }
                 }
             }
         }

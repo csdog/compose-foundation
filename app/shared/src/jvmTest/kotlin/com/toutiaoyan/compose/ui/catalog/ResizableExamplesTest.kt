@@ -68,7 +68,7 @@ class ResizableExamplesTest(private val viewport: Int, private val dark: Boolean
                         contentAlignment =
                             Alignment.Center,
                     ) {
-                        resizableDoc.examples.single { it.title == title }.preview()
+                        resizableDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }

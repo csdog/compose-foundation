@@ -46,7 +46,7 @@ class ItemExamplesTest {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                     OverlayHost {
                         Box(Modifier.width(width()).height(650.dp), contentAlignment = Alignment.Center) {
-                            itemDoc.examples.single { it.title == title }.preview()
+                            itemDoc.examples.single { it.title == title }.RenderPreview()
                         }
                     }
                 }

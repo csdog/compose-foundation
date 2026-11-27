@@ -92,7 +92,7 @@ class TooltipExamplesTest(private val viewport: Int, private val dark: Boolean) 
                             if (source != null) {
                                 TooltipDisabledRecipe(source)
                             } else {
-                                tooltipDoc.examples.single { it.title == title }.preview()
+                                tooltipDoc.examples.single { it.title == title }.RenderPreview()
                             }
                         }
                     }

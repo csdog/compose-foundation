@@ -39,7 +39,7 @@ class EmptyExamplesTest {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                     OverlayHost {
                         Box(Modifier.width(560.dp).height(600.dp)) {
-                            emptyDoc.examples.single { it.title == title }.preview()
+                            emptyDoc.examples.single { it.title == title }.RenderPreview()
                         }
                     }
                 }

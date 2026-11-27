@@ -39,7 +39,7 @@ class DropdownMenuExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(560.dp).height(600.dp), contentAlignment = Alignment.Center) {
-                        dropdownMenuDoc.examples.single { it.title == title }.preview()
+                        dropdownMenuDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }
@@ -58,7 +58,7 @@ class DropdownMenuExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(560.dp).height(600.dp), contentAlignment = Alignment.Center) {
-                        dropdownMenuDoc.examples.single { it.title == title }.preview()
+                        dropdownMenuDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }
@@ -235,7 +235,7 @@ class DropdownMenuExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(560.dp).height(600.dp), contentAlignment = Alignment.Center) {
-                        dropdownMenuDoc.examples.single { it.title == "Avatar" }.preview()
+                        dropdownMenuDoc.examples.single { it.title == "Avatar" }.RenderPreview()
                     }
                 }
             }

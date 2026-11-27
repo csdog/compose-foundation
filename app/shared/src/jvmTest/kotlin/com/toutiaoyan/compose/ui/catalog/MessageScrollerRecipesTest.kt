@@ -71,7 +71,7 @@ class MessageScrollerRecipesTest(private val width: Int, private val dark: Boole
                             Modifier.testTag("recipe-capture").width(width.dp).height(720.dp)
                                 .background(currentTheme.colors.background).padding(24.dp),
                             contentAlignment = Alignment.TopCenter,
-                        ) { messageScrollerDoc.examples.single { it.title == title }.preview() }
+                        ) { messageScrollerDoc.examples.single { it.title == title }.RenderPreview() }
                     }
                 }
             }

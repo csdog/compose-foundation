@@ -37,7 +37,7 @@ class StepperExamplesTest {
 
     @Test fun completeStepActionAdvancesTheIndicator() {
         val example = stepperDoc.examples.single { it.title == "Mid-flow action" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         val before = rule.onNodeWithText("3").captureToImage().toPixelMap()[0, 0]
         rule.onNodeWithText("Complete Step").performClick()
         val after = rule.onNodeWithText("3").captureToImage().toPixelMap()[0, 0]
@@ -47,7 +47,7 @@ class StepperExamplesTest {
 
     @Test fun formStepActionAcknowledgesTheEnteredInformation() {
         val example = stepperDoc.examples.single { it.title == "Form step" }
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Next").performClick()
         rule.onNodeWithText("Personal information complete").assertIsDisplayed()
         assertTrue(example.code.contains("submitted = true"))
@@ -56,7 +56,7 @@ class StepperExamplesTest {
     @Test fun defaultPreviewRendersStepsAndAdvances() {
         val example = stepperDoc.examples.first()
         assertEquals("Default", example.title)
-        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.RenderPreview() } }
         rule.onNodeWithText("Details").assertIsDisplayed()
         rule.onNodeWithText("Review").assertIsDisplayed()
         rule.onNodeWithText("Done").assertIsDisplayed()

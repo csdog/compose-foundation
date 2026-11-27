@@ -71,7 +71,7 @@ class SkeletonPhonePreviewTest(
                             minPreviewHeight = example.minPreviewHeight,
                             mobileMinPreviewHeight = example.mobileMinPreviewHeight,
                             previewPadding = example.previewPadding,
-                            preview = example.preview,
+                            preview = { example.RenderPreview() },
                         )
                     }
                 }

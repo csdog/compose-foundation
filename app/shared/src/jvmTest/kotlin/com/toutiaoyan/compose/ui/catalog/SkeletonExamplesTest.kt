@@ -63,7 +63,7 @@ class SkeletonExamplesTest(private val viewport: Int, private val dark: Boolean)
                             .padding(if (title == "RTL") 0.dp else 24.dp),
                         contentAlignment = Alignment.Center,
                     ) {
-                        skeletonDoc.examples.single { it.title == title }.preview()
+                        skeletonDoc.examples.single { it.title == title }.RenderPreview()
                     }
                 }
             }
