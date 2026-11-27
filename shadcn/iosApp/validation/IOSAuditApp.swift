@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "breadcrumb": BreadcrumbScreenshotFixture.Example.allCases.map { example in
+                ("breadcrumb-\(example.rawValue)-initial", { AnyView(BreadcrumbScreenshotFixture(example: example)) })
+            },
             "empty": [
                 ("empty-default-initial", { AnyView(EmptyScreenshotFixture(outlined: false)) }),
                 ("empty-outline-initial", { AnyView(EmptyScreenshotFixture(outlined: true)) }),
@@ -773,6 +776,46 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct BreadcrumbScreenshotFixture: View {
+    enum Example: String, CaseIterable { case `default`, ellipsis, separator }
+
+    @Environment(\.colorScheme) private var scheme
+    let example: Example
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let separator = example == .separator
+        return FoundationBreadcrumb(entries, separatorSymbol: separator ? "circle.fill" : "chevron.forward",
+                                    separatorSize: separator ? 4 : nil)
+            .foundationTheme(theme)
+            .padding(24)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
+    }
+
+    private var entries: [FoundationBreadcrumb.Entry] {
+        var entries: [FoundationBreadcrumb.Entry] = [.init(id: "home", title: "Home", action: {})]
+        switch example {
+        case .default:
+            entries.append(.ellipsis(id: "more", title: "Toggle menu", items: [
+                .init(id: "docs", title: "Documentation", action: {}),
+                .init(id: "themes", title: "Themes", action: {}),
+                .init(id: "github", title: "GitHub", action: {}),
+            ]))
+        case .ellipsis:
+            entries.append(.ellipsis(id: "more", title: "More"))
+        case .separator:
+            break
+        }
+        entries.append(.init(id: "components", title: "Components", action: {}))
+        entries.append(.init(id: "current", title: "Breadcrumb"))
+        return entries
     }
 }
 

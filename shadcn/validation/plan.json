@@ -20,6 +20,24 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "breadcrumb": {
+      "title": "Breadcrumb",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520]},
+          {"variant": "ellipsis", "status": "initial", "viewport": [402, 520]},
+          {"variant": "separator", "status": "initial", "viewport": [402, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/breadcrumb-demo.tsx",
+      "visual": "compare the complete path with a closed menu, static ellipsis or dot separators",
+      "behavior": "activate ancestor entries and keep the current page static",
+      "accessibility": "identify the current page and omitted levels, name the system menu, and hide separators",
+      "motion": "static settled frames"
+    },
     "empty": {
       "title": "Empty",
       "variant": "default",
