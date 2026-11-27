@@ -683,6 +683,27 @@ jobs:
           cat "$log"
           grep -q '^PASS:' "$log"
 
+      - name: Verify Aspect Ratio sizing and clipped actions on macOS
+        if: contains(needs.baseline.outputs.matrix, '"aspect-ratio"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          app="$RUNNER_TEMP/AspectRatioAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string AspectRatioAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.aspect-ratio-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationAspectRatio.swift" \
+            "$swiftui/validation/MacAspectRatioAudit.swift" \
+            -o "$app/Contents/MacOS/AspectRatioAudit"
+          log="$RUNNER_TEMP/aspect-ratio.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app"
+          cat "$log"
+          grep -q '^PASS:' "$log"
+
   report:
     name: Component parity report
     needs: [baseline, capture, cmp-behavior, swift-logic, publish]

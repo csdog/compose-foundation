@@ -13,5 +13,6 @@ public struct FoundationAspectRatio<Content: View>: View {
         Color.clear.aspectRatio(ratio, contentMode: .fit)
             .overlay(content)
             .clipped()
+            .contentShape(Rectangle())
     }
 }
