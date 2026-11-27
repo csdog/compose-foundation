@@ -40,6 +40,12 @@ Kbd 覆盖四个修饰键与 Ctrl + B 两行。Skeleton 覆盖头像和两条文
 
 整批 Review 中，原有的 40 张实拍与上一轮逐字节一致。修订禁用态后的四张开启和关闭截图也与整批 Review 一致。最终 macOS Swift Package 构建和 Tabs 导航回归通过。实际触控、硬件键盘、VoiceOver、RTL 和动效仍待单独验收。[整批 Review](https://github.com/csdog/compose-foundation/actions/runs/46005110796) · [最终验证](https://github.com/csdog/compose-foundation/actions/runs/46006892307)
 
+### Checkbox 默认、勾选、基础和禁用态
+
+Nova 的完整四行示例保留两段说明和通知卡片。首项勾选前后只有该选框区域改变。另拍单独的基础和禁用示例。默认示例裁切 shadcn 参考图时以 x=12 开始，独立示例以 x=159 开始，均完整保留内容。
+
+iPhone 17 Pro（iOS 26.2）上以 402 × 520 画布复拍深浅色八张 PNG，逐字节一致。原有 46 张图也与上一轮一致。两端文字光栅化和控件边缘仍有细微差异。macOS Swift Package 构建和 Tabs 导航回归通过。Checkbox 的三态转换断言通过。部分选中态视觉、真实触控、硬件键盘和 VoiceOver 仍待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46009522214/artifacts/15202868116)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -59,7 +65,7 @@ Kbd 覆盖四个修饰键与 Ctrl + B 两行。Skeleton 覆盖头像和两条文
 | card | 支持主题背景、边框和内容。Compose 的 header/footer/image/action slots、尺寸与卡片变体需由 SwiftUI 调用方组装。 |
 | carousel | 当前页和相邻页随横向拖动连续移动，松手后吸附到当前或相邻页。支持 RTL、前后按钮、页码无障碍调节和减少动态效果。视口高度由当前页决定。Compose 另有纵向模式、部分页宽及 dots API。 |
 | chart | 支持柱形、折线、面积、多序列和选点摘要。Compose 的独立图例、工具提示、序列主题配置和 indicator 选项未移植。 |
-| checkbox | 支持未选中、已选中和部分选中。部分选中使用减号、独立无障碍值和点按转全选。保留原有 Bool ToggleStyle API，支持 SwiftUI 提供的混合状态。 |
+| checkbox | 支持未选中、已选中和部分选中。部分选中使用减号、独立无障碍值和点按转全选。Nova 使用 16 pt 标记、深色未选中底色和首行文字对齐。Bool ToggleStyle 和 SwiftUI 混合状态均受支持。 |
 | chip | 可切换选中状态，支持内容标签和选中语义。缺少 Compose 的独立 chip 样式变体。 |
 | code-block | 支持横向滚动、语言标签和行号。缺少复制按钮、行状态、页脚和操作栏。 |
 | collapsible | 原生 DisclosureGroup 与展开绑定。Compose 的自定义 trigger slot、状态联动与展开动画参数未移植。 |

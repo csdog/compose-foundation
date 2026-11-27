@@ -68,28 +68,23 @@ private struct CheckboxControl<Label: View>: View {
         let palette = theme.palette(for: colorScheme)
         let shape = RoundedRectangle(cornerRadius: 4)
         let marked = state != .unchecked
+        let nova = theme.preset == .nova
+        let unmarkedFill = nova && colorScheme == .dark ? palette.novaDarkOutlineFill : Color.clear
 
         let control = Button(action: action) {
-            HStack(spacing: 8) {
-                shape.fill(marked ? palette.primary : Color.clear)
+            HStack(alignment: nova ? .firstTextBaseline : .center, spacing: 8) {
+                shape.fill(marked ? palette.primary : unmarkedFill)
                     .overlay(shape.strokeBorder(marked ? palette.primary : palette.input))
-                    .overlay(
-                        Group {
-                            if let mark = state.mark {
-                                Image(systemName: mark)
-                                    .font(.system(size: 10, weight: .semibold))
-                                    .foregroundColor(palette.primaryForeground)
-                            }
-                        }
-                    )
+                    .overlay(markView(nova: nova, palette: palette))
                     .frame(width: 16, height: 16)
+                    .alignmentGuide(.firstTextBaseline) { $0[VerticalAlignment.center] + 5 }
                     .accessibilityHidden(true)
                 label
             }
             .frame(minHeight: 44)
             .contentShape(Rectangle())
             .foregroundColor(palette.foreground)
-            .opacity(isEnabled ? 1 : 0.5)
+            .opacity(nova || isEnabled ? 1 : 0.5)
         }
         .buttonStyle(PlainButtonStyle())
         .accessibilityValue(state.accessibilityValue)
@@ -98,6 +93,30 @@ private struct CheckboxControl<Label: View>: View {
             control.accessibilityAddTraits(.isToggle)
         } else {
             control
+        }
+    }
+
+    @ViewBuilder
+    private func markView(nova: Bool, palette: FoundationPalette) -> some View {
+        if let mark = state.mark {
+            if nova {
+                Path { path in
+                    if state == .mixed {
+                        path.move(to: CGPoint(x: 2.92, y: 7))
+                        path.addLine(to: CGPoint(x: 11.08, y: 7))
+                    } else {
+                        path.move(to: CGPoint(x: 2.33, y: 7))
+                        path.addLine(to: CGPoint(x: 5.25, y: 9.92))
+                        path.addLine(to: CGPoint(x: 11.67, y: 3.5))
+                    }
+                }
+                .stroke(palette.primaryForeground, style: StrokeStyle(lineWidth: 1.17, lineCap: .round, lineJoin: .round))
+                .frame(width: 14, height: 14)
+            } else {
+                Image(systemName: mark)
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundColor(palette.primaryForeground)
+            }
         }
     }
 }
