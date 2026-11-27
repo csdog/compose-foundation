@@ -212,13 +212,21 @@ iPhone 17 Pro（iOS 26.2）使用 402 × 520 共同比较区域，收起与展�
 
 macOS 实际窗口调用悬停回调，验证配置的延迟、提前移出取消、已打开后移出关闭和禁用关闭。气泡显示在按钮下方，窗口保持 key 状态。SwiftUI 包构建与 Tabs 导航回归通过。系统指针路径、iOS 实际长按、Escape 和 VoiceOver 待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46067416555/job/140736147725)
 
+### Alert Dialog 居中面板与确认操作
+
+对照 shadcn Base UI / Nova 的 `alert-dialog-demo.tsx`，保留 Show Dialog、标题、说明及 Cancel、Continue。通过新增 `size:` 初始化器，调用方可以在填满呈现区域的容器上使用带遮罩和页脚的面板。常规尺寸随可用宽度切换横排和叠放操作，紧凑尺寸采用并排操作。原初始化器继续呈现系统确认框。
+
+iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布拍摄关闭和打开的四张深浅色图，复拍逐字节一致。两种主题的面板和页脚内部填色取样与参考一致，遮罩背景每通道相差 1，面板边缘相差约 1–3 pt。背景触发器使用模糊，页脚保留 44 pt 原生操作区域。[截图与差异报告](https://github.com/csdog/compose-foundation/actions/runs/46069335630/artifacts/15232243007)
+
+macOS 实际窗口验证从触发器打开、点击遮罩不透传、初始 Return 执行 Cancel、Escape 只取消一次，重新打开后点击 Continue 只执行一次确认。SwiftUI 包构建与 Tabs 导航回归通过。关闭后的触发器焦点恢复、iOS 实际触控和 VoiceOver 待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46069335630/job/140742295708)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
 | --- | --- |
 | accordion | 支持单开或多开、禁用项和绑定展开集合。Nova 使用全宽按钮、标题语义、展开状态和末尾方向箭头。横向布局与独立组装的触发器尚待对齐。 |
 | alert | 支持标题、说明、图标、操作和 destructive。Nova 使用紧凑的图标与文字排版，错误说明采用主题 destructive 色。操作区位置及 RTL 尚待对照。 |
-| alert-dialog | 原生确认框支持取消、确认和 destructive 操作。Compose 的自定义面板、媒体、页脚和叠层由系统确认框替代。 |
+| alert-dialog | 支持系统确认框及可选的居中面板。面板支持常规、紧凑尺寸、说明、取消和 destructive 操作。媒体、RTL、紧凑版实拍和 VoiceOver 待验收。 |
 | aspect-ratio | 固定宽高比，裁剪溢出内容与点击范围，无效比例回退到 1:1。无界布局和 RTL 样例待进一步对照。 |
 | attachment | 有上传进度、处理、失败和完成状态，并支持移除。缺少 Compose 的尺寸、纵向布局、附件组与预览触发器。 |
 | avatar | 支持本地 `Image`、三种尺寸、首字母或自定义回退、状态徽标、头像组和计数。iOS 15、macOS 12 起支持原生异步 URL 图片。 |
