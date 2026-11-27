@@ -20,6 +20,24 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "table": {
+      "title": "Table",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "footer", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/table-demo.tsx",
+      "visual": "compare the full invoice table and the compact footer example in both themes",
+      "behavior": "keep sorting within the data rows and support horizontal scrolling on narrow windows",
+      "accessibility": "header traits, named sort state and combined row content",
+      "motion": "static initial frames"
+    },
     "input-group": {
       "title": "Input Group",
       "variant": "default",

@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "table": TableScreenshotFixture.Example.allCases.map { example in
+                ("table-\(example.rawValue)-initial", { AnyView(TableScreenshotFixture(example: example)) })
+            },
             "input-group": InputGroupScreenshotFixture.Example.allCases.map { example in
                 ("input-group-\(example.rawValue)-initial", { AnyView(InputGroupScreenshotFixture(example: example)) })
             },
@@ -822,6 +825,53 @@ private struct SeparatorInitialScreenshotFixture: View {
         .padding(.top, 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct TableScreenshotFixture: View {
+    enum Example: String, CaseIterable { case `default`, footer }
+
+    private struct Invoice: Identifiable {
+        let id: String
+        let status: String
+        let method: String
+        let amount: String
+    }
+
+    @Environment(\.colorScheme) private var scheme
+    let example: Example
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let invoices = [
+            Invoice(id: "INV001", status: "Paid", method: "Credit Card", amount: "$250.00"),
+            Invoice(id: "INV002", status: "Pending", method: "PayPal", amount: "$150.00"),
+            Invoice(id: "INV003", status: "Unpaid", method: "Bank Transfer", amount: "$350.00"),
+            Invoice(id: "INV004", status: "Paid", method: "Credit Card", amount: "$450.00"),
+            Invoice(id: "INV005", status: "Paid", method: "PayPal", amount: "$550.00"),
+            Invoice(id: "INV006", status: "Pending", method: "Bank Transfer", amount: "$200.00"),
+            Invoice(id: "INV007", status: "Unpaid", method: "Credit Card", amount: "$300.00"),
+        ]
+        let columns: [FoundationTable<Invoice>.Column] = [
+            .init(id: "invoice", title: "Invoice", width: 84, weight: .medium, value: { $0.id }),
+            .init(id: "status", title: "Status", width: 134, value: { $0.status }),
+            .init(id: "method", title: "Method", width: 204, value: { $0.method }),
+            .init(id: "amount", title: "Amount", width: 186, alignment: .trailing, value: { $0.amount }),
+        ]
+        return FoundationTable(
+            columns: columns,
+            rows: example == .footer ? Array(invoices.prefix(3)) : invoices,
+            caption: "A list of your recent invoices.",
+            footer: Invoice(id: "Total", status: "", method: "", amount: "$2,500.00")
+        )
+        .foundationTheme(theme)
+        .frame(width: 672)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
         .ignoresSafeArea()
     }
 }

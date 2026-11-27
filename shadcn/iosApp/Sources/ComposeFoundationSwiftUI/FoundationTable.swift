@@ -6,6 +6,7 @@ public struct FoundationTable<Row: Identifiable>: View {
         public let title: String
         public let width: CGFloat
         public let alignment: Alignment
+        public let weight: Font.Weight?
         public let value: (Row) -> String
         public let areInIncreasingOrder: ((Row, Row) -> Bool)?
 
@@ -17,10 +18,23 @@ public struct FoundationTable<Row: Identifiable>: View {
             order: ((Row, Row) -> Bool)? = nil,
             value: @escaping (Row) -> String
         ) {
+            self.init(id: id, title: title, width: width, alignment: alignment, weight: nil, order: order, value: value)
+        }
+
+        public init(
+            id: String,
+            title: String,
+            width: CGFloat = 120,
+            alignment: Alignment = .leading,
+            weight: Font.Weight?,
+            order: ((Row, Row) -> Bool)? = nil,
+            value: @escaping (Row) -> String
+        ) {
             self.id = id
             self.title = title
             self.width = width.isFinite ? max(width, 44) : 120
             self.alignment = alignment
+            self.weight = weight
             self.value = value
             self.areInIncreasingOrder = order
         }
@@ -31,61 +45,114 @@ public struct FoundationTable<Row: Identifiable>: View {
     @State private var sortColumn: String?
     @State private var ascending = true
 
+    @ScaledMetric(relativeTo: .subheadline) private var novaFontSize: CGFloat = 14
+
     private let columns: [Column]
     private let rows: [Row]
+    private let caption: String?
+    private let footer: Row?
 
     public init(columns: [Column], rows: [Row]) {
-        self.columns = columns
-        self.rows = rows
+        self.init(columns: columns, rows: rows, caption: nil)
     }
 
+    public init(columns: [Column], rows: [Row], caption: String?, footer: Row? = nil) {
+        self.columns = columns
+        self.rows = rows
+        self.caption = caption
+        self.footer = footer
+    }
+
+    private var isNova: Bool { theme.preset == .nova }
+
+    @ViewBuilder
     public var body: some View {
         let palette = theme.palette(for: colorScheme)
         let shape = RoundedRectangle(cornerRadius: theme.cornerRadius)
+        let headerHeight: CGFloat = isNova ? (columns.contains { $0.areInIncreasingOrder != nil } ? 44 : 40) : 38
+        let sortedRows = orderedRows
 
-        ScrollView(.horizontal) {
+        let table = ScrollView(.horizontal) {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 0) {
                     ForEach(columns) { column in
-                        header(column)
-                            .font(.caption.weight(.semibold))
-                            .frame(width: column.width, alignment: column.alignment)
-                            .padding(.horizontal, 8)
+                        header(column, height: headerHeight)
                     }
                 }
-                .frame(minHeight: 38)
-                .background(palette.secondary)
-                if rows.isEmpty {
+                .frame(minHeight: headerHeight)
+                .background(isNova ? Color.clear : palette.secondary)
+                if isNova { divider(palette) }
+
+                if sortedRows.isEmpty {
                     Text("No rows").font(.subheadline)
                         .padding(12)
                         .foregroundColor(palette.mutedForeground)
                 } else {
                     LazyVStack(alignment: .leading, spacing: 0) {
-                        ForEach(orderedRows) { row in
-                            HStack(alignment: .top, spacing: 0) {
-                                ForEach(columns) { column in
-                                    Text(column.value(row))
-                                        .font(.subheadline)
-                                        .frame(width: column.width, alignment: column.alignment)
-                                        .padding(.horizontal, 8)
-                                }
-                            }
-                            .padding(.vertical, 8)
-                            .accessibilityElement(children: .combine)
-                            Rectangle().fill(palette.border).frame(height: 1).accessibilityHidden(true)
+                        ForEach(sortedRows) { row in
+                            cells(for: row)
+                            if !isNova || row.id != sortedRows.last?.id { divider(palette) }
                         }
                     }
+                }
+
+                if let footer {
+                    VStack(spacing: 0) {
+                        if isNova || sortedRows.isEmpty { divider(palette) }
+                        cells(for: footer, weight: .medium)
+                    }
+                    .background(palette.secondary.opacity(0.5))
+                }
+
+                if let caption {
+                    Text(caption)
+                        .font(isNova ? .system(size: novaFontSize) : .subheadline)
+                        .foregroundColor(palette.mutedForeground)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 8)
+                        .padding(.top, 16)
                 }
             }
         }
         .foregroundColor(palette.foreground)
-        .background(shape.fill(palette.card))
-        .clipShape(shape)
-        .overlay(shape.strokeBorder(palette.border).allowsHitTesting(false))
+
+        if isNova {
+            table
+        } else {
+            table.background(shape.fill(palette.card))
+                .clipShape(shape)
+                .overlay(shape.strokeBorder(palette.border).allowsHitTesting(false))
+        }
+    }
+
+    private func divider(_ palette: FoundationPalette) -> some View {
+        Rectangle()
+            .fill(palette.border, style: FillStyle(antialiased: !isNova))
+            .frame(height: 1)
+            .accessibilityHidden(true)
+    }
+
+    private func cells(for row: Row, weight: Font.Weight = .regular) -> some View {
+        HStack(alignment: isNova ? .center : .top, spacing: 0) {
+            ForEach(columns) { column in
+                Text(column.value(row))
+                    .font(isNova
+                          ? .system(size: novaFontSize, weight: column.weight ?? weight)
+                          : .subheadline.weight(column.weight ?? weight))
+                    .lineLimit(isNova ? 1 : nil)
+                    .frame(width: column.width, alignment: column.alignment)
+                    .padding(.horizontal, 8)
+            }
+        }
+        .padding(.vertical, 8)
+        .frame(minHeight: isNova ? 36 : nil)
+        .accessibilityElement(children: .combine)
     }
 
     @ViewBuilder
-    private func header(_ column: Column) -> some View {
+    private func header(_ column: Column, height: CGFloat) -> some View {
+        let font: Font = isNova ? .system(size: novaFontSize, weight: .medium) : .caption.weight(.semibold)
         if column.areInIncreasingOrder != nil {
             Button {
                 ascending = sortColumn == column.id ? !ascending : true
@@ -97,13 +164,21 @@ public struct FoundationTable<Row: Identifiable>: View {
                         Image(systemName: ascending ? "arrow.up" : "arrow.down").accessibilityHidden(true)
                     }
                 }
+                .font(font)
+                .frame(width: column.width, alignment: column.alignment)
+                .padding(.horizontal, 8)
+                .frame(minHeight: isNova ? height : nil)
                 .contentShape(Rectangle())
             }
             .buttonStyle(PlainButtonStyle())
             .accessibilityValue(Text(sortColumn == column.id ? (ascending ? "Ascending" : "Descending") : ""))
             .accessibilityAddTraits(.isHeader)
         } else {
-            Text(column.title).accessibilityAddTraits(.isHeader)
+            Text(column.title)
+                .font(font)
+                .frame(width: column.width, alignment: column.alignment)
+                .padding(.horizontal, 8)
+                .accessibilityAddTraits(.isHeader)
         }
     }
 
