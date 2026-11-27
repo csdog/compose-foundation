@@ -164,6 +164,14 @@ iPhone 17 Pro Max（iOS 26.2）以 440 × 520 画布复拍六张深浅色图，�
 
 macOS 通过原生 NSScrollView 接收滚轮事件，验证纵向和横向分别沿指定轴滚动，正交轴偏移不变。iOS 实际拖动、硬件键盘、VoiceOver 和滚动指示器的拖动待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46056329426/job/140699684536)
 
+### Pagination 文字按钮、纯页码和 RTL
+
+对照 shadcn Base UI / Nova 的 `pagination-demo.tsx`、`pagination-simple.tsx` 和 `pagination-rtl.tsx`。原有初始化器继续提供图标控制和包含首末页的标准窗口。新增控制可显示自定义前后页文字或仅显示页码。紧凑窗口显示连续的最多三个页码，在有隐藏页的一侧显示省略号。Nova 当前页使用描边和选中语义，前后控制在翻页边界禁用，阿拉伯文示例使用本地化数字与 RTL 方向图标。
+
+iPhone 17 Pro（iOS 26.2）以 402 × 520 画布复拍六张深浅色图，逐字节一致。RTL 使用 `ar@numbers=arab`，数字、按钮顺序和箭头方向与示例一致。原生按钮保留 44 pt 的操作区域，默认、纯页码和 RTL 的可见内容分别比参考宽 28–30、48–50 和 22–24 pt。[最终截图报告](https://github.com/csdog/compose-foundation/actions/runs/46058083580/artifacts/15227653258)
+
+macOS 原生窗口的点击回归验证首页和末页的禁用按钮不写入绑定、直接选页、逐页翻页及 RTL 镜像。iOS 实际触控、硬件键盘、VoiceOver 和窄屏滚动仍待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46058083580/job/140705454124)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -209,7 +217,7 @@ macOS 通过原生 NSScrollView 接收滚轮事件，验证纵向和横向分别
 | message | 收发对齐、作者、时间和内容。没有 Compose 的头像、消息组、独立 header/footer slots。 |
 | message-scroller | 内容更新时跟随末尾、触摸拖动暂停、恢复跟随和到达顶部回调。缺少 Compose 的任意锚点寻址、可见 ID，以及对桌面滚轮的完整跟随判定。 |
 | navigation-menu | 支持横向内容 slot、分组触发器和关联弹层。iOS 26.2 模拟器已验证打开后通过方向键切换导航组和以 Return 执行操作。Compose 另有独立 viewport 和 indicator API。 |
-| pagination | 前后按钮、页码窗口、省略和当前页绑定。Compose 另有专门的首末按钮和内容 slots。 |
+| pagination | 支持前后页图标或文字、纯页码布局、标准和紧凑窗口、省略及当前页绑定。独立的首末按钮和自定义内容 slots 待对齐。 |
 | popover | iOS 和 macOS 使用锚定的无箭头圆角面板，默认居中显示在触发器下方，间距 4 pt，并根据可用空间翻转或调整位置。`arrowEdge` 指定首选方向，`onDismiss` 在窗口关闭后调用。iOS 模拟器已验证面板内键盘焦点、Return、Escape、触控关闭和跨窗口还原触发器焦点。 |
 | progress | 支持范围归一化、动画、减少动态效果与百分比无障碍语义。Compose 可插入 label、value、track 和 indicator。 |
 | questionnaire | 单选、多选、文本题、验证、回退、跳过及提交可用。缺少 Compose 的快捷键、题定义 slots、重置与部分进度状态 API。 |
