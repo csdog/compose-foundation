@@ -26,6 +26,36 @@ The Gradle project paths `:shadcn:core` and `:app:androidApp` point to the reloc
 - Keep platform integrations in their source sets and use shared logic for behavior common to multiple targets. For standalone Android export, keep `expect` declarations in dedicated files and supply the matching Android actuals.
 - Run the owning regression tests. Record and verify Roborazzi baselines after Compose visual changes, then review the image diffs before staging. Put run evidence in `build/shadcn-audit/` and durable findings in the corresponding audit record.
 
+## Screenshot review and baseline publication
+
+`shadcn/validation/plan.json` defines the capture cases, platform paths, and upstream source revision. [compose-foundation-baselines](https://github.com/csdog/compose-foundation-baselines) stores both the shadcn visual references under `shadcn/` and the platform PNGs used for pixel regression. Match upstream references by component, variant, state, and light or dark theme. Each Actions run resolves one baseline commit for all platforms. Use `baseline.revision` to pin a specific commit, or leave it unset to resolve the baseline repository's `main`.
+
+Use the **Component parity** workflow in `compose-foundation` (`.github/workflows/component-parity.yml`).
+
+- **Daily regression (`update=no`)** captures each case once and compares it against the approved PNG for the same platform. Failed capture jobs upload any generated diff PNGs. Missing native baselines are pending unless `require_baselines` is enabled.
+- **Review (`update=review`)** captures each case twice. Download reproducible candidates from `component-parity-candidates-*`. In `component-parity-shadcn-review-*`, open `overview.png` to compare candidate and upstream images side by side. `report.md` links the originals and provenance and marks missing references. The report also records any comparison against the previous native baseline. When the platform index changes, `component-parity-index-preview-*` contains the Markdown patch. Review artifacts are retained for seven days.
+- **Publish (`update=publish`)** is manually triggered by the maintainer from the source repository's `main` after review and merge. Select the same component scope. The workflow recaptures the candidates and uses `COMPONENT_BASELINES_WRITE_TOKEN` to commit validated PNGs and updated platform `Index.md` files to the baseline repository. The Actions summary records the new baseline commit. Use the PR and review flow for proposed changes.
+
+Use the Actions UI to pick the branch and component, or dispatch a review with `gh workflow run component-parity.yml --ref "$review_ref" -f update=review -f component=popover`. Set `review_ref` to the PR branch. Omit `component` to run every case currently in the plan. Find the run with `gh run list --workflow component-parity.yml`, then use `gh run watch` and `gh run download` with its run ID.
+
+## Local screenshots and diffs
+
+- **SwiftUI iOS** uses macOS, Xcode, `xcrun swiftc`, and `xcrun simctl`. The capture script builds the audit app and manages a temporary iPhone 17 Pro simulator with the iOS 26.2 runtime. Check the active Xcode and installed runtimes with `xcodebuild -version` and `xcrun simctl list runtimes`. For manual keyboard, focus, and dismissal checks, use the Simulator app and the recipes in `docs/swiftui-parity-audit.md`. From Linux, use the workflow's macOS runner for iOS Simulator coverage.
+- **Compose Web** uses Node.js, Playwright, and Chromium. The capture adapter takes the installed Playwright entry point via `PLAYWRIGHT_MODULE`. **Compose Android** uses the catalog APK, an Android emulator, and `adb` with `ANDROID_SERIAL` set to the target device. Follow the matrix setup in the workflow for reproducible runs.
+
+Use `report.py` to capture, compare, and build reports. Install `Pillow==11.3.0` in your Python environment. This example runs a SwiftUI iOS regression on macOS against a baseline checkout.
+
+```sh
+mkdir -p build/shadcn-audit
+baseline_checkout="$(mktemp -d "$PWD/build/shadcn-audit/baselines.XXXXXX")"
+git clone https://github.com/csdog/compose-foundation-baselines.git "$baseline_checkout"
+audit="$(mktemp -d "$PWD/build/shadcn-audit/ios-popover.XXXXXX")"
+python3 shadcn/validation/report.py "$audit" --run --platform swiftui-ios \
+  --component popover --baselines "$baseline_checkout"
+```
+
+Open `report.md`, `failures.md`, or `overview.png` in the output directory. Native pixel differences are under the platform's `diff/` directory. Add `--update-baselines` with a fresh output directory to capture a local candidate pair. Use `--report-only --shadcn-references "$baseline_checkout"` with the same platform and component to refresh a saved report's upstream references without recapturing. See `docs/shadcn-component-sop.md` for candidate replay and upstream capture commands.
+
 ## Commands
 
 Run from the repository root. Use the available Gradle runner skill for agent-initiated Gradle checks.
