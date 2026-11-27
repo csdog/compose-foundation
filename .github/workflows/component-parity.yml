@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   swiftui-tabs:
-    name: Verify SwiftUI Tabs
+    name: Verify SwiftUI Button and Tabs
     runs-on: macos-15
     timeout-minutes: 45
     steps:
@@ -28,8 +28,9 @@ jobs:
           repository: csdog/compose-foundation-baselines
           ref: b19fcbf62f182422a5f26d7b8ce3dd8006695858
           sparse-checkout: |
-            mobile/swiftui/tabs
+            mobile/swiftui
             shadcn/tabs
+            shadcn/button
           path: build/component-baselines
           persist-credentials: false
       - uses: actions/setup-python@v6
@@ -43,7 +44,7 @@ jobs:
       - name: Capture the native iOS reference pairs
         run: |
           python shadcn/validation/report.py build/component-parity --run --platform swiftui-ios \
-            --component tabs --baselines build/component-baselines --update-baselines \
+            --component tabs --component button --baselines build/component-baselines --update-baselines \
             --bundle "$RUNNER_TEMP/swiftui-tabs-review"
       - name: Capture diagnostic logs
         if: failure()
