@@ -56,14 +56,20 @@ public struct FoundationTooltip: ViewModifier {
     @ViewBuilder
     private func hint(around content: Content) -> some View {
         let presented = presentation ?? $isVisible
+        let positionedBubble = bubble
+            .fixedSize()
+            .accessibilityHidden(true)
+            .allowsHitTesting(false)
+            .opacity(presented.wrappedValue && isEnabled ? 1 : 0)
+            .alignmentGuide(.top) { $0[.bottom] }
+            .alignmentGuide(.bottom) { $0[.top] }
+            .alignmentGuide(.leading) { $0[.trailing] }
+            .alignmentGuide(.trailing) { $0[.leading] }
+
         let trigger = content
             .accessibilityHint(Text(title))
             .onHover { interaction.pointerChanged($0 && isEnabled, presented: presented, delay: delay) }
-            .overlay(Group {
-                if presented.wrappedValue && isEnabled {
-                    positionedBubble.accessibilityHidden(true).allowsHitTesting(false)
-                }
-            }, alignment: alignment)
+            .overlay(positionedBubble, alignment: alignment)
             .onChange(of: isEnabled) { enabled in
                 if !enabled { interaction.pointerChanged(false, presented: presented, delay: 0) }
             }
@@ -83,16 +89,6 @@ public struct FoundationTooltip: ViewModifier {
         case .bottom: return .bottom
         case .leading: return .leading
         case .trailing: return .trailing
-        }
-    }
-
-    @ViewBuilder
-    private var positionedBubble: some View {
-        switch side {
-        case .top: bubble.alignmentGuide(.top) { $0[.bottom] }
-        case .bottom: bubble.alignmentGuide(.bottom) { $0[.top] }
-        case .leading: bubble.alignmentGuide(.leading) { $0[.trailing] }
-        case .trailing: bubble.alignmentGuide(.trailing) { $0[.leading] }
         }
     }
 

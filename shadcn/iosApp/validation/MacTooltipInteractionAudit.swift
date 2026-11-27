@@ -57,8 +57,9 @@ enum MacTooltipInteractionAudit {
 
             interaction.pointerChanged(true, presented: binding, delay: delay)
             try? await Task.sleep(for: .milliseconds(230))
-            require(state.visible && darkPixels(in: host) > closed + 500,
-                    "Hover presents the bubble below the trigger in the parent window")
+            let opened = darkPixels(in: host)
+            require(state.visible && opened > closed + 500,
+                    "Hover presents the bubble below the trigger (visible: \(state.visible), pixels: \(closed) → \(opened))")
             require(window.isKeyWindow, "Showing the hint leaves its parent focused")
 
             interaction.pointerChanged(false, presented: binding, delay: delay)
