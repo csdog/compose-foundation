@@ -120,6 +120,25 @@
       "accessibility": "progress label and percentage value",
       "motion": "static settled frame"
     },
+    "checkbox": {
+      "title": "Checkbox",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520], "referenceOrigin": [12, 0]},
+          {"variant": "default", "status": "checked", "viewport": [402, 520], "referenceOrigin": [12, 0]},
+          {"variant": "basic", "status": "initial", "viewport": [402, 520], "referenceOrigin": [159, 0]},
+          {"variant": "disabled", "status": "initial", "viewport": [402, 520], "referenceOrigin": [159, 0]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/checkbox-demo.tsx",
+      "visual": "compare the full four-row demo plus standalone basic and disabled fields",
+      "behavior": "toggle the bound checked value and preserve the mixed state transition",
+      "accessibility": "check state, label and disabled state",
+      "motion": "static settled frames"
+    },
     "switch": {
       "title": "Switch",
       "variant": "default",

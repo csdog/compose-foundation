@@ -147,8 +147,17 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "progress": { AnyView(StatusInitialScreenshotFixture(example: .progress)) },
             "tabs": { AnyView(TabsInitialScreenshotFixture()) },
         ]
+        typealias Capture = (filename: String, content: (() -> AnyView)?)
+        let variantFixtures: [String: [Capture]] = [
+            "switch": SwitchScreenshotFixture.Example.allCases.map { example in
+                ("switch-\(example.rawValue)", { AnyView(SwitchScreenshotFixture(example: example)) })
+            },
+            "checkbox": CheckboxScreenshotFixture.Example.allCases.map { example in
+                ("checkbox-\(example.rawValue)", { AnyView(CheckboxScreenshotFixture(example: example)) })
+            },
+        ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
-        let useComparisonFixtures = (names.contains("switch") || !names.isDisjoint(with: comparisonFixtures.keys))
+        let useComparisonFixtures = !names.isDisjoint(with: Set(comparisonFixtures.keys).union(variantFixtures.keys))
             && Bundle.main.url(forResource: "geist_medium", withExtension: "ttf") != nil
         if useComparisonFixtures || !popoverCases.isEmpty {
             try registerParityFonts()
@@ -166,11 +175,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 continue
             }
             guard let fixture = fixtures[name] else { continue }
-            let captures: [(filename: String, content: (() -> AnyView)?)]
-            if useComparisonFixtures, name == "switch" {
-                captures = SwitchScreenshotFixture.Example.allCases.map { example in
-                    ("switch-\(example.rawValue)", { AnyView(SwitchScreenshotFixture(example: example)) })
-                }
+            let captures: [Capture]
+            if useComparisonFixtures, let variants = variantFixtures[name] {
+                captures = variants
             } else {
                 captures = [(name, useComparisonFixtures ? comparisonFixtures[name] : nil)]
             }
@@ -673,6 +680,89 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct CheckboxScreenshotFixture: View {
+    enum Example: String, CaseIterable {
+        case initial = "default-initial"
+        case checked = "default-checked"
+        case basic = "basic-initial"
+        case disabled = "disabled-initial"
+    }
+
+    @Environment(\.colorScheme) private var scheme
+    @State private var termsAccepted: Bool
+    @State private var additionalTerms = true
+    @State private var unavailableNotifications = false
+    @State private var notifications = false
+    let example: Example
+
+    init(example: Example) {
+        self.example = example
+        _termsAccepted = State(initialValue: example == .checked)
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let palette = theme.palette(for: scheme)
+        let simple = example == .basic || example == .disabled
+        return Group {
+            if simple {
+                if example == .basic {
+                    Toggle("Accept terms and conditions", isOn: $termsAccepted)
+                } else {
+                    Toggle("Enable notifications", isOn: $unavailableNotifications).disabled(true)
+                }
+            } else {
+                VStack(alignment: .leading, spacing: 0) {
+                    Toggle("Accept terms and conditions", isOn: $termsAccepted)
+                    Toggle(isOn: $additionalTerms) {
+                        fieldLabel(
+                            "Accept terms and conditions",
+                            description: "By clicking this checkbox, you agree to the terms.",
+                            palette: palette
+                        )
+                    }
+                    .padding(.top, 5)
+                    Toggle("Enable notifications", isOn: $unavailableNotifications)
+                        .disabled(true)
+                        .padding(.top, 7)
+                    Toggle(isOn: $notifications) {
+                        fieldLabel(
+                            "Enable notifications",
+                            description: "You can enable or disable notifications at any time.",
+                            palette: palette
+                        )
+                    }
+                    .padding(.horizontal, 11)
+                    .frame(width: 384, height: 65, alignment: .leading)
+                    .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(palette.border))
+                    .padding(.top, 8)
+                }
+            }
+        }
+        .toggleStyle(FoundationCheckbox())
+        .font(.custom("Geist-Medium", size: 14))
+        .foundationTheme(theme)
+        .padding(.leading, simple ? 89 : 12)
+        .padding(.top, simple ? 12 : 10)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
+        .ignoresSafeArea()
+    }
+
+    private func fieldLabel(_ title: String, description: String, palette: FoundationPalette) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title).frame(height: 18)
+            Text(description)
+                .font(.custom("Geist-Regular", size: 14))
+                .foregroundColor(palette.mutedForeground)
+                .frame(height: 20)
+        }
     }
 }
 
