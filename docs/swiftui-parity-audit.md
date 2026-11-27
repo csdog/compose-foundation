@@ -194,7 +194,15 @@ macOS 实际窗口回归以 AppKit 点击和按键验证编辑器获得焦点、
 
 iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布拍摄完整发票和紧凑页脚的深浅色图。四张图复拍逐字节一致。表头、行间分隔线和合计栏的纵向位置与参考一致，两种主题的页面及页脚内部填色取样一致。差异集中在系统字体、分隔线灰阶和抗锯齿。[截图与 shadcn 差异报告](https://github.com/csdog/compose-foundation/actions/runs/46064358988/artifacts/15230840455)
 
-macOS 真实窗口回归验证点击表头分别按升序和降序排列、合计栏固定在数据行后，以及窄窗口可以横向滚动。SwiftUI 包构建与 Tabs 导航回归通过。iOS 的 VoiceOver、实际触控滚动和 RTL 仍待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46064358988/job/140726083322)
+macOS 真实窗口回归验证点击表头分别按升序和降序排列、合计栏固定在数据行后，以及窄窗口可以横向滚动。SwiftUI 包构建与 Tabs 导航回归通过。iOS 的 VoiceOver 和实际触控滚动仍待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46064358988/job/140726083322)
+
+### Table RTL 与行操作
+
+另外对照 `table-rtl.tsx` 和 `table-actions.tsx`。阿拉伯语发票通过 SwiftUI 的布局方向镜像列次序，金额沿参考图的物理右侧对齐。商品表示例使用原生行菜单，含 Edit、Duplicate 和 Delete。新增 `Column` 的 `cell` 渲染闭包，调用方可传入菜单、按钮或格式化视图。正文行将操作控件保留为独立的无障碍子元素，页脚使用列的文本值。
+
+iPad mini（A17 Pro，iOS 26.2）复拍四个变体的八张深浅色图，全部逐字节一致。完整发票与紧凑页脚的四张图也与上一轮逐字节一致。RTL 首行金额和发票编号的文字右缘与参考相差 1 pt，商品行菜单图标向左约 6 pt，对应原生 44 pt 触控区域。[截图与差异报告](https://github.com/csdog/compose-foundation/actions/runs/46065612262/artifacts/15231470214)
+
+macOS 真实窗口中，排序前后点击同一位置的按钮，分别执行 Zulu 和 Alpha 的操作。升降序、页脚位置、横向滚动及 Tabs 回归通过。iOS 菜单展开、选择和 VoiceOver 待实机交互验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46065612262/job/140730127707)
 
 ## 各条目
 
@@ -259,7 +267,7 @@ macOS 真实窗口回归验证点击表头分别按升序和降序排列、合�
 | spinner | 系统不定进度控件及无障碍标签。Compose 提供原有旋转外观和 size 参数。 |
 | stepper | 支持当前、已完成状态和点击回调。Compose 的横向排列、连接线与描述 slots 未移植。 |
 | switch | Nova 使用 32 × 18.4 pt 轨道、16 pt 滑块和至少 44 pt 高的触控区域。iOS 15、macOS 12 起使用系统 Toggle 提供无障碍语义，较早系统提供按钮及开关状态。其余预设使用原生 SwiftUI Switch。小尺寸和组合字段仍待对照。 |
-| table | 支持列标题、数据行、水平滚动、排序、说明文字和页脚。Nova 的完整发票和紧凑页脚示例覆盖深浅色。任意内容单元格、跨列合并、RTL、VoiceOver 和操作菜单示例待验收。 |
+| table | 支持列标题、数据行、水平滚动、排序、说明文字、页脚和自定义正文单元格。Nova 的完整发票、紧凑页脚、阿拉伯语 RTL 和商品操作示例覆盖深浅色。跨列合并、iOS 实际菜单操作和 VoiceOver 待验收。 |
 | tabs | 支持选择绑定、禁用、横向 tabs 与内容切换。iOS 17 / macOS 14 起提供左右键、Home / End、禁用项跳过，以及自动或手动激活。iOS 26.2 模拟器已验证 LTR、RTL、跨组 Tab、长列表滚动、自动激活及手动模式的独立焦点与提交。macOS 15.6.1 已验证自动模式跳过禁用项、跨组 Tab 和手动激活。Compose 另有纵向、list variant 和独立焦点移动 API。 |
 | text | 支持标题、headline、正文、caption 和 muted 文本。Compose 有更多主题字体角色及自定义内容和样式参数。 |
 | textarea | 原生 TextEditor 支持多行绑定、独立占位文字及错误边框。Nova 最小高 64 pt，iOS 16 和 macOS 13 起隐藏系统滚动背景。自动增高和自定义焦点样式仍待补齐。 |

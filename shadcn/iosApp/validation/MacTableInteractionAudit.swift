@@ -1,7 +1,13 @@
 import AppKit
 import SwiftUI
 
+@MainActor
+private final class TableAuditResult {
+    var choices: [String] = []
+}
+
 private struct TableProbe: View {
+    let result: TableAuditResult
     private struct Entry: Identifiable {
         let id: String
         let detail: String
@@ -11,6 +17,11 @@ private struct TableProbe: View {
         FoundationTable(
             columns: [
                 .init(id: "name", title: "Name", width: 100, order: { $0.id < $1.id }, value: { $0.id }),
+                .init(id: "action", title: "Action", width: 52, value: { _ in "" }) { entry in
+                    Button("Choose") { result.choices.append(entry.id) }
+                        .buttonStyle(PlainButtonStyle())
+                        .accessibilityLabel("Choose \(entry.id)")
+                },
                 .init(id: "detail", title: "Detail", width: 200, value: { $0.detail }),
             ],
             rows: [Entry(id: "Zulu", detail: "Second"), Entry(id: "Alpha", detail: "First")],
@@ -31,7 +42,8 @@ enum MacTableInteractionAudit {
         app.setActivationPolicy(.regular)
         let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 160, height: 200),
                               styleMask: [.titled, .closable], backing: .buffered, defer: false)
-        let host = NSHostingView(rootView: TableProbe())
+        let result = TableAuditResult()
+        let host = NSHostingView(rootView: TableProbe(result: result))
         window.contentView = host
         window.center()
         window.makeKeyAndOrderFront(nil)
@@ -42,17 +54,23 @@ enum MacTableInteractionAudit {
             window.makeKeyAndOrderFront(nil)
             try? await Task.sleep(for: .milliseconds(450))
             require(window.isKeyWindow, "The audit window needs focus")
+            await click(x: 144, y: 137, in: window)
+            require(result.choices == ["Zulu"], "The first row's native action receives the click")
             let initial = pixels(in: host, rows: 46..<114)
             let footer = pixels(in: host, rows: 119..<151)
             require(Set(initial).count > 3, "The body has rendered text")
             require(Set(footer).count > 3, "The footer has rendered text")
 
-            await clickHeader(in: window)
+            await click(x: 39, y: 178, in: window)
             require(pixels(in: host, rows: 46..<114) != initial, "First click sorts the body in ascending order")
             require(pixels(in: host, rows: 119..<151) == footer, "The footer stays below the sorted body")
 
-            await clickHeader(in: window)
+            await click(x: 39, y: 178, in: window)
             require(pixels(in: host, rows: 46..<114) == initial, "Second click restores the descending body order")
+
+            await click(x: 39, y: 178, in: window)
+            await click(x: 144, y: 137, in: window)
+            require(result.choices == ["Zulu", "Alpha"], "After sorting, the same action position targets the new row")
 
             guard let viewport = scrollView(in: host),
                   let wheel = CGEvent(scrollWheelEvent2Source: nil, units: .pixel, wheelCount: 2,
@@ -66,7 +84,7 @@ enum MacTableInteractionAudit {
             let after = viewport.contentView.bounds.origin
             require(abs(after.x - before.x) > 20 && abs(after.y - before.y) < 1,
                     "The wide table scrolls horizontally in a narrow viewport")
-            print("PASS: Table sorts data rows in both directions, preserves its footer and scrolls horizontally")
+            print("PASS: Table sorts data rows in both directions, preserves its footer and row actions, and scrolls horizontally")
             exit(0)
         }
         app.run()
@@ -90,10 +108,10 @@ enum MacTableInteractionAudit {
         return view.subviews.lazy.compactMap { scrollView(in: $0) }.first
     }
 
-    private static func clickHeader(in window: NSWindow) async {
+    private static func click(x: CGFloat, y: CGFloat, in window: NSWindow) async {
         for type in [NSEvent.EventType.leftMouseDown, .leftMouseUp] {
             if let event = NSEvent.mouseEvent(
-                with: type, location: NSPoint(x: 39, y: 178), modifierFlags: [],
+                with: type, location: NSPoint(x: x, y: y), modifierFlags: [],
                 timestamp: ProcessInfo.processInfo.systemUptime, windowNumber: window.windowNumber,
                 context: nil, eventNumber: 0, clickCount: 1, pressure: type == .leftMouseUp ? 0 : 1
             ) {

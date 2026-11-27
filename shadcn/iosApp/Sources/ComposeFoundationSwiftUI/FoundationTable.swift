@@ -9,6 +9,7 @@ public struct FoundationTable<Row: Identifiable>: View {
         public let weight: Font.Weight?
         public let value: (Row) -> String
         public let areInIncreasingOrder: ((Row, Row) -> Bool)?
+        fileprivate let content: ((Row) -> AnyView)?
 
         public init(
             id: String,
@@ -30,6 +31,34 @@ public struct FoundationTable<Row: Identifiable>: View {
             order: ((Row, Row) -> Bool)? = nil,
             value: @escaping (Row) -> String
         ) {
+            self.init(id: id, title: title, width: width, alignment: alignment, weight: weight,
+                      order: order, value: value, content: nil)
+        }
+
+        /// Renders interactive or formatted body cells. The footer uses the column's text value.
+        public init<Cell: View>(
+            id: String,
+            title: String,
+            width: CGFloat = 120,
+            alignment: Alignment = .leading,
+            order: ((Row, Row) -> Bool)? = nil,
+            value: @escaping (Row) -> String,
+            @ViewBuilder cell: @escaping (Row) -> Cell
+        ) {
+            self.init(id: id, title: title, width: width, alignment: alignment, weight: nil,
+                      order: order, value: value, content: { AnyView(cell($0)) })
+        }
+
+        private init(
+            id: String,
+            title: String,
+            width: CGFloat,
+            alignment: Alignment,
+            weight: Font.Weight?,
+            order: ((Row, Row) -> Bool)?,
+            value: @escaping (Row) -> String,
+            content: ((Row) -> AnyView)?
+        ) {
             self.id = id
             self.title = title
             self.width = width.isFinite ? max(width, 44) : 120
@@ -37,6 +66,7 @@ public struct FoundationTable<Row: Identifiable>: View {
             self.weight = weight
             self.value = value
             self.areInIncreasingOrder = order
+            self.content = content
         }
     }
 
@@ -99,7 +129,7 @@ public struct FoundationTable<Row: Identifiable>: View {
                 if let footer {
                     VStack(spacing: 0) {
                         if isNova || sortedRows.isEmpty { divider(palette) }
-                        cells(for: footer, weight: .medium)
+                        cells(for: footer, isFooter: true)
                     }
                     .background(palette.secondary.opacity(0.5))
                 }
@@ -133,21 +163,30 @@ public struct FoundationTable<Row: Identifiable>: View {
             .accessibilityHidden(true)
     }
 
-    private func cells(for row: Row, weight: Font.Weight = .regular) -> some View {
-        HStack(alignment: isNova ? .center : .top, spacing: 0) {
+    private func cells(for row: Row, isFooter: Bool = false) -> some View {
+        let interactive = !isFooter && columns.contains { $0.content != nil }
+        return HStack(alignment: isNova ? .center : .top, spacing: 0) {
             ForEach(columns) { column in
-                Text(column.value(row))
-                    .font(isNova
-                          ? .system(size: novaFontSize, weight: column.weight ?? weight)
-                          : .subheadline.weight(column.weight ?? weight))
-                    .lineLimit(isNova ? 1 : nil)
+                cell(for: row, in: column, isFooter: isFooter)
                     .frame(width: column.width, alignment: column.alignment)
                     .padding(.horizontal, 8)
             }
         }
-        .padding(.vertical, 8)
         .frame(minHeight: isNova ? 36 : nil)
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: interactive ? .contain : .combine)
+    }
+
+    @ViewBuilder
+    private func cell(for row: Row, in column: Column, isFooter: Bool) -> some View {
+        if !isFooter, let content = column.content {
+            content(row).padding(.vertical, 2)
+        } else {
+            let weight = column.weight ?? (isFooter ? .medium : .regular)
+            Text(column.value(row))
+                .font(isNova ? .system(size: novaFontSize, weight: weight) : .subheadline.weight(weight))
+                .lineLimit(isNova ? 1 : nil)
+                .padding(.vertical, 8)
+        }
     }
 
     @ViewBuilder

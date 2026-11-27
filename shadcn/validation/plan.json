@@ -29,13 +29,15 @@
       "platformCases": {
         "swiftui-ios": [
           {"variant": "default", "status": "initial", "viewport": [720, 520]},
-          {"variant": "footer", "status": "initial", "viewport": [720, 520]}
+          {"variant": "footer", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [720, 520]},
+          {"variant": "actions", "status": "initial", "viewport": [720, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/table-demo.tsx",
-      "visual": "compare the full invoice table and the compact footer example in both themes",
+      "visual": "compare the full invoice table, compact footer, Arabic RTL, and product actions in both themes",
       "behavior": "keep sorting within the data rows and support horizontal scrolling on narrow windows",
-      "accessibility": "header traits, named sort state and combined row content",
+      "accessibility": "header traits, named sort state, combined text rows, and independently accessible row controls",
       "motion": "static initial frames"
     },
     "input-group": {
