@@ -794,7 +794,10 @@ private struct AvatarScreenshotFixture: View {
         var light = FoundationPalette.neutralLight
         light.primary = .black
         let theme = FoundationTheme(preset: .nova, light: light)
-        let online = FoundationAvatar.Badge("Online", color: Color(rgb: scheme == .dark ? 0x016630 : 0x00a63e))
+        let onlineColor = scheme == .dark
+            ? Color(.sRGB, red: 1 / 255, green: 102 / 255, blue: 48 / 255, opacity: 1)
+            : Color(.sRGB, red: 0, green: 166 / 255, blue: 62 / 255, opacity: 1)
+        let online = FoundationAvatar.Badge("Online", color: onlineColor)
 
         return Group {
             switch example {
