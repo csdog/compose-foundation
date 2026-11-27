@@ -119,6 +119,25 @@ for pass in "${passes[@]}"; do
       fi
       cp "$mobile_output/result.txt" "$output/$pass-render.txt"
       cp "$mobile_output"/*.png "$work/$pass/"
+      python3 - "$work/$pass" <<'PYTHON' || capture_status=1
+from pathlib import Path
+import sys
+
+from PIL import Image
+
+directory = Path(sys.argv[1])
+for theme in ("light", "dark"):
+    initial = directory / f"popover-default-initial-{theme}.png"
+    if not initial.is_file():
+        continue
+    with Image.open(initial) as image:
+        expected_background = image.convert("RGB").getpixel((image.width - 1, image.height - 1))
+    for capture in directory.glob(f"popover-*-{theme}.png"):
+        with Image.open(capture) as image:
+            background = image.convert("RGB").getpixel((image.width - 1, image.height - 1))
+        if background != expected_background:
+            raise ValueError(f"{capture.name}: drawing the overlay changed the empty viewport background")
+PYTHON
       ;;
   esac
   for component in "${components[@]}"; do
