@@ -138,6 +138,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
 
         let outputDirectory = try prepareOutputDirectory()
         let comparisonFixtures: [String: () -> AnyView] = [
+            "label": { AnyView(LabelFieldScreenshotFixture(example: .label)) },
             "badge": { AnyView(BadgeInitialScreenshotFixture()) },
             "button": { AnyView(ButtonInitialScreenshotFixture()) },
             "separator": { AnyView(SeparatorInitialScreenshotFixture()) },
@@ -149,6 +150,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "field": [
+                ("field-input-initial", { AnyView(LabelFieldScreenshotFixture(example: .input)) }),
+                ("field-textarea-initial", { AnyView(LabelFieldScreenshotFixture(example: .textarea)) }),
+            ],
             "button-group": [
                 ("button-group-size-initial", { AnyView(ButtonGroupScreenshotFixture(vertical: false)) }),
                 ("button-group-orientation-initial", { AnyView(ButtonGroupScreenshotFixture(vertical: true)) }),
@@ -750,6 +755,64 @@ private struct SeparatorInitialScreenshotFixture: View {
         .background(palette.background)
         .ignoresSafeArea()
     }
+}
+
+private struct LabelFieldScreenshotFixture: View {
+    enum Example { case label, input, textarea }
+
+    let example: Example
+    @Environment(\.colorScheme) private var scheme
+    @State private var accepted = false
+    @State private var username = ""
+    @State private var password = ""
+    @State private var feedback = ""
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+
+        return Group {
+            switch example {
+            case .label:
+                Toggle(isOn: $accepted) {
+                    FoundationLabel("Accept terms and conditions")
+                }
+                .toggleStyle(FoundationCheckbox())
+                .font(.custom("Geist-Medium", size: 14))
+            case .input:
+                VStack(alignment: .leading, spacing: 20) {
+                    FoundationField("Username", description: "Choose a unique username for your account.") {
+                        FoundationInput("Username", text: $username, placeholder: "Max Leiter")
+                            .font(editorFont)
+                    }
+                    FoundationField("Password", description: "Must be at least 8 characters long.",
+                                    descriptionPlacement: .beforeContent) {
+                        FoundationInput("Password", text: $password, placeholder: "••••••••", secure: true)
+                            .font(editorFont)
+                    }
+                }
+                .font(.custom("Geist-Regular", size: 14))
+                .frame(width: 320)
+            case .textarea:
+                FoundationField("Feedback", description: "Share your thoughts about our service.") {
+                    FoundationTextarea("Feedback", text: $feedback, placeholder: "Your feedback helps us improve...")
+                        .font(editorFont)
+                        .frame(height: 64)
+                }
+                .font(.custom("Geist-Regular", size: 14))
+                .frame(width: 320)
+            }
+        }
+        .foundationTheme(theme)
+        .padding(.leading, 24)
+        .padding(.top, example == .label ? 10 : 24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+
+    private var editorFont: Font { .custom("Geist-Regular", size: 16) }
 }
 
 private struct ButtonGroupScreenshotFixture: View {
