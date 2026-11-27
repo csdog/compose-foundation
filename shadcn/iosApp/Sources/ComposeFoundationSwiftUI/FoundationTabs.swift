@@ -87,13 +87,18 @@ public struct FoundationTabs<Value: Hashable, Panel: View>: View {
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(!choice.isEnabled)
-        .opacity(choice.isEnabled ? 1 : 0.5)
+        .opacity(theme.preset == .nova || choice.isEnabled ? 1 : 0.5)
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
     private func novaLabel(_ title: String, selected: Bool, focused: Bool, palette: FoundationPalette) -> some View {
         let dark = colorScheme == .dark
         let shape = RoundedRectangle(cornerRadius: max(0, theme.cornerRadius - 2))
-        let selectedFill = dark ? palette.input.opacity(0.30) : palette.background
+        let neutral = palette.secondary == FoundationPalette.neutralDark.secondary
+            && palette.input == FoundationPalette.neutralDark.input
+        let referenceGrey = 47.0 / 255
+        let darkFill = neutral ? Color(.sRGB, red: referenceGrey, green: referenceGrey, blue: referenceGrey, opacity: 1)
+            : palette.input.opacity(0.30)
+        let selectedFill = dark ? darkFill : palette.background
         let foreground = selected ? palette.foreground : dark ? palette.mutedForeground : palette.foreground.opacity(0.60)
         return Text(title)
             .font(labelFont ?? .system(size: 14, weight: .medium))
