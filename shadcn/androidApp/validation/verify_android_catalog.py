@@ -94,6 +94,7 @@ def main():
     parser.add_argument("--device", required=True)
     parser.add_argument("--adb", default="adb")
     parser.add_argument("--only", nargs="+")
+    parser.add_argument("--retry-failed", action="store_true", help="Relaunch once if a catalog capture fails.")
     args = parser.parse_args()
     items = [item["name"] for item in json.loads(args.registry.read_text())["items"]]
     if len(items) != len(set(items)) or any(not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", item) for item in items):
@@ -126,21 +127,34 @@ def main():
                 try:
                     if not all(expected):
                         raise ValueError(f"Missing catalog title for {item}")
-                    catalog.open(route)
-                    hierarchy = catalog.expect(expected)
-                    (directory / f"{item}.xml").write_bytes(hierarchy)
-                    catalog.screenshot(directory / f"{item}.png")
+                    capture_case(catalog, route, expected, directory / item, args.retry_failed)
                     result["status"] = "route verified"
-                except (subprocess.SubprocessError, RuntimeError, ValueError, AssertionError) as error:
+                except (subprocess.SubprocessError, RuntimeError, ValueError, AssertionError, ET.ParseError) as error:
                     result["status"] = "failed"
                     result["error"] = str(error)
                     failed.append(f"{appearance}/{item}")
+                    print(f"{appearance}/{item}: {error}", flush=True)
                 (directory / f"{item}.json").write_text(json.dumps(result, ensure_ascii=False) + "\n")
                 print(f"{appearance}/{item}: {result['status']}", flush=True)
     finally:
         catalog.shell("cmd", "uimode", "night", initial_mode)
     if failed:
         raise SystemExit("Failed: " + ", ".join(failed))
+
+
+def capture_case(catalog, route, expected, output, retry):
+    try:
+        catalog.open(route)
+        hierarchy = catalog.expect(expected)
+        output.with_suffix(".xml").write_bytes(hierarchy)
+        catalog.screenshot(output.with_suffix(".png"))
+    except (subprocess.SubprocessError, RuntimeError, AssertionError, ET.ParseError) as error:
+        if not retry:
+            raise
+        print(f"{route}: capture failed, relaunching once: {error}", flush=True)
+        catalog.shell("am", "force-stop", PACKAGE)
+        time.sleep(1)
+        capture_case(catalog, route, expected, output, retry=False)
 
 
 if __name__ == "__main__":
