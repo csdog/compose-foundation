@@ -20,6 +20,25 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "scroll-area": {
+      "title": "Scroll Area",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPhone-17-Pro-Max",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [440, 520]},
+          {"variant": "horizontal-demo", "status": "initial", "viewport": [440, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [440, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/scroll-area-demo.tsx",
+      "visual": "compare the default and RTL tag lists and the horizontal artwork viewport",
+      "behavior": "keep vertical and horizontal scrolling native and clip visual overflow to the bordered viewport",
+      "accessibility": "delegate scrolling to the system and retain native content semantics",
+      "motion": "static initial frames"
+    },
     "aspect-ratio": {
       "title": "Aspect Ratio",
       "variant": "default",

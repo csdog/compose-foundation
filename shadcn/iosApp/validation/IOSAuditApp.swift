@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "scroll-area": ScrollAreaScreenshotFixture.Example.allCases.map { example in
+                ("scroll-area-\(example.rawValue)-initial", { AnyView(ScrollAreaScreenshotFixture(example: example)) })
+            },
             "aspect-ratio": AspectRatioScreenshotFixture.Example.allCases.map { example in
                 ("aspect-ratio-\(example.rawValue)-initial", { AnyView(AspectRatioScreenshotFixture(example: example)) })
             },
@@ -226,6 +229,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             && Bundle.main.url(forResource: "geist_medium", withExtension: "ttf") != nil
         if useComparisonFixtures || !popoverCases.isEmpty {
             try registerParityFonts()
+        }
+        if useComparisonFixtures, names.contains("scroll-area"),
+           !(0..<3).allSatisfy({ Bundle.main.url(forResource: "scroll_area_art_\($0)", withExtension: "jpg") != nil }) {
+            throw CocoaError(.fileNoSuchFile, userInfo: [NSLocalizedDescriptionKey: "Scroll Area artwork is missing"])
         }
         let viewports = useComparisonFixtures ? try loadComparisonViewports() : [:]
         var count = 0
@@ -785,6 +792,86 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct ScrollAreaScreenshotFixture: View {
+    enum Example: String, CaseIterable { case `default`, horizontal = "horizontal-demo", rtl }
+
+    @Environment(\.colorScheme) private var scheme
+    let example: Example
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let palette = theme.palette(for: scheme)
+        return Group {
+            if example == .horizontal {
+                artwork(palette: palette)
+                    .frame(width: 384, height: 458)
+            } else {
+                tags(palette: palette)
+                    .frame(width: 192, height: 288)
+                    .environment(\.layoutDirection, example == .rtl ? .rightToLeft : .leftToRight)
+            }
+        }
+        .foregroundColor(palette.foreground)
+        .foundationTheme(theme)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
+        .ignoresSafeArea()
+    }
+
+    private func tags(palette: FoundationPalette) -> some View {
+        FoundationScrollArea(showsBorder: true) {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(example == .rtl ? "العلامات" : "Tags")
+                    .font(.custom("Geist-Medium", size: 14))
+                    .frame(height: 14)
+                    .padding(.bottom, 16)
+                    .accessibilityAddTraits(.isHeader)
+                ForEach((1...50).reversed(), id: \.self) { tag in
+                    Text("v1.2.0-beta.\(tag)")
+                        .font(.custom("Geist-Regular", size: 14))
+                        .frame(height: 20)
+                    Rectangle().fill(palette.border)
+                        .frame(height: 1)
+                        .padding(.vertical, 8)
+                        .accessibilityHidden(true)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(16)
+        }
+    }
+
+    private func artwork(palette: FoundationPalette) -> some View {
+        let artists = ["Ornella Binni", "Tom Byrom", "Vladimir Malyavko"]
+        return FoundationScrollArea(.horizontal, showsBorder: true) {
+            HStack(spacing: 16) {
+                ForEach(artists.indices, id: \.self) { index in
+                    let artist = artists[index]
+                    VStack(alignment: .leading, spacing: 8) {
+                        if let photo = UIImage(named: "scroll_area_art_\(index).jpg") {
+                            Image(uiImage: photo)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 300, height: 400)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .accessibilityLabel(Text("Photo by \(artist)"))
+                        }
+                        (Text("Photo by ").foregroundColor(palette.mutedForeground)
+                            + Text(artist).font(.custom("Geist-Medium", size: 12)))
+                            .font(.custom("Geist-Regular", size: 12))
+                            .frame(height: 16)
+                    }
+                    .frame(width: 300, alignment: .leading)
+                }
+            }
+            .padding(16)
+        }
     }
 }
 

@@ -54,6 +54,9 @@ if [[ "$platform" == swiftui-ios ]]; then
   cp "$swiftui/validation/IOSAuditInfo.plist" "$app/Info.plist"
   cp "$registry" "$app/registry.json"
   cp app/shared/src/commonMain/composeResources/font/geist_{medium,regular}.ttf "$app/"
+  if [[ " ${components[*]} " == *" scroll-area "* ]]; then
+    cp app/shared/src/commonMain/composeResources/drawable/scroll_area_art_{0,1,2}.jpg "$app/"
+  fi
   cp "$plan" "$app/parity-plan.json"
   xcrun --sdk iphonesimulator swiftc -sdk "$sdk" -parse-as-library -swift-version 6 \
     -target "$(uname -m)-apple-ios14.0-simulator" \
