@@ -98,16 +98,17 @@ capture_ios_group() {
       fi
       return 1
     fi
-    cat "$mobile_output/result.txt" >> "$output/$pass-render.txt"
+    printf '%s\n' "$(cat "$mobile_output/result.txt")" >> "$output/$pass-render.txt"
     cp "$mobile_output"/*.png "$work/$pass/"
   done
+  xcrun simctl shutdown "$device"
   xcrun simctl delete "$device"
   device=''
 }
 
 if [[ "$platform" == swiftui-ios ]]; then
   device=''
-  trap 'if [[ -n "$device" ]]; then xcrun simctl delete "$device" || true; fi; rm -rf "$work"' EXIT
+  trap 'if [[ -n "$device" ]]; then xcrun simctl shutdown "$device" || true; xcrun simctl delete "$device" || true; fi; rm -rf "$work"' EXIT
   groups="$(python3 - "$plan" "${components[@]}" <<'PYTHON'
 import json
 import sys
