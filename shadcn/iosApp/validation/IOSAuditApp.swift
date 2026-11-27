@@ -250,7 +250,13 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         let image = UIGraphicsImageRenderer(size: size, format: format).image { _ in
             rendered = root.view.drawHierarchy(in: root.view.bounds, afterScreenUpdates: true)
             for surface in surfaces {
-                rendered = surface.drawHierarchy(in: surface.bounds, afterScreenUpdates: true) && rendered
+                let overlayFormat = UIGraphicsImageRendererFormat()
+                overlayFormat.scale = 1
+                overlayFormat.preferredRange = .standard
+                let overlay = UIGraphicsImageRenderer(size: size, format: overlayFormat).image { _ in
+                    rendered = surface.drawHierarchy(in: surface.bounds, afterScreenUpdates: true) && rendered
+                }
+                overlay.draw(at: .zero)
             }
         }
         guard rendered, let data = image.pngData() else {
@@ -312,14 +318,14 @@ private struct PopoverScreenshotFixture: View {
             case .rtl:
                 VStack(spacing: 16) {
                     HStack(spacing: 8) {
-                        rtl("يسار", edge: .leading)
-                        rtl("أعلى", edge: .bottom)
-                        rtl("أسفل", edge: .top)
-                        rtl("يمين", edge: .trailing)
+                        rtl("يسار", edge: .leading, triggerWidth: 48)
+                        rtl("أعلى", edge: .bottom, triggerWidth: 47)
+                        rtl("أسفل", edge: .top, triggerWidth: 53)
+                        rtl("يمين", edge: .trailing, triggerWidth: 50)
                     }
                     HStack(spacing: 8) {
-                        rtl("بداية السطر", edge: .trailing)
-                        rtl("نهاية السطر", edge: .leading)
+                        rtl("بداية السطر", edge: .trailing, triggerWidth: 85)
+                        rtl("نهاية السطر", edge: .leading, triggerWidth: 85)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -342,8 +348,8 @@ private struct PopoverScreenshotFixture: View {
         }
     }
 
-    private func rtl(_ title: String, edge: Edge) -> some View {
-        trigger(title, width: 288, alignment: .center, edge: edge, rightToLeft: true) {
+    private func rtl(_ title: String, edge: Edge, triggerWidth: CGFloat) -> some View {
+        trigger(title, width: 288, alignment: .center, edge: edge, rightToLeft: true, minimumTriggerWidth: triggerWidth) {
             heading(rightToLeft: true)
         }
     }
@@ -355,6 +361,7 @@ private struct PopoverScreenshotFixture: View {
         compact: Bool = false,
         edge: Edge = .top,
         rightToLeft: Bool = false,
+        minimumTriggerWidth: CGFloat? = nil,
         @ViewBuilder panel: @escaping () -> Panel
     ) -> some View {
         let open = Binding(get: { active == title }, set: { shown in
@@ -370,9 +377,10 @@ private struct PopoverScreenshotFixture: View {
             open.wrappedValue.toggle()
         } label: {
             Text(title)
-                .font(.custom(rightToLeft ? "ArialMT" : "Geist-Medium", size: compact ? 13 : 14))
+                .font(rightToLeft ? .system(size: 14) : .custom("Geist-Medium", size: compact ? 12.8 : 14))
                 .foregroundColor(dark ? palette.foreground : .black)
                 .padding(.horizontal, 11)
+                .frame(minWidth: minimumTriggerWidth)
                 .frame(height: height)
                 .background(shape.fill(fill))
                 .overlay(shape.strokeBorder(focus && !dark ? grey(161) : dark ? grey(46) : grey(229)))
@@ -393,12 +401,12 @@ private struct PopoverScreenshotFixture: View {
     private func heading(rightToLeft: Bool = false, compactTitle: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: compactTitle ? 8 : 2) {
             Text(rightToLeft ? "الأبعاد" : "Dimensions")
-                .font(.custom(rightToLeft ? "ArialMT" : "Geist-Medium", size: 14))
+                .font(rightToLeft ? .system(size: 14) : .custom("Geist-Medium", size: 14))
                 .foregroundColor(dark ? palette.foreground : .black)
                 .frame(height: compactTitle ? 14 : 20)
                 .accessibilityAddTraits(.isHeader)
             Text(rightToLeft ? "تعيين الأبعاد للطبقة." : "Set the dimensions for the layer.")
-                .font(.custom(rightToLeft ? "ArialMT" : "Geist-Regular", size: 14))
+                .font(rightToLeft ? .system(size: 14) : .custom("Geist-Regular", size: 14))
                 .foregroundColor(palette.mutedForeground)
                 .frame(height: 20)
         }

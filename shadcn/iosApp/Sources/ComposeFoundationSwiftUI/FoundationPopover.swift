@@ -318,7 +318,8 @@ private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
                 Color.clear.contentShape(Rectangle()).onTapGesture(perform: dismiss).accessibilityHidden(true)
                 panel
                     .frame(width: frame.width, height: frame.height)
-                    .shadow(color: .black.opacity(0.16), radius: 10, y: 4)
+                    .compositingGroup()
+                    .shadow(color: .black.opacity(0.12), radius: 4, y: 3)
                     .position(x: frame.midX, y: frame.midY)
             }
             .ignoresSafeArea()
