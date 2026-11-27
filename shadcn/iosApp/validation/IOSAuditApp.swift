@@ -234,11 +234,14 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             return []
         }
         struct Plan: Decodable {
-            struct Component: Decodable { let platformCases: [String: [PopoverAuditCase]]? }
-            let components: [String: Component]
+            struct Components: Decodable {
+                struct Popover: Decodable { let platformCases: [String: [PopoverAuditCase]] }
+                let popover: Popover
+            }
+            let components: Components
         }
         let plan = try JSONDecoder().decode(Plan.self, from: Data(contentsOf: manifest))
-        guard let cases = plan.components["popover"]?.platformCases?["swiftui-ios"], !cases.isEmpty else {
+        guard let cases = plan.components.popover.platformCases["swiftui-ios"], !cases.isEmpty else {
             throw CocoaError(.fileReadCorruptFile)
         }
         return cases
