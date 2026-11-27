@@ -120,6 +120,24 @@
       "accessibility": "progress label and percentage value",
       "motion": "static settled frame"
     },
+    "radio-group": {
+      "title": "Radio Group",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520]},
+          {"variant": "default", "status": "compact", "viewport": [402, 520]},
+          {"variant": "disabled", "status": "initial", "viewport": [402, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/radio-group-demo.tsx",
+      "visual": "compare all three radio rows and the selected indicator while retaining 44-point native touch targets",
+      "behavior": "select a single enabled item",
+      "accessibility": "selected and disabled states",
+      "motion": "static settled frames"
+    },
     "checkbox": {
       "title": "Checkbox",
       "variant": "default",

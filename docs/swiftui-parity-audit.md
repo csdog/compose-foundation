@@ -46,6 +46,12 @@ Nova 的完整四行示例保留两段说明和通知卡片。首项勾选前后
 
 iPhone 17 Pro（iOS 26.2）上以 402 × 520 画布复拍深浅色八张 PNG，逐字节一致。原有 46 张图也与上一轮一致。两端文字光栅化和控件边缘仍有细微差异。macOS Swift Package 构建和 Tabs 导航回归通过。Checkbox 的三态转换断言通过。部分选中态视觉、真实触控、硬件键盘和 VoiceOver 仍待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46009522214/artifacts/15202868116)
 
+### Radio Group 选中和禁用态
+
+对照 Nova 的 `radio-group-demo.tsx` 和 `radio-group-disabled.tsx`。三组完整用例覆盖 Comfortable 选中、Compact 选中及首项禁用。iOS 默认样例的选项中心相隔 46 pt，上游为 24 CSS px。该差异来自 44 pt 最小行高与 2 pt 行间距。禁用示例的标签间距也有差异。
+
+iPhone 17 Pro（iOS 26.2）上深浅色共六张截图，复拍逐字节一致。切换 Comfortable 和 Compact 的预设选择只改变第二、第三项的圆形控件区域。原有 54 张截图与上一轮逐字节一致。macOS Swift Package 构建和 Tabs 导航回归通过。方向键导航、实际触控和 VoiceOver 待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46011436975/artifacts/15204561793)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -95,7 +101,7 @@ iPhone 17 Pro（iOS 26.2）上以 402 × 520 画布复拍深浅色八张 PNG，�
 | popover | iOS 和 macOS 使用锚定的无箭头圆角面板，默认居中显示在触发器下方，间距 4 pt，并根据可用空间翻转或调整位置。`arrowEdge` 指定首选方向，`onDismiss` 在窗口关闭后调用。iOS 模拟器已验证面板内键盘焦点、Return、Escape、触控关闭和跨窗口还原触发器焦点。 |
 | progress | 支持范围归一化、动画、减少动态效果与百分比无障碍语义。Compose 可插入 label、value、track 和 indicator。 |
 | questionnaire | 单选、多选、文本题、验证、回退、跳过及提交可用。缺少 Compose 的快捷键、题定义 slots、重置与部分进度状态 API。 |
-| radio-group | 纵向单选与禁用状态。Compose 另有横向布局和独立 RadioButton。 |
+| radio-group | 支持纵向单选和禁用。Nova 使用 16 pt 圆形控件、8 pt 选中圆点和深色未选中底色。iOS 每项至少保留 44 × 44 pt 点按区域。横向布局、键盘方向键导航和其他示例仍待验收。 |
 | resizable | 支持双窗格纵向/横向比例、拖动限制、RTL 和无障碍增减。拖动读取全局坐标，避免手柄移动改变手势参考点。Compose 另有专门的状态与面板 slots。 |
 | scroll-area | 使用原生 ScrollView，支持滚动轴和指示器。缺少 Compose 的独立滚动条、显隐策略、lazy API 和拖动 thumb 配置。 |
 | scroll-fade | 按所选边缘和固定距离加渐变遮罩。和 Compose 的静态 overload 对应，缺少按可滚动方向和偏移量驱动的 overload。 |
