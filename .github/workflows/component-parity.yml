@@ -908,10 +908,12 @@ jobs:
           xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
             "$sources"/Foundation{Theme,Calendar,CalendarNavigation,CalendarSelection}.swift \
             "$swiftui/validation/MacCalendarAudit.swift" -o "$app/Contents/MacOS/CalendarAudit"
-          log="$RUNNER_TEMP/calendar.log"
-          open -n -W --stdout "$log" --stderr "$log" "$app"
-          cat "$log"
-          grep -q '^PASS:' "$log"
+          for direction in ltr rtl; do
+            log="$RUNNER_TEMP/calendar-$direction.log"
+            open -n -W --stdout "$log" --stderr "$log" "$app" --args "--$direction"
+            cat "$log"
+            grep -q '^PASS:' "$log"
+          done
 
   report:
     name: Component parity report
