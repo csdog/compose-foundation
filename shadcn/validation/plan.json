@@ -120,6 +120,24 @@
       "accessibility": "progress label and percentage value",
       "motion": "static settled frame"
     },
+    "switch": {
+      "title": "Switch",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520]},
+          {"variant": "default", "status": "on", "viewport": [402, 520]},
+          {"variant": "disabled", "status": "initial", "viewport": [402, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/switch-demo.tsx",
+      "visual": "compare the complete labeled control in off, on, and disabled states",
+      "behavior": "activate the binding unless the switch is disabled",
+      "accessibility": "accessible name, on or off value, and enabled state",
+      "motion": "static settled frames"
+    },
     "popover": {
       "title": "Popover",
       "variant": "default",
