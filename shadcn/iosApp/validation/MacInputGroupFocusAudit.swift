@@ -102,7 +102,10 @@ enum MacInputGroupFocusAudit {
     }
 
     private static func require(_ condition: Bool, _ message: String) {
-        guard condition else { print("FAIL: \(message)"); exit(1) }
+        guard condition else {
+            print("FAIL: \(message)")
+            exit(1)
+        }
     }
 
     private static func click(x: CGFloat, y: CGFloat, in window: NSWindow) async {

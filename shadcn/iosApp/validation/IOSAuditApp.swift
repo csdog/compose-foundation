@@ -843,7 +843,7 @@ private struct InputGroupScreenshotFixture: View {
         return Group {
             if example == .default {
                 FoundationInputGroup {
-                    textField("Search...")
+                    textField("Search...", palette: palette)
                 } leading: {
                     Image(systemName: "magnifyingglass").font(.system(size: 14)).accessibilityHidden(true)
                 } trailing: {
@@ -865,11 +865,17 @@ private struct InputGroupScreenshotFixture: View {
         .ignoresSafeArea()
     }
 
-    private func textField(_ placeholder: String) -> some View {
-        TextField(placeholder, text: $input)
-            .textFieldStyle(.plain)
-            .font(.custom("Geist-Regular", size: 16))
-            .frame(minHeight: 44)
+    private func textField(_ placeholder: String, palette: FoundationPalette) -> some View {
+        Group {
+            if #available(iOS 15, *) {
+                TextField(placeholder, text: $input, prompt: Text(placeholder).foregroundColor(palette.mutedForeground))
+            } else {
+                TextField(placeholder, text: $input)
+            }
+        }
+        .textFieldStyle(.plain)
+        .font(.custom("Geist-Regular", size: 16))
+        .frame(minHeight: 44)
     }
 
     private func blockExamples(palette: FoundationPalette) -> some View {
@@ -877,7 +883,7 @@ private struct InputGroupScreenshotFixture: View {
         return VStack(spacing: 24) {
             field("Input", description: "\(above ? "Header positioned above" : "Footer positioned below") the input.", palette: palette) {
                 FoundationInputGroup(axis: .vertical) {
-                    textField(above ? "Enter your name" : "Enter amount")
+                    textField(above ? "Enter your name" : "Enter amount", palette: palette)
                 } leading: {
                     if above { Text("Full Name").font(.custom("Geist-Medium", size: 14)) }
                 } trailing: {
@@ -893,7 +899,7 @@ private struct InputGroupScreenshotFixture: View {
                             Image(systemName: "doc.badge.gearshape").accessibilityHidden(true)
                             Text("script.js").font(.system(size: 14, design: .monospaced))
                             Spacer()
-                            Button {} label: { Image(systemName: "doc.on.doc") }
+                            Button {} label: { Image(systemName: "doc.on.doc").foregroundColor(palette.mutedForeground) }
                                 .accessibilityLabel(Text("Copy"))
                                 .buttonStyle(FoundationButtonStyle(.ghost, size: .iconExtraSmall))
                         }
