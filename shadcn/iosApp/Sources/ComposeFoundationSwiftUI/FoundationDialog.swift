@@ -104,15 +104,15 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
                         .transition(.opacity)
+                        .onDisappear {
+                            guard !isPresented else { return }
+                            DispatchQueue.main.async {
+                                if !isPresented { onDismiss() }
+                            }
+                        }
                     }
                 })
                 .animation(reduceMotion ? nil : .easeOut(duration: 0.10), value: isPresented)
-                .onChange(of: isPresented) { presented in
-                    guard !presented else { return }
-                    DispatchQueue.main.async {
-                        if !isPresented { onDismiss() }
-                    }
-                }
         } else {
             content.sheet(isPresented: $isPresented, onDismiss: onDismiss) {
                 VStack(alignment: .leading, spacing: 14) {
