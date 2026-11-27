@@ -162,6 +162,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 ("input-default-initial", { AnyView(TextFieldScreenshotFixture(example: .input)) }),
                 ("input-basic-initial", { AnyView(TextFieldScreenshotFixture(example: .basicInput)) }),
             ],
+            "input-otp": InputOtpScreenshotFixture.Example.allCases.map { example in
+                ("input-otp-\(example.rawValue)", { AnyView(InputOtpScreenshotFixture(example: example)) })
+            },
             "textarea": [
                 ("textarea-default-initial", { AnyView(TextFieldScreenshotFixture(example: .textarea)) }),
                 ("textarea-field-initial", { AnyView(TextFieldScreenshotFixture(example: .textareaField)) }),
@@ -730,6 +733,43 @@ private struct SeparatorInitialScreenshotFixture: View {
         .padding(.top, 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct InputOtpScreenshotFixture: View {
+    enum Example: String, CaseIterable {
+        case complete = "default-initial"
+        case fourDigits = "four-digits-initial"
+        case disabled = "disabled-initial"
+    }
+
+    let example: Example
+    @State private var code: String
+    @Environment(\.colorScheme) private var scheme
+
+    init(example: Example) {
+        self.example = example
+        _code = State(initialValue: example == .fourDigits ? "" : "123456")
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let disabled = example == .disabled
+        return FoundationInputOtp(
+            code: $code,
+            length: example == .fourDigits ? 4 : 6,
+            groupBreaks: disabled ? [3] : []
+        )
+        .disabled(disabled)
+        .font(.custom("Geist-Regular", size: 14))
+        .foundationTheme(theme)
+        .padding(.horizontal, 24)
+        .padding(.top, 18)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
         .ignoresSafeArea()
     }
 }

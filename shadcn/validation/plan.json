@@ -138,6 +138,24 @@
       "accessibility": "field label and secure entry where applicable",
       "motion": "static settled frames"
     },
+    "input-otp": {
+      "title": "Input OTP",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520]},
+          {"variant": "four-digits", "status": "initial", "viewport": [402, 520]},
+          {"variant": "disabled", "status": "initial", "viewport": [402, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/input-otp-demo.tsx",
+      "visual": "compare six filled slots, four empty slots, and a disabled three-plus-three group",
+      "behavior": "bind one numeric code with configurable grouping",
+      "accessibility": "one editable field with code and disabled state",
+      "motion": "static settled frames"
+    },
     "textarea": {
       "title": "Textarea",
       "variant": "default",
