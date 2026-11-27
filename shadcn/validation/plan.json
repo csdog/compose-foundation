@@ -12,8 +12,7 @@
     "cmp-ios": "pending",
     "cmp-desktop": "pending",
     "jetpack-compose": "pending",
-    "swiftui-ios": "automated",
-    "swiftui-macos": "automated"
+    "swiftui-ios": "automated"
   },
   "components": {
     "button": {

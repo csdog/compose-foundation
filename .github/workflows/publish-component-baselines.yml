@@ -1,0 +1,109 @@
+name: Publish component baselines
+
+on:
+  workflow_dispatch:
+    inputs:
+      review_run_id:
+        description: Actions run ID containing the approved review screenshots
+        required: true
+        type: string
+      platform:
+        description: Platform of the approved screenshots
+        required: true
+        type: choice
+        options:
+          - swiftui-ios
+          - cmp-web
+          - cmp-android
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: publish-component-baselines
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    env:
+      REVIEW_RUN_ID: ${{ inputs.review_run_id }}
+      PLATFORM: ${{ inputs.platform }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Validate the selected review run
+        id: review
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [[ "$REVIEW_RUN_ID" =~ ^[1-9][0-9]*$ ]]
+          endpoint="repos/$GITHUB_REPOSITORY/actions/runs/$REVIEW_RUN_ID"
+          run="$(gh api "$endpoint")"
+          if ! jq -e --arg repo "$GITHUB_REPOSITORY" '
+            .status == "completed" and .head_repository.full_name == $repo
+            and (.path | split("@")[0]) == ".github/workflows/component-parity.yml"
+            and ((.event == "workflow_dispatch" and .head_branch == "main")
+              or (.event == "push" and .head_branch == "codex/popover-baseline-pilot"))
+          ' <<< "$run" >/dev/null; then
+            echo 'Select a completed Component parity review run from the main or Popover pilot branch.' >&2
+            exit 1
+          fi
+          source_sha="$(jq -er '.head_sha | select(test("^[0-9a-f]{40}$"))' <<< "$run")"
+          attempt="$(jq -er '.run_attempt' <<< "$run")"
+          job="Capture and compare / $PLATFORM"
+          if ! gh api --paginate "$endpoint/attempts/$attempt/jobs" --jq +            '.jobs[] | select(.conclusion == "success") | .name' | grep -Fx "$job" >/dev/null; then
+            echo "The selected platform did not complete successfully in the latest review attempt." >&2
+            exit 1
+          fi
+          plan="$RUNNER_TEMP/review-plan.json"
+          gh api --method GET "repos/$GITHUB_REPOSITORY/contents/shadcn/validation/plan.json" -f ref="$source_sha" +            --jq .content | base64 --decode > "$plan"
+          repository="$(jq -er '.baseline.repository | select(test("^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"))' shadcn/validation/plan.json)"
+          test "$repository" = "$(jq -er '.baseline.repository' "$plan")"
+          printf 'source_sha=%s\nrepository=%s\n' "$source_sha" "$repository" >> "$GITHUB_OUTPUT"
+
+      - name: Download the approved candidates
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.review_run_id }}
+          name: component-parity-candidates-${{ inputs.platform }}
+          path: ${{ runner.temp }}/candidates
+
+      - name: Check out the baseline repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.review.outputs.repository }}
+          ref: main
+          token: ${{ secrets.COMPONENT_BASELINES_WRITE_TOKEN }}
+          path: baseline-repository
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install Pillow==11.3.0
+
+      - name: Publish approved PNGs
+        env:
+          SOURCE_SHA: ${{ steps.review.outputs.source_sha }}
+          BASELINE_REPOSITORY: ${{ steps.review.outputs.repository }}
+        run: |
+          python shadcn/validation/publish_baselines.py \
+            --plan "$RUNNER_TEMP/review-plan.json" --platform "$PLATFORM" \
+            --candidates "$RUNNER_TEMP/candidates" --baselines baseline-repository
+          git -C baseline-repository add -- "$PLATFORM"
+          if ! git -C baseline-repository diff --cached --quiet; then
+            git -C baseline-repository -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -m "Update $PLATFORM screenshot baselines" \
+                -m "Capture source: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$SOURCE_SHA" \
+                -m "Reviewed run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$REVIEW_RUN_ID"
+            git -C baseline-repository push origin HEAD:main
+          fi
+          revision="$(git -C baseline-repository rev-parse HEAD)"
+          printf '发布后的基准提交：[%s](%s/%s/commit/%s)\n' \
+            "$revision" "$GITHUB_SERVER_URL" "$BASELINE_REPOSITORY" "$revision" >> "$GITHUB_STEP_SUMMARY"

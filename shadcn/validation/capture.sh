@@ -36,7 +36,7 @@ case "$platform" in
     adb -s "$android_device" shell getprop ro.build.fingerprint
     python3 shadcn/registry/build.py --output "$work/registry"
     ;;
-  swiftui-ios|swiftui-macos)
+  swiftui-ios)
     xcodebuild -version
     sw_vers
     python3 shadcn/registry/build.py --output "$work/registry"
@@ -45,11 +45,7 @@ case "$platform" in
   *) echo "No capture adapter for $platform" >&2; exit 2 ;;
 esac
 
-if [[ "$platform" == swiftui-macos ]]; then
-  xcrun swiftc -parse-as-library -swift-version 6 \
-    "$swiftui"/Sources/ComposeFoundationSwiftUI/*.swift \
-    "$swiftui"/validation/{AuditFixtures,RenderAudit}.swift -o "$work/render"
-elif [[ "$platform" == swiftui-ios ]]; then
+if [[ "$platform" == swiftui-ios ]]; then
   app="$work/ComposeFoundationAudit.app"
   bundle=com.toutiaoyan.compose.foundation.audit
   sdk="$(xcrun --sdk iphonesimulator --show-sdk-path)"
@@ -97,9 +93,6 @@ for pass in "${passes[@]}"; do
         xvfb-run -a -s '-screen 0 1024x768x24' ./gradlew :shadcn:core:jvmTest \
           --tests '*PopoverNovaScreenshotTest' --rerun --console=plain || capture_status=1
       ;;
-    swiftui-macos)
-      "$work/render" "$registry" "$work/$pass"
-      ;;
     swiftui-ios)
       mobile_output="$container/Documents/ParityAudit"
       rm -rf "$mobile_output"
@@ -122,7 +115,7 @@ for pass in "${passes[@]}"; do
         cmp-web) source="$output/browser/$pass/$component/desktop-$theme.png" ;;
         cmp-android) source="$output/device/$pass/$theme/$component.png" ;;
         cmp-desktop) source="$work/$pass/popover_nova_basic_$theme.png" ;;
-        swiftui-*) source="$work/$pass/$component-$theme.png" ;;
+        swiftui-ios) source="$work/$pass/$component-$theme.png" ;;
       esac
       if [[ "$platform" == cmp-desktop ]]; then
         python3 - "$source" "$destination/$theme.png" <<'PY' || capture_status=1

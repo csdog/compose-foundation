@@ -20,7 +20,7 @@ on:
         description: Component slug to capture. Leave empty for the full pilot.
         type: string
       update_baselines:
-        description: Capture twice and upload reproducible baseline candidates for review
+        description: Review mode. Capture twice and upload reproducible baseline candidates.
         type: boolean
         default: false
       require_baselines:
@@ -47,8 +47,6 @@ jobs:
           - platform: cmp-android
             runner: ubuntu-24.04
           - platform: swiftui-ios
-            runner: macos-15
-          - platform: swiftui-macos
             runner: macos-15
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 45
@@ -107,7 +105,7 @@ jobs:
           "$RUNNER_TEMP/parity-browser/node_modules/.bin/playwright" install --with-deps chromium
           echo "PLAYWRIGHT_MODULE=$RUNNER_TEMP/parity-browser/node_modules/playwright/index.mjs" >> "$GITHUB_ENV"
       - name: Select Xcode
-        if: runner.os == 'macOS'
+        if: matrix.platform == 'swiftui-ios'
         run: sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
 
       - name: Free disk space for the Android emulator
