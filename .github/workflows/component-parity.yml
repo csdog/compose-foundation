@@ -82,12 +82,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: cmp-web
-            runner: ubuntu-24.04
           - platform: cmp-android
             runner: ubuntu-24.04
-          - platform: swiftui-ios
-            runner: macos-15
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 45
     env:

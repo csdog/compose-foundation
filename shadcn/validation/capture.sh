@@ -84,9 +84,15 @@ for pass in "${passes[@]}"; do
       done
       ;;
     cmp-android)
-      python3 shadcn/androidApp/validation/verify_android_catalog.py \
+      if ! python3 shadcn/androidApp/validation/verify_android_catalog.py \
         --registry "$work/registry/registry.json" --device "$android_device" \
-        --output "$output/device/$pass" --only "${components[@]}" || capture_status=1
+        --output "$output/device/$pass" --only "${components[@]}"; then
+        capture_status=1
+        for result in "$output/device/$pass"/*/*.json; do
+          [[ -f "$result" ]] || continue
+          jq -c 'select(.status == "failed")' "$result"
+        done
+      fi
       ;;
     cmp-desktop)
       COMPONENT_PARITY_SCREENSHOT_DIR="$work/$pass" \
@@ -119,6 +125,7 @@ for pass in "${passes[@]}"; do
         swiftui-ios) source="$work/$pass/$component-$theme.png" ;;
       esac
       if [[ "$platform" == cmp-android ]]; then
+        [[ -f "$source" ]] || { capture_status=1; continue; }
         python3 - "$source" "$destination/$theme.png" "$work/android-displays.txt" <<'PY' || capture_status=1
 from pathlib import Path
 import re
