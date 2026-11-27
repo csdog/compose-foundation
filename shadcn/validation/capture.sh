@@ -53,6 +53,11 @@ if [[ "$platform" == swiftui-ios ]]; then
   mkdir "$app"
   cp "$swiftui/validation/IOSAuditInfo.plist" "$app/Info.plist"
   cp "$registry" "$app/registry.json"
+  cp app/shared/src/commonMain/composeResources/font/geist_medium.ttf "$app/"
+  audit_components=()
+  for component in "${components[@]}"; do
+    audit_components+=("--audit-component=$component")
+  done
   xcrun --sdk iphonesimulator swiftc -sdk "$sdk" -parse-as-library -swift-version 6 \
     -target "$(uname -m)-apple-ios14.0-simulator" \
     "$swiftui"/Sources/ComposeFoundationSwiftUI/*.swift \
@@ -98,7 +103,7 @@ for pass in "${passes[@]}"; do
       mobile_output="$container/Documents/ParityAudit"
       rm -rf "$mobile_output"
       xcrun simctl launch --terminate-running-process "$device" "$bundle" \
-        -AppleLanguages '(en)' -AppleLocale en_US
+        -AppleLanguages '(en)' -AppleLocale en_US "${audit_components[@]}"
       for ((attempt = 0; attempt < 180; attempt++)); do
         [[ ! -s "$mobile_output/result.txt" ]] || break
         sleep 1

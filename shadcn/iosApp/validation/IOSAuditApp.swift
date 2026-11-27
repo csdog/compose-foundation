@@ -1,3 +1,4 @@
+import CoreText
 import SwiftUI
 import UIKit
 
@@ -126,18 +127,36 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             throw CocoaError(.fileReadCorruptFile)
         }
 
+        let requested = ProcessInfo.processInfo.arguments.compactMap { argument -> String? in
+            let prefix = "--audit-component="
+            return argument.hasPrefix(prefix) ? String(argument.dropFirst(prefix.count)) : nil
+        }
+        let names = requested.isEmpty ? Set(fixtures.keys) : Set(requested)
+        guard names.isSubset(of: fixtures.keys) else {
+            throw CocoaError(.fileReadCorruptFile, userInfo: [NSLocalizedDescriptionKey: "Unknown audit component"])
+        }
+
         let outputDirectory = try prepareOutputDirectory()
+        let popoverFont = names.contains("popover")
+            ? Bundle.main.url(forResource: "geist_medium", withExtension: "ttf") : nil
+        if let popoverFont, !CTFontManagerRegisterFontsForURL(popoverFont as CFURL, .process, nil) {
+            throw CocoaError(.fileReadCorruptFile, userInfo: [NSFilePathErrorKey: popoverFont.path])
+        }
         var count = 0
-        for name in fixtures.keys.sorted() {
+        for name in names.sorted() {
             guard let fixture = fixtures[name] else { continue }
             for dark in [false, true] {
                 let scheme: ColorScheme = dark ? .dark : .light
                 let palette = FoundationTheme().palette(for: scheme)
                 window.overrideUserInterfaceStyle = dark ? .dark : .light
-                let host = UIHostingController(rootView: fixture()
-                    .padding(16)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(palette.background)
+                let isPopover = name == "popover" && popoverFont != nil
+                let content = isPopover
+                    ? AnyView(PopoverInitialScreenshotFixture(dark: dark))
+                    : AnyView(fixture()
+                        .padding(16)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(palette.background))
+                let host = UIHostingController(rootView: content
                     .environment(\.colorScheme, scheme)
                     .environment(\.locale, Locale(identifier: "en_US")))
                 root.addChild(host)
@@ -148,8 +167,15 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 try await Task.sleep(nanoseconds: 32_000_000)
                 let format = UIGraphicsImageRendererFormat()
                 format.scale = 1
+                var bounds = root.view.bounds
+                if isPopover {
+                    // Compare the shared viewport at one pixel per layout point.
+                    bounds.size.height = min(bounds.height, 520)
+                    format.preferredRange = .standard
+                    format.opaque = true
+                }
                 var captureSucceeded = false
-                let image = UIGraphicsImageRenderer(bounds: root.view.bounds, format: format).image { _ in
+                let image = UIGraphicsImageRenderer(bounds: bounds, format: format).image { _ in
                     captureSucceeded = root.view.drawHierarchy(in: root.view.bounds, afterScreenUpdates: true)
                 }
                 guard captureSucceeded, let data = image.pngData() else {
@@ -165,5 +191,56 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         }
         window.rootViewController = UIHostingController(rootView: Text("Rendered \(count) audit fixtures"))
         return count
+    }
+}
+
+private struct PopoverInitialScreenshotFixture: View {
+    let dark: Bool
+    @State private var isPresented = false
+    @State private var width = "100%"
+    @State private var maxWidth = "300px"
+    @State private var height = "25px"
+    @State private var maxHeight = "none"
+
+    var body: some View {
+        // The hosted light example uses black text. Use Geist for the audit label.
+        let theme = FoundationTheme(preset: .nova)
+        let palette = theme.palette(for: dark ? .dark : .light)
+        Button {
+            isPresented.toggle()
+        } label: {
+            Text("Open popover")
+                .font(.custom("Geist-Medium", size: 14, relativeTo: .subheadline))
+                .foregroundColor(dark ? palette.foreground : .black)
+        }
+        .buttonStyle(FoundationButtonStyle(.outline))
+        .modifier(FoundationPopover(isPresented: $isPresented) {
+            VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Dimensions").font(.headline)
+                    Text("Set the dimensions for the layer.")
+                        .font(.subheadline)
+                        .foregroundColor(palette.mutedForeground)
+                }
+                dimension("Width", value: $width)
+                dimension("Max. width", value: $maxWidth)
+                dimension("Height", value: $height)
+                dimension("Max. height", value: $maxHeight)
+            }
+        })
+        .foundationTheme(theme)
+        .padding(.horizontal, 24)
+        // The Nova style centers its 32-point border in a 44-point hit target.
+        .padding(.top, 24 - (44 - 32) / 2)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
+        .ignoresSafeArea()
+    }
+
+    private func dimension(_ label: String, value: Binding<String>) -> some View {
+        HStack {
+            Text(label).frame(width: 84, alignment: .leading).accessibilityHidden(true)
+            FoundationInput(label, text: value)
+        }
     }
 }

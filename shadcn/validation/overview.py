@@ -16,9 +16,8 @@ STATUS_LABELS = {
 def draw_overview(root, rows, *, shadcn_review=False):
     padding, gutter = 20, 12
     label_width, tile_width, row_height = 216, 260, 141
-    capture_header = "CANDIDATE / ACTUAL" if shadcn_review else "ACTUAL"
-    headers = ("BASELINE / REPEAT", capture_header, "DIFF", "SHADCN REFERENCE")
-    panel_order = (1, 3, 0, 2) if shadcn_review else (0, 1, 2, 3)
+    headers = ("BASELINE / REPEAT", "ACTUAL", "NATIVE DIFF", "SHADCN REFERENCE", "SHADCN DIFF")
+    panel_order = (1, 3, 4, 0, 2) if shadcn_review else (0, 1, 2, 3, 4)
     width = padding * 2 + label_width + len(headers) * (tile_width + gutter)
     canvas = Image.new("RGB", (width, 100 + row_height * len(rows)), "#f1f5f9")
     draw = ImageDraw.Draw(canvas)
@@ -43,20 +42,19 @@ def draw_overview(root, rows, *, shadcn_review=False):
             baseline = paths.get("重拍")
             baseline_label = "Second capture"
         else:
-            baseline = paths.get("基准图") or paths.get("待审核候选图")
-            local_candidate = baseline_source == "candidate" or "基准图" not in paths
-            baseline_label = "Local candidate" if local_candidate else "Baseline"
+            baseline = paths.get("基准图")
+            baseline_label = "Local candidate" if baseline_source == "candidate" else "Published baseline"
         diff_label = {
             "repeat": "Actual vs second capture",
             "candidate": "Actual vs local candidate",
             "baseline": "Actual vs baseline",
         }.get(against, "Diff")
-        candidate = paths.get("待审核候选图") if shadcn_review else None
         panels = (
             (baseline, baseline_label, "No baseline"),
-            (candidate or paths.get("本次截图"), "Candidate" if candidate else "Actual", "No capture"),
+            (paths.get("本次截图"), "Actual", "No capture"),
             (paths.get("差异图"), diff_label, "No change" if status == "passed" else "No diff"),
-            (paths.get("上游截图"), "Visual review only", "No reference"),
+            (paths.get("上游截图"), "shadcn reference", "No reference"),
+            (paths.get("shadcn 差异图"), "Actual vs shadcn", "No diff"),
         )
         for offset, panel in enumerate(panel_order):
             path, caption, empty = panels[panel]
@@ -73,7 +71,7 @@ def draw_overview(root, rows, *, shadcn_review=False):
                 draw.text((x + 12, y + 50), "Image unreadable", fill="#991b1b", font=text)
                 continue
             sampling = Image.Resampling.LANCZOS
-            if panel == 2:
+            if panel in (2, 4):
                 sampling = Image.Resampling.NEAREST
                 if bounds := preview.getchannel("A").getbbox():
                     if bounds[2] - bounds[0] < 24 and bounds[3] - bounds[1] < 24:

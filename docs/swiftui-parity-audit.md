@@ -88,6 +88,12 @@ Web 兼容分发在 Chromium 的 Wasm 路径和 JS 回退路径均显示原生�
 
 新版使用 SwiftUI `ButtonStyle` 的原生按压状态，以 150 ms 曲线平移 1 pt。开启减少动态效果后直接切换位置。新版模拟器复拍 39 帧，按住时文字下移约 3 个物理像素且亮度保持稳定，松手后回到起始位置。无障碍树确认触控区域仍高 44 pt，实际按钮动作只执行一次。iOS 14 模拟器目标编译、macOS 11 部署目标的 Swift Package 构建及 69 项 SwiftUI registry 重新生成均通过。当前对比覆盖触屏输入，Web 和 SwiftUI 下移动作的时机仍有差异。
 
+## Popover 收起态视觉验收
+
+验收范围为 Nova 默认变体的收起态，覆盖浅色和深色。SwiftUI 审计应用用 `FoundationButtonStyle(.outline)` 和 `FoundationPopover` 组装可打开的触发器。审计应用复用仓库内的 Geist Medium 字体。按钮外观与点击区域分别高 32 pt 和 44 pt。
+
+iPhone 17 Pro（iOS 26.2、Xcode 26.2）每个主题各渲染两次。每对原生 PNG 完全一致。将上游 720 × 520 画布裁到同一 402 × 520 区域，按 1 pt 对 1 CSS px 比较，保留全部可见控件。浅色和深色的按钮均位于左上角 24 pt，文字位置和背景一致。像素差异限于按钮区域，涉及边缘及字形抗锯齿和深色填充的 1 级灰度差。展开态和键盘激活态有独立的参考图，本次审核覆盖收起态。[shadcn 参考与来源](https://github.com/csdog/compose-foundation-baselines/blob/df707eeb146db4b3bb2b23ba8306444039f6e541/shadcn/popover/Index.md) · [浅色与深色审核附件](https://github.com/csdog/compose-foundation/actions/runs/45975773617/artifacts/15187598129)
+
 ## 复现
 
 ```sh

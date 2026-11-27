@@ -23,8 +23,10 @@ DIFF_COMPARISONS = {
 }
 
 
-def differences(expected, actual, output):
+def differences(expected, actual, output, *, reference_viewport=()):
     with Image.open(expected) as first, Image.open(actual) as second:
+        if second.size == tuple(reference_viewport) and first.width >= second.width and first.height >= second.height:
+            first = first.crop((0, 0, *second.size))
         if first.size != second.size:
             if output:
                 comparison = Image.new("RGB", (first.width + second.width + 4, max(first.height, second.height)), "red")
@@ -116,7 +118,7 @@ def include_shadcn_reference(reference_root, output, screenshot):
                     json.dumps({**provenance, "example": record}, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8",
                 )
-        return "有参考图，供人工对照"
+        return "有参考图"
     except (OSError, SyntaxError, ValueError):
         return "参考图无法读取"
 
@@ -207,8 +209,24 @@ def report_images(root, platform, component, theme, screenshot):
         reference = files["上游截图"]
         provenance = reference.with_suffix(".provenance.json")
         files["上游截图来源"] = provenance if provenance.is_file() else reference.with_name("provenance.json")
-    files["待审核候选图"] = platform_dir / "candidate" / location
     return {label: path.relative_to(root) for label, path in files.items() if path.is_file()}
+
+
+def shadcn_difference(root, artifact, screenshot, images, viewport):
+    output = artifact / "diff-shadcn" / screenshot
+    output.unlink(missing_ok=True)
+    actual = images.get("本次截图")
+    reference = images.get("上游截图")
+    if not actual or not reference:
+        return "—"
+    output.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        change = differences(root / reference, root / actual, output, reference_viewport=viewport)
+    except (OSError, ValueError):
+        return "无法比对截图"
+    if output.is_file():
+        images["shadcn 差异图"] = output.relative_to(root)
+    return change or "像素一致"
 
 
 def summarize(args, plan):
@@ -258,6 +276,8 @@ def summarize(args, plan):
             columns = [platform, f"{component}/{case['variant']}/{case_status}", theme,
                        f"{labels[status]}（{safe_detail}）", reference]
             images = report_images(args.output, platform, component, theme, screenshot) if results else {}
+            viewport = case.get("shadcnComparisonViewport", {}).get(platform, ())
+            upstream_change = shadcn_difference(args.output, artifact, screenshot, images, viewport)
             overview_status = status if results is not None else "pending"
             overview_rows.append((platform, columns[1], theme, overview_status, against, baseline_source, images))
             paths = images.copy()
@@ -269,34 +289,47 @@ def summarize(args, plan):
                 paths["浏览器明细"] = browser_summary.relative_to(args.output)
             targets.update(paths.values())
             links = {label: f"[{label}]({quote(path.as_posix())})" for label, path in paths.items()}
-            rows.append((columns, links, DIFF_COMPARISONS.get(against), status == "failed"))
+            rows.append((columns, links, against, baseline_source, upstream_change, status == "failed"))
     details = ["", "| 组件 | 首版上游参考与视觉审核 | 平台交互待验 | 无障碍待验 | 平台动画待验 |",
                "| --- | --- | --- | --- | --- |"]
     for component, case in plan["components"].items():
         link = f"https://github.com/shadcn-ui/ui/blob/{plan['upstreamRevision']}/{case['reference']}"
         details.append(f"| {component} | [源码示例]({link})，{case['visual']} | "
                        f"{case['behavior']} | {case['accessibility']} | {case['motion']} |")
-    details.extend(["", "差异图的透明区域表示像素一致，洋红越深表示差异越大。尺寸不同时，基准比对按基准图、本次截图从左到右排列，重复采集比对按本次截图、重拍图排列。",
+    details.extend(["", "差异图的透明区域表示像素一致，洋红越深表示差异越大。尺寸不同时，比较图将参考图与实拍图从左到右并排展示。设有共同视口的用例在该区域做像素比较。shadcn 比对结果供视觉审核。",
                     "各平台的设备交互、无障碍和动画仍需独立验收。", ""])
     table = [
-        "| 平台 | 用例 | 主题 | 结论 | 本次截图 | 基准图 | 差异图（本次截图与基准图） | shadcn 截图对照 |",
-        "| --- | --- | --- | --- | --- | --- | --- | --- |",
+        "| 平台 | 用例 | 主题 | 结论 | 本次截图 | 已发布基准 | 差异图（本次截图与基准图） | shadcn 截图对照 | 差异图（本次截图与 shadcn 截图对照） |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
     linked_rows = []
     failure_rows = []
-    for columns, links, comparison, failed in rows:
+    for columns, links, against, baseline_source, upstream_change, failed in rows:
         summary_columns = columns.copy()
-        if comparison:
+        if comparison := DIFF_COMPARISONS.get(against):
             summary_columns[3] += f" · {comparison}"
         lines.append("| " + " | ".join(summary_columns) + " |")
-        actual = " · ".join(links[label] for label in ("本次截图", "重拍", "采集日志", "浏览器明细") if label in links)
-        baseline_link = " · ".join(links[label] for label in ("基准图", "待审核候选图") if label in links)
-        diff_link = links.get("差异图")
-        diff_cell = f"{diff_link}（{comparison or '比较对象未记录'}）" if diff_link else "—"
+        conclusion = columns[3]
+        diagnostics = [links[label] for label in ("采集日志", "浏览器明细") if label in links]
+        if against == "repeat" and "重拍" in links:
+            diagnostics.append(links["重拍"])
+        if baseline_source == "candidate" and "基准图" in links:
+            diagnostics.append(links["基准图"].replace("[基准图]", "[本地候选基准]"))
+        if against in {"repeat", "candidate"} and "差异图" in links:
+            diagnostics.append(links["差异图"].replace("[差异图]", f"[{comparison}]"))
+        if diagnostics:
+            conclusion += " · " + " · ".join(diagnostics)
+        baseline_link = links.get("基准图") if baseline_source == "baseline" else None
+        if baseline_link:
+            baseline_link = baseline_link.replace("[基准图]", "[已发布基准]")
         upstream = " · ".join(links[label] for label in ("上游截图", "上游截图来源") if label in links)
+        upstream_diff = links.get("shadcn 差异图")
+        if upstream_diff:
+            upstream_change = f"{upstream_diff}（{upstream_change}）"
         row = "| " + " | ".join([
-            *columns[:4], actual or "缺截图", baseline_link or "缺基准图", diff_cell,
-            upstream or columns[-1],
+            *columns[:3], conclusion, links.get("本次截图", "缺截图"), baseline_link or "—",
+            links.get("差异图", "—") if against == "baseline" else "—",
+            upstream or columns[-1], upstream_change,
         ]) + " |"
         linked_rows.append(row)
         if failed:
