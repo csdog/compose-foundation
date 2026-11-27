@@ -230,13 +230,23 @@ iPad mini（A17 Pro，iOS 26.2）采集四个案例在收起和展开时的 16 �
 
 macOS 实际窗口复跑遮罩点击、初始 Return 取消、Escape 和单次确认。RTL、iOS 触控、触发器焦点恢复和 VoiceOver 待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46070366785/job/140745676384)
 
+### Alert Dialog 阿拉伯语和关闭后的焦点
+
+对照 `alert-dialog-rtl.tsx`。两个触发器右对齐，原生 RTL 布局镜像常规面板的文字和操作顺序，紧凑面板使用居中蓝牙图标及并排操作。对应的四张 shadcn 展开参考通过官方示例采集，复拍逐字节一致。[上游参考 PR](https://github.com/csdog/compose-foundation-baselines/pull/10)
+
+面板的 `.onDismiss { ... }` 在关闭并重新启用背景后回调，调用方可以把键盘焦点归还给实际触发器。确认和取消仍各自使用原回调，外部绑定关闭只报告 dismiss。
+
+iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布采集 22 张深浅色图，复拍逐字节一致。此前 16 张图也与上一轮逐字节一致。RTL 两种展开图的确认按钮都在取消按钮左侧。紧凑版阿拉伯语说明在 SwiftUI 折成两行，参考为一行，面板上下边缘各相差约 11–13 pt。使用参考 PR 的图生成了所有 22 个用例的 shadcn 差异图。[iOS 截图附件](https://github.com/csdog/compose-foundation/actions/runs/46071762772/artifacts/15232789578)
+
+macOS 实际窗口验证初始 Return 执行取消、Escape 关闭、确认以及外部绑定关闭。每次关闭后，触发器重新收到用于打开面板的键盘事件。回归还通过了遮罩拦截及确认和取消回调次数检查。iOS 触控、iOS 键盘焦点恢复和 VoiceOver 待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46071762772/job/140750197594)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
 | --- | --- |
 | accordion | 支持单开或多开、禁用项和绑定展开集合。Nova 使用全宽按钮、标题语义、展开状态和末尾方向箭头。横向布局与独立组装的触发器尚待对齐。 |
 | alert | 支持标题、说明、图标、操作和 destructive。Nova 使用紧凑的图标与文字排版，错误说明采用主题 destructive 色。操作区位置及 RTL 尚待对照。 |
-| alert-dialog | 支持系统确认框及可选的居中面板。常规、紧凑、媒体和紧凑媒体示例覆盖深浅色。RTL、iOS 触控、关闭后的焦点恢复和 VoiceOver 待验收。 |
+| alert-dialog | 支持系统确认框及可选的居中面板。常规、紧凑、媒体、紧凑媒体和阿拉伯语 RTL 示例覆盖深浅色。调用方可以在 dismiss 后归还触发器焦点。iOS 触控、iOS 焦点恢复和 VoiceOver 待验收。 |
 | aspect-ratio | 固定宽高比，裁剪溢出内容与点击范围，无效比例回退到 1:1。无界布局和 RTL 样例待进一步对照。 |
 | attachment | 有上传进度、处理、失败和完成状态，并支持移除。缺少 Compose 的尺寸、纵向布局、附件组与预览触发器。 |
 | avatar | 支持本地 `Image`、三种尺寸、首字母或自定义回退、状态徽标、头像组和计数。iOS 15、macOS 12 起支持原生异步 URL 图片。 |
