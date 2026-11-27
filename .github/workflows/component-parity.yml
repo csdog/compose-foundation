@@ -860,7 +860,7 @@ jobs:
           grep -q '^PASS:' "$log"
 
       - name: Verify Drawer, Dialog and Sheet focus on macOS
-        if: contains(needs.baseline.outputs.matrix, '"drawer"')
+        if: contains(needs.baseline.outputs.matrix, '"drawer"') || contains(needs.baseline.outputs.matrix, '"dialog"')
         timeout-minutes: 4
         run: |
           swiftui=shadcn/iosApp
@@ -876,11 +876,13 @@ jobs:
             "$sources"/Foundation{Theme,ButtonStyle,PresentationHeader,Drawer,Dialog,Sheet}.swift \
             "$swiftui/validation/MacPresentationFocusAudit.swift" \
             -o "$app/Contents/MacOS/PresentationFocusAudit"
-          for kind in drawer drawer-nova drawer-rhea dialog sheet; do
+          for kind in drawer drawer-nova drawer-rhea dialog dialog-centered sheet; do
             log="$RUNNER_TEMP/presentation-$kind.log"
             open -n -W --stdout "$log" --stderr "$log" "$app" --args "$kind"
             cat "$log"
-            test "$(grep -c '^PASS:' "$log")" -eq 2
+            expected=2
+            if [[ "$kind" == dialog-centered ]]; then expected=3; fi
+            test "$(grep -c '^PASS:' "$log")" -eq "$expected"
           done
 
   report:

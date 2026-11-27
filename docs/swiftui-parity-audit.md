@@ -248,6 +248,14 @@ iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布拍摄开合的四张深�
 
 macOS 实际窗口复跑原版 Drawer、Nova Drawer、Rhea Drawer、Dialog 和 Sheet。五种面板均通过初始 Return、Escape、单次回调和触发器焦点归还。Drawer 回调在关闭及背景更新后执行，触发器可再次从键盘打开面板。新版布局的触控拖动和 VoiceOver 待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46073531801/job/140755923260)
 
+### Dialog 居中面板、表单与固定页脚
+
+对照 shadcn Base UI / Nova 的 `dialog-demo.tsx`。编辑资料示例使用 `FoundationField` 和 `FoundationInput`，保留已有 Name、Username、Cancel 和 Save changes 内容。`presentation: .centered` 在填满呈现区域的容器上启用遮罩、居中面板和可选固定页脚。内容超出时单独滚动，原初始化器继续走系统 sheet。居中面板初始关闭焦点复用已有的呈现组件逻辑。
+
+iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布拍摄开合的四张深浅色图，复拍逐字节一致。两种主题的面板和页脚填色取样与参考一致。SwiftUI 的两个输入框和页脚按钮保留 44 pt 操作区，面板比参考高约 37–39 pt。Web 展开图显示 Name 输入框焦点环，SwiftUI 初始焦点放在关闭按钮。[截图与差异报告](https://github.com/csdog/compose-foundation/actions/runs/46075322227/artifacts/15235260515)
+
+macOS 实际窗口验证原生表单输入、遮罩关闭、Return 和 Escape，并检查每次关闭后触发器恢复焦点。关闭回调在面板退出和输入控件释放焦点后执行。原系统 Dialog、三种 Drawer、Sheet 和 Tabs 的回归通过。iOS 触控、键盘焦点归还及 VoiceOver 待独立验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46075322227/job/140762633510)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -274,7 +282,7 @@ macOS 实际窗口复跑原版 Drawer、Nova Drawer、Rhea Drawer、Dialog 和 S
 | combobox | 支持搜索、空态、禁用选项、分组、单选和可移除的多选 chips。iOS 模拟器和 macOS 已验证方向键跨组、跳过禁用项、Return 选择、Escape 关闭、多选、移除 chips 和搜索隐藏空分组。iOS 平铺模式此前还验证了软键盘提交和 VoiceOver 朗读。 |
 | command | 支持分组过滤、空态、禁用项和回车选择首个可用结果。缺少对话框、加载状态、footer 和逐项快捷键。 |
 | context-menu | 使用系统右键或长按菜单。调用方可传入系统菜单视图，Compose 的位置、portal、子菜单和条目 DSL 有独立 API。 |
-| dialog | 原生 sheet 显示标题、说明、内容和关闭按钮。iOS 模拟器与 macOS 已验证 Return、Escape 和关闭后的触发器焦点。Compose 另有遮罩、portal、尺寸与页脚控制。 |
+| dialog | 支持系统 sheet 及带遮罩的可选居中面板、滚动内容和固定页脚。默认编辑资料示例覆盖深浅色。其他变体、iOS 居中版触控、键盘焦点和 VoiceOver 待验收。 |
 | drawer | 支持原有底部面板，以及 Nova、Rhea 的说明文字、可滚动内容和固定页脚。原布局已验收关闭焦点、Return、Escape、向下拖动和焦点归还。侧边面板、吸附点、嵌套面板和无模态示例待对齐。 |
 | dropdown-menu | 自定义外部触发器外观，菜单内容走 SwiftUI Menu。Compose 可控制菜单锚点、portal、焦点和自定义条目状态。 |
 | emoji-text | Apple 系统彩色 emoji，可保留 ZWJ 等 Unicode 序列。Compose 使用自己的 emoji 图形与替换逻辑。 |

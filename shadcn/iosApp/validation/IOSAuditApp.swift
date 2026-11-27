@@ -150,6 +150,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "dialog": [
+                ("dialog-default-initial", { AnyView(DialogScreenshotFixture(isOpen: false)) }),
+                ("dialog-default-open", { AnyView(DialogScreenshotFixture(isOpen: true)) }),
+            ],
             "drawer": [
                 ("drawer-default-initial", { AnyView(DrawerScreenshotFixture(isOpen: false)) }),
                 ("drawer-default-open", { AnyView(DrawerScreenshotFixture(isOpen: true)) }),
@@ -846,6 +850,59 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct DialogScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    @State private var isOpen: Bool
+    @State private var name = "Pedro Duarte"
+    @State private var username = "@peduarte"
+
+    init(isOpen: Bool) {
+        _isOpen = State(initialValue: isOpen)
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let palette = theme.palette(for: scheme)
+
+        return Button("Open Dialog") { isOpen = true }
+            .buttonStyle(FoundationButtonStyle(.outline))
+            .padding(.top, 18)
+            .padding(.horizontal, 24)
+            .frame(width: 720, height: 520, alignment: .topLeading)
+            .background(palette.background)
+            .modifier(FoundationDialog(
+                isPresented: $isOpen, title: "Edit profile",
+                description: "Make changes to your profile here. Click save when you're done.", presentation: .centered
+            ) {
+                HStack(spacing: 8) {
+                    Button("Cancel") { isOpen = false }
+                        .buttonStyle(FoundationButtonStyle(.outline))
+                    Button("Save changes") { isOpen = false }
+                        .buttonStyle(FoundationButtonStyle(.primary))
+                }
+            } content: {
+                VStack(alignment: .leading, spacing: 16) {
+                    FoundationField("Name") {
+                        FoundationInput("Name", text: $name)
+                            .font(.custom("Geist-Regular", size: 16))
+                    }
+                    FoundationField("Username") {
+                        FoundationInput("Username", text: $username)
+                            .font(.custom("Geist-Regular", size: 16))
+                    }
+                }
+                .font(.custom("Geist-Regular", size: 14))
+            })
+            .foundationTheme(theme)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(palette.background)
+            .ignoresSafeArea()
     }
 }
 
