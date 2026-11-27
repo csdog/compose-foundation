@@ -132,6 +132,14 @@ iPhone 17 Pro（iOS 26.2）的六张深浅色图以 402 × 520 画布复拍，�
 
 macOS Swift Package 构建与 AppKit 点击回归通过。Home 和 Components 可独立触发，点分隔符不触发动作，末项即使带有回调也保持静态。菜单打开和选择、iOS 实际触控、硬件键盘、VoiceOver 及 RTL 待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46049871562/job/140678364299)
 
+### Avatar 首字母、尺寸、徽标与头像组
+
+对照 shadcn Base UI / Nova 的 `avatar-demo.tsx`、`avatar-size.tsx`、`avatar-badge-icon.tsx` 和 `avatar-group-count.tsx`。归档参考图呈现图片未加载时的首字母，模拟器使用相同内容。头像尺寸为 24、32 和 40 pt，带状态徽标的头像可为辅助技术提供对应状态文字。头像组按 8 pt 重叠，并提供 `+N` 计数。调用者可自定义回退文字，原有 `FoundationAvatar(_:image:)` 继续支持本地 `Image` 和自动首字母。
+
+iPhone 17 Pro（iOS 26.2）以 402 × 520 画布复拍八张深浅色图，全部逐字节一致。四个示例的外边界与参考图相差最多 2 pt。绿色状态徽标中心的 sRGB 取样在两种主题均一致。字号光栅化、加号和环形描边边缘仍有平台差异。[最终截图报告](https://github.com/csdog/compose-foundation/actions/runs/46051515412/artifacts/15224872953)
+
+异步 URL 初始化器使用系统 `AsyncImage`，适用于 iOS 15 和 macOS 12 起的版本。在 macOS 窗口分别验证本地图像、环回 HTTP 200 图像和 HTTP 404 后保留回退。iOS 实际远程加载、VoiceOver、RTL 和动态字体仍待单独验收。[macOS 验证](https://github.com/csdog/compose-foundation/actions/runs/46051515412/job/140683808277)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -141,7 +149,7 @@ macOS Swift Package 构建与 AppKit 点击回归通过。Home 和 Components �
 | alert-dialog | 原生确认框支持取消、确认和 destructive 操作。Compose 的自定义面板、媒体、页脚和叠层由系统确认框替代。 |
 | aspect-ratio | 固定宽高比、裁剪，非法比例回退到 1:1。窄容器和无界布局的精确测量规则需另行比较。 |
 | attachment | 有上传进度、处理、失败和完成状态，并支持移除。缺少 Compose 的尺寸、纵向布局、附件组与预览触发器。 |
-| avatar | 支持本地 `Image` 和姓名首字母回退。缺少内建异步 URL 加载、错误状态、徽标和头像组。 |
+| avatar | 支持本地 `Image`、三种尺寸、首字母或自定义回退、状态徽标、头像组和计数。iOS 15、macOS 12 起支持原生异步 URL 图片。 |
 | badge | 支持 primary、secondary、outline、destructive。缺少 Compose 的 ghost/link 样式与图标位置参数。 |
 | breadcrumb | 支持水平路径、链接、当前页、自定义分隔符以及静态与菜单式省略项。自定义页面 slot 和其余示例待对齐。 |
 | bubble | 支持 incoming、outgoing、muted 内容气泡。缺少气泡组及定位在气泡边缘的 reactions。 |
