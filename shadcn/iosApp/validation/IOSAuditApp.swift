@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "avatar": AvatarScreenshotFixture.Example.allCases.map { example in
+                ("avatar-\(example.rawValue)-initial", { AnyView(AvatarScreenshotFixture(example: example)) })
+            },
             "breadcrumb": BreadcrumbScreenshotFixture.Example.allCases.map { example in
                 ("breadcrumb-\(example.rawValue)-initial", { AnyView(BreadcrumbScreenshotFixture(example: example)) })
             },
@@ -776,6 +779,60 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct AvatarScreenshotFixture: View {
+    enum Example: String, CaseIterable {
+        case `default`, size, badgeIcon = "badge-icon", groupCount = "group-count"
+    }
+
+    @Environment(\.colorScheme) private var scheme
+    let example: Example
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let onlineColor = scheme == .dark
+            ? Color(.sRGB, red: 1 / 255, green: 102 / 255, blue: 48 / 255, opacity: 1)
+            : Color(.sRGB, red: 0, green: 166 / 255, blue: 62 / 255, opacity: 1)
+        let online = FoundationAvatar.Badge("Online", color: onlineColor)
+
+        return Group {
+            switch example {
+            case .default:
+                HStack(spacing: 24) {
+                    FoundationAvatar("@shadcn", size: .regular, fallback: "CN")
+                    FoundationAvatar("@evilrabbit", size: .regular, fallback: "ER", badge: online)
+                    avatarGroup
+                }
+            case .size:
+                HStack(spacing: 8) {
+                    FoundationAvatar("@shadcn", size: .small, fallback: "CN")
+                    FoundationAvatar("@shadcn", size: .regular, fallback: "CN")
+                    FoundationAvatar("@shadcn", size: .large, fallback: "CN")
+                }
+            case .badgeIcon:
+                FoundationAvatar("@pranathip", size: .regular, fallback: "PP", badge: .init("Add", symbol: "plus"))
+            case .groupCount:
+                avatarGroup
+            }
+        }
+        .foundationTheme(theme)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+
+    private var avatarGroup: some View {
+        FoundationAvatarGroup {
+            FoundationAvatar("@shadcn", size: .regular, fallback: "CN")
+            FoundationAvatar("@maxleiter", size: .regular, fallback: "LR")
+            FoundationAvatar("@evilrabbit", size: .regular, fallback: "ER")
+            FoundationAvatarGroupCount(3)
+        }
     }
 }
 

@@ -20,6 +20,25 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "avatar": {
+      "title": "Avatar",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520]},
+          {"variant": "size", "status": "initial", "viewport": [402, 520]},
+          {"variant": "badge-icon", "status": "initial", "viewport": [402, 520]},
+          {"variant": "group-count", "status": "initial", "viewport": [402, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/avatar-demo.tsx",
+      "visual": "compare the fallback initials, three diameters, status badge and overlapping count group",
+      "behavior": "show caller images or initials when an image is unavailable",
+      "accessibility": "each avatar exposes its name and optional status",
+      "motion": "static settled frames"
+    },
     "breadcrumb": {
       "title": "Breadcrumb",
       "variant": "default",
