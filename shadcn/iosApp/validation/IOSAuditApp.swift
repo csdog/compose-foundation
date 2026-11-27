@@ -855,13 +855,14 @@ private struct TableScreenshotFixture: View {
             Invoice(id: "INV006", status: "Pending", method: "Bank Transfer", amount: "$200.00"),
             Invoice(id: "INV007", status: "Unpaid", method: "Credit Card", amount: "$300.00"),
         ]
+        let columns: [FoundationTable<Invoice>.Column] = [
+            .init(id: "invoice", title: "Invoice", width: 84, weight: .medium, value: { $0.id }),
+            .init(id: "status", title: "Status", width: 134, value: { $0.status }),
+            .init(id: "method", title: "Method", width: 204, value: { $0.method }),
+            .init(id: "amount", title: "Amount", width: 186, alignment: .trailing, value: { $0.amount }),
+        ]
         return FoundationTable(
-            columns: [
-                .init(id: "invoice", title: "Invoice", width: 84, weight: .medium, value: { $0.id }),
-                .init(id: "status", title: "Status", width: 134, value: { $0.status }),
-                .init(id: "method", title: "Method", width: 204, value: { $0.method }),
-                .init(id: "amount", title: "Amount", width: 186, alignment: .trailing, value: { $0.amount }),
-            ],
+            columns: columns,
             rows: example == .footer ? Array(invoices.prefix(3)) : invoices,
             caption: "A list of your recent invoices.",
             footer: Invoice(id: "Total", status: "", method: "", amount: "$2,500.00")

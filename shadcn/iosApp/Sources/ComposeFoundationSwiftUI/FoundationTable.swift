@@ -65,13 +65,14 @@ public struct FoundationTable<Row: Identifiable>: View {
 
     private var isNova: Bool { theme.preset == .nova }
 
+    @ViewBuilder
     public var body: some View {
         let palette = theme.palette(for: colorScheme)
-        let shape = RoundedRectangle(cornerRadius: isNova ? 0 : theme.cornerRadius)
+        let shape = RoundedRectangle(cornerRadius: theme.cornerRadius)
         let headerHeight: CGFloat = isNova ? (columns.contains { $0.areInIncreasingOrder != nil } ? 44 : 40) : 38
         let sortedRows = orderedRows
 
-        ScrollView(.horizontal) {
+        let table = ScrollView(.horizontal) {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 0) {
                     ForEach(columns) { column in
@@ -96,9 +97,11 @@ public struct FoundationTable<Row: Identifiable>: View {
                 }
 
                 if let footer {
-                    if isNova || sortedRows.isEmpty { divider(palette) }
-                    cells(for: footer, weight: .medium)
-                        .background(palette.secondary.opacity(0.5))
+                    VStack(spacing: 0) {
+                        if isNova || sortedRows.isEmpty { divider(palette) }
+                        cells(for: footer, weight: .medium)
+                    }
+                    .background(palette.secondary.opacity(0.5))
                 }
 
                 if let caption {
@@ -113,13 +116,21 @@ public struct FoundationTable<Row: Identifiable>: View {
             }
         }
         .foregroundColor(palette.foreground)
-        .background(shape.fill(isNova ? Color.clear : palette.card))
-        .clipShape(shape)
-        .overlay(shape.strokeBorder(isNova ? Color.clear : palette.border).allowsHitTesting(false))
+
+        if isNova {
+            table
+        } else {
+            table.background(shape.fill(palette.card))
+                .clipShape(shape)
+                .overlay(shape.strokeBorder(palette.border).allowsHitTesting(false))
+        }
     }
 
     private func divider(_ palette: FoundationPalette) -> some View {
-        Rectangle().fill(palette.border).frame(height: 1).accessibilityHidden(true)
+        Rectangle()
+            .fill(palette.border, style: FillStyle(antialiased: !isNova))
+            .frame(height: 1)
+            .accessibilityHidden(true)
     }
 
     private func cells(for row: Row, weight: Font.Weight = .regular) -> some View {
