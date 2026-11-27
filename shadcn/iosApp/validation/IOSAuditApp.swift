@@ -245,7 +245,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         format.scale = 1
         format.preferredRange = .standard
         format.opaque = true
-        let size = CGSize(width: item.viewport[0], height: item.viewport[1])
+        let size = CGSize(width: CGFloat(item.viewport[0]), height: CGFloat(item.viewport[1]))
         var rendered = false
         let image = UIGraphicsImageRenderer(size: size, format: format).image { _ in
             rendered = root.view.drawHierarchy(in: root.view.bounds, afterScreenUpdates: true)
@@ -365,7 +365,7 @@ private struct PopoverScreenshotFixture: View {
         let radius: CGFloat = compact ? 8 : 10
         let shape = RoundedRectangle(cornerRadius: radius)
         let mutedTrigger = open.wrappedValue && (item.variant != .default || item.status != .open)
-        let fill = dark ? grey(mutedTrigger ? 28 : 20) : (open.wrappedValue ? grey(245) : .white)
+        let fill = dark ? (mutedTrigger ? grey(28) : palette.novaDarkOutlineFill) : (open.wrappedValue ? grey(245) : .white)
         Button {
             open.wrappedValue.toggle()
         } label: {
@@ -431,6 +431,7 @@ private struct PopoverScreenshotFixture: View {
                 .accessibilityHidden(true)
             PopoverAuditTextField(label: label, value: value, requestFocus: focused)
                 .padding(.horizontal, 10)
+                .frame(maxWidth: .infinity)
                 .frame(height: 32)
                 .background(shape.fill(dark ? grey(33) : .white))
                 .overlay(shape.strokeBorder(focused ? (dark ? grey(69) : grey(161)) : dark ? grey(69) : grey(229)))
@@ -464,7 +465,8 @@ private struct PopoverAuditTriggerFocus: ViewModifier {
         @FocusState private var focused: Bool
 
         func body(content: Content) -> some View {
-            content.focused($focused)
+            content.focusable()
+                .focused($focused)
                 .focusEffectDisabled()
                 .onAppear { if requestFocus { focused = true } }
         }

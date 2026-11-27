@@ -109,7 +109,14 @@ for pass in "${passes[@]}"; do
         [[ ! -s "$mobile_output/result.txt" ]] || break
         sleep 1
       done
-      grep '^PASS ' "$mobile_output/result.txt"
+      if ! grep '^PASS ' "$mobile_output/result.txt"; then
+        if [[ -f "$mobile_output/result.txt" ]]; then
+          cat "$mobile_output/result.txt" >&2
+        else
+          echo "iOS audit did not finish before its deadline" >&2
+        fi
+        exit 1
+      fi
       cp "$mobile_output/result.txt" "$output/$pass-render.txt"
       cp "$mobile_output"/*.png "$work/$pass/"
       ;;

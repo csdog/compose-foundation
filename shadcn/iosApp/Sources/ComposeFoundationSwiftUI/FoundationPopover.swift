@@ -267,9 +267,11 @@ private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
                 let host = PopoverHost(rootView: surface)
                 host.dismiss = surface.dismiss
                 host.view.backgroundColor = .clear
+                host.view.isOpaque = false
                 host.view.accessibilityViewIsModal = true
                 let overlay = UIWindow(windowScene: scene)
                 overlay.backgroundColor = .clear
+                overlay.isOpaque = false
                 overlay.windowLevel = UIWindow.Level(rawValue: window.windowLevel.rawValue + 1)
                 overlay.frame = window.frame
                 overlay.rootViewController = host
