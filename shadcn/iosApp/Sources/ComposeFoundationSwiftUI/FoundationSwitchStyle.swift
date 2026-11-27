@@ -53,7 +53,7 @@ public struct FoundationSwitchStyle: ToggleStyle {
                 configuration.label
             }
             .foregroundColor(palette.foreground)
-            .opacity(isEnabled ? 1 : 0.5)
+            .compositingGroup()
             .frame(minHeight: 44)
             .contentShape(Rectangle())
         }
