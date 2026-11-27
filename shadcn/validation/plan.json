@@ -35,12 +35,15 @@
           {"variant": "media", "status": "initial", "viewport": [720, 520]},
           {"variant": "media", "status": "open", "viewport": [720, 520]},
           {"variant": "small-media", "status": "initial", "viewport": [720, 520]},
-          {"variant": "small-media", "status": "open", "viewport": [720, 520]}
+          {"variant": "small-media", "status": "open", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "open", "viewport": [720, 520]},
+          {"variant": "rtl-small", "status": "open", "viewport": [720, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/alert-dialog-demo.tsx",
-      "visual": "compare regular, small, and media confirmation panels with the corresponding triggers",
-      "behavior": "focus cancel, keep the dialog open on outside clicks, and dismiss once per selected action",
+      "visual": "compare regular, small, media, and Arabic RTL confirmation panels and their triggers",
+      "behavior": "focus cancel, block background clicks, dismiss once per action, and let the caller restore focus",
       "accessibility": "hide background controls while presenting and expose heading and action roles",
       "motion": "static settled frames"
     },

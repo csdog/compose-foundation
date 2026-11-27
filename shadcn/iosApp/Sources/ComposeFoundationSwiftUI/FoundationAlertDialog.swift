@@ -20,6 +20,7 @@ public struct FoundationAlertDialog: ViewModifier {
     private let media: AnyView?
     private let onCancel: () -> Void
     private let onConfirm: () -> Void
+    private var panelDismissal: (() -> Void)?
 
     public init(
         isPresented: Binding<Bool>,
@@ -86,6 +87,13 @@ public struct FoundationAlertDialog: ViewModifier {
         self.onConfirm = onConfirm
     }
 
+    /// Runs after a styled panel closes and its background controls are enabled again.
+    public func onDismiss(perform action: @escaping () -> Void) -> Self {
+        var dialog = self
+        dialog.panelDismissal = action
+        return dialog
+    }
+
     @ViewBuilder
     public func body(content: Content) -> some View {
         if let size {
@@ -111,6 +119,12 @@ public struct FoundationAlertDialog: ViewModifier {
                     }
                 })
                 .animation(reduceMotion ? nil : .easeOut(duration: 0.10), value: isPresented)
+                .onChange(of: isPresented) { presented in
+                    guard !presented, let panelDismissal else { return }
+                    DispatchQueue.main.async {
+                        if !isPresented { panelDismissal() }
+                    }
+                }
         } else {
             content.alert(isPresented: $isPresented) {
                 let confirm: Alert.Button = destructive

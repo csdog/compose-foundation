@@ -7,16 +7,26 @@ private final class AlertDialogAuditState: ObservableObject {
     var cancelled = 0
     var confirmed = 0
     var backgroundClicks = 0
+    var dismissals = 0
+    var triggerFocused = false
 }
 
 private struct AlertDialogAuditFixture: View {
     @ObservedObject var state: AlertDialogAuditState
+    @FocusState private var triggerFocused: Bool
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             Button("Open") {
                 state.backgroundClicks += 1
                 state.visible = true
+            }
+            .focusable(interactions: [.edit, .activate])
+            .focused($triggerFocused)
+            .onChange(of: triggerFocused) { _, focused in state.triggerFocused = focused }
+            .onKeyPress(keys: ["d"], phases: .down) { _ in
+                state.visible = true
+                return .handled
             }
             .frame(width: 100, height: 44)
             .padding(20)
@@ -27,7 +37,10 @@ private struct AlertDialogAuditFixture: View {
             isPresented: $state.visible, title: "Are you absolutely sure?",
             message: "This action cannot be undone. This will permanently delete your account from our servers.",
             size: .regular, onCancel: { state.cancelled += 1 }, onConfirm: { state.confirmed += 1 }
-        ))
+        ).onDismiss {
+            state.dismissals += 1
+            triggerFocused = true
+        })
         .foundationTheme(FoundationTheme(preset: .nova))
         .environment(\.colorScheme, .light)
     }
@@ -60,16 +73,25 @@ enum MacAlertDialogAudit {
             await press("\r", code: 36, in: window)
             require(!state.visible && state.cancelled == 1 && state.confirmed == 0, "Initial Return activates Cancel")
 
-            await click(x: 70, y: 358, in: window)
-            require(state.visible, "The trigger opens again")
+            require(state.dismissals == 1 && state.triggerFocused, "Return restores trigger focus after cancellation")
+            await press("d", code: 2, in: window)
+            require(state.visible, "The restored trigger receives the keyboard event and reopens the dialog")
             await press("\u{1b}", code: 53, in: window)
             require(!state.visible && state.cancelled == 2 && state.confirmed == 0, "Escape cancels exactly once")
 
-            await click(x: 70, y: 358, in: window)
-            require(state.visible, "The dialog can open after keyboard dismissal")
+            require(state.dismissals == 2 && state.triggerFocused, "Escape restores trigger focus")
+            await press("d", code: 2, in: window)
+            require(state.visible, "The dialog can reopen from the restored trigger")
             await click(x: 495, y: 139, in: window)
             require(!state.visible && state.cancelled == 2 && state.confirmed == 1, "Confirm runs exactly once")
-            print("PASS: Alert Dialog blocks background clicks, defaults to Cancel, dismisses on Escape, and confirms once")
+            require(state.dismissals == 3 && state.triggerFocused, "Confirmation restores trigger focus")
+            await press("d", code: 2, in: window)
+            require(state.visible, "The restored trigger can reopen the dialog after confirmation")
+            state.visible = false
+            try? await Task.sleep(for: .milliseconds(200))
+            require(state.dismissals == 4 && state.triggerFocused && state.cancelled == 2 && state.confirmed == 1,
+                    "Programmatic closure only reports dismissal and restores trigger focus")
+            print("PASS: Alert Dialog blocks outside clicks and restores focus after Return, Escape, confirmation and programmatic closure")
             exit(0)
         }
         app.run()
