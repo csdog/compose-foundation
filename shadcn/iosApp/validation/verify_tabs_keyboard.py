@@ -72,7 +72,12 @@ def main():
     frame = selected["frame"]
     assert viewport["x"] <= frame["x"], frame
     assert frame["x"] + frame["width"] <= viewport["x"] + viewport["width"], frame
-    print("PASS: RTL movement, cross-group Tab, manual Return, and overflow scrolling")
+
+    launch("--tabs-disabled")
+    for key in (79, 77, 44, 40):  # Right, End, Space, Return
+        press(key)
+        expect("Automatic panel: Overview", "Manual panel: Overview")
+    print("PASS: RTL movement, cross-group Tab, manual Return, overflow scrolling, disabled strips")
 
 
 if __name__ == "__main__":

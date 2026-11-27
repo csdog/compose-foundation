@@ -38,6 +38,48 @@
 
 ## 4. 从仓库根目录运行
 
+### 跨平台视觉回归试点
+
+GitHub Actions 的 **Component parity** 在相关 PR 上采集 Button、Tabs、Popover 的初始状态和深浅色截图。CMP Web、CMP Android 和 SwiftUI iOS 使用各自的 Catalog。SwiftUI 截图在 iPhone 模拟器采集。CMP Desktop 的 Popover 展开态已可在本地采集，平台截图尚未接入 CI。CMP iOS 和独立 Jetpack Compose 的执行入口仍待接入。报告同时收录 CMP JVM 的 Tabs 和 Popover 行为测试，以及 SwiftUI 的 Tabs 导航逻辑测试。设备交互、无障碍和动画仍需按下文的方法单独验收。
+
+[`shadcn/validation/plan.json`](../shadcn/validation/plan.json) 记录每个组件的 shadcn Base UI / Nova 源码版本和示例。日常回归和手动运行的默认模式 `update=no` 每个用例采集一遍，并与本次选定的基准做像素比较。手动选择 `review` 或 `publish` 时采集两遍，只有可复现的截图会成为候选图。对照上游示例审核候选图的内容、排版、主题和组件状态，并在 PR 上说明有意保留的平台差异。初始截图只覆盖当前 fixture 的状态。例如 Popover 展开态要单独验收。
+
+审核通过的实际图提交到独立的 `csdog/compose-foundation-baselines` 仓库。目录按 Web 和移动端组织，各平台路径由 `plan.json` 的 `baseline.paths` 定义。文件名保留组件、变体、状态和深浅色。
+
+| 截图 | 试点路径 |
+| --- | --- |
+| 上游 shadcn 参考图 | `shadcn/button/button-variants-initial-light.png` |
+| CMP Web | `web/button/button-variants-initial-light.png` |
+| CMP Android | `mobile/cmp-android/button/button-variants-initial-light.png` |
+| SwiftUI iOS | `mobile/swiftui/button/button-variants-initial-light.png` |
+| Compose Desktop | `cmp-desktop/popover/popover-default-open-light.png` |
+
+基准提交应记录用于采集的源码提交、上游示例、渲染环境和审核记录。默认读取基准仓库的 `main`，每次工作流只解析一次 SHA，各平台共用该提交。需要复跑历史版本时，可通过 `baseline.revision` 指定完整 SHA。本地报告也可直接读取基准 Git checkout 的 HEAD。私有基准仓库需要 Actions 能读它的 `COMPONENT_BASELINES_READ_TOKEN`。外部贡献者的 PR 无法读取该 secret，基准需要在允许读取它的工作流环境复验。
+
+Actions 的 **Summary** 显示各平台的比对结论和所用基准 SHA。日常回归只有失败才上传生成的差异图。更新基准时从各平台的 `component-parity-candidates-*` 附件下载候选图，发布任务按平台写入基准目录。缺少原生基准的日常用例显示待验。手动启用 `require_baselines` 可让该情况报错。本地报告仍会生成 `report.md`、`failures.md` 和 `overview.png`。
+
+手动运行 CI 时，把 `component` 设为 `popover` 即可只采集这一个组件。本地可用同一入口采集、比对、生成差异图和 Markdown 报告。以下例子使用 JDK 21、Xvfb 和 Pillow，从现有 CMP JVM fixture 采集 **展开态**，使用两个独立运行目录验证候选图。桌面采集会裁掉 Roborazzi 画布的透明区域。该 fixture 含触发器和弹层标题、描述，上游完整表单需要单独采集。
+
+```sh
+first=build/shadcn-audit/popover-first
+second=build/shadcn-audit/popover-second
+python3 shadcn/validation/report.py "$first" --run --update-baselines --platform cmp-desktop \
+  --component popover --baselines build/component-baselines
+python3 shadcn/validation/report.py "$second" --run --platform cmp-desktop \
+  --component popover --baselines "$first/cmp-desktop/candidate" --try-candidate
+```
+
+先在 **Component parity** 手动选择 `update=review` 采集并下载候选图。对照上游确认后，从 `main` 手动选择 `update=publish`，使用同一个组件范围重拍。全部采集平台通过检查后，发布任务下载本次候选图，将 PNG 一次性提交到基准仓库的 `main` 并输出 SHA。发布使用 `COMPONENT_BASELINES_WRITE_TOKEN`，该 secret 需要对基准仓库有 Contents 写权限。采用默认配置的新运行会读取这版基准。`--try-candidate` 只用于本地验证，报告会标明候选图仍待审核。
+
+Popover 的上游参考图可以用固定版本的 shadcn 源码在本地预览中重拍。生成器用 Playwright 打开正式示例的弹层，按深浅色截图，并保存上游提交和浏览器等来源信息。对已有报告使用 `--report-only --shadcn-references <目录>`，保留原生比对结果并加入参考图。
+
+```sh
+references=build/shadcn-audit/popover-shadcn
+node shadcn/validation/capture_shadcn_popover.mjs "$references"
+python3 shadcn/validation/report.py "$second" --report-only --platform cmp-desktop \
+  --component popover --try-candidate --shadcn-references "$references"
+```
+
 ### Compose JVM 与 Android Preview 像素基线
 
 ```sh

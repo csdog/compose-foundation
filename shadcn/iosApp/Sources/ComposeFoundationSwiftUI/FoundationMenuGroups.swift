@@ -52,6 +52,7 @@ struct FoundationMenuGroups: View {
 
 @available(iOS 17, macOS 14, *)
 private struct FoundationKeyboardMenuGroups: View {
+    @Environment(\.isEnabled) private var isEnabled
     @Environment(\.layoutDirection) private var layoutDirection
     #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -69,7 +70,7 @@ private struct FoundationKeyboardMenuGroups: View {
     let groups: [FoundationMenuGroup]
     let spacing: CGFloat
 
-    private var enabledGroups: [FoundationMenuGroup] { groups.filter(\.isEnabled) }
+    private var enabledGroups: [FoundationMenuGroup] { isEnabled ? groups.filter(\.isEnabled) : [] }
     private var openGroup: FoundationMenuGroup? { enabledGroups.first { $0.id == openID } }
 
     #if os(macOS)
@@ -102,7 +103,7 @@ private struct FoundationKeyboardMenuGroups: View {
                 }
                 .accessibilityValue(openID == group.id ? Text("Expanded") : Text("Collapsed"))
                 #if !os(macOS)
-                .focusable(group.isEnabled)
+                .focusable(isEnabled && group.isEnabled)
                 .focused($focus, equals: group.id)
                 .onKeyPress(keys: [.leftArrow, .rightArrow, .upArrow, .downArrow, .home, .end, .return, .space]) {
                     handleTrigger($0, group: group)
@@ -171,14 +172,12 @@ private struct FoundationKeyboardMenuGroups: View {
         activeTriggerID = returnID
         triggersFocused = !enabledGroups.isEmpty
         #else
-        if enabledGroups.contains(where: { $0.id == returnID }) {
-            focus = returnID
-        }
+        focus = enabledGroups.first { $0.id == returnID }?.id ?? enabledGroups.first?.id
         #endif
     }
 
     private func open(_ group: FoundationMenuGroup, atEnd: Bool = false) {
-        guard group.isEnabled else { return }
+        guard isEnabled, group.isEnabled else { return }
         #if os(macOS)
         activeTriggerID = group.id
         #endif
@@ -189,7 +188,7 @@ private struct FoundationKeyboardMenuGroups: View {
     }
 
     private func handleTrigger(_ press: KeyPress, group: FoundationMenuGroup) -> KeyPress.Result {
-        guard menuAccepts(press) else { return .ignored }
+        guard isEnabled, group.isEnabled, menuAccepts(press) else { return .ignored }
         switch press.key {
         case .leftArrow, .rightArrow, .home, .end:
             if let target = menuDestination(press.key, from: group.id, within: enabledGroups.map(\.id), layoutDirection: layoutDirection) {
@@ -217,6 +216,7 @@ private struct FoundationKeyboardMenuGroups: View {
 
 @available(iOS 17, macOS 14, *)
 private struct FoundationMenuGroupPanel: View {
+    @Environment(\.isEnabled) private var isEnabled
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
     #if os(macOS)
@@ -301,13 +301,13 @@ private struct FoundationMenuGroupPanel: View {
     }
 
     private func activate(_ action: FoundationMenuAction) {
-        guard action.isEnabled else { return }
+        guard isEnabled, action.isEnabled else { return }
         dismiss()
         action.perform()
     }
 
     private func handle(_ press: KeyPress, action: FoundationMenuAction?, scroll: ScrollViewProxy) -> KeyPress.Result {
-        guard menuAccepts(press) else { return .ignored }
+        guard isEnabled, menuAccepts(press) else { return .ignored }
         let enabled = group.actions.filter(\.isEnabled)
         let active = enabled.first { $0.id == highlightedActionID } ?? action ?? enabled.first
         switch press.key {
