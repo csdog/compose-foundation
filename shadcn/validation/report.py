@@ -23,10 +23,10 @@ DIFF_COMPARISONS = {
 }
 
 
-def differences(expected, actual, output, *, reference_viewport=()):
+def differences(expected, actual, output, *, reference_viewport=(), origin=0):
     with Image.open(expected) as first, Image.open(actual) as second:
-        if second.size == tuple(reference_viewport) and first.width >= second.width and first.height >= second.height:
-            first = first.crop((0, 0, *second.size))
+        if second.size == tuple(reference_viewport) and first.width >= second.width + origin and first.height >= second.height:
+            first = first.crop((origin, 0, origin + second.width, second.height))
         if first.size != second.size:
             if output:
                 comparison = Image.new("RGB", (first.width + second.width + 4, max(first.height, second.height)), "red")
@@ -212,7 +212,7 @@ def report_images(root, platform, component, theme, screenshot):
     return {label: path.relative_to(root) for label, path in files.items() if path.is_file()}
 
 
-def shadcn_difference(root, artifact, screenshot, images, viewport):
+def shadcn_difference(root, artifact, screenshot, images, viewport, origin):
     output = artifact / "diff-shadcn" / screenshot
     output.unlink(missing_ok=True)
     actual = images.get("本次截图")
@@ -221,7 +221,7 @@ def shadcn_difference(root, artifact, screenshot, images, viewport):
         return "—"
     output.parent.mkdir(parents=True, exist_ok=True)
     try:
-        change = differences(root / reference, root / actual, output, reference_viewport=viewport)
+        change = differences(root / reference, root / actual, output, reference_viewport=viewport, origin=origin)
     except (OSError, ValueError):
         return "无法比对截图"
     if output.is_file():
@@ -277,7 +277,7 @@ def summarize(args, plan):
                        f"{labels[status]}（{safe_detail}）", reference]
             images = report_images(args.output, platform, component, theme, screenshot) if results else {}
             viewport = case.get("shadcnComparisonViewport", {}).get(platform, ())
-            upstream_change = shadcn_difference(args.output, artifact, screenshot, images, viewport)
+            upstream_change = shadcn_difference(args.output, artifact, screenshot, images, viewport, case.get("shadcnComparisonOrigin", 0))
             overview_status = status if results is not None else "pending"
             overview_rows.append((platform, columns[1], theme, overview_status, against, baseline_source, images))
             paths = images.copy()

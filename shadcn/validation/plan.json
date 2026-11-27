@@ -25,7 +25,12 @@
       "variant": "variants",
       "status": "initial",
       "reference": "apps/v4/examples/base/button-demo.tsx",
-      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
+      "shadcnComparisonViewport": {
+        "swiftui-ios": [
+          402,
+          520
+        ]
+      },
       "visual": "review component variants, spacing and content against the reference",
       "behavior": "activation and disabled state",
       "accessibility": "accessible name, button role and disabled state",
@@ -36,7 +41,12 @@
       "variant": "default",
       "status": "initial",
       "reference": "apps/v4/examples/base/tabs-disabled.tsx",
-      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
+      "shadcnComparisonViewport": {
+        "swiftui-ios": [
+          402,
+          520
+        ]
+      },
       "visual": "review selected and disabled state against the reference",
       "behavior": "skip the disabled tab, select the next available tab and update the panel",
       "accessibility": "selected and disabled states, panel association and traversal order",
@@ -46,13 +56,54 @@
       "title": "Popover",
       "variant": "default",
       "status": "initial",
-      "platformStatus": {"cmp-desktop": "open"},
-      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
+      "platformStatus": {
+        "cmp-desktop": "open"
+      },
+      "shadcnComparisonViewport": {
+        "swiftui-ios": [
+          402,
+          520
+        ]
+      },
       "reference": "apps/v4/examples/base/popover-demo.tsx",
       "visual": "review trigger and panel chrome; the CMP Desktop open fixture omits the upstream form, which needs its own capture",
       "behavior": "open, dismiss and return focus to the trigger",
       "accessibility": "panel content is reachable while open and absent after dismissal",
       "motion": "enter and exit with normal and reduced motion"
+    },
+    "badge": {
+      "title": "Badge",
+      "variant": "default",
+      "status": "initial",
+      "reference": "apps/v4/examples/base/badge-demo.tsx",
+      "visual": "Compare the complete Nova example",
+      "behavior": "Review visual state",
+      "accessibility": "Review native semantics",
+      "motion": "Static reference",
+      "shadcnComparisonViewport": {
+        "swiftui-ios": [
+          402,
+          520
+        ]
+      },
+      "shadcnComparisonOrigin": 159
+    },
+    "separator": {
+      "title": "Separator",
+      "variant": "default",
+      "status": "initial",
+      "reference": "apps/v4/examples/base/separator-demo.tsx",
+      "visual": "Compare the complete Nova example",
+      "behavior": "Review visual state",
+      "accessibility": "Review native semantics",
+      "motion": "Static reference",
+      "shadcnComparisonViewport": {
+        "swiftui-ios": [
+          402,
+          520
+        ]
+      },
+      "shadcnComparisonOrigin": 6
     }
   }
 }
