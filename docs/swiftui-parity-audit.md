@@ -90,12 +90,18 @@ iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集四张深浅色图，复�
 
 iPhone 17 Pro（iOS 26.2）的六张深浅色截图与复拍逐字节一致，原有 94 张图也与上一轮逐字节一致。macOS 实际窗口通过 AppKit 鼠标事件验证点击标签和复选框会更新同一绑定，禁用时点击不写入。iOS 触控、键盘、VoiceOver 和独立标签的焦点关联待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46034351670/artifacts/15218125719) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46034351670/job/140625952242)
 
+### Alert 成功与错误、Card 登录与小尺寸
+
+对照 shadcn Base UI / Nova 的 `alert-basic.tsx`、`alert-destructive.tsx`、`card-demo.tsx` 和 `card-small.tsx`。Alert 保留完整标题、说明及状态图标。可见外边界与参考相差最多 1 pt。两行说明的换行位置和原生 SF Symbols 图标仍有差异。Card 保留完整登录表单和小尺寸报告卡的操作区。以浅暗两种主题抽样，输入框、底部描边按钮和底部背景与 shadcn 的六处填色一致。登录卡和小尺寸卡的底部仍分别低 45–46 pt 和 32–33 pt，原生输入控件和按钮保留 44 pt 操作高度。
+
+Alert 在 iPad mini（iPadOS 26.2）以 720 × 520 画布容纳 448 pt 宽的参考布局。Card 在 iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集。两种主题共八张新图，复拍逐字节一致，原有 100 张图也与上一轮逐字节一致。macOS 实际窗口通过 AppKit 鼠标事件验证卡片正文和底部的控件可以独立操作，且禁用底部按钮后正文仍能响应。Alert 操作区和 RTL、Card 边缘布局、iOS 触控、硬件键盘及 VoiceOver 待单独验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46039710034/artifacts/15220152607) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46039710034/job/140644135876)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
 | --- | --- |
 | accordion | 支持单开或多开、禁用项、绑定展开集合。Compose 另有横向布局和独立组装的触发器、面板。 |
-| alert | 标题、说明、图标、操作和 destructive 样式齐备。Compose 可用多个独立 slot 自定义排布。 |
+| alert | 支持标题、说明、图标、操作和 destructive。Nova 使用紧凑的图标与文字排版，错误说明采用主题 destructive 色。操作区位置及 RTL 尚待对照。 |
 | alert-dialog | 原生确认框支持取消、确认和 destructive 操作。Compose 的自定义面板、媒体、页脚和叠层由系统确认框替代。 |
 | aspect-ratio | 固定宽高比、裁剪，非法比例回退到 1:1。窄容器和无界布局的精确测量规则需另行比较。 |
 | attachment | 有上传进度、处理、失败和完成状态，并支持移除。缺少 Compose 的尺寸、纵向布局、附件组与预览触发器。 |
@@ -106,7 +112,7 @@ iPhone 17 Pro（iOS 26.2）的六张深浅色截图与复拍逐字节一致，�
 | button | 六种颜色变体、禁用、按压反馈和内容 slot。Compose 另有尺寸、图标位置、焦点环和多种按压动画。 |
 | button-group | 支持纵向和横向布局。iOS 18、macOS 15 起，Nova 的 FoundationButtonStyle 子项合并相邻圆角和边框。分隔符、文本项及子项焦点层级仍待对齐。 |
 | calendar | 支持本地化单月和连续多月，窄布局纵向排列，宽布局并排。支持日期单选、区间、多选、月份和年份菜单。日期上下限约束菜单和翻页，区间跨月时保留中间日期的选中样式。Compose 另有独立网格 slots。 |
-| card | 支持主题背景、边框和内容。Compose 的 header/footer/image/action slots、尺寸与卡片变体需由 SwiftUI 调用方组装。 |
+| card | 支持主题背景、边框、常规与紧凑尺寸，以及独立的底部操作区。头部、图片与关联操作可通过内容构建器组合。边缘贴图和 RTL 尚待对照。 |
 | carousel | 当前页和相邻页随横向拖动连续移动，松手后吸附到当前或相邻页。支持 RTL、前后按钮、页码无障碍调节和减少动态效果。视口高度由当前页决定。Compose 另有纵向模式、部分页宽及 dots API。 |
 | chart | 支持柱形、折线、面积、多序列和选点摘要。Compose 的独立图例、工具提示、序列主题配置和 indicator 选项未移植。 |
 | checkbox | 支持未选中、已选中和部分选中。部分选中使用减号、独立无障碍值和点按转全选。Nova 使用 16 pt 标记、深色未选中底色和首行文字对齐。Bool ToggleStyle 和 SwiftUI 混合状态均受支持。 |
