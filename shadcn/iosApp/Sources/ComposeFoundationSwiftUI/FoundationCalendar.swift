@@ -103,6 +103,10 @@ public struct FoundationCalendar: View {
 
     private var isNova: Bool { theme.preset == .nova }
 
+    private var dayHighlightSize: CGFloat? { isNova ? max(28, cellTextSize * 2) : nil }
+
+    private var dayRowHeight: CGFloat { max(44, dayHighlightSize ?? 0) }
+
     private var navigation: FoundationCalendarNavigation {
         FoundationCalendarNavigation(calendar: calendar, bounds: bounds, numberOfMonths: numberOfMonths)
     }
@@ -151,11 +155,11 @@ public struct FoundationCalendar: View {
                             Text(number)
                                 .font(.system(size: cellTextSize))
                                 .foregroundColor(palette.mutedForeground)
-                                .frame(maxWidth: .infinity, minHeight: 44)
+                                .frame(maxWidth: .infinity, minHeight: dayRowHeight)
                                 .accessibilityHidden(true)
                         }
                     } else {
-                        Color.clear.frame(height: 44).accessibilityHidden(true)
+                        Color.clear.frame(height: dayRowHeight).accessibilityHidden(true)
                     }
                 }
             }
@@ -281,7 +285,7 @@ public struct FoundationCalendar: View {
             Text(title)
                 .font(isNova ? .system(size: cellTextSize) : .subheadline)
                 .foregroundColor(presentation.hasPrimaryFill ? palette.primaryForeground : palette.foreground)
-                .frame(maxWidth: .infinity, minHeight: 44)
+                .frame(maxWidth: .infinity, minHeight: dayRowHeight)
                 .background(dayBackground(presentation, today: today, palette: palette))
                 .contentShape(Rectangle())
         }
@@ -296,13 +300,12 @@ public struct FoundationCalendar: View {
     private func dayBackground(
         _ presentation: FoundationCalendarSelection.DayPresentation, today: Bool, palette: FoundationPalette
     ) -> some View {
-        let visualSize = isNova ? max(28, cellTextSize * 2) : nil
         if presentation == .rangeInterior {
-            Rectangle().fill(palette.secondary).frame(height: visualSize)
+            Rectangle().fill(palette.secondary).frame(height: dayHighlightSize)
         } else if presentation.hasPrimaryFill || today {
             RoundedRectangle(cornerRadius: isNova ? max(0, theme.cornerRadius - 2) : theme.cornerRadius)
                 .fill(presentation.hasPrimaryFill ? palette.primary : palette.secondary)
-                .frame(width: visualSize, height: visualSize)
+                .frame(maxWidth: dayHighlightSize, maxHeight: dayHighlightSize)
         }
     }
 
