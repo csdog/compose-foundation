@@ -165,6 +165,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "input-otp": InputOtpScreenshotFixture.Example.allCases.map { example in
                 ("input-otp-\(example.rawValue)", { AnyView(InputOtpScreenshotFixture(example: example)) })
             },
+            "slider": SliderScreenshotFixture.Example.allCases.map { example in
+                ("slider-\(example.rawValue)", { AnyView(SliderScreenshotFixture(example: example)) })
+            },
             "textarea": [
                 ("textarea-default-initial", { AnyView(TextFieldScreenshotFixture(example: .textarea)) }),
                 ("textarea-field-initial", { AnyView(TextFieldScreenshotFixture(example: .textareaField)) }),
@@ -734,6 +737,41 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct SliderScreenshotFixture: View {
+    enum Example: String, CaseIterable {
+        case initial = "default-initial"
+        case increased = "default-increased"
+        case disabled = "disabled-initial"
+    }
+
+    let example: Example
+    @State private var value: Double
+    @Environment(\.colorScheme) private var scheme
+
+    init(example: Example) {
+        self.example = example
+        switch example {
+        case .initial: _value = State(initialValue: 75)
+        case .increased: _value = State(initialValue: 76)
+        case .disabled: _value = State(initialValue: 50)
+        }
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        return FoundationSlider("Value", value: $value, in: 0...100)
+            .disabled(example == .disabled)
+            .foundationTheme(theme)
+            .frame(width: 320)
+            .padding(.top, 4)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
     }
 }
 
