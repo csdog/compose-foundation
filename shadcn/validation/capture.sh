@@ -34,6 +34,7 @@ case "$platform" in
   cmp-android)
     android_device="${ANDROID_SERIAL:?Set ANDROID_SERIAL to the running CMP simulator}"
     adb -s "$android_device" shell getprop ro.build.fingerprint
+    adb -s "$android_device" shell dumpsys window displays > "$work/android-displays.txt"
     python3 shadcn/registry/build.py --output "$work/registry"
     ;;
   swiftui-ios)
@@ -117,7 +118,25 @@ for pass in "${passes[@]}"; do
         cmp-desktop) source="$work/$pass/popover_nova_basic_$theme.png" ;;
         swiftui-ios) source="$work/$pass/$component-$theme.png" ;;
       esac
-      if [[ "$platform" == cmp-desktop ]]; then
+      if [[ "$platform" == cmp-android ]]; then
+        python3 - "$source" "$destination/$theme.png" "$work/android-displays.txt" <<'PY' || capture_status=1
+from pathlib import Path
+import re
+import sys
+from PIL import Image
+
+frames = re.findall(
+    r"\b(?:mType|type)=statusBars\s+(?:mFrame|frame)=\[0,0\]\[(\d+),(\d+)\]",
+    Path(sys.argv[3]).read_text(),
+)
+with Image.open(sys.argv[1]) as image:
+    heights = [int(height) for width, height in frames if int(width) == image.width]
+    top = max(heights, default=0)
+    if not 0 < top < image.height:
+        raise ValueError("Could not find the Android status bar inset for this screenshot")
+    image.crop((0, top, image.width, image.height)).save(sys.argv[2])
+PY
+      elif [[ "$platform" == cmp-desktop ]]; then
         python3 - "$source" "$destination/$theme.png" <<'PY' || capture_status=1
 import sys
 from PIL import Image
