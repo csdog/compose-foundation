@@ -75,11 +75,15 @@ public struct FoundationInput: View {
 
     @ViewBuilder
     private func alignedEditor(_ prompt: String, nova: Bool) -> some View {
+        #if compiler(>=6.2)
         if #available(iOS 26, macOS 26, *), nova && layoutDirection == .rightToLeft {
             editor(prompt).multilineTextAlignment(strategy: .layoutBased)
         } else {
             editor(prompt)
         }
+        #else
+        editor(prompt)
+        #endif
     }
 
     @ViewBuilder
