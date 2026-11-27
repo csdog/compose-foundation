@@ -17,6 +17,7 @@ public struct FoundationAlertDialog: ViewModifier {
     private let cancelTitle: String
     private let destructive: Bool
     private let size: Size?
+    private let media: AnyView?
     private let onCancel: () -> Void
     private let onConfirm: () -> Void
 
@@ -29,7 +30,8 @@ public struct FoundationAlertDialog: ViewModifier {
         onConfirm: @escaping () -> Void
     ) {
         self.init(isPresented: isPresented, title: title, message: message, confirmTitle: confirmTitle,
-                  cancelTitle: "Cancel", destructive: destructive, panelSize: nil, onCancel: {}, onConfirm: onConfirm)
+                  cancelTitle: "Cancel", destructive: destructive, panelSize: nil, media: nil,
+                  onCancel: {}, onConfirm: onConfirm)
     }
 
     /// Presents a styled dialog over the modified view. Apply to a container that fills the presentation area.
@@ -45,13 +47,32 @@ public struct FoundationAlertDialog: ViewModifier {
         onConfirm: @escaping () -> Void
     ) {
         self.init(isPresented: isPresented, title: title, message: message, confirmTitle: confirmTitle,
-                  cancelTitle: cancelTitle, destructive: destructive, panelSize: size,
+                  cancelTitle: cancelTitle, destructive: destructive, panelSize: size, media: nil,
+                  onCancel: onCancel, onConfirm: onConfirm)
+    }
+
+    /// Adds a media view to the styled panel's header.
+    public init<Media: View>(
+        isPresented: Binding<Bool>,
+        title: String,
+        message: String,
+        size: Size,
+        confirmTitle: String = "Continue",
+        cancelTitle: String = "Cancel",
+        destructive: Bool = false,
+        onCancel: @escaping () -> Void = {},
+        onConfirm: @escaping () -> Void,
+        @ViewBuilder media: () -> Media
+    ) {
+        self.init(isPresented: isPresented, title: title, message: message, confirmTitle: confirmTitle,
+                  cancelTitle: cancelTitle, destructive: destructive, panelSize: size, media: AnyView(media()),
                   onCancel: onCancel, onConfirm: onConfirm)
     }
 
     private init(
         isPresented: Binding<Bool>, title: String, message: String, confirmTitle: String, cancelTitle: String,
-        destructive: Bool, panelSize: Size?, onCancel: @escaping () -> Void, onConfirm: @escaping () -> Void
+        destructive: Bool, panelSize: Size?, media: AnyView?,
+        onCancel: @escaping () -> Void, onConfirm: @escaping () -> Void
     ) {
         self._isPresented = isPresented
         self.title = title
@@ -60,6 +81,7 @@ public struct FoundationAlertDialog: ViewModifier {
         self.cancelTitle = cancelTitle
         self.destructive = destructive
         self.size = panelSize
+        self.media = media
         self.onCancel = onCancel
         self.onConfirm = onConfirm
     }
@@ -145,13 +167,33 @@ public struct FoundationAlertDialog: ViewModifier {
         heading: Heading, actions: Actions, palette: FoundationPalette, wide: Bool
     ) -> some View {
         VStack(spacing: 0) {
-            let header = VStack(alignment: wide ? .leading : .center, spacing: 6) {
+            let copy = VStack(alignment: wide ? .leading : .center, spacing: 6) {
                 heading
                 Text(message)
                     .font(theme.font(.subheadline))
                     .foregroundColor(palette.mutedForeground)
                     .multilineTextAlignment(wide ? .leading : .center)
                     .fixedSize(horizontal: false, vertical: true)
+            }
+            let header = Group {
+                if let media {
+                    let badge = media
+                        .frame(width: 40, height: 40)
+                        .background(RoundedRectangle(cornerRadius: theme.cornerRadius).fill(palette.secondary))
+                    if wide {
+                        HStack(alignment: .top, spacing: 16) {
+                            badge
+                            copy
+                        }
+                    } else {
+                        VStack(spacing: 12) {
+                            badge
+                            copy
+                        }
+                    }
+                } else {
+                    copy
+                }
             }
             .frame(maxWidth: .infinity, alignment: wide ? .leading : .center)
             .padding(16)

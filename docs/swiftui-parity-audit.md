@@ -220,13 +220,23 @@ iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布拍摄关闭和打开的�
 
 macOS 实际窗口验证从触发器打开、点击遮罩不透传、初始 Return 执行 Cancel、Escape 只取消一次，重新打开后点击 Continue 只执行一次确认。SwiftUI 包构建与 Tabs 导航回归通过。关闭后的触发器焦点恢复、iOS 实际触控和 VoiceOver 待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46069335630/job/140742295708)
 
+### Alert Dialog 紧凑面板与媒体
+
+对照 `alert-dialog-small.tsx`、`alert-dialog-media.tsx` 和 `alert-dialog-small-media.tsx`。媒体插槽采用 40 pt 方形背景。宽版面板把媒体放在文字前，紧凑版放在标题上方，保留并排等宽的取消和确认操作。现有系统确认框和无媒体面板初始化器继续可用。
+
+三个新增案例的 shadcn 展开参考通过官方托管示例采集，六张图复拍逐字节一致。参考截图、索引和采集记录在基准仓库单独审核。[上游参考 PR](https://github.com/csdog/compose-foundation-baselines/pull/9)
+
+iPad mini（A17 Pro，iOS 26.2）采集四个案例在收起和展开时的 16 张深浅色图，复拍逐字节一致。默认案例的四张图也与上一轮逐字节一致。三个新增面板的边缘与参考相差 1–4 pt，按钮布局一致。SwiftUI 的 Share Project 媒体使用系统圆形加号，shadcn 参考使用渐隐圆形加号。使用参考 PR 的图本地重生成了 16 个用例的 shadcn 差异图。[iOS 截图附件](https://github.com/csdog/compose-foundation/actions/runs/46070366785/artifacts/15233256919)
+
+macOS 实际窗口复跑遮罩点击、初始 Return 取消、Escape 和单次确认。RTL、iOS 触控、触发器焦点恢复和 VoiceOver 待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46070366785/job/140745676384)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
 | --- | --- |
 | accordion | 支持单开或多开、禁用项和绑定展开集合。Nova 使用全宽按钮、标题语义、展开状态和末尾方向箭头。横向布局与独立组装的触发器尚待对齐。 |
 | alert | 支持标题、说明、图标、操作和 destructive。Nova 使用紧凑的图标与文字排版，错误说明采用主题 destructive 色。操作区位置及 RTL 尚待对照。 |
-| alert-dialog | 支持系统确认框及可选的居中面板。面板支持常规、紧凑尺寸、说明、取消和 destructive 操作。媒体、RTL、紧凑版实拍和 VoiceOver 待验收。 |
+| alert-dialog | 支持系统确认框及可选的居中面板。常规、紧凑、媒体和紧凑媒体示例覆盖深浅色。RTL、iOS 触控、关闭后的焦点恢复和 VoiceOver 待验收。 |
 | aspect-ratio | 固定宽高比，裁剪溢出内容与点击范围，无效比例回退到 1:1。无界布局和 RTL 样例待进一步对照。 |
 | attachment | 有上传进度、处理、失败和完成状态，并支持移除。缺少 Compose 的尺寸、纵向布局、附件组与预览触发器。 |
 | avatar | 支持本地 `Image`、三种尺寸、首字母或自定义回退、状态徽标、头像组和计数。iOS 15、macOS 12 起支持原生异步 URL 图片。 |
