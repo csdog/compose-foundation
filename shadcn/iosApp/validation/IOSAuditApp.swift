@@ -150,10 +150,14 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
-            "alert-dialog": [
-                ("alert-dialog-default-initial", { AnyView(AlertDialogScreenshotFixture(isOpen: false)) }),
-                ("alert-dialog-default-open", { AnyView(AlertDialogScreenshotFixture(isOpen: true)) }),
-            ],
+            "alert-dialog": AlertDialogScreenshotFixture.Example.allCases.flatMap { example in
+                [false, true].map { isOpen in
+                    let state = isOpen ? "open" : "initial"
+                    return ("alert-dialog-\(example.rawValue)-\(state)", {
+                        AnyView(AlertDialogScreenshotFixture(example: example, isOpen: isOpen))
+                    })
+                }
+            },
             "tooltip": [
                 ("tooltip-default-initial", { AnyView(TooltipScreenshotFixture(isOpen: false)) }),
                 ("tooltip-default-open", { AnyView(TooltipScreenshotFixture(isOpen: true)) }),
@@ -838,10 +842,48 @@ private struct SeparatorInitialScreenshotFixture: View {
 }
 
 private struct AlertDialogScreenshotFixture: View {
+    enum Example: String, CaseIterable {
+        case `default`, small, media, smallMedia = "small-media"
+
+        var size: FoundationAlertDialog.Size {
+            self == .small || self == .smallMedia ? .small : .regular
+        }
+
+        var trigger: String { self == .media ? "Share Project" : "Show Dialog" }
+
+        var title: String {
+            switch self {
+            case .default: return "Are you absolutely sure?"
+            case .small, .smallMedia: return "Allow accessory to connect?"
+            case .media: return "Share this project?"
+            }
+        }
+
+        var message: String {
+            switch self {
+            case .default: return "This action cannot be undone. This will permanently delete your account from our servers."
+            case .small, .smallMedia: return "Do you want to allow the USB accessory to connect to this device?"
+            case .media: return "Anyone with the link will be able to view and edit this project."
+            }
+        }
+
+        var confirm: String {
+            switch self {
+            case .default: return "Continue"
+            case .small, .smallMedia: return "Allow"
+            case .media: return "Share"
+            }
+        }
+
+        var cancel: String { size == .small ? "Don't allow" : "Cancel" }
+    }
+
     @Environment(\.colorScheme) private var scheme
     @State private var isOpen: Bool
+    let example: Example
 
-    init(isOpen: Bool) {
+    init(example: Example, isOpen: Bool) {
+        self.example = example
         _isOpen = State(initialValue: isOpen)
     }
 
@@ -850,21 +892,54 @@ private struct AlertDialogScreenshotFixture: View {
         light.foreground = .black
         light.primary = .black
         let theme = FoundationTheme(preset: .nova, light: light)
-        return Button("Show Dialog") { isOpen = true }
+        return Button(example.trigger) { isOpen = true }
             .buttonStyle(FoundationButtonStyle(.outline))
             .padding(.horizontal, 24)
             .padding(.top, 18)
             .frame(width: 720, height: 520, alignment: .topLeading)
             .background(theme.palette(for: scheme).background)
-            .modifier(FoundationAlertDialog(
-                isPresented: $isOpen, title: "Are you absolutely sure?",
-                message: "This action cannot be undone. This will permanently delete your account from our servers.",
-                size: .regular, onConfirm: {}
-            ))
+            .modifier(dialog)
             .foundationTheme(theme)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(theme.palette(for: scheme).background)
             .ignoresSafeArea()
+    }
+
+    private var dialog: FoundationAlertDialog {
+        switch example {
+        case .default, .small:
+            return FoundationAlertDialog(
+                isPresented: $isOpen, title: example.title, message: example.message,
+                size: example.size, confirmTitle: example.confirm, cancelTitle: example.cancel, onConfirm: {}
+            )
+        case .media, .smallMedia:
+            return FoundationAlertDialog(
+                isPresented: $isOpen, title: example.title, message: example.message,
+                size: example.size, confirmTitle: example.confirm, cancelTitle: example.cancel, onConfirm: {}
+            ) {
+                Group {
+                    if example == .media {
+                        Image(systemName: "plus.circle").font(.system(size: 24))
+                    } else {
+                        bluetooth
+                    }
+                }
+                .accessibilityHidden(true)
+            }
+        }
+    }
+
+    private var bluetooth: some View {
+        Path { path in
+            path.move(to: CGPoint(x: 7, y: 7))
+            path.addLine(to: CGPoint(x: 17, y: 17))
+            path.addLine(to: CGPoint(x: 12, y: 22))
+            path.addLine(to: CGPoint(x: 12, y: 2))
+            path.addLine(to: CGPoint(x: 17, y: 7))
+            path.addLine(to: CGPoint(x: 7, y: 17))
+        }
+        .stroke(style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
+        .frame(width: 24, height: 24)
     }
 }
 
