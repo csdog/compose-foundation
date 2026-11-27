@@ -95,7 +95,10 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
                         GeometryReader { geometry in
                             ZStack {
                                 Color.black.opacity(0.10)
-                                    .onTapGesture(perform: close)
+                                    .onTapGesture {
+                                        foundationEndEditingBeforeBackdropDismissal()
+                                        close()
+                                    }
                                     .accessibilityHidden(true)
                                 centeredPanel(palette)
                                     .frame(width: min(384, max(1, geometry.size.width - 32)))

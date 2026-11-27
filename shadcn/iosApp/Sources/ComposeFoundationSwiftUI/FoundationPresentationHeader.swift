@@ -1,4 +1,18 @@
 import SwiftUI
+#if os(macOS)
+import AppKit
+#endif
+
+@MainActor
+func foundationEndEditingBeforeBackdropDismissal() {
+    #if os(macOS)
+    // The SwiftUI focus target can only regain focus after the AppKit field editor resigns.
+    if let window = NSApplication.shared.keyWindow,
+       let editor = window.firstResponder as? NSTextView, editor.isFieldEditor {
+        window.makeFirstResponder(nil)
+    }
+    #endif
+}
 
 struct FoundationPresentationHeader<Close: View>: View {
     @Environment(\.foundationTheme) private var theme

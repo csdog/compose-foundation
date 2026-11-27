@@ -1,7 +1,4 @@
 import SwiftUI
-#if os(macOS)
-import AppKit
-#endif
 
 public struct FoundationSheet<SheetContent: View>: ViewModifier {
     @Environment(\.foundationTheme) private var theme
@@ -247,13 +244,7 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
     }
 
     private func closeFromBackdrop() {
-        #if os(macOS)
-        // Let the platform field editor relinquish focus before removing its sheet.
-        if let window = NSApplication.shared.keyWindow,
-           let editor = window.firstResponder as? NSTextView, editor.isFieldEditor {
-            window.makeFirstResponder(nil)
-        }
-        #endif
+        foundationEndEditingBeforeBackdropDismissal()
         close()
     }
 
