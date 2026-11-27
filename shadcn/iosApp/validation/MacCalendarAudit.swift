@@ -55,7 +55,7 @@ enum MacCalendarAudit {
             try? await Task.sleep(for: .milliseconds(400))
             require(window.isKeyWindow, "The audit window needs focus")
 
-            func clickDateOrArrow(x: CGFloat, y: CGFloat) async {
+            @MainActor func clickDateOrArrow(x: CGFloat, y: CGFloat) async {
                 let position = rightToLeft ? window.contentLayoutRect.width - x : x
                 await click(x: position, y: y, in: window)
             }
