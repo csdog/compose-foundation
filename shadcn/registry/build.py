@@ -24,6 +24,7 @@ SWIFT_SUPPORT_FILES = {
     "dialog": ("FoundationPresentationHeader.swift",),
     "drawer": ("FoundationPresentationHeader.swift",),
     "field": ("FoundationLabel.swift",),
+    "hover-card": ("FoundationPopover.swift",),
     "menubar": ("FoundationMenuGroups.swift", "FoundationPopover.swift"),
     "navigation-menu": ("FoundationMenuGroups.swift", "FoundationPopover.swift"),
     "pagination": ("FoundationButtonStyle.swift",),

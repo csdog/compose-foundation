@@ -16,6 +16,9 @@ public struct FoundationPopover<PopoverContent: View>: ViewModifier {
     private let arrowEdge: Edge
     private let alignment: FoundationPopoverAlignment
     private let width: CGFloat?
+    private let alignmentOffset: CGFloat
+    private let takesFocus: Bool
+    private let onPanelHover: ((Bool) -> Void)?
     private let onDismiss: () -> Void
     private let popoverContent: () -> PopoverContent
 
@@ -47,10 +50,22 @@ public struct FoundationPopover<PopoverContent: View>: ViewModifier {
         onDismiss: @escaping () -> Void = {},
         @ViewBuilder content: @escaping () -> PopoverContent
     ) {
+        self.init(isPresented: isPresented, arrowEdge: arrowEdge, alignment: alignment, width: width,
+                  alignmentOffset: 0, takesFocus: true, onPanelHover: nil, onDismiss: onDismiss, content: content)
+    }
+
+    init(
+        isPresented: Binding<Bool>, arrowEdge: Edge = .top, alignment: FoundationPopoverAlignment = .center,
+        width: CGFloat?, alignmentOffset: CGFloat, takesFocus: Bool, onPanelHover: ((Bool) -> Void)?,
+        onDismiss: @escaping () -> Void = {}, @ViewBuilder content: @escaping () -> PopoverContent
+    ) {
         self._isPresented = isPresented
         self.arrowEdge = arrowEdge
         self.alignment = alignment
         self.width = width
+        self.alignmentOffset = alignmentOffset
+        self.takesFocus = takesFocus
+        self.onPanelHover = onPanelHover
         self.onDismiss = onDismiss
         self.popoverContent = content
     }
@@ -62,7 +77,9 @@ public struct FoundationPopover<PopoverContent: View>: ViewModifier {
                 isPresented: isPresented,
                 placement: PopoverPlacement(edge: placementEdge, alignment: alignment,
                                             rightToLeft: environment.layoutDirection == .rightToLeft,
-                                            width: width, usesSafeArea: !environment.foundationPopoverFullViewport),
+                                            width: width, alignmentOffset: alignmentOffset,
+                                            usesSafeArea: !environment.foundationPopoverFullViewport),
+                takesFocus: takesFocus,
                 panel: panel,
                 requestDismissal: { isPresented = false }, onDismiss: onDismiss
             )
@@ -89,7 +106,7 @@ public struct FoundationPopover<PopoverContent: View>: ViewModifier {
         let theme = environment.foundationTheme
         let palette = theme.palette(for: environment.colorScheme)
         let shape = RoundedRectangle(cornerRadius: theme.popoverCornerRadius)
-        return popoverContent()
+        let content = popoverContent()
             .padding(theme.preset?.metrics.popoverPadding ?? 12)
             .frame(maxWidth: width == nil ? nil : .infinity, alignment: .leading)
             .foregroundColor(palette.foreground)
@@ -103,6 +120,10 @@ public struct FoundationPopover<PopoverContent: View>: ViewModifier {
             .environment(\.layoutDirection, environment.layoutDirection)
             .environment(\.locale, environment.locale)
             .environment(\.sizeCategory, environment.sizeCategory)
+        return Group {
+            if let onPanelHover { content.onHover(perform: onPanelHover) }
+            else { content }
+        }
     }
 }
 
@@ -122,6 +143,7 @@ private struct PopoverPlacement {
     let alignment: FoundationPopoverAlignment
     let rightToLeft: Bool
     let width: CGFloat?
+    let alignmentOffset: CGFloat
     let usesSafeArea: Bool
 
     func frame(size: CGSize, anchor: CGRect, viewport: CGRect) -> CGRect {
@@ -146,12 +168,16 @@ private struct PopoverPlacement {
         switch edge {
         case .top:
             y = afterY + size.height <= viewport.maxY ? afterY : beforeY
+            x += rightToLeft ? -alignmentOffset : alignmentOffset
         case .bottom:
             y = beforeY >= viewport.minY ? beforeY : afterY
+            x += rightToLeft ? -alignmentOffset : alignmentOffset
         case .leading:
             x = afterX + size.width <= viewport.maxX ? afterX : beforeX
+            y += alignmentOffset
         case .trailing:
             x = beforeX >= viewport.minX ? beforeX : afterX
+            y += alignmentOffset
         }
         x = min(max(x, viewport.minX), viewport.maxX - size.width)
         y = min(max(y, viewport.minY), viewport.maxY - size.height)
@@ -163,6 +189,7 @@ private struct PopoverPlacement {
 private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
     let isPresented: Bool
     let placement: PopoverPlacement
+    let takesFocus: Bool
     let panel: Panel
     let requestDismissal: () -> Void
     let onDismiss: () -> Void
@@ -212,7 +239,7 @@ private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
         var configuration: FoundationPopoverAnchor?
         private var host: PopoverHost?
         private var sizingHost: UIHostingController<MeasuredPanel>?
-        private var overlayWindow: UIWindow?
+        private var overlayWindow: PopoverWindow?
         private weak var returnWindow: UIWindow?
 
         func refresh(from anchor: Anchor) {
@@ -263,13 +290,14 @@ private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
             if let host, let overlayWindow {
                 overlayWindow.frame = window.frame
                 host.rootView = surface
+                configureFocus(of: overlayWindow, host: host, parent: window, frame: frame,
+                               takesFocus: configuration.takesFocus)
             } else {
                 let host = PopoverHost(rootView: surface)
                 host.dismiss = surface.dismiss
                 host.view.backgroundColor = .clear
                 host.view.isOpaque = false
-                host.view.accessibilityViewIsModal = true
-                let overlay = UIWindow(windowScene: scene)
+                let overlay = PopoverWindow(windowScene: scene)
                 overlay.backgroundColor = .clear
                 overlay.isOpaque = false
                 overlay.windowLevel = UIWindow.Level(rawValue: window.windowLevel.rawValue + 1)
@@ -278,12 +306,27 @@ private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
                 self.host = host
                 overlayWindow = overlay
                 returnWindow = window
-                overlay.makeKeyAndVisible()
+                configureFocus(of: overlay, host: host, parent: window, frame: frame, takesFocus: configuration.takesFocus)
+            }
+        }
+
+        private func configureFocus(of window: PopoverWindow, host: PopoverHost, parent: UIWindow,
+                                    frame: CGRect, takesFocus: Bool) {
+            let modeChanged = (window.passiveHitRegion != nil) == takesFocus
+            window.passiveHitRegion = takesFocus ? nil : frame
+            host.view.accessibilityViewIsModal = takesFocus
+            guard window.isHidden || modeChanged else { return }
+            if takesFocus {
+                guard !window.isKeyWindow else { return }
+                window.makeKeyAndVisible()
                 if UIAccessibility.isVoiceOverRunning {
                     UIAccessibility.post(notification: .screenChanged, argument: nil)
                 } else {
                     host.becomeFirstResponder()
                 }
+            } else {
+                window.isHidden = false
+                if window.isKeyWindow { parent.makeKey() }
             }
         }
 
@@ -298,6 +341,15 @@ private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
             sizingHost = nil
             overlayWindow = nil
             returnWindow = nil
+        }
+    }
+
+    final class PopoverWindow: UIWindow {
+        var passiveHitRegion: CGRect?
+
+        override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+            if let passiveHitRegion, !passiveHitRegion.contains(point) { return nil }
+            return super.hitTest(point, with: event)
         }
     }
 
@@ -346,6 +398,7 @@ private struct FoundationPopoverAnchor<Panel: View>: UIViewRepresentable {
 private struct FoundationPopoverAnchor<Panel: View>: NSViewRepresentable {
     let isPresented: Bool
     let placement: PopoverPlacement
+    let takesFocus: Bool
     let panel: Panel
     let requestDismissal: () -> Void
     let onDismiss: () -> Void
@@ -430,14 +483,23 @@ private struct FoundationPopoverAnchor<Panel: View>: NSViewRepresentable {
                 self.popover = popover
                 parent.addChildWindow(popover, ordered: .above)
 
-                mouseMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown]) {
+                mouseMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown, .keyDown]) {
                     [weak self, weak popover] event in
+                    if event.type == .keyDown {
+                        if self?.configuration?.takesFocus == false, event.keyCode == 53 {
+                            self?.dismiss()
+                            return nil
+                        }
+                        return event
+                    }
                     if event.window !== popover { self?.dismiss() }
                     return event
                 }
             }
 
             guard let host, let popover else { return }
+            let focusChanged = popover.takesFocus != configuration.takesFocus
+            popover.takesFocus = configuration.takesFocus
             host.rootView = panel
             let measured = host.fittingSize
             let size = CGSize(
@@ -454,10 +516,19 @@ private struct FoundationPopoverAnchor<Panel: View>: NSViewRepresentable {
                 display: true
             )
             // Adding a child window can make it visible before it becomes key.
-            if isOpening { popover.makeKeyAndOrderFront(nil) }
+            if isOpening || focusChanged {
+                if configuration.takesFocus {
+                    popover.makeKeyAndOrderFront(nil)
+                } else {
+                    popover.orderFront(nil)
+                    if popover.isKeyWindow { parent.makeKey() }
+                }
+            }
         }
 
-        func windowDidResignKey(_ notification: Notification) { dismiss() }
+        func windowDidResignKey(_ notification: Notification) {
+            if configuration?.takesFocus == true { dismiss() }
+        }
 
         private func dismiss() { configuration?.requestDismissal() }
 
@@ -486,7 +557,8 @@ private struct FoundationPopoverAnchor<Panel: View>: NSViewRepresentable {
 
     final class PopoverPanel: NSPanel {
         var dismiss: (() -> Void)?
-        override var canBecomeKey: Bool { true }
+        var takesFocus = true
+        override var canBecomeKey: Bool { takesFocus }
         override func cancelOperation(_ sender: Any?) { dismiss?() }
     }
 }

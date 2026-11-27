@@ -20,6 +20,23 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "hover-card": {
+      "title": "Hover Card",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520]},
+          {"variant": "default", "status": "open", "viewport": [402, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/hover-card-demo.tsx",
+      "visual": "compare the trigger and anchored profile card in both settled states",
+      "behavior": "preserve hover transfer from trigger to card and keep the parent window focused",
+      "accessibility": "caller content and trigger maintain their native semantics",
+      "motion": "static settled frames"
+    },
     "pagination": {
       "title": "Pagination",
       "variant": "default",

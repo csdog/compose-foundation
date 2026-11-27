@@ -749,6 +749,30 @@ jobs:
           cat "$log"
           grep -q '^PASS:' "$log"
 
+      - name: Verify Hover Card pointer transfer and Popover focus on macOS
+        if: contains(needs.baseline.outputs.matrix, '"hover-card"')
+        timeout-minutes: 3
+        run: |
+          swiftui=shadcn/iosApp
+          sources="$swiftui/Sources/ComposeFoundationSwiftUI"
+          for name in HoverCardAudit PopoverFocusAudit; do
+            app="$RUNNER_TEMP/$name.app"
+            mkdir -p "$app/Contents/MacOS"
+            plist="$app/Contents/Info.plist"
+            plutil -create xml1 "$plist"
+            plutil -insert CFBundleExecutable -string "$name" "$plist"
+            plutil -insert CFBundleIdentifier -string "com.composefoundation.$name" "$plist"
+            plutil -insert CFBundlePackageType -string APPL "$plist"
+            xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+              "$sources/FoundationTheme.swift" "$sources/FoundationPopover.swift" \
+              "$sources/FoundationHoverCard.swift" "$swiftui/validation/Mac$name.swift" \
+              -o "$app/Contents/MacOS/$name"
+            log="$RUNNER_TEMP/$name.log"
+            open -n -W --stdout "$log" --stderr "$log" "$app"
+            cat "$log"
+            grep -q '^PASS:' "$log"
+          done
+
   report:
     name: Component parity report
     needs: [baseline, capture, cmp-behavior, swift-logic, publish]
