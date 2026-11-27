@@ -6,7 +6,9 @@ struct FoundationModalOverlay<Panel: View>: ViewModifier {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     @Binding var isPresented: Bool
-    let animation: Animation
+    @State private var dismissal: Task<Void, Never>?
+    let duration: TimeInterval
+    let animation: (TimeInterval) -> Animation
     let onDismiss: () -> Void
     @ViewBuilder let panel: (CGSize) -> Panel
 
@@ -24,20 +26,31 @@ struct FoundationModalOverlay<Panel: View>: ViewModifier {
                             Color.black.opacity(0.10)
                                 .onTapGesture { isPresented = false }
                                 .accessibilityHidden(true)
-                                .transition(.opacity)
                             panel(geometry.size)
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                     .transition(.opacity)
                     .onDisappear {
-                        guard !isPresented else { return }
-                        DispatchQueue.main.async {
-                            if !isPresented { onDismiss() }
-                        }
+                        scheduleDismissal()
                     }
                 }
             })
-            .animation(reduceMotion ? nil : animation, value: isPresented)
+            .animation(reduceMotion ? nil : animation(duration), value: isPresented)
+            .onChange(of: isPresented) { presented in
+                if presented { dismissal?.cancel() }
+            }
+            .onDisappear { dismissal?.cancel() }
+    }
+
+    private func scheduleDismissal() {
+        guard !isPresented else { return }
+        dismissal?.cancel()
+        // The platform text editor can resign focus after SwiftUI begins removing the overlay.
+        let delay = reduceMotion ? 0 : UInt64(duration * 1_000_000_000)
+        dismissal = Task { @MainActor in
+            do { try await Task.sleep(nanoseconds: delay) } catch { return }
+            if !isPresented { onDismiss() }
+        }
     }
 }

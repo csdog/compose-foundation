@@ -76,7 +76,7 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
     public func body(content: Content) -> some View {
         let palette = theme.palette(for: colorScheme)
         if let edge {
-            content.modifier(FoundationModalOverlay(isPresented: $isPresented, animation: .easeInOut(duration: 0.20), onDismiss: onDismiss) { size in
+            content.modifier(FoundationModalOverlay(isPresented: $isPresented, duration: 0.20, animation: Animation.easeInOut(duration:), onDismiss: onDismiss) { size in
                 positionedPanel(edge: edge, size: size, palette: palette)
             })
         } else {

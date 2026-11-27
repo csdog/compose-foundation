@@ -82,11 +82,10 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
     public func body(content: Content) -> some View {
         let palette = theme.palette(for: colorScheme)
         if presentation == .centered {
-            content.modifier(FoundationModalOverlay(isPresented: $isPresented, animation: .easeOut(duration: 0.10), onDismiss: onDismiss) { size in
+            content.modifier(FoundationModalOverlay(isPresented: $isPresented, duration: 0.10, animation: Animation.easeOut(duration:), onDismiss: onDismiss) { size in
                 centeredPanel(palette)
                     .frame(width: min(384, max(1, size.width - 32)))
                     .padding(.vertical, 16)
-                    .transition(.opacity)
             })
         } else {
             content.sheet(isPresented: $isPresented, onDismiss: onDismiss) {
