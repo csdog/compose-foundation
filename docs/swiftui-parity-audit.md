@@ -148,6 +148,14 @@ iPad mini（iPadOS 26.2）以 720 × 520 画布复拍六张深浅色图，逐字
 
 macOS Swift Package 构建和 AppKit 点击回归通过。同一行的两个操作分别触发，切换 RTL 后命中区域随布局镜像，禁用一个操作时另一个仍可点击。iOS 实际触控、键盘、VoiceOver、动态字体和其他媒体组合待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46053822322/job/140691488790)
 
+### Aspect Ratio 横向、方形和竖向裁剪
+
+对照 shadcn Base UI / Nova 的 `aspect-ratio-demo.tsx`、`aspect-ratio-square.tsx` 和 `aspect-ratio-portrait.tsx`。示例以 16:9、1:1、9:16 布局分别裁剪居中的正方形内容，使用本地生成的渐变复现几何和亮度。`FoundationAspectRatio` 保留原有初始化器、父容器尺寸提议和无效比例回退。超出可见矩形的子视图不能接收点击。
+
+iPhone 17 Pro Max（iOS 26.2）在 440 × 520 画布上复拍六张深浅色图，逐字节一致。三种比例的可见边界与参考最多相差 2 pt，中央颜色取样最多相差 1 个 RGB 通道值。程序生成的渐变在亮度分布和圆角抗锯齿上仍有像素差异。[截图报告](https://github.com/csdog/compose-foundation/actions/runs/46055187678/artifacts/15226197760)
+
+macOS 原生渲染测得 160 × 90、160 × 160 和 90 × 160 三种尺寸。零、负数、无穷大和 NaN 都回退到 80 × 80。实际窗口通过 AppKit 点击验证，可见区内的超尺寸按钮仍可操作，横向与纵向裁剪区外的点击交给下层按钮。iOS 实际触控及 RTL 参考示例待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46055187678/job/140695915025)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -155,7 +163,7 @@ macOS Swift Package 构建和 AppKit 点击回归通过。同一行的两个操�
 | accordion | 支持单开或多开、禁用项和绑定展开集合。Nova 使用全宽按钮、标题语义、展开状态和末尾方向箭头。横向布局与独立组装的触发器尚待对齐。 |
 | alert | 支持标题、说明、图标、操作和 destructive。Nova 使用紧凑的图标与文字排版，错误说明采用主题 destructive 色。操作区位置及 RTL 尚待对照。 |
 | alert-dialog | 原生确认框支持取消、确认和 destructive 操作。Compose 的自定义面板、媒体、页脚和叠层由系统确认框替代。 |
-| aspect-ratio | 固定宽高比、裁剪，非法比例回退到 1:1。窄容器和无界布局的精确测量规则需另行比较。 |
+| aspect-ratio | 固定宽高比，裁剪溢出内容与点击范围，无效比例回退到 1:1。无界布局和 RTL 样例待进一步对照。 |
 | attachment | 有上传进度、处理、失败和完成状态，并支持移除。缺少 Compose 的尺寸、纵向布局、附件组与预览触发器。 |
 | avatar | 支持本地 `Image`、三种尺寸、首字母或自定义回退、状态徽标、头像组和计数。iOS 15、macOS 12 起支持原生异步 URL 图片。 |
 | badge | 支持 primary、secondary、outline、destructive。缺少 Compose 的 ghost/link 样式与图标位置参数。 |
