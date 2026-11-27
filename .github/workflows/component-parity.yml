@@ -12,6 +12,10 @@ on:
       - "*gradle*"
       - scripts/verify_component_browser.mjs
       - scripts/component_browser_helpers.mjs
+  # Publication uses the integrated commit after a merge into main.
+  pull_request_target:
+    types: [closed]
+    branches: [main]
   workflow_dispatch:
     inputs:
       component:
@@ -33,25 +37,37 @@ on:
 permissions:
   contents: read
 
+env:
+  SOURCE_REVISION: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.merge_commit_sha || github.sha }}
+
 concurrency:
-  group: component-parity-${{ github.ref }}-${{ inputs.update == 'publish' && 'publish' || 'check' }}
-  cancel-in-progress: ${{ inputs.update != 'publish' }}
+  group: component-parity-${{ github.ref }}-${{ (inputs.update == 'publish' || github.event_name == 'pull_request_target') && github.run_id || 'check' }}
+  cancel-in-progress: ${{ inputs.update != 'publish' && github.event_name != 'pull_request_target' }}
 
 jobs:
   baseline:
+    if: github.event_name != 'pull_request_target' || (github.event.pull_request.merged && contains(toJSON(github.event.pull_request.labels.*.name), '"publish:'))
     name: Resolve the baseline once for all platforms
     runs-on: ubuntu-24.04
     outputs:
       repository: ${{ steps.resolve.outputs.repository }}
       revision: ${{ steps.resolve.outputs.revision }}
+      matrix: ${{ steps.scope.outputs.matrix }}
+      update: ${{ steps.resolve.outputs.update }}
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ env.SOURCE_REVISION }}
           persist-credentials: false
+      - name: Select capture scope
+        id: scope
+        env:
+          COMPONENT: ${{ inputs.component }}
+        run: python3 shadcn/validation/capture_scope.py >> "$GITHUB_OUTPUT"
       - name: Resolve the pinned commit or the latest main
         id: resolve
         env:
-          UPDATE_MODE: ${{ inputs.update }}
+          UPDATE_MODE: ${{ github.event_name == 'pull_request_target' && 'publish' || inputs.update || 'no' }}
           GH_TOKEN: ${{ secrets.COMPONENT_BASELINES_READ_TOKEN || github.token }}
         run: |
           if [[ "$UPDATE_MODE" == publish && "$GITHUB_REF" != refs/heads/main ]]; then
@@ -71,28 +87,25 @@ jobs:
             echo 'Baseline revision must be a full commit SHA' >&2
             exit 1
           fi
-          printf 'repository=%s\nrevision=%s\n' "$repository" "$revision" >> "$GITHUB_OUTPUT"
+          printf 'repository=%s\nrevision=%s\nupdate=%s\n' "$repository" "$revision" "$UPDATE_MODE" >> "$GITHUB_OUTPUT"
 
   capture:
     needs: baseline
     name: Capture and compare / ${{ matrix.platform }}
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - platform: cmp-web
-            runner: ubuntu-24.04
-          - platform: cmp-android
-            runner: ubuntu-24.04
-          - platform: swiftui-ios
-            runner: macos-15
+      matrix: ${{ fromJSON(needs.baseline.outputs.matrix) }}
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 45
     env:
       PLATFORM: ${{ matrix.platform }}
-      UPDATE_BASELINES: ${{ inputs.update == 'review' || inputs.update == 'publish' }}
+      UPDATE_MODE: ${{ needs.baseline.outputs.update }}
+      UPDATE_BASELINES: ${{ needs.baseline.outputs.update == 'review' || needs.baseline.outputs.update == 'publish' }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SOURCE_REVISION }}
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -208,11 +221,12 @@ jobs:
         env:
           REQUIRE_BASELINES: ${{ inputs.require_baselines }}
           BASELINE_REVISION: ${{ needs.baseline.outputs.revision }}
-          COMPONENT: ${{ inputs.component }}
-          UPDATE_MODE: ${{ inputs.update }}
+          COMPONENTS: ${{ toJSON(matrix.components) }}
         run: |
           flags=()
-          if [[ -n "$COMPONENT" ]]; then flags+=(--component "$COMPONENT"); fi
+          while IFS= read -r component; do
+            flags+=(--component "$component")
+          done < <(jq -r '.[]' <<< "$COMPONENTS")
           if [[ "$UPDATE_MODE" == review ]]; then
             flags+=(--bundle "$RUNNER_TEMP/component-parity-shadcn-review-$PLATFORM")
           fi
@@ -247,7 +261,7 @@ jobs:
           path: build/component-parity/${{ matrix.platform }}/diff/
           if-no-files-found: ignore
       - name: Upload shadcn visual review
-        if: ${{ !cancelled() && inputs.update == 'review' }}
+        if: ${{ !cancelled() && env.UPDATE_MODE == 'review' }}
         uses: actions/upload-artifact@v4
         with:
           name: component-parity-shadcn-review-${{ matrix.platform }}
@@ -261,9 +275,9 @@ jobs:
           name: component-parity-candidates-${{ matrix.platform }}
           retention-days: 7
           path: build/component-parity/${{ matrix.platform }}/candidate/
-          if-no-files-found: ${{ inputs.update == 'publish' && 'error' || 'ignore' }}
+          if-no-files-found: ${{ env.UPDATE_MODE == 'publish' && 'error' || 'ignore' }}
       - name: Preview baseline index changes
-        if: ${{ inputs.update == 'review' && needs.baseline.outputs.revision != '' }}
+        if: ${{ env.UPDATE_MODE == 'review' && needs.baseline.outputs.revision != '' }}
         run: |
           plan=shadcn/validation/plan.json
           checkout=build/component-baselines
@@ -277,7 +291,7 @@ jobs:
             git -C "$checkout" diff HEAD -- ':(glob)**/Index.md' > "$RUNNER_TEMP/baseline-index.patch"
           fi
       - name: Upload baseline index preview
-        if: ${{ inputs.update == 'review' }}
+        if: ${{ env.UPDATE_MODE == 'review' }}
         uses: actions/upload-artifact@v4
         with:
           name: component-parity-index-preview-${{ matrix.platform }}
@@ -288,13 +302,18 @@ jobs:
   publish:
     name: Publish component baselines
     needs: [baseline, capture]
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.update == 'publish'
+    if: github.ref == 'refs/heads/main' && needs.baseline.outputs.update == 'publish'
     runs-on: ubuntu-24.04
+    concurrency:
+      group: component-baselines-write
+      queue: max
     env:
       BASELINE_REPOSITORY: ${{ needs.baseline.outputs.repository }}
+      CAPTURE_MATRIX: ${{ needs.baseline.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ env.SOURCE_REVISION }}
           persist-credentials: false
       - uses: actions/download-artifact@v4
         with:
@@ -313,23 +332,27 @@ jobs:
       - name: Publish validated screenshots and indexes
         run: |
           plan=shadcn/validation/plan.json
-          platforms="$(jq -er '.platforms | to_entries | map(select(.value == "automated") | .key) | join("\n")' "$plan")"
           published_paths="$RUNNER_TEMP/published-paths.txt"
           : > "$published_paths"
-          for platform in $platforms; do
-            python shadcn/validation/publish_baselines.py --plan "$plan" --platform "$platform" \
+          while IFS= read -r capture; do
+            platform="$(jq -er '.platform' <<< "$capture")"
+            flags=()
+            while IFS= read -r component; do
+              flags+=(--component "$component")
+            done < <(jq -r '.components[]' <<< "$capture")
+            python shadcn/validation/publish_baselines.py --plan "$plan" --platform "$platform" "${flags[@]}" \
               --candidates "$RUNNER_TEMP/candidates/component-parity-candidates-$platform" \
               --baselines baseline-repository >> "$published_paths"
             python shadcn/validation/update_baseline_indexes.py --plan "$plan" --platform "$platform" \
               --baselines baseline-repository >> "$published_paths"
-          done
+          done < <(jq -c '.include[]' <<< "$CAPTURE_MATRIX")
           mapfile -t paths < "$published_paths"
           git -C baseline-repository add -- "${paths[@]}"
           if ! git -C baseline-repository diff --cached --quiet; then
             git -C baseline-repository -c user.name='github-actions[bot]' \
               -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
               commit -m 'Update component screenshot baselines' \
-                -m "Capture source: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$GITHUB_SHA" \
+                -m "Capture source: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$SOURCE_REVISION" \
                 -m "Publish run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
             git -C baseline-repository push origin HEAD:main
           fi
@@ -338,6 +361,7 @@ jobs:
             "$revision" "$GITHUB_SERVER_URL" "$BASELINE_REPOSITORY" "$revision" >> "$GITHUB_STEP_SUMMARY"
 
   cmp-behavior:
+    if: github.event_name != 'pull_request_target'
     name: CMP shared interaction tests
     runs-on: ubuntu-24.04
     timeout-minutes: 30
@@ -361,6 +385,7 @@ jobs:
           path: shadcn/shared/build/reports/tests/jvmTest
 
   swift-logic:
+    if: github.event_name != 'pull_request_target'
     name: SwiftUI Tabs navigation logic
     runs-on: macos-15
     timeout-minutes: 10
@@ -377,13 +402,13 @@ jobs:
 
   report:
     name: Component parity report
-    needs: [capture, cmp-behavior, swift-logic, publish]
-    if: always()
+    needs: [baseline, capture, cmp-behavior, swift-logic, publish]
+    if: always() && needs.baseline.result != 'skipped'
     runs-on: ubuntu-24.04
     steps:
       - name: Summarize platform and interaction checks
         env:
-          UPDATE_MODE: ${{ inputs.update }}
+          UPDATE_MODE: ${{ needs.baseline.outputs.update }}
           CAPTURE_RESULT: ${{ needs.capture.result }}
           CMP_RESULT: ${{ needs.cmp-behavior.result }}
           SWIFT_RESULT: ${{ needs.swift-logic.result }}
@@ -403,5 +428,8 @@ jobs:
             echo "- CMP JVM Tabs 与 Popover 交互：$CMP_RESULT"
             echo "- SwiftUI Tabs 焦点与选择逻辑：$SWIFT_RESULT"
           } >> "$GITHUB_STEP_SUMMARY"
-          [[ "$CAPTURE_RESULT" == success && "$CMP_RESULT" == success && "$SWIFT_RESULT" == success ]]
+          [[ "$CAPTURE_RESULT" == success ]]
+          if [[ "$GITHUB_EVENT_NAME" != pull_request_target ]]; then
+            [[ "$CMP_RESULT" == success && "$SWIFT_RESULT" == success ]]
+          fi
           [[ "$UPDATE_MODE" != publish || "$PUBLISH_RESULT" == success ]]

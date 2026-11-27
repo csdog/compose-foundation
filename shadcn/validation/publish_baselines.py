@@ -13,6 +13,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--platform", required=True)
+    parser.add_argument("--component", action="append", help="Require a complete pair for each selected component.")
     parser.add_argument("--candidates", type=Path, required=True)
     parser.add_argument("--baselines", type=Path, required=True)
     args = parser.parse_args()
@@ -20,13 +21,18 @@ def main():
     plan = json.loads(args.plan.read_text())
     if plan["platforms"].get(args.platform) != "automated":
         parser.error(f"no automated capture for {args.platform}")
+    components = args.component or plan["components"]
+    if unknown := set(components) - plan["components"].keys():
+        parser.error(f"unknown components: {', '.join(sorted(unknown))}")
     pairs = {
         frozenset(Path(args.platform) / screenshot_path(plan, component, theme, args.platform)
                   for theme in ("light", "dark"))
-        for component in plan["components"]
+        for component in components
     }
     expected = set().union(*pairs)
     files = {path.relative_to(args.candidates) for path in args.candidates.rglob("*") if path.is_file()}
+    if args.component and files != expected:
+        parser.error("candidates must contain exactly the selected components")
     if not files or not files <= expected or any(files & pair and not pair <= files for pair in pairs):
         parser.error("candidates must contain complete light/dark PNG pairs for the selected platform")
 
