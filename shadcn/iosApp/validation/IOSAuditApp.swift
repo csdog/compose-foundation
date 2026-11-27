@@ -830,49 +830,130 @@ private struct SeparatorInitialScreenshotFixture: View {
 }
 
 private struct TableScreenshotFixture: View {
-    enum Example: String, CaseIterable { case `default`, footer }
+    enum Example: String, CaseIterable { case `default`, footer, rtl, actions }
+
+    private enum Status: String {
+        case paid = "Paid", pending = "Pending", unpaid = "Unpaid"
+
+        var arabic: String {
+            switch self {
+            case .paid: return "مدفوع"
+            case .pending: return "قيد الانتظار"
+            case .unpaid: return "غير مدفوع"
+            }
+        }
+    }
+
+    private enum Method: String {
+        case card = "Credit Card", paypal = "PayPal", transfer = "Bank Transfer"
+
+        var arabic: String {
+            switch self {
+            case .card: return "بطاقة ائتمانية"
+            case .paypal: return "PayPal"
+            case .transfer: return "تحويل بنكي"
+            }
+        }
+    }
 
     private struct Invoice: Identifiable {
         let id: String
-        let status: String
-        let method: String
+        let status: Status?
+        let method: Method?
         let amount: String
     }
 
+    private struct Product: Identifiable {
+        let id: String
+        let price: String
+    }
+
     @Environment(\.colorScheme) private var scheme
+    @State private var lastAction = ""
     let example: Example
 
     var body: some View {
         var light = FoundationPalette.neutralLight
         light.foreground = .black
         let theme = FoundationTheme(preset: .nova, light: light)
-        let invoices = [
-            Invoice(id: "INV001", status: "Paid", method: "Credit Card", amount: "$250.00"),
-            Invoice(id: "INV002", status: "Pending", method: "PayPal", amount: "$150.00"),
-            Invoice(id: "INV003", status: "Unpaid", method: "Bank Transfer", amount: "$350.00"),
-            Invoice(id: "INV004", status: "Paid", method: "Credit Card", amount: "$450.00"),
-            Invoice(id: "INV005", status: "Paid", method: "PayPal", amount: "$550.00"),
-            Invoice(id: "INV006", status: "Pending", method: "Bank Transfer", amount: "$200.00"),
-            Invoice(id: "INV007", status: "Unpaid", method: "Credit Card", amount: "$300.00"),
-        ]
-        let columns: [FoundationTable<Invoice>.Column] = [
-            .init(id: "invoice", title: "Invoice", width: 84, weight: .medium, value: { $0.id }),
-            .init(id: "status", title: "Status", width: 134, value: { $0.status }),
-            .init(id: "method", title: "Method", width: 204, value: { $0.method }),
-            .init(id: "amount", title: "Amount", width: 186, alignment: .trailing, value: { $0.amount }),
-        ]
-        return FoundationTable(
-            columns: columns,
-            rows: example == .footer ? Array(invoices.prefix(3)) : invoices,
-            caption: "A list of your recent invoices.",
-            footer: Invoice(id: "Total", status: "", method: "", amount: "$2,500.00")
-        )
+        return Group {
+            if example == .actions {
+                products
+            } else {
+                invoiceTable
+            }
+        }
         .foundationTheme(theme)
         .frame(width: 672)
         .padding(24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(theme.palette(for: scheme).background)
         .ignoresSafeArea()
+    }
+
+    private var invoiceTable: some View {
+        let rtl = example == .rtl
+        let invoices = [
+            Invoice(id: "INV001", status: .paid, method: .card, amount: "$250.00"),
+            Invoice(id: "INV002", status: .pending, method: .paypal, amount: "$150.00"),
+            Invoice(id: "INV003", status: .unpaid, method: .transfer, amount: "$350.00"),
+            Invoice(id: "INV004", status: .paid, method: .card, amount: "$450.00"),
+            Invoice(id: "INV005", status: .paid, method: .paypal, amount: "$550.00"),
+            Invoice(id: "INV006", status: .pending, method: .transfer, amount: "$200.00"),
+            Invoice(id: "INV007", status: .unpaid, method: .card, amount: "$300.00"),
+        ]
+        let columns: [FoundationTable<Invoice>.Column] = [
+            .init(id: "invoice", title: rtl ? "الفاتورة" : "Invoice", width: 84, weight: .medium, value: { $0.id }),
+            .init(id: "status", title: rtl ? "الحالة" : "Status", width: rtl ? 159 : 134,
+                  value: { (rtl ? $0.status?.arabic : $0.status?.rawValue) ?? "" }),
+            .init(id: "method", title: rtl ? "الطريقة" : "Method", width: rtl ? 188 : 204,
+                  value: { (rtl ? $0.method?.arabic : $0.method?.rawValue) ?? "" }),
+            .init(id: "amount", title: rtl ? "المبلغ" : "Amount", width: rtl ? 177 : 186,
+                  alignment: rtl ? .leading : .trailing, value: { $0.amount }),
+        ]
+        return FoundationTable(
+            columns: columns,
+            rows: example == .footer ? Array(invoices.prefix(3)) : invoices,
+            caption: rtl ? "قائمة بفواتيرك الأخيرة." : "A list of your recent invoices.",
+            footer: Invoice(id: rtl ? "المجموع" : "Total", status: nil, method: nil, amount: "$2,500.00")
+        )
+        .environment(\.layoutDirection, rtl ? .rightToLeft : .leftToRight)
+    }
+
+    private var products: some View {
+        let columns: [FoundationTable<Product>.Column] = [
+            .init(id: "product", title: "Product", width: 349, weight: .medium, value: { $0.id }),
+            .init(id: "price", title: "Price", width: 136, value: { $0.price }),
+            .init(id: "actions", title: "Actions", width: 139, alignment: .trailing, value: { _ in "" }) { product in
+                Menu {
+                    Button("Edit") { lastAction = "Edit \(product.id)" }
+                    Button("Duplicate") { lastAction = "Duplicate \(product.id)" }
+                    Divider()
+                    if #available(iOS 15.0, *) {
+                        Button("Delete", role: .destructive) { lastAction = "Delete \(product.id)" }
+                    } else {
+                        Button("Delete") { lastAction = "Delete \(product.id)" }
+                    }
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(.primary)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
+                }
+                .accessibilityLabel("Open menu for \(product.id)")
+            },
+        ]
+        return FoundationTable(columns: columns, rows: [
+            Product(id: "Wireless Mouse", price: "$29.99"),
+            Product(id: "Mechanical Keyboard", price: "$129.99"),
+            Product(id: "USB-C Hub", price: "$49.99"),
+        ])
+        .overlay(Group {
+            if !lastAction.isEmpty {
+                Text(lastAction).font(.caption).padding(8)
+            }
+        }, alignment: .bottomLeading)
     }
 }
 
