@@ -183,7 +183,7 @@ struct MacPresentationFocusAudit {
                 timestamp: ProcessInfo.processInfo.systemUptime, windowNumber: window.windowNumber,
                 context: nil, eventNumber: 0, clickCount: 1, pressure: type == .leftMouseUp ? 0 : 1
             ) {
-                app.sendEvent(event)
+                app.postEvent(event, atStart: false)
             }
         }
     }
