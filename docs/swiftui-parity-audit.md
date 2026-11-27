@@ -188,6 +188,14 @@ iPhone 17 Pro Max（iOS 26.2）以 440 × 520 画布复拍六张深浅色图，�
 
 macOS 实际窗口回归以 AppKit 点击和按键验证编辑器获得焦点、组边框外出现焦点环、按键更新原生输入绑定、附加按钮独立运行以及移出焦点后焦点环消失。iOS 实际输入、键盘、VoiceOver、RTL 和错误样式仍待进一步验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46062487554/job/140719888964)
 
+### Table 发票、页脚和窄窗口
+
+对照 shadcn Base UI / Nova 的 `table-demo.tsx` 和 `table-footer.tsx`。完整示例包含七行发票，紧凑示例展示前三行，两张表都带合计和说明文字。Nova 使用无外框表头、行分隔线、浅色填充页脚和底部居中说明。原初始化器与列定义仍可用。新增的可选页脚复用列的值提取逻辑，始终位于排序后的数据行下方。
+
+iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布拍摄完整发票和紧凑页脚的深浅色图。四张图复拍逐字节一致。表头、行间分隔线和合计栏的纵向位置与参考一致，两种主题的页面及页脚内部填色取样一致。差异集中在系统字体、分隔线灰阶和抗锯齿。[截图与 shadcn 差异报告](https://github.com/csdog/compose-foundation/actions/runs/46064358988/artifacts/15230840455)
+
+macOS 真实窗口回归验证点击表头分别按升序和降序排列、合计栏固定在数据行后，以及窄窗口可以横向滚动。SwiftUI 包构建与 Tabs 导航回归通过。iOS 的 VoiceOver、实际触控滚动和 RTL 仍待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46064358988/job/140726083322)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -251,7 +259,7 @@ macOS 实际窗口回归以 AppKit 点击和按键验证编辑器获得焦点、
 | spinner | 系统不定进度控件及无障碍标签。Compose 提供原有旋转外观和 size 参数。 |
 | stepper | 支持当前、已完成状态和点击回调。Compose 的横向排列、连接线与描述 slots 未移植。 |
 | switch | Nova 使用 32 × 18.4 pt 轨道、16 pt 滑块和至少 44 pt 高的触控区域。iOS 15、macOS 12 起使用系统 Toggle 提供无障碍语义，较早系统提供按钮及开关状态。其余预设使用原生 SwiftUI Switch。小尺寸和组合字段仍待对照。 |
-| table | 支持标题、数据行、列宽、排序与水平滚动。Compose 有任意内容单元格、caption/footer 和独立表结构 slots。 |
+| table | 支持列标题、数据行、水平滚动、排序、说明文字和页脚。Nova 的完整发票和紧凑页脚示例覆盖深浅色。任意内容单元格、跨列合并、RTL、VoiceOver 和操作菜单示例待验收。 |
 | tabs | 支持选择绑定、禁用、横向 tabs 与内容切换。iOS 17 / macOS 14 起提供左右键、Home / End、禁用项跳过，以及自动或手动激活。iOS 26.2 模拟器已验证 LTR、RTL、跨组 Tab、长列表滚动、自动激活及手动模式的独立焦点与提交。macOS 15.6.1 已验证自动模式跳过禁用项、跨组 Tab 和手动激活。Compose 另有纵向、list variant 和独立焦点移动 API。 |
 | text | 支持标题、headline、正文、caption 和 muted 文本。Compose 有更多主题字体角色及自定义内容和样式参数。 |
 | textarea | 原生 TextEditor 支持多行绑定、独立占位文字及错误边框。Nova 最小高 64 pt，iOS 16 和 macOS 13 起隐藏系统滚动背景。自动增高和自定义焦点样式仍待补齐。 |
