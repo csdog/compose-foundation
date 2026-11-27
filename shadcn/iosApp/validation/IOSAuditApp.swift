@@ -137,7 +137,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         }
 
         let outputDirectory = try prepareOutputDirectory()
-        let parityFont = !names.isDisjoint(with: ["popover", "tabs"])
+        let parityFont = !names.isDisjoint(with: ["popover", "tabs", "button"])
             ? Bundle.main.url(forResource: "geist_medium", withExtension: "ttf") : nil
         if let parityFont, !CTFontManagerRegisterFontsForURL(parityFont as CFURL, .process, nil) {
             throw CocoaError(.fileReadCorruptFile, userInfo: [NSFilePathErrorKey: parityFont.path])
@@ -149,12 +149,14 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 let scheme: ColorScheme = dark ? .dark : .light
                 let palette = FoundationTheme().palette(for: scheme)
                 window.overrideUserInterfaceStyle = dark ? .dark : .light
-                let useComparisonViewport = parityFont != nil && (name == "popover" || name == "tabs")
+                let useComparisonViewport = parityFont != nil && ["popover", "tabs", "button"].contains(name)
                 let content: AnyView
                 if useComparisonViewport && name == "popover" {
                     content = AnyView(PopoverInitialScreenshotFixture(dark: dark))
                 } else if useComparisonViewport && name == "tabs" {
                     content = AnyView(TabsInitialScreenshotFixture())
+                } else if useComparisonViewport {
+                    content = AnyView(ButtonInitialScreenshotFixture())
                 } else {
                     content = AnyView(fixture()
                         .padding(16)
@@ -276,5 +278,39 @@ private struct TabsInitialScreenshotFixture: View {
         var light = FoundationPalette.neutralLight
         light.foreground = .black
         return FoundationTheme(preset: .nova, light: light)
+    }
+}
+
+private struct ButtonInitialScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        return HStack(spacing: 2) {
+            Button("Button") {}
+                .buttonStyle(FoundationButtonStyle(.outline))
+            Button {} label: {
+                Path { path in
+                    path.move(to: CGPoint(x: 8, y: 12.67))
+                    path.addLine(to: CGPoint(x: 8, y: 3.33))
+                    path.move(to: CGPoint(x: 3.33, y: 8))
+                    path.addLine(to: CGPoint(x: 8, y: 3.33))
+                    path.addLine(to: CGPoint(x: 12.67, y: 8))
+                }
+                .stroke(style: StrokeStyle(lineWidth: 1.33, lineCap: .round, lineJoin: .round))
+                .frame(width: 16, height: 16)
+            }
+            .buttonStyle(FoundationButtonStyle(.outline, size: .icon))
+            .accessibilityLabel("Arrow up")
+        }
+        .environment(\.font, .custom("Geist-Medium", size: 14))
+        .foundationTheme(theme)
+        .padding(.horizontal, 24)
+        .padding(.top, 18)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
     }
 }
