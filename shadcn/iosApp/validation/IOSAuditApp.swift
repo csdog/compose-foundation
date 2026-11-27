@@ -153,6 +153,12 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "sheet": [
                 ("sheet-default-initial", { AnyView(SheetScreenshotFixture(isOpen: false)) }),
                 ("sheet-default-open", { AnyView(SheetScreenshotFixture(isOpen: true)) }),
+                ("sheet-rtl-initial", { AnyView(SheetScreenshotFixture(isOpen: false, rightToLeft: true)) }),
+                ("sheet-rtl-open", { AnyView(SheetScreenshotFixture(isOpen: true, rightToLeft: true)) }),
+                ("sheet-side-initial", { AnyView(SheetSidesScreenshotFixture(open: nil)) }),
+                ("sheet-side-open", { AnyView(SheetSidesScreenshotFixture(open: .top)) }),
+                ("sheet-side-bottom-open", { AnyView(SheetSidesScreenshotFixture(open: .bottom)) }),
+                ("sheet-side-left-open", { AnyView(SheetSidesScreenshotFixture(open: .left)) }),
             ],
             "dialog": [
                 ("dialog-default-initial", { AnyView(DialogScreenshotFixture(isOpen: false)) }),
@@ -861,10 +867,13 @@ private struct SheetScreenshotFixture: View {
     @Environment(\.colorScheme) private var scheme
     @State private var isOpen: Bool
     @State private var name = "Pedro Duarte"
-    @State private var username = "@peduarte"
+    @State private var username: String
+    private let rightToLeft: Bool
 
-    init(isOpen: Bool) {
+    init(isOpen: Bool, rightToLeft: Bool = false) {
+        self.rightToLeft = rightToLeft
         _isOpen = State(initialValue: isOpen)
+        _username = State(initialValue: rightToLeft ? "peduarte" : "@peduarte")
     }
 
     var body: some View {
@@ -874,47 +883,137 @@ private struct SheetScreenshotFixture: View {
         let theme = FoundationTheme(preset: .nova, light: light)
         let palette = theme.palette(for: scheme)
 
-        return Button("Open") { isOpen = true }
+        return Button(rightToLeft ? "فتح" : "Open") { isOpen = true }
             .buttonStyle(FoundationButtonStyle(.outline))
             .padding(.top, 18)
             .padding(.horizontal, 24)
             .frame(width: 720, height: 520, alignment: .topLeading)
             .background(palette.background)
+            .environment(\.layoutDirection, .leftToRight)
             .modifier(FoundationSheet(
-                isPresented: $isOpen, title: "Edit profile",
-                description: "Make changes to your profile here. Click save when you're done.", side: .trailing
+                isPresented: $isOpen, title: rightToLeft ? "تعديل الملف الشخصي" : "Edit profile",
+                description: rightToLeft ? "قم بإجراء تغييرات على ملفك الشخصي هنا. انقر حفظ عند الانتهاء."
+                    : "Make changes to your profile here. Click save when you're done.",
+                side: .trailing
             ) {
                 VStack(spacing: 8) {
                     Button {
                         isOpen = false
                     } label: {
-                        Text("Save changes").frame(maxWidth: .infinity)
+                        Text(rightToLeft ? "حفظ التغييرات" : "Save changes").frame(maxWidth: .infinity)
                     }
                     .buttonStyle(FoundationButtonStyle(.primary))
                     Button {
                         isOpen = false
                     } label: {
-                        Text("Close").frame(maxWidth: .infinity)
+                        Text(rightToLeft ? "إغلاق" : "Close").frame(maxWidth: .infinity)
                     }
                     .buttonStyle(FoundationButtonStyle(.outline))
                 }
             } content: {
                 VStack(alignment: .leading, spacing: 24) {
-                    FoundationField("Name") {
-                        FoundationInput("Name", text: $name)
+                    FoundationField(rightToLeft ? "الاسم" : "Name") {
+                        FoundationInput(rightToLeft ? "الاسم" : "Name", text: $name)
                             .font(.custom("Geist-Regular", size: 16))
                     }
-                    FoundationField("Username") {
-                        FoundationInput("Username", text: $username)
+                    FoundationField(rightToLeft ? "اسم المستخدم" : "Username") {
+                        FoundationInput(rightToLeft ? "اسم المستخدم" : "Username", text: $username)
                             .font(.custom("Geist-Regular", size: 16))
                     }
                 }
                 .font(.custom("Geist-Regular", size: 14))
             })
+            .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
+            .environment(\.locale, Locale(identifier: rightToLeft ? "ar" : "en_US"))
             .foundationTheme(theme)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(palette.background)
             .ignoresSafeArea()
+    }
+}
+
+private struct SheetSidesScreenshotFixture: View {
+    enum Side: String, CaseIterable {
+        case top, right, bottom, left
+
+        var edge: Edge {
+            switch self {
+            case .top: return .top
+            case .right: return .trailing
+            case .bottom: return .bottom
+            case .left: return .leading
+            }
+        }
+    }
+
+    @Environment(\.colorScheme) private var scheme
+    @State private var selected: Side
+    @State private var isOpen: Bool
+
+    private let paragraph = """
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        """
+
+    init(open: Side?) {
+        _selected = State(initialValue: open ?? .top)
+        _isOpen = State(initialValue: open != nil)
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let palette = theme.palette(for: scheme)
+
+        return HStack(spacing: 8) {
+            ForEach(Side.allCases, id: \.self) { side in
+                Button(side.rawValue.capitalized) {
+                    selected = side
+                    isOpen = true
+                }
+                .buttonStyle(FoundationButtonStyle(.outline))
+            }
+        }
+        .padding(.top, 18)
+        .padding(.horizontal, 24)
+        .frame(width: 720, height: 520, alignment: .topLeading)
+        .background(palette.background)
+        .modifier(FoundationSheet(
+            isPresented: $isOpen, title: "Edit profile",
+            description: "Make changes to your profile here. Click save when you're done.", side: selected.edge
+        ) {
+            VStack(spacing: 8) {
+                Button {
+                    isOpen = false
+                } label: {
+                    Text("Save changes").frame(maxWidth: .infinity)
+                }
+                .buttonStyle(FoundationButtonStyle(.primary))
+                Button {
+                    isOpen = false
+                } label: {
+                    Text("Cancel").frame(maxWidth: .infinity)
+                }
+                .buttonStyle(FoundationButtonStyle(.outline))
+            }
+        } content: {
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(0..<10) { _ in
+                    Text(paragraph)
+                        .font(.custom("Geist-Regular", size: 14))
+                        .lineSpacing(4)
+                }
+            }
+        }
+        .maximumPanelHeight(selected == .top || selected == .bottom ? 260 : 520))
+        .foundationTheme(theme)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
+        .ignoresSafeArea()
     }
 }
 

@@ -264,6 +264,16 @@ iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布采集开合的四张深�
 
 macOS 实际窗口验证四个逻辑边的初始关闭焦点、Return、Escape、单次回调和触发器焦点归还。右侧面板另验收输入表单后点击遮罩，先释放 macOS 文本编辑器焦点，再在关闭后归还焦点。系统 Sheet、居中和系统 Dialog、Drawer 及 Tabs 回归通过。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46078074006/job/140771605885)
 
+### Sheet 上、下、左面板与 RTL
+
+对照 shadcn 的 `sheet-side.tsx` 和 `sheet-rtl.tsx`。上、下示例将面板最高设为半屏。新增 `.maximumPanelHeight(...)` 可限制边缘面板高度，超出的正文单独滚动，操作保持在页脚。阿拉伯语示例保留左侧触发器，面板由末尾逻辑边在 RTL 环境中映射到物理左侧。
+
+四张 shadcn 下方与左侧展开参考通过官方示例采集，复拍逐字节一致。[参考图 PR](https://github.com/csdog/compose-foundation-baselines/pull/11)
+
+iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布采集 16 张深浅色图，复拍逐字节一致。四张默认参考用例也与上一轮逐字节一致。上、下示例面板高度取样为 259–260 pt，与对应 shadcn 图一致。RTL 的面板和字段标签镜像，英文输入值保持原生靠左对齐，Web 参考靠右。用待审核参考图重生成全部 16 项 shadcn 差异。[iOS 截图附件](https://github.com/csdog/compose-foundation/actions/runs/46080011895/artifacts/15236292196)
+
+macOS 实际窗口验证 RTL 与四个逻辑边的 Return、Escape、单次关闭和焦点归还。右侧 Sheet 与居中 Dialog 在输入文字后点击遮罩，均释放了 macOS 原生字段编辑器并归还焦点。原版 Sheet、Drawer 和 Tabs 的回归通过。iOS 实际触控和 VoiceOver 待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46080011895/job/140776652762)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -319,7 +329,7 @@ macOS 实际窗口验证四个逻辑边的初始关闭焦点、Return、Escape�
 | scroll-fade | 按所选边缘和固定距离加渐变遮罩。和 Compose 的静态 overload 对应，缺少按可滚动方向和偏移量驱动的 overload。 |
 | select | 原生 Menu 支持单选、占位、选中图标、禁用项和原生分区标题。iOS 模拟器及 macOS 已验证分区、禁用状态、指针选择及无障碍值。Compose 另有尺寸、变体及不同面板位置。 |
 | separator | 横纵向装饰性分隔线可用。边缘颜色和屏幕像素由 SwiftUI/theme 决定。 |
-| sheet | 支持系统 sheet 及四个逻辑边的面板。面板支持说明、滚动内容和固定页脚。右侧编辑资料示例覆盖深浅色；其余边方向截图、RTL、iOS 触控和 VoiceOver 待验收。 |
+| sheet | 支持系统 sheet 及四个逻辑边的面板。可设最大高度，正文可滚动，页脚固定。四个方向和阿拉伯语 RTL 示例覆盖深浅色。iOS 实际触控、滚动及 VoiceOver 待验收。 |
 | shimmer | 支持开关、穿过内容的光带、减少动态效果。Compose 另有文本遮罩及可调颜色、宽度、方向、时序。 |
 | sidebar | 可开关侧栏，宽容器并排、窄容器遮罩。Compose 另有侧栏方位、collapsible/rail 策略、菜单 slots 和键盘快捷键。 |
 | skeleton | 支持静态主题占位圆角。Compose 默认包含 pulse 动画。 |
