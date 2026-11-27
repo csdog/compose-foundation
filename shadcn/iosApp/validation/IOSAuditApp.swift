@@ -835,12 +835,13 @@ private struct CardScreenshotFixture: View {
                         }
                         .padding(.trailing, 62)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .overlay(alignment: .topTrailing) {
+                        .overlay(
                             Button("Sign Up") {}
                                 .buttonStyle(PlainButtonStyle())
                                 .font(.custom("Geist-Medium", size: 14))
-                                .frame(minHeight: 44, alignment: .topTrailing)
-                        }
+                                .frame(minHeight: 44, alignment: .topTrailing),
+                            alignment: .topTrailing
+                        )
                         VStack(alignment: .leading, spacing: 8) {
                             FoundationLabel("Email").font(.custom("Geist-Medium", size: 14))
                             FoundationInput("Email", text: $email, placeholder: "m@example.com")
