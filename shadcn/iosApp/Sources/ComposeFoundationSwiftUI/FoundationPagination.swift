@@ -62,7 +62,8 @@ public struct FoundationPagination: View {
             ForEach(pages.indices, id: \.self) { index in
                 let value = pages[index]
                 if index > 0, value - pages[index - 1] > 1 { ellipsis }
-                control(Text(pageTitle(value)), target: value, label: Text("Page \(value)"), selected: value == current)
+                let title = pageTitle(value)
+                control(Text(title), target: value, label: Text("Page \(title)"), selected: value == current)
             }
             if let last = pages.last, last < count { ellipsis }
             step(current < count ? current + 1 : nil, previous: false)
@@ -111,11 +112,12 @@ public struct FoundationPagination: View {
         case .icons:
             control(icon.font(theme.preset == .nova ? .system(size: 12) : nil), target: target, label: label)
         case let .labels(previousTitle, nextTitle):
+            let title = previous ? previousTitle : nextTitle
             control(HStack(spacing: 6) {
                 if previous { icon.font(.system(size: 11)) }
-                Text(previous ? previousTitle : nextTitle)
+                Text(title)
                 if !previous { icon.font(.system(size: 11)) }
-            }, target: target, label: label, iconSize: false)
+            }, target: target, label: Text(title), iconSize: false)
         }
     }
 

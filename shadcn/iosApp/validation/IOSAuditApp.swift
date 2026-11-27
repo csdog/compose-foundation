@@ -819,7 +819,7 @@ private struct PaginationScreenshotFixture: View {
                                     controls: controls, window: example == .simple ? .standard : .compact)
             .font(.custom("Geist-Medium", size: 14))
             .environment(\.layoutDirection, example == .rtl ? .rightToLeft : .leftToRight)
-            .environment(\.locale, Locale(identifier: example == .rtl ? "ar" : "en_US"))
+            .environment(\.locale, Locale(identifier: example == .rtl ? "ar@numbers=arab" : "en_US"))
             .foundationTheme(theme)
             .padding(.top, 18)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
