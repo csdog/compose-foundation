@@ -1,5 +1,22 @@
 import SwiftUI
 
+struct FoundationButtonGroupPosition: Sendable {
+    let axis: Axis
+    let first: Bool
+    let last: Bool
+}
+
+private struct FoundationButtonGroupPositionKey: EnvironmentKey {
+    static let defaultValue: FoundationButtonGroupPosition? = nil
+}
+
+extension EnvironmentValues {
+    var foundationButtonGroupPosition: FoundationButtonGroupPosition? {
+        get { self[FoundationButtonGroupPositionKey.self] }
+        set { self[FoundationButtonGroupPositionKey.self] = newValue }
+    }
+}
+
 public struct FoundationButtonStyle: ButtonStyle {
     public enum Variant: Sendable {
         case primary
@@ -48,6 +65,7 @@ public struct FoundationButtonStyle: ButtonStyle {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.textCase) private var textCase
     @Environment(\.font) private var labelFont
+    @Environment(\.foundationButtonGroupPosition) private var groupPosition
     @ScaledMetric(relativeTo: .subheadline) private var horizontalPadding: CGFloat = 12
 
     private let variant: Variant
@@ -63,13 +81,33 @@ public struct FoundationButtonStyle: ButtonStyle {
         self.size = size
     }
 
+    @ViewBuilder
     public func makeBody(configuration: Configuration) -> some View {
-        let palette = theme.palette(for: colorScheme)
-        let colors = colors(for: palette)
         let metrics = theme.preset?.metrics
         let height = size?.height ?? metrics?.buttonHeight ?? 32
         let radius = metrics == nil ? theme.cornerRadius : min(theme.cornerRadius, height / 2)
-        let shape = RoundedRectangle(cornerRadius: radius)
+        if #available(iOS 18, macOS 15, *), let position = groupPosition, theme.preset == .nova {
+            let leading = position.axis == .horizontal ? position.first : true
+            let trailing = position.axis == .horizontal ? position.last : true
+            let top = position.axis == .vertical ? position.first : true
+            let bottom = position.axis == .vertical ? position.last : true
+            buttonBody(configuration, shape: UnevenRoundedRectangle(
+                topLeadingRadius: leading && top ? radius : 0,
+                bottomLeadingRadius: leading && bottom ? radius : 0,
+                bottomTrailingRadius: trailing && bottom ? radius : 0,
+                topTrailingRadius: trailing && top ? radius : 0
+            ), height: height, position: position)
+        } else {
+            buttonBody(configuration, shape: RoundedRectangle(cornerRadius: radius), height: height, position: nil)
+        }
+    }
+
+    private func buttonBody(
+        _ configuration: Configuration, shape: some InsettableShape, height: CGFloat, position: FoundationButtonGroupPosition?
+    ) -> some View {
+        let palette = theme.palette(for: colorScheme)
+        let colors = colors(for: palette)
+        let metrics = theme.preset?.metrics
         let editorial = theme.preset == .sera
         let pressed = isEnabled && configuration.isPressed
         let novaOutline = theme.preset == .nova && variant == .outline
@@ -85,18 +123,26 @@ public struct FoundationButtonStyle: ButtonStyle {
             .foregroundColor(colors.foreground)
             .padding(.horizontal, horizontalPadding * padding / 12 + (novaOutline && !iconOnly ? 1 : 0))
             .padding(.vertical, size == nil ? 6 : 2)
-            .frame(minHeight: height)
-            .frame(width: iconOnly ? height : nil)
+            .frame(minHeight: position?.axis == .vertical ? max(44, height) : height)
+            .frame(width: iconOnly ? (position == nil ? height : max(44, height)) : nil)
+            .frame(minWidth: position == nil ? nil : 44)
             .background(Group {
                 if darkNovaOutline {
-                    shape.inset(by: 1).fill(palette.novaDarkOutlineFill)
+                    shape.inset(by: position == nil ? 1 : 0).fill(palette.novaDarkOutlineFill)
                 } else {
                     shape.fill(colors.background)
                 }
             })
-            .overlay(shape.strokeBorder(darkNovaOutline ? palette.input : colors.border))
+            .overlay(Group {
+                let stroke = shape.strokeBorder(darkNovaOutline ? palette.input : colors.border)
+                if let position, !position.first {
+                    stroke.padding(position.axis == .horizontal ? .leading : .top, -1).clipped()
+                } else {
+                    stroke
+                }
+            })
             .opacity(isEnabled ? 1 : 0.5)
-            .offset(y: pressed ? 1 : 0)
+            .offset(y: pressed && position == nil ? 1 : 0)
             .animation(reduceMotion ? nil : .timingCurve(0.4, 0, 0.2, 1, duration: 0.15), value: pressed)
             .frame(minWidth: iconOnly ? 44 : nil, minHeight: 44)
             .contentShape(Rectangle())

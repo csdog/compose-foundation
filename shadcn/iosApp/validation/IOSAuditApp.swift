@@ -149,6 +149,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "button-group": [
+                ("button-group-size-initial", { AnyView(ButtonGroupScreenshotFixture(vertical: false)) }),
+                ("button-group-orientation-initial", { AnyView(ButtonGroupScreenshotFixture(vertical: true)) }),
+            ],
             "switch": SwitchScreenshotFixture.Example.allCases.map { example in
                 ("switch-\(example.rawValue)", { AnyView(SwitchScreenshotFixture(example: example)) })
             },
@@ -745,6 +749,69 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct ButtonGroupScreenshotFixture: View {
+    let vertical: Bool
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+
+        return Group {
+            if vertical {
+                FoundationButtonGroup(.vertical) {
+                    iconButton("Increase", plus: true, size: .icon)
+                    iconButton("Decrease", plus: false, size: .icon)
+                }
+                .padding(.top, 24)
+            } else {
+                VStack(alignment: .leading, spacing: 0) {
+                    sizeRow("Small", size: .small, iconSize: .iconSmall)
+                    sizeRow("Default", size: .regular, iconSize: .icon).padding(.top, 18)
+                    sizeRow("Large", size: .large, iconSize: .iconLarge).padding(.top, 22)
+                }
+                .padding(.top, 16)
+            }
+        }
+        .foundationTheme(theme)
+        .padding(.leading, 24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+
+    private func sizeRow(_ label: String, size: FoundationButtonStyle.Size, iconSize: FoundationButtonStyle.Size) -> some View {
+        FoundationButtonGroup {
+            Button(label) {}.buttonStyle(FoundationButtonStyle(.outline, size: size))
+            Button("Button") {}.buttonStyle(FoundationButtonStyle(.outline, size: size))
+            Button("Group") {}.buttonStyle(FoundationButtonStyle(.outline, size: size))
+            iconButton("Add", plus: true, size: iconSize)
+        }
+        .font(.custom("Geist-Medium", size: size == .small ? 12.8 : 14))
+    }
+
+    private func iconButton(_ title: String, plus: Bool, size: FoundationButtonStyle.Size) -> some View {
+        let side: CGFloat = size == .iconSmall ? 14 : 16
+        return Button {} label: {
+            Path { path in
+                let start = side * 5 / 24
+                let end = side - start
+                path.move(to: CGPoint(x: start, y: side / 2))
+                path.addLine(to: CGPoint(x: end, y: side / 2))
+                if plus {
+                    path.move(to: CGPoint(x: side / 2, y: start))
+                    path.addLine(to: CGPoint(x: side / 2, y: end))
+                }
+            }
+            .stroke(style: StrokeStyle(lineWidth: side / 12, lineCap: .round))
+            .frame(width: side, height: side)
+        }
+        .buttonStyle(FoundationButtonStyle(.outline, size: size))
+        .accessibilityLabel(Text(title))
     }
 }
 

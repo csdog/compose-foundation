@@ -138,6 +138,23 @@
       "accessibility": "field label and secure entry where applicable",
       "motion": "static settled frames"
     },
+    "button-group": {
+      "title": "Button Group",
+      "variant": "size",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "size", "status": "initial", "viewport": [402, 520]},
+          {"variant": "orientation", "status": "initial", "viewport": [402, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/button-group-size.tsx",
+      "visual": "compare the three complete size rows and the vertical plus/minus group",
+      "behavior": "preserve each child's independent button action",
+      "accessibility": "group role, child order and independent button labels",
+      "motion": "static settled frames"
+    },
     "toggle": {
       "title": "Toggle",
       "variant": "default",
