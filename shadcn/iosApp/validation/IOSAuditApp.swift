@@ -150,6 +150,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "empty": [
+                ("empty-default-initial", { AnyView(EmptyScreenshotFixture(outlined: false)) }),
+                ("empty-outline-initial", { AnyView(EmptyScreenshotFixture(outlined: true)) }),
+            ],
             "collapsible": [
                 ("collapsible-default-initial", { AnyView(CollapsibleScreenshotFixture(expanded: false)) }),
                 ("collapsible-default-open", { AnyView(CollapsibleScreenshotFixture(expanded: true)) }),
@@ -766,6 +770,57 @@ private struct SeparatorInitialScreenshotFixture: View {
         .foundationTheme(theme)
         .padding(.leading, 18)
         .padding(.top, 24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct EmptyScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    let outlined: Bool
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let palette = theme.palette(for: scheme)
+
+        return FoundationEmpty(
+            outlined ? "Cloud Storage Empty" : "No Projects Yet",
+            message: outlined
+                ? "Upload files to your cloud storage to access them anywhere."
+                : "You haven't created any projects yet. Get started by creating your first project.",
+            symbol: outlined ? "cloud" : "folder",
+            variant: outlined ? .outline : .standard
+        ) {
+            if outlined {
+                Button("Upload Files") {}
+                    .buttonStyle(FoundationButtonStyle(.outline, size: .small))
+            } else {
+                VStack(spacing: 16) {
+                    HStack(spacing: 8) {
+                        Button("Create Project") {}
+                            .buttonStyle(FoundationButtonStyle(.primary, size: .regular))
+                        Button("Import Project") {}
+                            .buttonStyle(FoundationButtonStyle(.outline, size: .regular))
+                    }
+                    Button {} label: {
+                        HStack(spacing: 4) {
+                            Text("Learn More")
+                            Image(systemName: "arrow.up.right").accessibilityHidden(true)
+                        }
+                        .foregroundColor(palette.mutedForeground)
+                    }
+                    .buttonStyle(FoundationButtonStyle(.link, size: .small))
+                }
+            }
+        }
+        .font(.custom("Geist-Medium", size: 14))
+        .foundationTheme(theme)
+        .frame(width: 672)
+        .padding(24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()

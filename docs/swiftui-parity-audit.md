@@ -116,6 +116,14 @@ iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集收起、展开的四张�
 
 macOS 实际窗口回归已验证开关各写入绑定一次、关闭的面板无法接收点击、展开始终可由外部状态控制，以及禁用触发按钮时已展开的内容仍可操作。iOS 触控、键盘、VoiceOver、RTL 和其余布局待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46046834807/job/140668144649)
 
+### Empty 默认与虚线边框
+
+对照 shadcn Base UI / Nova 的 `empty-demo.tsx` 和 `empty-outline.tsx`。默认示例保留新建、导入和帮助入口，边框示例保留上传操作。Nova 使用 32 pt 的装饰图标区域、14 pt 的标题与说明，以及独立的操作区。标题有原生无障碍 heading 语义，图标和虚线边框从无障碍树隐藏。传入 `variant: .outline` 可选择边框，原有带或不带 `actions` 的初始化方式仍可使用。
+
+iPad mini（iPadOS 26.2）的四张深浅色图在 720 × 520 画布上复拍逐字节一致。图标底色取样与 shadcn 一致，浅色为 `#f5f5f5`，深色为 `#262626`。虚线边框的左右边界与参考相差最多 1 pt。SwiftUI 说明使用自然换行，保留原生 SF Symbols 和 44 pt 按钮操作高度。默认样例末行低 12–13 pt，边框样例下沿低 4–5 pt。[最终 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46048600511/artifacts/15222394857)
+
+macOS Swift Package 构建和 AppKit 点击回归通过。虚线边框内两个按钮可分别操作，禁用其中一个时另一个仍能响应。iOS 触控、硬件键盘、VoiceOver、RTL 和动态字体待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46048600511/job/140674068424)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -146,7 +154,7 @@ macOS 实际窗口回归已验证开关各写入绑定一次、关闭的面板�
 | drawer | 支持底部面板、遮罩点击、拖动关闭、减少动态效果和 `onDismiss`。iOS 模拟器与 macOS 已验证初始关闭焦点、Return、Escape 和键盘关闭后归还焦点。macOS 已验证向下拖动关闭和向上拖动边界。Compose 另有多方向、吸附点和背景缩进。 |
 | dropdown-menu | 自定义外部触发器外观，菜单内容走 SwiftUI Menu。Compose 可控制菜单锚点、portal、焦点和自定义条目状态。 |
 | emoji-text | Apple 系统彩色 emoji，可保留 ZWJ 等 Unicode 序列。Compose 使用自己的 emoji 图形与替换逻辑。 |
-| empty | 支持符号、标题、说明和操作 slot。缺少 Compose 的默认/虚线框变体和说明换行策略。 |
+| empty | 支持符号、标题、说明和操作 slot，以及标准和虚线边框样式。Nova 对齐基本排版。自定义头像等媒体及其余示例布局待对照。 |
 | field | 纵向显示标题、说明、错误及任意输入。Nova 使用 14 pt 支持文字与 8 pt 间距，说明可放在控件前或后。FieldSet、Legend、横向及响应式排列待补齐。 |
 | hover-card | 触发器和卡片有延迟打开、指针离开后延迟关闭，并支持触摸长按。Compose 另有共享 provider、位置和更完整的指针过渡控制。 |
 | icon | 支持 SF Symbols、动态字号和可选无障碍标签。Compose 可传入任意 ImageVector 并选择图标变体。 |

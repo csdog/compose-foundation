@@ -20,6 +20,24 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "empty": {
+      "title": "Empty",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "outline", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/empty-demo.tsx",
+      "visual": "compare the full heading, icon, description, action rows and dashed outline",
+      "behavior": "independently activate supplied actions inside the Empty container",
+      "accessibility": "title is a heading, the decorative symbol and outline are hidden",
+      "motion": "static settled frames"
+    },
     "collapsible": {
       "title": "Collapsible",
       "variant": "default",
