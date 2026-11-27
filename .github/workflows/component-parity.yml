@@ -616,6 +616,51 @@ jobs:
           cat "$log"
           grep -q '^PASS:' "$log"
 
+      - name: Verify Avatar images and fallback on macOS
+        if: contains(needs.baseline.outputs.matrix, '"avatar"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          app="$RUNNER_TEMP/AvatarAudit.app"
+          assets="$RUNNER_TEMP/avatar-assets"
+          mkdir -p "$app/Contents/MacOS" "$assets"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string AvatarAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.avatar-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          plutil -insert NSAppTransportSecurity -xml '<dict><key>NSAllowsLocalNetworking</key><true/></dict>' "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationTheme.swift" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationAvatar.swift" \
+            "$swiftui/validation/MacAvatarImageAudit.swift" \
+            -o "$app/Contents/MacOS/AvatarAudit"
+          python3 - "$assets" > "$RUNNER_TEMP/avatar-server.log" 2>&1 <<'PY' &
+          import base64
+          import functools
+          import http.server
+          import pathlib
+          import sys
+          assets = pathlib.Path(sys.argv[1])
+          png = "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGO8LWjNwMDAxMDAwMDAAAAOngEr1LhkiwAAAABJRU5ErkJggg=="
+          (assets / "avatar.png").write_bytes(base64.b64decode(png))
+          handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=assets)
+          with http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler) as server:
+              (assets / "port").write_text(str(server.server_port))
+              server.serve_forever()
+          PY
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            [[ -s "$assets/port" ]] && break
+            sleep 0.1
+          done
+          log="$RUNNER_TEMP/avatar.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app" --args "http://127.0.0.1:$(cat "$assets/port")/" "$assets/avatar.png"
+          cat "$log" "$RUNNER_TEMP/avatar-server.log"
+          grep -q '^PASS:' "$log"
+          grep -q 'GET /missing.png HTTP/1.1" 404' "$RUNNER_TEMP/avatar-server.log"
+
   report:
     name: Component parity report
     needs: [baseline, capture, cmp-behavior, swift-logic, publish]
