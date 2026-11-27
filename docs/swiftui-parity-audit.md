@@ -274,6 +274,16 @@ iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布采集 16 张深浅色图�
 
 macOS 实际窗口验证 RTL 与四个逻辑边的 Return、Escape、单次关闭和焦点归还。右侧 Sheet 与居中 Dialog 在输入文字后点击遮罩，均释放了 macOS 原生字段编辑器并归还焦点。原版 Sheet、Drawer 和 Tabs 的回归通过。iOS 实际触控和 VoiceOver 待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46080011895/job/140776652762)
 
+### Input 阿拉伯语布局和光标编辑
+
+Nova 的 RTL 单行输入在 iOS 26 和 macOS 26 上使用系统布局对齐策略，英文值可沿界面的起始边放置。TextField、SecureField、文本绑定和无障碍标签继续由 SwiftUI 提供。旧 SDK 与早期系统沿用原有对齐策略，部署目标仍为 iOS 14、macOS 11。[Apple 对齐策略文档](https://developer.apple.com/documentation/swiftui/view/multilinetextalignment(strategy:))
+
+iPad mini（A17 Pro，iOS 26.2）的 16 张 Sheet 图复拍逐字节一致。两张 RTL 展开图的英文值从 x=29 移到字段右侧，字形右缘同为 x=355；其余 14 张与上一轮逐字节一致。[Sheet 截图与差异报告](https://github.com/csdog/compose-foundation/actions/runs/46080927172/artifacts/15237217758)
+
+独立 Input 用例的六张深浅色图复拍逐字节一致，四张原英文图与此前一致。阿拉伯语密码占位文字与参考图的横向边界最多相差 1 pt。SwiftUI 将占位串显示为 `sk-...`，浏览器显示为 `...-sk`，两端短横线和省略号采用各自的双向排版结果。[Input 截图与差异报告](https://github.com/csdog/compose-foundation/actions/runs/46081746716/artifacts/15237403782)
+
+macOS 实际窗口中点击 RTL Sheet 的 `FoundationInput`，从 `Pedro` 末尾向左移动光标后输入 `a`，绑定值为 `Pedrao`。点击遮罩关闭后焦点归还，其他呈现组件的回归通过。该 macOS runner 使用系统原有对齐策略，iOS 截图用于验收新策略。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46080927172/job/140779538561)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -308,7 +318,7 @@ macOS 实际窗口验证 RTL 与四个逻辑边的 Return、Escape、单次关�
 | field | 纵向显示标题、说明、错误及任意输入。Nova 使用 14 pt 支持文字与 8 pt 间距，说明可放在控件前或后。FieldSet、Legend、横向及响应式排列待补齐。 |
 | hover-card | 支持延迟开关、触发器与卡片间的指针切换、长按和受控展开。Nova 使用锚定弹层，悬停保持原窗口焦点。共享 provider、位置变体及触控回归待对齐。 |
 | icon | 支持 SF Symbols、动态字号和可选无障碍标签。Compose 可传入任意 ImageVector 并选择图标变体。 |
-| input | 原生单行输入支持独立占位文字、SecureField、错误和禁用状态。Nova 边框视觉高 32 pt，字段布局至少高 44 pt。数字等专用类型与 Compose 样式变体仍有差异。 |
+| input | 原生单行输入支持独立占位文字、SecureField、错误和禁用状态。Nova 边框视觉高 32 pt，字段布局至少高 44 pt。iOS 26 与 macOS 26 的 Nova RTL 字段按界面起始边对齐。混合脚本输入、iOS 光标及 VoiceOver 待单独验收。 |
 | input-group | 支持横向和纵向附加区域、共用边框与由调用方控制的焦点/错误外观。输入和操作可通过原生 SwiftUI 控件组合。 |
 | input-otp | 使用一个定长数字绑定和原生编辑字段，iOS 字段标记为一次性验证码。Nova 使用连续的 32 pt 格，可通过 `groupBreaks` 加入分隔符。字母数字模式及逐槽选区控制仍待补齐。 |
 | item | 支持媒体、标题、说明、操作、三种表面样式和三种尺寸。群组、图片媒体尺寸和独立 header/footer 待对齐。 |

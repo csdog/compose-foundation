@@ -247,6 +247,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "input": [
                 ("input-default-initial", { AnyView(TextFieldScreenshotFixture(example: .input)) }),
                 ("input-basic-initial", { AnyView(TextFieldScreenshotFixture(example: .basicInput)) }),
+                ("input-rtl-initial", { AnyView(TextFieldScreenshotFixture(example: .rtlInput)) }),
             ],
             "input-otp": InputOtpScreenshotFixture.Example.allCases.map { example in
                 ("input-otp-\(example.rawValue)", { AnyView(InputOtpScreenshotFixture(example: example)) })
@@ -2589,7 +2590,7 @@ private struct InputOtpScreenshotFixture: View {
 }
 
 private struct TextFieldScreenshotFixture: View {
-    enum Example { case input, basicInput, textarea, textareaField }
+    enum Example { case input, basicInput, rtlInput, textarea, textareaField }
 
     let example: Example
     @State private var value = ""
@@ -2602,12 +2603,15 @@ private struct TextFieldScreenshotFixture: View {
         let palette = theme.palette(for: scheme)
         return VStack(alignment: .leading, spacing: 0) {
             switch example {
-            case .input:
-                fieldLabel("API Key")
-                FoundationInput("API Key", text: $value, placeholder: "sk-...", secure: true)
+            case .input, .rtlInput:
+                let rtl = example == .rtlInput
+                let label = rtl ? "مفتاح API" : "API Key"
+                fieldLabel(label)
+                FoundationInput(label, text: $value, placeholder: "sk-...", secure: true)
                     .font(fieldFont)
                     .padding(.top, 2)
-                description("Your API key is encrypted and stored securely.", palette: palette)
+                description(rtl ? "مفتاح API الخاص بك مشفر ومخزن بأمان."
+                    : "Your API key is encrypted and stored securely.", palette: palette)
                     .padding(.top, 3)
             case .basicInput:
                 FoundationInput("Text", text: $value, placeholder: "Enter text")
@@ -2630,6 +2634,7 @@ private struct TextFieldScreenshotFixture: View {
         .foregroundColor(palette.foreground)
         .foundationTheme(theme)
         .frame(width: 672, alignment: .leading)
+        .environment(\.layoutDirection, example == .rtlInput ? .rightToLeft : .leftToRight)
         .padding(.leading, 24)
         .padding(.top, example == .basicInput ? 18 : 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
