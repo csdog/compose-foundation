@@ -209,9 +209,13 @@ jobs:
           REQUIRE_BASELINES: ${{ inputs.require_baselines }}
           BASELINE_REVISION: ${{ needs.baseline.outputs.revision }}
           COMPONENT: ${{ inputs.component }}
+          UPDATE_MODE: ${{ inputs.update }}
         run: |
           flags=()
           if [[ -n "$COMPONENT" ]]; then flags+=(--component "$COMPONENT"); fi
+          if [[ "$UPDATE_MODE" == review ]]; then
+            flags+=(--bundle "$RUNNER_TEMP/component-parity-shadcn-review-$PLATFORM")
+          fi
           if [[ "$UPDATE_BASELINES" == true ]]; then
             flags+=(--update-baselines)
           elif [[ "$REQUIRE_BASELINES" == true ]]; then
@@ -241,6 +245,14 @@ jobs:
           name: component-parity-differences-${{ matrix.platform }}
           retention-days: 7
           path: build/component-parity/${{ matrix.platform }}/diff/
+          if-no-files-found: ignore
+      - name: Upload shadcn visual review
+        if: ${{ !cancelled() && inputs.update == 'review' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: component-parity-shadcn-review-${{ matrix.platform }}
+          retention-days: 7
+          path: ${{ runner.temp }}/component-parity-shadcn-review-${{ matrix.platform }}/
           if-no-files-found: ignore
       - name: Upload baseline candidates
         if: ${{ !cancelled() && env.UPDATE_BASELINES == 'true' }}
@@ -382,7 +394,7 @@ jobs:
             if [[ "$UPDATE_MODE" == publish ]]; then
               echo "基准发布：$PUBLISH_RESULT"
             elif [[ "$UPDATE_MODE" == review ]]; then
-              echo '基准审核：稳定的候选图可从各平台附件下载。'
+              echo '基准审核：下载各平台的 component-parity-shadcn-review 附件，打开 overview.png 查看候选图与 shadcn 对照。'
             else
               echo '日常回归：每个用例拍摄一遍。比对详情在各平台任务的 Summary，截图差异只在失败时上传。'
             fi

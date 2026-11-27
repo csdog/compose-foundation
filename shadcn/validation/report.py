@@ -293,7 +293,8 @@ def summarize(args, plan):
                   if failure_rows else ["✅ 本次没有截图验收失败项。"]), ""]
     reports = {"report.md": "\n".join(linked + details), "failures.md": "\n".join(failures)}
     args.output.mkdir(parents=True, exist_ok=True)
-    targets.add(draw_overview(args.output, overview_rows).relative_to(args.output))
+    overview = draw_overview(args.output, overview_rows, shadcn_review=args.update_baselines)
+    targets.add(overview.relative_to(args.output))
     for name, report in reports.items():
         (args.output / name).write_text(report)
     if args.bundle:
@@ -306,8 +307,8 @@ def summarize(args, plan):
     print(args.output / "failures.md")
     if summary := os.environ.get("GITHUB_STEP_SUMMARY"):
         if args.bundle:
-            lines.extend(["", "在本次运行的 Artifacts 下载 **component-parity-report**，解压后打开 "
-                          "`report.md` 查看总报告，或打开 `failures.md` 查看失败项。"])
+            lines.extend(["", f"在本次运行的 Artifacts 下载 **{args.bundle.name}**，解压后打开 "
+                          "`overview.png` 查看截图对照，或打开 `report.md` 查看原图和来源。"])
         with Path(summary).open("a") as stream:
             stream.write("\n".join(lines + details))
     return bool(failure_rows)
