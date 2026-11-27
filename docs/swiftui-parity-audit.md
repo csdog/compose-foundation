@@ -180,6 +180,14 @@ iPhone 17 Pro（iOS 26.2）使用 402 × 520 画布复拍收起、展开的四�
 
 macOS 在实际窗口内调用组件悬停回调，验证过早离开会取消打开、触发器到卡片的切换会取消关闭、离开卡片后关闭，以及父窗口一直保持为 key window。系统指针轨迹在 CI 未得到验证。既有 Popover 的 Escape 关闭与触发器焦点回归通过。共用弹层改动后的 24 张 iOS Popover 截图与改动前逐字节一致。iOS 实际长按、VoiceOver 和 RTL 待另行验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46060257085/job/140712584204) · [Popover 截图回归](https://github.com/csdog/compose-foundation/actions/runs/46059382583/artifacts/15227918198)
 
+### Input Group 行内与上下附加区域
+
+对照 shadcn Base UI / Nova 的 `input-group-demo.tsx`、`input-group-block-start.tsx` 和 `input-group-block-end.tsx`。示例保留搜索图标和结果计数、单行输入、带标题的代码编辑器及带计数与发布按钮的评论编辑器。原有横向初始化器继续可用，`axis: .vertical` 将首尾附加区域放在编辑器上下。组级 `isFocused` 和 `isInvalid` 可由调用方的原生焦点或校验状态驱动，输入和附加按钮保留各自的原生控件语义。
+
+iPhone 17 Pro Max（iOS 26.2）以 440 × 520 画布复拍六张深浅色图，逐字节一致。横向组边界与参考最多相差 2 pt，填色取样在两种主题一致，搜索占位文字的灰阶取样与参考相差 2–4。保留 44 pt 操作区后，上附加区域和下附加区域示例的底部分别低 36–37 pt 和 28–29 pt。[最终截图报告](https://github.com/csdog/compose-foundation/actions/runs/46062487554/artifacts/15229552092)
+
+macOS 实际窗口回归以 AppKit 点击和按键验证编辑器获得焦点、组边框外出现焦点环、按键更新原生输入绑定、附加按钮独立运行以及移出焦点后焦点环消失。iOS 实际输入、键盘、VoiceOver、RTL 和错误样式仍待进一步验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46062487554/job/140719888964)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -215,7 +223,7 @@ macOS 在实际窗口内调用组件悬停回调，验证过早离开会取消�
 | hover-card | 支持延迟开关、触发器与卡片间的指针切换、长按和受控展开。Nova 使用锚定弹层，悬停保持原窗口焦点。共享 provider、位置变体及触控回归待对齐。 |
 | icon | 支持 SF Symbols、动态字号和可选无障碍标签。Compose 可传入任意 ImageVector 并选择图标变体。 |
 | input | 原生单行输入支持独立占位文字、SecureField、错误和禁用状态。Nova 边框视觉高 32 pt，字段布局至少高 44 pt。数字等专用类型与 Compose 样式变体仍有差异。 |
-| input-group | 横向 leading/content/trailing slots。Compose 还支持上下 addon、组合焦点及明确的 input/textarea/button slots。 |
+| input-group | 支持横向和纵向附加区域、共用边框与由调用方控制的焦点/错误外观。输入和操作可通过原生 SwiftUI 控件组合。 |
 | input-otp | 使用一个定长数字绑定和原生编辑字段，iOS 字段标记为一次性验证码。Nova 使用连续的 32 pt 格，可通过 `groupBreaks` 加入分隔符。字母数字模式及逐槽选区控制仍待补齐。 |
 | item | 支持媒体、标题、说明、操作、三种表面样式和三种尺寸。群组、图片媒体尺寸和独立 header/footer 待对齐。 |
 | kbd | 显示单个键符及 themed 键帽。Compose 另有组合键分组 slot。 |
