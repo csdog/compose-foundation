@@ -150,6 +150,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "drawer": [
+                ("drawer-default-initial", { AnyView(DrawerScreenshotFixture(isOpen: false)) }),
+                ("drawer-default-open", { AnyView(DrawerScreenshotFixture(isOpen: true)) }),
+            ],
             "alert-dialog": AlertDialogScreenshotFixture.Example.allCases.flatMap { example in
                 [false, true].map { isOpen in
                     let state = isOpen ? "open" : "initial"
@@ -842,6 +846,105 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct DrawerScreenshotFixture: View {
+    private struct Delivery: Identifiable {
+        let id: String
+        let title: String
+        let description: String
+    }
+
+    private let deliveries = [
+        Delivery(id: "asap", title: "Standard delivery", description: "25–35 min · Driver assigned now"),
+        Delivery(id: "5-00", title: "5:00 PM – 5:15 PM", description: "Prep starts at 4:45 PM"),
+        Delivery(id: "5-30", title: "5:30 PM – 5:45 PM", description: "Good if you're heading home"),
+        Delivery(id: "6-00", title: "6:00 PM – 6:15 PM", description: "Most popular · High demand"),
+        Delivery(id: "6-30", title: "6:30 PM – 6:45 PM", description: "Last slot before kitchen closes"),
+    ]
+
+    @Environment(\.colorScheme) private var scheme
+    @State private var isOpen: Bool
+    @State private var selection = "asap"
+
+    init(isOpen: Bool) {
+        _isOpen = State(initialValue: isOpen)
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .rhea, light: light)
+        let palette = theme.palette(for: scheme)
+        return Button("Open Drawer") { isOpen = true }
+            .buttonStyle(FoundationButtonStyle(.secondary))
+            .padding(.top, 18)
+            .padding(.horizontal, 24)
+            .frame(width: 720, height: 520, alignment: .topLeading)
+            .background(palette.background)
+            .modifier(FoundationDrawer(
+                isPresented: $isOpen, title: "Pick a delivery time",
+                description: "We'll prepare your order as soon as possible.", closeTitle: "Cancel"
+            ) {
+                Button {
+                    isOpen = false
+                } label: {
+                    Text("Confirm Delivery Time").frame(maxWidth: .infinity)
+                }
+                .buttonStyle(FoundationButtonStyle(.primary))
+            } panel: {
+                VStack(spacing: 8) {
+                    ForEach(deliveries) { delivery in
+                        deliveryRow(delivery, palette: palette)
+                    }
+                }
+            })
+            .foundationTheme(theme)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(palette.background)
+            .ignoresSafeArea()
+    }
+
+    private func deliveryRow(_ delivery: Delivery, palette: FoundationPalette) -> some View {
+        let selected = selection == delivery.id
+        let shape = RoundedRectangle(cornerRadius: 20)
+        return Button {
+            selection = delivery.id
+        } label: {
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 8) {
+                        Text(delivery.title).font(.system(size: 14, weight: .medium))
+                        if delivery.id == "asap" {
+                            Text("Fastest")
+                                .font(.system(size: 12, weight: .medium))
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 2)
+                                .background(Capsule().fill(palette.secondary))
+                        }
+                    }
+                    Text(delivery.description)
+                        .font(.system(size: 14))
+                        .foregroundColor(palette.mutedForeground)
+                }
+                Spacer(minLength: 8)
+                Circle()
+                    .fill(selected ? palette.card : palette.border)
+                    .overlay(Circle().strokeBorder(selected ? palette.primary : .clear, lineWidth: 4))
+                    .frame(width: 16, height: 16)
+                    .accessibilityHidden(true)
+            }
+            .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
+            .padding(16)
+            .foregroundColor(palette.foreground)
+            .background(shape.fill(selected ? palette.secondary : palette.card))
+            .overlay(shape.strokeBorder(palette.border))
+            .contentShape(shape)
+        }
+        .buttonStyle(PlainButtonStyle())
+        .accessibilityAddTraits(selected ? .isSelected : [])
     }
 }
 

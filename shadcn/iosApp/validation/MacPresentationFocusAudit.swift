@@ -11,6 +11,8 @@ private final class PresentationResult: ObservableObject {
 
 private enum PresentationKind: String {
     case drawer, dialog, sheet
+    case drawerNova = "drawer-nova"
+    case drawerRhea = "drawer-rhea"
 }
 
 @available(macOS 14, *)
@@ -25,6 +27,14 @@ private struct PresentationProbe: View {
             trigger.modifier(FoundationDrawer(isPresented: $state.presented, title: "Audit drawer", onDismiss: dismissed) {
                 content
             })
+        case .drawerNova, .drawerRhea:
+            trigger.modifier(FoundationDrawer(
+                isPresented: $state.presented, title: "Audit drawer", description: "A footer-close layout",
+                closeTitle: "Cancel", onDismiss: dismissed
+            ) {
+                content
+            })
+            .foundationTheme(FoundationTheme(preset: kind == .drawerNova ? .nova : .rhea))
         case .dialog:
             trigger.modifier(FoundationDialog(isPresented: $state.presented, title: "Audit dialog", onDismiss: dismissed) {
                 content

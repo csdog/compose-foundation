@@ -23,7 +23,7 @@ SWIFT_SUPPORT_FILES = {
     "button-group": ("FoundationButtonStyle.swift",),
     "calendar": ("FoundationCalendarSelection.swift", "FoundationCalendarNavigation.swift"),
     "dialog": ("FoundationPresentationHeader.swift",),
-    "drawer": ("FoundationPresentationHeader.swift",),
+    "drawer": ("FoundationPresentationHeader.swift", "FoundationButtonStyle.swift"),
     "field": ("FoundationLabel.swift",),
     "hover-card": ("FoundationPopover.swift",),
     "menubar": ("FoundationMenuGroups.swift", "FoundationPopover.swift"),

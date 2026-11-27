@@ -16,10 +16,11 @@ struct FoundationPresentationHeader<Close: View>: View {
             .accessibilityAddTraits(.isHeader)
         let dismissButton = close.keyboardShortcut(.cancelAction)
         if #available(iOS 17, macOS 14, *) {
-            FoundationFocusedPresentationHeader(
-                heading: heading, description: description, alignment: alignment, close: dismissButton,
-                onActivate: dismiss
-            )
+            FoundationPresentationFocus(heading: heading, close: dismissButton, onActivate: dismiss) { heading, close in
+                FoundationPresentationHeaderRow(
+                    heading: heading, description: description, alignment: alignment, close: close
+                )
+            }
         } else {
             FoundationPresentationHeaderRow(
                 heading: heading, description: description, alignment: alignment, close: dismissButton
@@ -29,16 +30,15 @@ struct FoundationPresentationHeader<Close: View>: View {
 }
 
 @available(iOS 17, macOS 14, *)
-private struct FoundationFocusedPresentationHeader<Heading: View, Close: View>: View {
+struct FoundationPresentationFocus<Heading: View, Close: View, Layout: View>: View {
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
     @FocusState private var closeFocused: Bool
     @AccessibilityFocusState(for: .voiceOver) private var headingFocused: Bool
 
     let heading: Heading
-    let description: Text?
-    let alignment: VerticalAlignment
     let close: Close
     let onActivate: () -> Void
+    @ViewBuilder let layout: (AnyView, AnyView) -> Layout
 
     private var closeFocusInteractions: FocusInteractions {
         #if os(macOS)
@@ -49,12 +49,9 @@ private struct FoundationFocusedPresentationHeader<Heading: View, Close: View>: 
     }
 
     var body: some View {
-        FoundationPresentationHeaderRow(
-            heading: heading.accessibilityFocused($headingFocused),
-            description: description,
-            alignment: alignment,
-            close: close
-                .focusable(interactions: closeFocusInteractions)
+        layout(
+            AnyView(heading.accessibilityFocused($headingFocused)),
+            AnyView(close.focusable(interactions: closeFocusInteractions)
                 .focused($closeFocused)
                 .onKeyPress(keys: [.return, .space], phases: .down) { press in
                     guard press.modifiers.intersection([.command, .control, .option, .shift]).isEmpty else {
@@ -62,7 +59,7 @@ private struct FoundationFocusedPresentationHeader<Heading: View, Close: View>: 
                     }
                     onActivate()
                     return .handled
-                }
+                })
         )
         .defaultFocus($closeFocused, !voiceOverEnabled)
         .task {
