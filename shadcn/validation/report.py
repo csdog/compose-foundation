@@ -88,9 +88,11 @@ def include_shadcn_reference(reference_root, output, screenshot):
     relative = Path("shadcn") / screenshot
     reference = reference_root / relative
     target = output / relative
+    capture_provenance = target.with_suffix(".provenance.json")
     same_path = reference.resolve() == target.resolve()
     if not same_path:
         target.unlink(missing_ok=True)
+        capture_provenance.unlink(missing_ok=True)
     if not reference.is_file():
         return "缺参考图"
     try:
@@ -102,6 +104,18 @@ def include_shadcn_reference(reference_root, output, screenshot):
         output_provenance = target.with_name("provenance.json")
         if provenance.is_file() and provenance.resolve() != output_provenance.resolve():
             copy_image(provenance, output_provenance)
+        coverage = reference.with_name("coverage.json")
+        if coverage.is_file():
+            manifest = json.loads(coverage.read_text(encoding="utf-8"))
+            record = next(
+                (item for item in manifest["captures"] if reference.name in item["images"]), None
+            )
+            if record is not None:
+                provenance = {key: value for key, value in manifest.items() if key != "captures"}
+                capture_provenance.write_text(
+                    json.dumps({**provenance, "example": record}, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8",
+                )
         return "有参考图，供人工对照"
     except (OSError, SyntaxError, ValueError):
         return "参考图无法读取"
@@ -190,7 +204,9 @@ def report_images(root, platform, component, theme, screenshot):
         "上游截图": platform_dir / "shadcn" / screenshot,
     }
     if files["上游截图"].is_file():
-        files["上游截图来源"] = files["上游截图"].with_name("provenance.json")
+        reference = files["上游截图"]
+        provenance = reference.with_suffix(".provenance.json")
+        files["上游截图来源"] = provenance if provenance.is_file() else reference.with_name("provenance.json")
     files["待审核候选图"] = platform_dir / "candidate" / location
     return {label: path.relative_to(root) for label, path in files.items() if path.is_file()}
 
