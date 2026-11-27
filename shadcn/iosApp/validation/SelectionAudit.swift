@@ -71,6 +71,19 @@ enum SelectionAudit {
         let short = FoundationCalendarNavigation(calendar: calendar, bounds: january...february, numberOfMonths: 3)
         try expect(short.visibleMonths(from: february) == [january, february], "Short bounds trim the window")
 
+        var mondayCalendar = calendar
+        mondayCalendar.firstWeekday = 2
+        let mondayGrid = FoundationCalendarNavigation(calendar: mondayCalendar, bounds: nil, numberOfMonths: 1)
+        let november = try monthDate(2026, 11, calendar: calendar)
+        let october26 = try require(calendar.date(from: DateComponents(year: 2026, month: 10, day: 26)))
+        let december6 = try require(calendar.date(from: DateComponents(year: 2026, month: 12, day: 6)))
+        let padded = mondayGrid.gridDays(in: november, includesOutsideDays: true)
+        let legacy = mondayGrid.gridDays(in: november, includesOutsideDays: false)
+        try expect(padded.count == 42 && padded[0] == october26 && padded[41] == december6,
+                   "Outside dates complete the first and last weeks")
+        try expect(legacy.count == 36 && legacy.prefix(6).allSatisfy { $0 == nil },
+                   "The original grid preserves leading placeholders")
+
         try expect(FoundationCheckboxState.mixed.activated == .checked, "Mixed activation checks")
         try expect(FoundationCheckboxState.checked.activated == .unchecked, "Checked activation clears")
         try expect(FoundationCheckboxState.unchecked.activated == .checked, "Unchecked activation checks")

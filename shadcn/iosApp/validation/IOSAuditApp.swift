@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "calendar": CalendarScreenshotFixture.Example.allCases.map { example in
+                ("calendar-\(example.rawValue)-initial", { AnyView(CalendarScreenshotFixture(example: example)) })
+            },
             "sheet": [
                 ("sheet-default-initial", { AnyView(SheetScreenshotFixture(isOpen: false)) }),
                 ("sheet-default-open", { AnyView(SheetScreenshotFixture(isOpen: true)) }),
@@ -860,6 +863,50 @@ private struct SeparatorInitialScreenshotFixture: View {
         .padding(.top, 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct CalendarScreenshotFixture: View {
+    enum Example: String, CaseIterable { case `default`, basic, caption }
+
+    private static var calendar: Calendar {
+        var value = Calendar(identifier: .gregorian)
+        value.timeZone = TimeZone(secondsFromGMT: 0)!
+        value.firstWeekday = 1
+        return value
+    }
+
+    private static var referenceDate: Date {
+        calendar.date(from: DateComponents(year: 2026, month: 11, day: 27))!
+    }
+
+    @Environment(\.colorScheme) private var scheme
+    @State private var selection: Date?
+    let example: Example
+
+    init(example: Example) {
+        self.example = example
+        _selection = State(initialValue: example == .default ? Self.referenceDate : nil)
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        return FoundationCalendar(
+            selection: $selection,
+            captionLayout: example == .basic ? .label : .dropdown,
+            referenceDate: Self.referenceDate
+        )
+        .frame(width: 324)
+        .environment(\.calendar, Self.calendar)
+        .environment(\.locale, Locale(identifier: "en_US"))
+        .foundationTheme(theme)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
         .ignoresSafeArea()
     }
 }

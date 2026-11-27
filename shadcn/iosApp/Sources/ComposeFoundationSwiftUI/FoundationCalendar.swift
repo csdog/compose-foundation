@@ -5,6 +5,8 @@ public struct FoundationCalendar: View {
     @Environment(\.locale) private var locale
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
+    @ScaledMetric(relativeTo: .subheadline) private var cellTextSize: CGFloat = 14
+    @ScaledMetric(relativeTo: .caption) private var weekdayTextSize: CGFloat = 12
     @State private var visibleDate: Date
     @State private var lastLocalSelection: FoundationCalendarSelection?
 
@@ -12,6 +14,7 @@ public struct FoundationCalendar: View {
     private let bounds: ClosedRange<Date>?
     private let numberOfMonths: Int
     private let captionLayout: FoundationCalendarCaptionLayout
+    private let referenceDate: Date?
 
     public init(selection: Binding<Date?>, in bounds: ClosedRange<Date>? = nil) {
         self.init(selection: selection, in: bounds, numberOfMonths: 1)
@@ -48,21 +51,28 @@ public struct FoundationCalendar: View {
         self.init(selection: .multiple(selectedDates), bounds: bounds, numberOfMonths: numberOfMonths, captionLayout: captionLayout)
     }
 
+    init(selection: Binding<Date?>, captionLayout: FoundationCalendarCaptionLayout, referenceDate: Date) {
+        self.init(selection: .single(selection), bounds: nil, numberOfMonths: 1,
+                  captionLayout: captionLayout, referenceDate: referenceDate)
+    }
+
     private init(
         selection: FoundationCalendarBinding, bounds: ClosedRange<Date>?,
-        numberOfMonths: Int, captionLayout: FoundationCalendarCaptionLayout
+        numberOfMonths: Int, captionLayout: FoundationCalendarCaptionLayout, referenceDate: Date? = nil
     ) {
         self.selection = selection
-        self._visibleDate = State(initialValue: selection.value.navigationDate ?? Date())
+        self._visibleDate = State(initialValue: selection.value.navigationDate ?? referenceDate ?? Date())
         self.bounds = bounds
         self.numberOfMonths = max(1, numberOfMonths)
         self.captionLayout = captionLayout
+        self.referenceDate = referenceDate
     }
 
     public var body: some View {
         let palette = theme.palette(for: colorScheme)
         let months = navigation.visibleMonths(from: visibleDate)
         let selected = selection.value
+        let shape = RoundedRectangle(cornerRadius: theme.cornerRadius)
 
         Group {
             if months.count == 1, let month = months.first {
@@ -78,8 +88,9 @@ public struct FoundationCalendar: View {
             }
         }
         .foregroundColor(palette.foreground)
-        .padding(10)
-        .background(RoundedRectangle(cornerRadius: theme.cornerRadius).fill(palette.card))
+        .padding(isNova ? 8 : 10)
+        .background(shape.fill(isNova ? palette.background : palette.card))
+        .overlay(shape.strokeBorder(isNova ? palette.border : Color.clear).allowsHitTesting(false))
         .foundationOnChange(of: selected) { value in
             let initiatedHere = value == lastLocalSelection
             lastLocalSelection = nil
@@ -90,6 +101,12 @@ public struct FoundationCalendar: View {
         .foundationOnChange(of: bounds) { _ in visibleDate = navigation.anchor(for: visibleDate) }
     }
 
+    private var isNova: Bool { theme.preset == .nova }
+
+    private var dayHighlightSize: CGFloat? { isNova ? max(28, cellTextSize * 2) : nil }
+
+    private var dayRowHeight: CGFloat { max(44, dayHighlightSize ?? 0) }
+
     private var navigation: FoundationCalendarNavigation {
         FoundationCalendarNavigation(calendar: calendar, bounds: bounds, numberOfMonths: numberOfMonths)
     }
@@ -98,12 +115,12 @@ public struct FoundationCalendar: View {
         _ month: Date, offset: Int, last: Bool, selection: FoundationCalendarSelection, palette: FoundationPalette
     ) -> some View {
         let weekdays = weekdayNames
-        let days = gridDays(for: month)
+        let days = navigation.gridDays(in: month, includesOutsideDays: isNova)
         let dayNumbers = formatter(template: "d")
         let dayLabels = formatter(template: "yMMMMd")
-        let columns = Array(repeating: GridItem(.flexible(), spacing: 2), count: 7)
+        let columns = Array(repeating: GridItem(.flexible(), spacing: isNova ? 0 : 2), count: 7)
 
-        return VStack(spacing: 8) {
+        return VStack(spacing: isNova ? 12 : 8) {
             HStack {
                 if offset == 0 {
                     monthButton("chevron.backward", label: "Previous month", offset: -1)
@@ -121,23 +138,33 @@ public struct FoundationCalendar: View {
             }
             LazyVGrid(columns: columns, spacing: 2) {
                 ForEach(weekdays.indices, id: \.self) { index in
-                    Text(weekdays[index]).font(.caption).foregroundColor(palette.mutedForeground)
+                    Text(weekdays[index])
+                        .font(isNova ? .system(size: weekdayTextSize) : .caption)
+                        .foregroundColor(palette.mutedForeground)
+                        .frame(minHeight: isNova ? 18 : nil)
                 }
                 ForEach(days.indices, id: \.self) { index in
                     if let date = days[index] {
-                        dayButton(
-                            date,
-                            title: dayNumbers.string(from: date),
-                            accessibilityLabel: dayLabels.string(from: date),
-                            selection: selection,
-                            palette: palette
-                        )
+                        let number = dayNumbers.string(from: date)
+                        if calendar.isDate(date, equalTo: month, toGranularity: .month) {
+                            dayButton(
+                                date, title: number, accessibilityLabel: dayLabels.string(from: date),
+                                selection: selection, palette: palette
+                            )
+                        } else {
+                            Text(number)
+                                .font(.system(size: cellTextSize))
+                                .foregroundColor(palette.mutedForeground)
+                                .frame(maxWidth: .infinity, minHeight: dayRowHeight)
+                                .accessibilityHidden(true)
+                        }
                     } else {
-                        Color.clear.frame(height: 44).accessibilityHidden(true)
+                        Color.clear.frame(height: dayRowHeight).accessibilityHidden(true)
                     }
                 }
             }
         }
+        .frame(maxWidth: isNova ? 308 : nil)
     }
 
     @ViewBuilder
@@ -145,7 +172,7 @@ public struct FoundationCalendar: View {
         let title = formatter(template: "yMMMM").string(from: month)
         if captionLayout == .label {
             Text(title)
-                .font(.subheadline.weight(.semibold))
+                .font(isNova ? .system(size: cellTextSize, weight: .medium) : .subheadline.weight(.semibold))
                 .accessibilityAddTraits(.isHeader)
         } else {
             let monthText = formatter(template: "MMM")
@@ -183,7 +210,7 @@ public struct FoundationCalendar: View {
                     yearControl
                 }
             }
-            .font(.subheadline.weight(.semibold))
+            .font(isNova ? .system(size: cellTextSize, weight: .medium) : .subheadline.weight(.semibold))
         }
     }
 
@@ -216,15 +243,8 @@ public struct FoundationCalendar: View {
         let names = dateFormatter.shortStandaloneWeekdaySymbols ?? []
         guard !names.isEmpty else { return [] }
         let first = (calendar.firstWeekday - 1) % names.count
-        return Array(names[first...]) + Array(names[..<first])
-    }
-
-    private func gridDays(for month: Date) -> [Date?] {
-        let weekday = calendar.component(.weekday, from: month)
-        let leading = (weekday - calendar.firstWeekday + 7) % 7
-        let count = calendar.range(of: .day, in: .month, for: month)?.count ?? 0
-        return Array(repeating: nil, count: leading)
-            + (0..<count).map { calendar.date(byAdding: .day, value: $0, to: month) }
+        let ordered = Array(names[first...]) + Array(names[..<first])
+        return isNova && locale.languageCode == "en" ? ordered.map { String($0.prefix(2)) } : ordered
     }
 
     private func monthButton(_ symbol: String, label: String, offset: Int) -> some View {
@@ -232,7 +252,10 @@ public struct FoundationCalendar: View {
         return Button {
             if let destination { visibleDate = destination }
         } label: {
-            Image(systemName: symbol).frame(minWidth: 44, minHeight: 44).contentShape(Rectangle())
+            Image(systemName: symbol)
+                .font(isNova ? .system(size: 12, weight: .medium) : nil)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
         .accessibilityLabel(Text(label))
@@ -249,6 +272,7 @@ public struct FoundationCalendar: View {
     ) -> some View {
         let presentation = value.presentation(of: date, calendar: calendar)
         let enabled = FoundationCalendarSelection.isSelectable(date, calendar: calendar, bounds: bounds)
+        let today = isNova && calendar.isDate(date, inSameDayAs: referenceDate ?? Date())
 
         return Button {
             let previous = selection.value
@@ -259,10 +283,10 @@ public struct FoundationCalendar: View {
             }
         } label: {
             Text(title)
-                .font(.subheadline)
+                .font(isNova ? .system(size: cellTextSize) : .subheadline)
                 .foregroundColor(presentation.hasPrimaryFill ? palette.primaryForeground : palette.foreground)
-                .frame(maxWidth: .infinity, minHeight: 44)
-                .background(dayBackground(presentation, palette: palette))
+                .frame(maxWidth: .infinity, minHeight: dayRowHeight)
+                .background(dayBackground(presentation, today: today, palette: palette))
                 .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
@@ -273,11 +297,15 @@ public struct FoundationCalendar: View {
     }
 
     @ViewBuilder
-    private func dayBackground(_ presentation: FoundationCalendarSelection.DayPresentation, palette: FoundationPalette) -> some View {
+    private func dayBackground(
+        _ presentation: FoundationCalendarSelection.DayPresentation, today: Bool, palette: FoundationPalette
+    ) -> some View {
         if presentation == .rangeInterior {
-            Rectangle().fill(palette.secondary)
-        } else if presentation.hasPrimaryFill {
-            RoundedRectangle(cornerRadius: theme.cornerRadius).fill(palette.primary)
+            Rectangle().fill(palette.secondary).frame(height: dayHighlightSize)
+        } else if presentation.hasPrimaryFill || today {
+            RoundedRectangle(cornerRadius: isNova ? max(0, theme.cornerRadius - 2) : theme.cornerRadius)
+                .fill(presentation.hasPrimaryFill ? palette.primary : palette.secondary)
+                .frame(maxWidth: dayHighlightSize, maxHeight: dayHighlightSize)
         }
     }
 
