@@ -138,6 +138,25 @@
       "accessibility": "field label and secure entry where applicable",
       "motion": "static settled frames"
     },
+    "slider": {
+      "title": "Slider",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520], "referenceOrigin": [159, 0]},
+          {"variant": "default", "status": "increased", "viewport": [402, 520], "referenceOrigin": [159, 0]},
+          {"variant": "disabled", "status": "initial", "viewport": [402, 520], "referenceOrigin": [159, 0]},
+          {"variant": "rtl", "status": "initial", "viewport": [402, 520], "referenceOrigin": [159, 0]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/slider-demo.tsx",
+      "visual": "compare the full track and thumb at 75, 76, disabled 50, and 75 in RTL",
+      "behavior": "bind a single value with step rounding, keyboard adjustment and logical direction",
+      "accessibility": "named adjustable control",
+      "motion": "static settled frames"
+    },
     "input-otp": {
       "title": "Input OTP",
       "variant": "default",

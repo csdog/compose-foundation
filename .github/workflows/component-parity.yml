@@ -413,6 +413,29 @@ jobs:
           "$RUNNER_TEMP/tabs-navigation"
       - name: Compile the native SwiftUI package for macOS
         run: swift build --package-path shadcn/iosApp
+      - name: Verify Nova Slider mouse and keyboard input on macOS
+        if: contains(needs.baseline.outputs.matrix, '"slider"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          app="$RUNNER_TEMP/SliderAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string SliderAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.slider-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationTheme.swift" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationSlider.swift" \
+            "$swiftui/validation/MacSliderInteractionAudit.swift" \
+            -o "$app/Contents/MacOS/SliderAudit"
+          for direction in ltr rtl; do
+            log="$RUNNER_TEMP/slider-$direction.log"
+            open -n -W --stdout "$log" --stderr "$log" "$app" --args "--$direction"
+            cat "$log"
+            grep -q '^PASS:' "$log"
+          done
 
   report:
     name: Component parity report
