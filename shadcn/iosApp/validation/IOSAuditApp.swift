@@ -150,6 +150,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "tooltip": [
+                ("tooltip-default-initial", { AnyView(TooltipScreenshotFixture(isOpen: false)) }),
+                ("tooltip-default-open", { AnyView(TooltipScreenshotFixture(isOpen: true)) }),
+            ],
             "table": TableScreenshotFixture.Example.allCases.map { example in
                 ("table-\(example.rawValue)-initial", { AnyView(TableScreenshotFixture(example: example)) })
             },
@@ -826,6 +830,30 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct TooltipScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    @State private var isOpen: Bool
+
+    init(isOpen: Bool) {
+        _isOpen = State(initialValue: isOpen)
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        return Button("Hover") {}
+            .buttonStyle(FoundationButtonStyle(.outline))
+            .modifier(FoundationTooltip("Add to library", isPresented: $isOpen, side: .bottom))
+            .foundationTheme(theme)
+            .padding(.horizontal, 24)
+            .padding(.top, 18)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
     }
 }
 
