@@ -44,7 +44,8 @@ enum MacTableInteractionAudit {
             require(window.isKeyWindow, "The audit window needs focus")
             let initial = pixels(in: host, rows: 46..<114)
             let footer = pixels(in: host, rows: 119..<151)
-            require(!initial.isEmpty && Set(initial).count > 3, "The body has rendered text")
+            require(Set(initial).count > 3, "The body has rendered text")
+            require(Set(footer).count > 3, "The footer has rendered text")
 
             await clickHeader(in: window)
             require(pixels(in: host, rows: 46..<114) != initial, "First click sorts the body in ascending order")
@@ -77,8 +78,8 @@ enum MacTableInteractionAudit {
         let scale = CGFloat(bitmap.pixelsWide) / view.bounds.width
         return rows.flatMap { y in
             (8..<72).map { x in
-                let color = bitmap.colorAt(x: Int(CGFloat(x) * scale), y: Int(CGFloat(y) * scale))
-                    ?.usingColorSpace(.sRGB)
+                let pixel = bitmap.colorAt(x: Int(CGFloat(x) * scale), y: Int(CGFloat(y) * scale))
+                let color = pixel?.usingColorSpace(.sRGB)
                 return Int((color?.redComponent ?? 1) * 255)
             }
         }
