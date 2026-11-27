@@ -52,6 +52,12 @@ iPhone 17 Pro（iOS 26.2）上以 402 × 520 画布复拍深浅色八张 PNG，�
 
 iPhone 17 Pro（iOS 26.2）上深浅色共六张截图，复拍逐字节一致。切换 Comfortable 和 Compact 的预设选择只改变第二、第三项的圆形控件区域。原有 54 张截图与上一轮逐字节一致。macOS Swift Package 构建和 Tabs 导航回归通过。方向键导航、实际触控和 VoiceOver 待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46011436975/artifacts/15204561793)
 
+### Input 和 Textarea 初始态
+
+Input 覆盖完整的 API Key 字段和独立输入框。API Key 示例使用系统 SecureField。Textarea 覆盖独立编辑器和含标题说明的编辑器。iPad mini（A17 Pro，iPadOS 26.2）使用 720 × 520 画布，完整保留 672 pt 宽的输入框及边框。输入与占位文字为 16 pt，外部标签和说明为 14 pt。
+
+深浅色共八张新图，复拍逐字节一致。原有 60 张 iPhone 图也与上一轮一致。浅色占位文字的可见边界与参考图最多差 1 px。Textarea 使用原生滚动编辑器，上游网页有拖拽调整尺寸的手柄。macOS Swift Package 构建和 Tabs 导航回归通过。实际输入、安全遮蔽、错误和焦点态、VoiceOver 及窄屏布局仍待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46016882459/artifacts/15207916190)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -86,7 +92,7 @@ iPhone 17 Pro（iOS 26.2）上深浅色共六张截图，复拍逐字节一致�
 | field | 纵向显示标题、说明、错误及任意输入。缺少 FieldSet/Legend、横向/响应式排列及 Compose 的分组语义。 |
 | hover-card | 触发器和卡片有延迟打开、指针离开后延迟关闭，并支持触摸长按。Compose 另有共享 provider、位置和更完整的指针过渡控制。 |
 | icon | 支持 SF Symbols、动态字号和可选无障碍标签。Compose 可传入任意 ImageVector 并选择图标变体。 |
-| input | 原生单行输入，支持错误、禁用和编辑时的边框反馈。缺少密码/数字等内建类型和 Compose 样式变体。 |
+| input | 原生单行输入支持独立占位文字、SecureField、错误和禁用状态。Nova 边框视觉高 32 pt，字段布局至少高 44 pt。数字等专用类型与 Compose 样式变体仍有差异。 |
 | input-group | 横向 leading/content/trailing slots。Compose 还支持上下 addon、组合焦点及明确的 input/textarea/button slots。 |
 | input-otp | 数字规整、定长槽位、iOS 自动填码。缺少 Compose 的字母数字输入类型、分组分隔符和逐槽状态控制。 |
 | item | 支持媒体、标题、说明、操作。Compose 有尺寸、变体、群组和独立 header/footer。 |
@@ -118,7 +124,7 @@ iPhone 17 Pro（iOS 26.2）上深浅色共六张截图，复拍逐字节一致�
 | table | 支持标题、数据行、列宽、排序与水平滚动。Compose 有任意内容单元格、caption/footer 和独立表结构 slots。 |
 | tabs | 支持选择绑定、禁用、横向 tabs 与内容切换。iOS 17 / macOS 14 起提供左右键、Home / End、禁用项跳过，以及自动或手动激活。iOS 26.2 模拟器已验证 LTR、RTL、跨组 Tab、长列表滚动、自动激活及手动模式的独立焦点与提交。macOS 15.6.1 已验证自动模式跳过禁用项、跨组 Tab 和手动激活。Compose 另有纵向、list variant 和独立焦点移动 API。 |
 | text | 支持标题、headline、正文、caption 和 muted 文本。Compose 有更多主题字体角色及自定义内容和样式参数。 |
-| textarea | 原生 TextEditor，多行绑定与错误边框齐备。Compose 的变体、placeholder/尺寸参数及自定义焦点样式未对齐。 |
+| textarea | 原生 TextEditor 支持多行绑定、独立占位文字及错误边框。Nova 最小高 64 pt，iOS 16 和 macOS 13 起隐藏系统滚动背景。自动增高和自定义焦点样式仍待补齐。 |
 | theme | SwiftUI 环境支持自定义深浅色、圆角及 Vega、Nova、Maia、Lyra、Mira、Luma、Sera、Rhea 八种样式。预设为通用圆角、按钮尺寸、卡片和 Popover 间距、部分字体和动效提供默认值。Compose 的配色集合、图表色及各组件状态样式仍有差别。 |
 | toast | 支持原有单条通知和 `FoundationToastState` 队列。队列默认显示最新三条，支持深浅色、变体图标、可选操作、逐条关闭、清空和独立计时。面板目前纵向展开。堆叠展开、滑动手势、优先级播报和多操作仍待对齐。 |
 | toggle | 可绑定选中、禁用及 slot 内容。Compose 还提供多种样式、尺寸和图标位置。 |
