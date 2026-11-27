@@ -3,7 +3,6 @@ import SwiftUI
 public struct FoundationAccordion<Value: Hashable, Panel: View>: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
-    @Environment(\.isEnabled) private var isEnabled
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @ScaledMetric(relativeTo: .subheadline) private var fontSize = 14.0
     @Binding private var expanded: Set<Value>
@@ -75,7 +74,6 @@ public struct FoundationAccordion<Value: Hashable, Panel: View>: View {
                 .padding(.vertical, 10)
                 .frame(minHeight: 44)
                 .contentShape(Rectangle())
-                .opacity(isEnabled && choice.isEnabled ? 1 : 0.5)
             }
             .buttonStyle(PlainButtonStyle())
             .accessibilityAddTraits(.isHeader)
