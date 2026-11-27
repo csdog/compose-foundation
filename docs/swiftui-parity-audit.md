@@ -256,6 +256,14 @@ iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布拍摄开合的四张深�
 
 macOS 实际窗口验证原生表单输入、遮罩关闭、Return 和 Escape，并检查每次关闭后触发器恢复焦点。关闭回调在面板退出和输入控件释放焦点后执行。原系统 Dialog、三种 Drawer、Sheet 和 Tabs 的回归通过。iOS 触控、键盘焦点归还及 VoiceOver 待独立验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46075322227/job/140762633510)
 
+### Sheet 方位、表单与固定页脚
+
+对照 shadcn Base UI / Nova 的 `sheet-demo.tsx`。编辑资料示例保留 Name、Username、Save changes 和 Close。新增 `side:` 入口在占满呈现区域的容器上沿逻辑边显示面板，支持 `top`、`bottom`、`leading`、`trailing`。侧边内容可以滚动，页脚固定。原有初始化器继续使用系统 sheet。新面板复用呈现组件的关闭按钮焦点逻辑。
+
+iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布采集开合的四张深浅色图，复拍逐字节一致。侧边面板的分界线在 x=336 pt，两种主题的面板填色取样与参考一致，遮罩背景每通道相差 1。SwiftUI 保留 44 pt 输入和按钮操作区。Web 展开图显示 Name 焦点环，SwiftUI 初始焦点位于关闭按钮。[截图与差异报告](https://github.com/csdog/compose-foundation/actions/runs/46078074006/artifacts/15234969638)
+
+macOS 实际窗口验证四个逻辑边的初始关闭焦点、Return、Escape、单次回调和触发器焦点归还。右侧面板另验收输入表单后点击遮罩，先释放 macOS 文本编辑器焦点，再在关闭后归还焦点。系统 Sheet、居中和系统 Dialog、Drawer 及 Tabs 回归通过。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46078074006/job/140771605885)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -311,7 +319,7 @@ macOS 实际窗口验证原生表单输入、遮罩关闭、Return 和 Escape，
 | scroll-fade | 按所选边缘和固定距离加渐变遮罩。和 Compose 的静态 overload 对应，缺少按可滚动方向和偏移量驱动的 overload。 |
 | select | 原生 Menu 支持单选、占位、选中图标、禁用项和原生分区标题。iOS 模拟器及 macOS 已验证分区、禁用状态、指针选择及无障碍值。Compose 另有尺寸、变体及不同面板位置。 |
 | separator | 横纵向装饰性分隔线可用。边缘颜色和屏幕像素由 SwiftUI/theme 决定。 |
-| sheet | 原生 sheet 支持标题、内容、Done、Escape 和 `onDismiss`。iOS 模拟器与 macOS 已验证初始关闭焦点、Return、Escape 和关闭后的触发器焦点。Compose 具备 top/end/bottom/start 方位与独立 header/footer/close slots。 |
+| sheet | 支持系统 sheet 及四个逻辑边的面板。面板支持说明、滚动内容和固定页脚。右侧编辑资料示例覆盖深浅色；其余边方向截图、RTL、iOS 触控和 VoiceOver 待验收。 |
 | shimmer | 支持开关、穿过内容的光带、减少动态效果。Compose 另有文本遮罩及可调颜色、宽度、方向、时序。 |
 | sidebar | 可开关侧栏，宽容器并排、窄容器遮罩。Compose 另有侧栏方位、collapsible/rail 策略、菜单 slots 和键盘快捷键。 |
 | skeleton | 支持静态主题占位圆角。Compose 默认包含 pulse 动画。 |
