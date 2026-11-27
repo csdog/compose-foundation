@@ -1,8 +1,13 @@
 import SwiftUI
+#if os(macOS)
+import AppKit
+#endif
 
 public struct FoundationSheet<SheetContent: View>: ViewModifier {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     @ScaledMetric(relativeTo: .body) private var titleSize: CGFloat = 16
     @ScaledMetric(relativeTo: .subheadline) private var descriptionSize: CGFloat = 14
     @Binding private var isPresented: Bool
@@ -76,9 +81,33 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
     public func body(content: Content) -> some View {
         let palette = theme.palette(for: colorScheme)
         if let edge {
-            content.modifier(FoundationModalOverlay(isPresented: $isPresented, duration: 0.20, animation: Animation.easeInOut(duration:), onDismiss: onDismiss) { size in
-                positionedPanel(edge: edge, size: size, palette: palette)
-            })
+            content
+                .disabled(isPresented)
+                .allowsHitTesting(!isPresented)
+                .accessibilityHidden(isPresented)
+                .compositingGroup()
+                .blur(radius: isPresented && !reduceTransparency ? 4 : 0)
+                .overlay(Group {
+                    if isPresented {
+                        GeometryReader { geometry in
+                            ZStack {
+                                Color.black.opacity(0.10)
+                                    .onTapGesture(perform: closeFromBackdrop)
+                                    .accessibilityHidden(true)
+                                positionedPanel(edge: edge, size: geometry.size, palette: palette)
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
+                        .transition(.opacity)
+                        .onDisappear {
+                            guard !isPresented else { return }
+                            DispatchQueue.main.async {
+                                if !isPresented { onDismiss() }
+                            }
+                        }
+                    }
+                })
+                .animation(reduceMotion ? nil : .easeInOut(duration: 0.20), value: isPresented)
         } else {
             content.sheet(isPresented: $isPresented, onDismiss: onDismiss) {
                 VStack(alignment: .leading, spacing: 12) {
@@ -205,6 +234,17 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
                     .layoutPriority(1)
             }
         }
+    }
+
+    private func closeFromBackdrop() {
+        #if os(macOS)
+        // Let the platform field editor relinquish focus before removing its sheet.
+        if let window = NSApplication.shared.keyWindow,
+           let editor = window.firstResponder as? NSTextView, editor.isFieldEditor {
+            window.makeFirstResponder(nil)
+        }
+        #endif
+        close()
     }
 
     private func close() {

@@ -873,7 +873,7 @@ jobs:
           plutil -insert CFBundleIdentifier -string com.composefoundation.presentation-focus-audit "$plist"
           plutil -insert CFBundlePackageType -string APPL "$plist"
           xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
-            "$sources"/Foundation{Theme,ButtonStyle,PresentationHeader,ModalOverlay,Drawer,Dialog,Sheet}.swift \
+            "$sources"/Foundation{Theme,ButtonStyle,PresentationHeader,Drawer,Dialog,Sheet}.swift \
             "$swiftui/validation/MacPresentationFocusAudit.swift" \
             -o "$app/Contents/MacOS/PresentationFocusAudit"
           for kind in drawer drawer-nova drawer-rhea dialog dialog-centered sheet sheet-trailing sheet-leading sheet-top sheet-bottom; do

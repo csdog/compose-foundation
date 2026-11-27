@@ -193,7 +193,7 @@ struct MacPresentationFocusAudit {
 
     @MainActor
     private static func fail(_ message: String, _ state: PresentationResult) -> Never {
-        print("FAIL \(message): presented=\(state.presented), triggerFocused=\(state.triggerFocused), dismissals=\(state.dismissals)")
+        print("FAIL \(message): presented=\(state.presented), triggerFocused=\(state.triggerFocused), dismissals=\(state.dismissals), firstResponder=\(String(describing: NSApp.keyWindow?.firstResponder))")
         exit(1)
     }
 

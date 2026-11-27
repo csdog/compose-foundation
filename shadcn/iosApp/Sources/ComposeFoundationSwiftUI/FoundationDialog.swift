@@ -7,6 +7,8 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
 
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     @ScaledMetric(relativeTo: .body) private var titleSize: CGFloat = 16
     @ScaledMetric(relativeTo: .subheadline) private var descriptionSize: CGFloat = 14
     @Binding private var isPresented: Bool
@@ -82,11 +84,35 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
     public func body(content: Content) -> some View {
         let palette = theme.palette(for: colorScheme)
         if presentation == .centered {
-            content.modifier(FoundationModalOverlay(isPresented: $isPresented, duration: 0.10, animation: Animation.easeOut(duration:), onDismiss: onDismiss) { size in
-                centeredPanel(palette)
-                    .frame(width: min(384, max(1, size.width - 32)))
-                    .padding(.vertical, 16)
-            })
+            content
+                .disabled(isPresented)
+                .allowsHitTesting(!isPresented)
+                .accessibilityHidden(isPresented)
+                .compositingGroup()
+                .blur(radius: isPresented && !reduceTransparency ? 4 : 0)
+                .overlay(Group {
+                    if isPresented {
+                        GeometryReader { geometry in
+                            ZStack {
+                                Color.black.opacity(0.10)
+                                    .onTapGesture(perform: close)
+                                    .accessibilityHidden(true)
+                                centeredPanel(palette)
+                                    .frame(width: min(384, max(1, geometry.size.width - 32)))
+                                    .padding(.vertical, 16)
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
+                        .transition(.opacity)
+                        .onDisappear {
+                            guard !isPresented else { return }
+                            DispatchQueue.main.async {
+                                if !isPresented { onDismiss() }
+                            }
+                        }
+                    }
+                })
+                .animation(reduceMotion ? nil : .easeOut(duration: 0.10), value: isPresented)
         } else {
             content.sheet(isPresented: $isPresented, onDismiss: onDismiss) {
                 VStack(alignment: .leading, spacing: 14) {
