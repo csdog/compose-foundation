@@ -411,6 +411,8 @@ jobs:
             "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationTabsNavigation.swift" \
             "$swiftui/validation/TabsNavigationAudit.swift" -o "$RUNNER_TEMP/tabs-navigation"
           "$RUNNER_TEMP/tabs-navigation"
+      - name: Compile the native SwiftUI package for macOS
+        run: swift build --package-path shadcn/iosApp
 
   report:
     name: Component parity report

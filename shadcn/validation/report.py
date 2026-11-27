@@ -2,7 +2,6 @@
 
 import argparse
 from array import array
-import itertools
 import json
 import os
 from pathlib import Path
@@ -23,10 +22,12 @@ DIFF_COMPARISONS = {
 }
 
 
-def differences(expected, actual, output, *, reference_viewport=()):
+def differences(expected, actual, output, *, reference_viewport=(), reference_origin=(0, 0)):
     with Image.open(expected) as first, Image.open(actual) as second:
-        if second.size == tuple(reference_viewport) and first.width >= second.width and first.height >= second.height:
-            first = first.crop((0, 0, *second.size))
+        left, top = reference_origin
+        right, bottom = left + second.width, top + second.height
+        if second.size == tuple(reference_viewport) and right <= first.width and bottom <= first.height:
+            first = first.crop((left, top, right, bottom))
         if first.size != second.size:
             if output:
                 comparison = Image.new("RGB", (first.width + second.width + 4, max(first.height, second.height)), "red")
@@ -71,10 +72,26 @@ def browser_failures(output, component, theme, passes):
     return ""
 
 
-def screenshot_path(plan, component, theme, platform):
-    case = plan["components"][component]
-    status = case.get("platformStatus", {}).get(platform, case["status"])
-    return Path(component, f"{component}-{case['variant']}-{status}-{theme}.png")
+def screenshot_cases(plan, platform):
+    for component, config in plan["components"].items():
+        if platform not in config.get("platforms", plan["platforms"]):
+            continue
+        cases = config.get("platformCases", {}).get(platform)
+        has_case_directories = cases is not None
+        if cases is None:
+            cases = [{
+                "variant": config["variant"],
+                "status": config.get("platformStatus", {}).get(platform, config["status"]),
+                "viewport": config.get("shadcnComparisonViewport", {}).get(platform, ()),
+                "referenceOrigin": config.get("shadcnComparisonOrigin", {}).get(platform, (0, 0)),
+            }]
+        for case in cases:
+            variant, status = case["variant"], case["status"]
+            for theme in ("light", "dark"):
+                screenshot = Path(component, f"{component}-{variant}-{status}-{theme}.png")
+                capture = (Path(component, variant, status, f"{theme}.png")
+                           if has_case_directories else Path(component, "initial", f"{theme}.png"))
+                yield component, case, theme, screenshot, capture
 
 
 def baseline_path(plan, platform):
@@ -128,11 +145,9 @@ def capture_results(args, plan):
     output.mkdir(parents=True, exist_ok=True)
     passes = ("actual", "repeat") if args.update_baselines else ("actual",)
     results = {}
-    for component, theme in itertools.product(plan["components"], ("light", "dark")):
-        captured = Path(component, "initial", f"{theme}.png")
+    for component, _, theme, screenshot, captured in screenshot_cases(plan, args.platform):
         first = output / "actual" / captured
         second = output / "repeat" / captured
-        screenshot = screenshot_path(plan, component, theme, args.platform)
         location = Path(args.platform) / screenshot
         native_path = Path(args.platform) if args.try_candidate else baseline_path(plan, args.platform)
         baseline = args.baselines / native_path / screenshot
@@ -193,8 +208,7 @@ def capture_results(args, plan):
     return any(result["status"] == "failed" for result in results.values())
 
 
-def report_images(root, platform, component, theme, screenshot):
-    captured = Path(component, "initial", f"{theme}.png")
+def report_images(root, platform, screenshot, captured):
     location = Path(platform) / screenshot
     platform_dir = root / platform
     baseline = platform_dir / "expected" / location
@@ -212,7 +226,7 @@ def report_images(root, platform, component, theme, screenshot):
     return {label: path.relative_to(root) for label, path in files.items() if path.is_file()}
 
 
-def shadcn_difference(root, artifact, screenshot, images, viewport):
+def shadcn_difference(root, artifact, screenshot, images, viewport, origin):
     output = artifact / "diff-shadcn" / screenshot
     output.unlink(missing_ok=True)
     actual = images.get("本次截图")
@@ -221,7 +235,8 @@ def shadcn_difference(root, artifact, screenshot, images, viewport):
         return "—"
     output.parent.mkdir(parents=True, exist_ok=True)
     try:
-        change = differences(root / reference, root / actual, output, reference_viewport=viewport)
+        change = differences(root / reference, root / actual, output,
+                             reference_viewport=viewport, reference_origin=origin)
     except (OSError, ValueError):
         return "无法比对截图"
     if output.is_file():
@@ -248,11 +263,9 @@ def summarize(args, plan):
         artifact = args.output / platform
         result = artifact / "result.json"
         results = json.loads(result.read_text()) if result.is_file() else None
-        for component, theme in itertools.product(plan["components"], ("light", "dark")):
-            case = plan["components"][component]
-            screenshot = screenshot_path(plan, component, theme, platform)
+        for component, case, theme, screenshot, captured in screenshot_cases(plan, platform):
             key = screenshot.as_posix()
-            case_status = case.get("platformStatus", {}).get(platform, case["status"])
+            case_status = case["status"]
             reference = "本次未采集"
             against = None
             baseline_source = None
@@ -275,9 +288,9 @@ def summarize(args, plan):
             safe_detail = detail.replace("|", "\\|").replace("\n", " ")
             columns = [platform, f"{component}/{case['variant']}/{case_status}", theme,
                        f"{labels[status]}（{safe_detail}）", reference]
-            images = report_images(args.output, platform, component, theme, screenshot) if results else {}
-            viewport = case.get("shadcnComparisonViewport", {}).get(platform, ())
-            upstream_change = shadcn_difference(args.output, artifact, screenshot, images, viewport)
+            images = report_images(args.output, platform, screenshot, captured) if results else {}
+            upstream_change = shadcn_difference(args.output, artifact, screenshot, images,
+                                                case.get("viewport", ()), case.get("referenceOrigin", (0, 0)))
             overview_status = status if results is not None else "pending"
             overview_rows.append((platform, columns[1], theme, overview_status, against, baseline_source, images))
             paths = images.copy()
@@ -427,6 +440,12 @@ def main():
     if args.platform:
         if args.platform not in plan["platforms"] or args.baselines is None:
             parser.error("--platform requires a known platform and --baselines")
+        available = {slug for slug, _, _, _, _ in screenshot_cases(plan, args.platform)}
+        if args.component and set(args.component) - available:
+            parser.error(f"a selected component has no cases on {args.platform}")
+        plan["components"] = {slug: case for slug, case in plan["components"].items() if slug in available}
+        if not plan["components"]:
+            parser.error(f"no cases for {args.platform}")
         if args.run:
             return run_capture(args, plan)
         return capture_results(args, plan)

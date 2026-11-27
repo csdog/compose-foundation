@@ -42,12 +42,53 @@
       "accessibility": "selected and disabled states, panel association and traversal order",
       "motion": "selection indicator or panel transitions where present"
     },
+    "badge": {
+      "title": "Badge",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "reference": "apps/v4/examples/base/badge-demo.tsx",
+      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
+      "shadcnComparisonOrigin": {"swiftui-ios": [159, 0]},
+      "visual": "review all four badge variants in the default example",
+      "behavior": "static labels",
+      "accessibility": "each badge exposes its label",
+      "motion": "static reference"
+    },
+    "separator": {
+      "title": "Separator",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "reference": "apps/v4/examples/base/separator-demo.tsx",
+      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
+      "shadcnComparisonOrigin": {"swiftui-ios": [6, 0]},
+      "visual": "review the rule and both surrounding text groups",
+      "behavior": "static divider",
+      "accessibility": "decorative separator is hidden",
+      "motion": "static reference"
+    },
     "popover": {
       "title": "Popover",
       "variant": "default",
       "status": "initial",
       "platformStatus": {"cmp-desktop": "open"},
-      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520]},
+          {"variant": "default", "status": "open", "viewport": [402, 324]},
+          {"variant": "default", "status": "keyboard-focused", "viewport": [402, 520]},
+          {"variant": "default", "status": "keyboard-activated", "viewport": [402, 520]},
+          {"variant": "basic", "status": "initial", "viewport": [402, 520]},
+          {"variant": "basic", "status": "open", "viewport": [402, 520]},
+          {"variant": "alignments", "status": "initial", "viewport": [402, 520]},
+          {"variant": "alignments", "status": "open", "viewport": [402, 520]},
+          {"variant": "form", "status": "initial", "viewport": [402, 520]},
+          {"variant": "form", "status": "open", "viewport": [402, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [402, 520], "referenceOrigin": [159, 0]},
+          {"variant": "rtl", "status": "open", "viewport": [402, 520], "referenceOrigin": [199, 0]}
+        ]
+      },
       "reference": "apps/v4/examples/base/popover-demo.tsx",
       "visual": "review trigger and panel chrome; the CMP Desktop open fixture omits the upstream form, which needs its own capture",
       "behavior": "open, dismiss and return focus to the trigger",
