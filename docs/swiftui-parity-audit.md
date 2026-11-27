@@ -84,6 +84,12 @@ iPhone 17 Pro（iOS 26.2）深浅色共八张新图，与复拍逐字节一致�
 
 iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集四张深浅色图，复拍逐字节一致。包含独立 Button 在内的原有 90 张图与上一轮逐字节一致。macOS 窗口回归分别点按横向和纵向接缝两侧，验证只触发对应按钮，且禁用 Next 后 Back 仍可操作。iOS 实际触控、键盘、VoiceOver、RTL 和混合子控件的布局仍待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46031332393/artifacts/15214938905) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46031332393/job/140615958625)
 
+### Label 复选框和 Field 输入示例
+
+对照 Nova 的 `label-demo.tsx`、`field-input.tsx` 和 `field-textarea.tsx`。Label 用例保留复选框和完整条款文字。Field 用例保留用户名、密码及两条说明，以及独立的反馈编辑器。密码说明在控件上方，其他说明在控件下方。用户名和密码组的尾部在浅色图中比参考低约 20 pt，输入控件保留 44 pt 的原生操作高度。
+
+iPhone 17 Pro（iOS 26.2）的六张深浅色截图与复拍逐字节一致，原有 94 张图也与上一轮逐字节一致。macOS 实际窗口通过 AppKit 鼠标事件验证点击标签和复选框会更新同一绑定，禁用时点击不写入。iOS 触控、键盘、VoiceOver 和独立标签的焦点关联待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46034351670/artifacts/15218125719) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46034351670/job/140625952242)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -115,7 +121,7 @@ iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集四张深浅色图，复�
 | dropdown-menu | 自定义外部触发器外观，菜单内容走 SwiftUI Menu。Compose 可控制菜单锚点、portal、焦点和自定义条目状态。 |
 | emoji-text | Apple 系统彩色 emoji，可保留 ZWJ 等 Unicode 序列。Compose 使用自己的 emoji 图形与替换逻辑。 |
 | empty | 支持符号、标题、说明和操作 slot。缺少 Compose 的默认/虚线框变体和说明换行策略。 |
-| field | 纵向显示标题、说明、错误及任意输入。缺少 FieldSet/Legend、横向/响应式排列及 Compose 的分组语义。 |
+| field | 纵向显示标题、说明、错误及任意输入。Nova 使用 14 pt 支持文字与 8 pt 间距，说明可放在控件前或后。FieldSet、Legend、横向及响应式排列待补齐。 |
 | hover-card | 触发器和卡片有延迟打开、指针离开后延迟关闭，并支持触摸长按。Compose 另有共享 provider、位置和更完整的指针过渡控制。 |
 | icon | 支持 SF Symbols、动态字号和可选无障碍标签。Compose 可传入任意 ImageVector 并选择图标变体。 |
 | input | 原生单行输入支持独立占位文字、SecureField、错误和禁用状态。Nova 边框视觉高 32 pt，字段布局至少高 44 pt。数字等专用类型与 Compose 样式变体仍有差异。 |
@@ -123,7 +129,7 @@ iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集四张深浅色图，复�
 | input-otp | 使用一个定长数字绑定和原生编辑字段，iOS 字段标记为一次性验证码。Nova 使用连续的 32 pt 格，可通过 `groupBreaks` 加入分隔符。字母数字模式及逐槽选区控制仍待补齐。 |
 | item | 支持媒体、标题、说明、操作。Compose 有尺寸、变体、群组和独立 header/footer。 |
 | kbd | 显示单个键符及 themed 键帽。Compose 另有组合键分组 slot。 |
-| label | 主题文本，支持禁用降权。Compose 的可点击、自定义内容和关联输入行为需要用原生可访问性 API 或外部容器提供。 |
+| label | Nova 标签使用 14 pt Medium，支持禁用淡化。作为原生 Toggle 的内容时，文字和复选框使用同一绑定。独立表单标签的焦点关联待补齐。 |
 | marker | plain、separator、border 三种文本标记。缺少 Compose 的独立图标和内容 slots。 |
 | menubar | 分组入口支持共享打开状态、键盘移动、跳过禁用项、Return 执行和 Escape 关闭。iOS 26.2 模拟器已验证打开后的项目导航及跨菜单切换。Compose 另有子菜单和独立 radio/checkbox 条目。 |
 | message | 收发对齐、作者、时间和内容。没有 Compose 的头像、消息组、独立 header/footer slots。 |
