@@ -38,6 +38,20 @@ struct FoundationCalendarNavigation {
         return months
     }
 
+    func gridDays(in month: Date, includesOutsideDays: Bool) -> [Date?] {
+        let first = monthStart(month)
+        let weekday = calendar.component(.weekday, from: first)
+        let leading = (weekday - calendar.firstWeekday + 7) % 7
+        guard let count = calendar.range(of: .day, in: .month, for: first)?.count else { return [] }
+        let slots = leading + count
+        let gridCount = includesOutsideDays ? ((slots + 6) / 7) * 7 : slots
+        return (0..<gridCount).map { index in
+            let offset = index - leading
+            if !includesOutsideDays && offset < 0 { return nil }
+            return calendar.date(byAdding: .day, value: offset, to: first)
+        }
+    }
+
     func step(from date: Date, by offset: Int) -> Date? {
         let current = anchor(for: date)
         guard let candidate = addingMonths(offset, to: current) else { return nil }

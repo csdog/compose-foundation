@@ -20,6 +20,25 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "calendar": {
+      "title": "Calendar",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "basic", "status": "initial", "viewport": [720, 520]},
+          {"variant": "caption", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/calendar-demo.tsx",
+      "visual": "compare the Nova day grid, selected and current-day fills, and month/year captions",
+      "behavior": "navigate months, select dates, and preserve selection and navigation bounds",
+      "accessibility": "named navigation buttons and date labels with selected states",
+      "motion": "static settled frames"
+    },
     "sheet": {
       "title": "Sheet",
       "variant": "default",
