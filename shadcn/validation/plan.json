@@ -20,6 +20,25 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "aspect-ratio": {
+      "title": "Aspect Ratio",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPhone-17-Pro-Max",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [440, 520]},
+          {"variant": "square", "status": "initial", "viewport": [440, 520]},
+          {"variant": "portrait", "status": "initial", "viewport": [440, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/aspect-ratio-demo.tsx",
+      "visual": "compare the complete landscape, square and portrait bounds with centered cover content",
+      "behavior": "fit the proposed area, clip overflow and keep interaction inside the visible rectangle",
+      "accessibility": "supplied content owns its accessibility label and role",
+      "motion": "static reference"
+    },
     "item": {
       "title": "Item",
       "variant": "default",

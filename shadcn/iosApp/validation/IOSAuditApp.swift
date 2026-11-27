@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "aspect-ratio": AspectRatioScreenshotFixture.Example.allCases.map { example in
+                ("aspect-ratio-\(example.rawValue)-initial", { AnyView(AspectRatioScreenshotFixture(example: example)) })
+            },
             "item": ItemScreenshotFixture.Example.allCases.map { example in
                 ("item-\(example.rawValue)-initial", { AnyView(ItemScreenshotFixture(example: example)) })
             },
@@ -781,6 +784,51 @@ private struct SeparatorInitialScreenshotFixture: View {
         .padding(.top, 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct AspectRatioScreenshotFixture: View {
+    enum Example: String, CaseIterable {
+        case `default`, square, portrait
+
+        var ratio: CGFloat {
+            switch self {
+            case .default: 16 / 9
+            case .square: 1
+            case .portrait: 9 / 16
+            }
+        }
+
+        var width: CGFloat {
+            switch self {
+            case .default: 384
+            case .square: 192
+            case .portrait: 160
+            }
+        }
+    }
+
+    @Environment(\.colorScheme) private var scheme
+    let example: Example
+
+    var body: some View {
+        let side = max(example.width, example.width / example.ratio)
+        let brightness = scheme == .dark ? 0.2 : 1.0
+        let theme = FoundationTheme(preset: .nova)
+        return FoundationAspectRatio(example.ratio) {
+            LinearGradient(
+                gradient: Gradient(colors: [Color(white: 214.0 / 255 * brightness), Color(white: 195.0 / 255 * brightness)]),
+                startPoint: .topLeading, endPoint: .bottomTrailing
+            )
+            .frame(width: side, height: side)
+            .accessibilityLabel(Text("Photo"))
+        }
+        .clipShape(RoundedRectangle(cornerRadius: theme.cornerRadius))
+        .frame(width: example.width)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
         .ignoresSafeArea()
     }
 }
