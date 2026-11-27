@@ -58,6 +58,12 @@ Input 覆盖完整的 API Key 字段和独立输入框。API Key 示例使用系
 
 深浅色共八张新图，复拍逐字节一致。原有 60 张 iPhone 图也与上一轮一致。浅色占位文字的可见边界与参考图最多差 1 px。Textarea 使用原生滚动编辑器，上游网页有拖拽调整尺寸的手柄。macOS Swift Package 构建和 Tabs 导航回归通过。实际输入、安全遮蔽、错误和焦点态、VoiceOver 及窄屏布局仍待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46016882459/artifacts/15207916190)
 
+### Input OTP 初始与禁用态
+
+Nova 示例覆盖六位填满、四位空白及三加三禁用。每张图保留完整格组、数字和适用的分隔符。单个验证码绑定负责原生输入，同组使用 32 pt 高的连续格。使用 `groupBreaks: [3]` 在第四格前加入分隔符。本地 Swift 断言通过，覆盖重复和越界位置、分组排序、非数字过滤、Unicode 数字归一化和长度截断。
+
+iPhone 17 Pro（iOS 26.2）使用 402 × 520 画布采集深浅色六张新图，复拍逐字节一致，原有 68 张图与上一轮逐字节一致。整体可见边界与参考最多相差 2 px。macOS Swift Package 构建和 Tabs 导航回归通过。实际输入、粘贴、系统自动填充、焦点态和 VoiceOver 待单独验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46019689625/artifacts/15209185259)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -94,7 +100,7 @@ Input 覆盖完整的 API Key 字段和独立输入框。API Key 示例使用系
 | icon | 支持 SF Symbols、动态字号和可选无障碍标签。Compose 可传入任意 ImageVector 并选择图标变体。 |
 | input | 原生单行输入支持独立占位文字、SecureField、错误和禁用状态。Nova 边框视觉高 32 pt，字段布局至少高 44 pt。数字等专用类型与 Compose 样式变体仍有差异。 |
 | input-group | 横向 leading/content/trailing slots。Compose 还支持上下 addon、组合焦点及明确的 input/textarea/button slots。 |
-| input-otp | 数字规整、定长槽位、iOS 自动填码。缺少 Compose 的字母数字输入类型、分组分隔符和逐槽状态控制。 |
+| input-otp | 使用一个定长数字绑定和原生编辑字段，iOS 字段标记为一次性验证码。Nova 使用连续的 32 pt 格，可通过 `groupBreaks` 加入分隔符。字母数字模式及逐槽选区控制仍待补齐。 |
 | item | 支持媒体、标题、说明、操作。Compose 有尺寸、变体、群组和独立 header/footer。 |
 | kbd | 显示单个键符及 themed 键帽。Compose 另有组合键分组 slot。 |
 | label | 主题文本，支持禁用降权。Compose 的可点击、自定义内容和关联输入行为需要用原生可访问性 API 或外部容器提供。 |
