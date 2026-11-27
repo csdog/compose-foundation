@@ -172,6 +172,14 @@ iPhone 17 Pro（iOS 26.2）以 402 × 520 画布复拍六张深浅色图，逐�
 
 macOS 原生窗口的点击回归验证首页和末页的禁用按钮不写入绑定、直接选页、逐页翻页及 RTL 镜像。iOS 实际触控、硬件键盘、VoiceOver 和窄屏滚动仍待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46058083580/job/140705454124)
 
+### Hover Card 收起、展开与指针切换
+
+对照 shadcn Base UI / Nova 的 `hover-card-demo.tsx`，包含完整的触发器、账号、两行简介和加入时间。Nova 复用锚定弹层，使用 256 pt 默认宽度、4 pt 间距和对齐偏移。指针悬停打开时保留原窗口焦点，移入卡片会取消延迟关闭。长按入口和非 Nova 原生系统弹层仍可用。新增 `isPresented` 绑定用于调用方控制展开。
+
+iPhone 17 Pro（iOS 26.2）使用 402 × 520 画布复拍收起、展开的四张深浅色图，逐字节一致。展开面板取样颜色与参考一致。SwiftUI 布局保留 44 pt 的原生触发区域，面板顶缘比参考低约 6 pt。Web 展开图带有鼠标悬停下划线，SwiftUI 图通过受控状态打开。[最终截图报告](https://github.com/csdog/compose-foundation/actions/runs/46060257085/artifacts/15228428014)
+
+macOS 在实际窗口内调用组件悬停回调，验证过早离开会取消打开、触发器到卡片的切换会取消关闭、离开卡片后关闭，以及父窗口一直保持为 key window。系统指针轨迹在 CI 未得到验证。既有 Popover 的 Escape 关闭与触发器焦点回归通过。共用弹层改动后的 24 张 iOS Popover 截图与改动前逐字节一致。iOS 实际长按、VoiceOver 和 RTL 待另行验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46060257085/job/140712584204) · [Popover 截图回归](https://github.com/csdog/compose-foundation/actions/runs/46059382583/artifacts/15227918198)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -204,7 +212,7 @@ macOS 原生窗口的点击回归验证首页和末页的禁用按钮不写入�
 | emoji-text | Apple 系统彩色 emoji，可保留 ZWJ 等 Unicode 序列。Compose 使用自己的 emoji 图形与替换逻辑。 |
 | empty | 支持符号、标题、说明和操作 slot，以及标准和虚线边框样式。Nova 对齐基本排版。自定义头像等媒体及其余示例布局待对照。 |
 | field | 纵向显示标题、说明、错误及任意输入。Nova 使用 14 pt 支持文字与 8 pt 间距，说明可放在控件前或后。FieldSet、Legend、横向及响应式排列待补齐。 |
-| hover-card | 触发器和卡片有延迟打开、指针离开后延迟关闭，并支持触摸长按。Compose 另有共享 provider、位置和更完整的指针过渡控制。 |
+| hover-card | 支持延迟开关、触发器与卡片间的指针切换、长按和受控展开。Nova 使用锚定弹层，悬停保持原窗口焦点。共享 provider、位置变体及触控回归待对齐。 |
 | icon | 支持 SF Symbols、动态字号和可选无障碍标签。Compose 可传入任意 ImageVector 并选择图标变体。 |
 | input | 原生单行输入支持独立占位文字、SecureField、错误和禁用状态。Nova 边框视觉高 32 pt，字段布局至少高 44 pt。数字等专用类型与 Compose 样式变体仍有差异。 |
 | input-group | 横向 leading/content/trailing slots。Compose 还支持上下 addon、组合焦点及明确的 input/textarea/button slots。 |
