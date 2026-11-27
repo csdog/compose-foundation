@@ -250,6 +250,28 @@ jobs:
           retention-days: 7
           path: build/component-parity/${{ matrix.platform }}/candidate/
           if-no-files-found: ${{ inputs.update == 'publish' && 'error' || 'ignore' }}
+      - name: Preview baseline index changes
+        if: ${{ inputs.update == 'review' && needs.baseline.outputs.revision != '' }}
+        run: |
+          plan=shadcn/validation/plan.json
+          checkout=build/component-baselines
+          python shadcn/validation/publish_baselines.py --plan "$plan" --platform "$PLATFORM" \
+            --candidates "build/component-parity/$PLATFORM/candidate" --baselines "$checkout" >/dev/null
+          paths="$RUNNER_TEMP/baseline-index-paths.txt"
+          python shadcn/validation/update_baseline_indexes.py --plan "$plan" --platform "$PLATFORM" \
+            --baselines "$checkout" > "$paths"
+          if [[ -s "$paths" ]]; then
+            git -C "$checkout" add --intent-to-add --pathspec-from-file="$paths"
+            git -C "$checkout" diff HEAD -- ':(glob)**/Index.md' > "$RUNNER_TEMP/baseline-index.patch"
+          fi
+      - name: Upload baseline index preview
+        if: ${{ inputs.update == 'review' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: component-parity-index-preview-${{ matrix.platform }}
+          retention-days: 7
+          path: ${{ runner.temp }}/baseline-index.patch
+          if-no-files-found: ignore
 
   publish:
     name: Publish component baselines
@@ -276,7 +298,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: python -m pip install Pillow==11.3.0
-      - name: Publish validated screenshots
+      - name: Publish validated screenshots and indexes
         run: |
           plan=shadcn/validation/plan.json
           platforms="$(jq -er '.platforms | to_entries | map(select(.value == "automated") | .key) | join("\n")' "$plan")"
@@ -285,6 +307,8 @@ jobs:
           for platform in $platforms; do
             python shadcn/validation/publish_baselines.py --plan "$plan" --platform "$platform" \
               --candidates "$RUNNER_TEMP/candidates/component-parity-candidates-$platform" \
+              --baselines baseline-repository >> "$published_paths"
+            python shadcn/validation/update_baseline_indexes.py --plan "$plan" --platform "$platform" \
               --baselines baseline-repository >> "$published_paths"
           done
           mapfile -t paths < "$published_paths"
