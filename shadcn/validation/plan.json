@@ -20,6 +20,24 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "dialog": {
+      "title": "Dialog",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "default", "status": "open", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/dialog-demo.tsx",
+      "visual": "compare the Edit profile dialog, labeled native fields and footer controls",
+      "behavior": "focus the close control, dismiss from Escape or the backdrop and allow caller focus restoration",
+      "accessibility": "preserve the heading and field labels while hiding background controls",
+      "motion": "static settled frames"
+    },
     "drawer": {
       "title": "Drawer",
       "variant": "default",
