@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "pagination": PaginationScreenshotFixture.Example.allCases.map { example in
+                ("pagination-\(example.rawValue)-initial", { AnyView(PaginationScreenshotFixture(example: example)) })
+            },
             "scroll-area": ScrollAreaScreenshotFixture.Example.allCases.map { example in
                 ("scroll-area-\(example.rawValue)-initial", { AnyView(ScrollAreaScreenshotFixture(example: example)) })
             },
@@ -792,6 +795,36 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct PaginationScreenshotFixture: View {
+    enum Example: String, CaseIterable { case `default`, simple, rtl }
+
+    @Environment(\.colorScheme) private var scheme
+    @State private var page = 2
+    let example: Example
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let controls: FoundationPaginationControls = switch example {
+        case .default: .labels(previous: "Previous", next: "Next")
+        case .simple: .none
+        case .rtl: .labels(previous: "السابق", next: "التالي")
+        }
+
+        return FoundationPagination(pageCount: example == .simple ? 5 : 10, page: $page,
+                                    controls: controls, window: example == .simple ? .standard : .compact)
+            .font(.custom("Geist-Medium", size: 14))
+            .environment(\.layoutDirection, example == .rtl ? .rightToLeft : .leftToRight)
+            .environment(\.locale, Locale(identifier: example == .rtl ? "ar@numbers=arab" : "en_US"))
+            .foundationTheme(theme)
+            .padding(.top, 18)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
     }
 }
 

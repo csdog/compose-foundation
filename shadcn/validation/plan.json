@@ -20,6 +20,24 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "pagination": {
+      "title": "Pagination",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520], "referenceOrigin": [159, 0]},
+          {"variant": "simple", "status": "initial", "viewport": [402, 520], "referenceOrigin": [159, 0]},
+          {"variant": "rtl", "status": "initial", "viewport": [402, 520], "referenceOrigin": [159, 0]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/pagination-demo.tsx",
+      "visual": "compare the labeled layout, pages-only layout and Arabic RTL layout",
+      "behavior": "select a page, advance or go back, and respect first and last boundaries",
+      "accessibility": "named native buttons, selected page state and disabled boundaries",
+      "motion": "static initial frames"
+    },
     "scroll-area": {
       "title": "Scroll Area",
       "variant": "default",
