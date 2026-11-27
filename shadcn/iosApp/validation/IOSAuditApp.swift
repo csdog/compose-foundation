@@ -148,7 +148,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "tabs": { AnyView(TabsInitialScreenshotFixture()) },
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
-        let useComparisonFixtures = !names.isDisjoint(with: comparisonFixtures.keys)
+        let useComparisonFixtures = (names.contains("switch") || !names.isDisjoint(with: comparisonFixtures.keys))
             && Bundle.main.url(forResource: "geist_medium", withExtension: "ttf") != nil
         if useComparisonFixtures || !popoverCases.isEmpty {
             try registerParityFonts()
@@ -166,44 +166,54 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 continue
             }
             guard let fixture = fixtures[name] else { continue }
-            for dark in [false, true] {
-                let scheme: ColorScheme = dark ? .dark : .light
-                let palette = FoundationTheme().palette(for: scheme)
-                window.overrideUserInterfaceStyle = dark ? .dark : .light
-                let comparison = useComparisonFixtures ? comparisonFixtures[name]?() : nil
-                let content = comparison ?? AnyView(fixture().padding(16)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(palette.background))
-                let host = UIHostingController(rootView: content
-                    .environment(\.colorScheme, scheme)
-                    .environment(\.locale, Locale(identifier: "en_US")))
-                root.addChild(host)
-                host.view.frame = root.view.bounds
-                root.view.addSubview(host.view)
-                host.didMove(toParent: root)
-                root.view.layoutIfNeeded()
-                try await Task.sleep(nanoseconds: 32_000_000)
-                let format = UIGraphicsImageRendererFormat()
-                format.scale = 1
-                var bounds = root.view.bounds
-                if comparison != nil {
-                    bounds.size.height = min(bounds.height, 520)
-                    format.preferredRange = .standard
-                    format.opaque = true
+            let captures: [(filename: String, content: (() -> AnyView)?)]
+            if useComparisonFixtures, name == "switch" {
+                captures = SwitchScreenshotFixture.Example.allCases.map { example in
+                    ("switch-\(example.rawValue)", { AnyView(SwitchScreenshotFixture(example: example)) })
                 }
-                var captureSucceeded = false
-                let image = UIGraphicsImageRenderer(bounds: bounds, format: format).image { _ in
-                    captureSucceeded = root.view.drawHierarchy(in: root.view.bounds, afterScreenUpdates: true)
+            } else {
+                captures = [(name, useComparisonFixtures ? comparisonFixtures[name] : nil)]
+            }
+            for (filename, comparisonFixture) in captures {
+                for dark in [false, true] {
+                    let scheme: ColorScheme = dark ? .dark : .light
+                    let palette = FoundationTheme().palette(for: scheme)
+                    window.overrideUserInterfaceStyle = dark ? .dark : .light
+                    let comparison = comparisonFixture?()
+                    let content = comparison ?? AnyView(fixture().padding(16)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(palette.background))
+                    let host = UIHostingController(rootView: content
+                        .environment(\.colorScheme, scheme)
+                        .environment(\.locale, Locale(identifier: "en_US")))
+                    root.addChild(host)
+                    host.view.frame = root.view.bounds
+                    root.view.addSubview(host.view)
+                    host.didMove(toParent: root)
+                    root.view.layoutIfNeeded()
+                    try await Task.sleep(nanoseconds: 32_000_000)
+                    let format = UIGraphicsImageRendererFormat()
+                    format.scale = 1
+                    var bounds = root.view.bounds
+                    if comparison != nil {
+                        bounds.size.height = min(bounds.height, 520)
+                        format.preferredRange = .standard
+                        format.opaque = true
+                    }
+                    var captureSucceeded = false
+                    let image = UIGraphicsImageRenderer(bounds: bounds, format: format).image { _ in
+                        captureSucceeded = root.view.drawHierarchy(in: root.view.bounds, afterScreenUpdates: true)
+                    }
+                    guard captureSucceeded, let data = image.pngData() else {
+                        throw CocoaError(.fileWriteUnknown, userInfo: [NSFilePathErrorKey: name])
+                    }
+                    let appearance = dark ? "dark" : "light"
+                    try data.write(to: outputDirectory.appendingPathComponent("\(filename)-\(appearance).png"))
+                    host.willMove(toParent: nil)
+                    host.view.removeFromSuperview()
+                    host.removeFromParent()
+                    count += 1
                 }
-                guard captureSucceeded, let data = image.pngData() else {
-                    throw CocoaError(.fileWriteUnknown, userInfo: [NSFilePathErrorKey: name])
-                }
-                let appearance = dark ? "dark" : "light"
-                try data.write(to: outputDirectory.appendingPathComponent("\(name)-\(appearance).png"))
-                host.willMove(toParent: nil)
-                host.view.removeFromSuperview()
-                host.removeFromParent()
-                count += 1
             }
         }
         window.rootViewController = UIHostingController(rootView: Text("Rendered \(count) audit fixtures"))
@@ -660,6 +670,41 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct SwitchScreenshotFixture: View {
+    enum Example: String, CaseIterable {
+        case off = "default-initial"
+        case on = "default-on"
+        case disabled = "disabled-initial"
+    }
+
+    @Environment(\.colorScheme) private var scheme
+    @State private var isOn: Bool
+    let example: Example
+
+    init(example: Example) {
+        self.example = example
+        _isOn = State(initialValue: example == .on)
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let disabled = example == .disabled
+        return Toggle(disabled ? "Disabled" : "Airplane Mode", isOn: $isOn)
+            .toggleStyle(FoundationSwitchStyle())
+            .disabled(disabled)
+            .font(.custom("Geist-Medium", size: 14))
+            .foundationTheme(theme)
+            .padding(.horizontal, 24)
+            .padding(.top, 11)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
     }
 }
 

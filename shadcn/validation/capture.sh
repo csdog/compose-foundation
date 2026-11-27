@@ -176,14 +176,18 @@ PYTHON
       ;;
   esac
   for component in "${components[@]}"; do
-    if [[ "$platform" == swiftui-ios && "$component" == popover ]]; then
+    ios_cases=''
+    if [[ "$platform" == swiftui-ios ]]; then
+      ios_cases="$(python3 -c 'import json, sys; print(*(c["variant"] + ":" + c["status"] for c in json.load(open(sys.argv[1]))["components"][sys.argv[2]].get("platformCases", {}).get("swiftui-ios", [])), sep="\n")' "$plan" "$component")"
+    fi
+    if [[ -n "$ios_cases" ]]; then
       while IFS= read -r key; do
         for theme in light dark; do
           destination="$output/$pass/$component/${key%%:*}/${key##*:}"
           mkdir -p "$destination"
           cp "$work/$pass/$component-${key/:/-}-$theme.png" "$destination/$theme.png" || capture_status=1
         done
-      done < <(python3 -c 'import json, sys; print(*(c["variant"] + ":" + c["status"] for c in json.load(open(sys.argv[1]))["components"]["popover"]["platformCases"]["swiftui-ios"]), sep="\n")' "$plan")
+      done <<< "$ios_cases"
       continue
     fi
     destination="$output/$pass/$component/initial"
