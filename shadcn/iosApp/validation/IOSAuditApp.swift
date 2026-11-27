@@ -228,7 +228,8 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             ],
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
-        let useComparisonFixtures = !names.isDisjoint(with: Set(comparisonFixtures.keys).union(variantFixtures.keys))
+        let useComparisonFixtures = (names.contains("hover-card")
+            || !names.isDisjoint(with: Set(comparisonFixtures.keys).union(variantFixtures.keys)))
             && Bundle.main.url(forResource: "geist_medium", withExtension: "ttf") != nil
         if useComparisonFixtures || !popoverCases.isEmpty {
             try registerParityFonts()
@@ -245,6 +246,20 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                     for dark in [false, true] {
                         try await capturePopover(item, dark: dark, root: root, window: window,
                                                  outputDirectory: outputDirectory)
+                        count += 1
+                    }
+                }
+                continue
+            }
+            if name == "hover-card", useComparisonFixtures {
+                for isOpen in [false, true] {
+                    let filename = "hover-card-default-\(isOpen ? "open" : "initial")"
+                    guard let viewport = viewports[filename] else { throw CocoaError(.fileReadCorruptFile) }
+                    for dark in [false, true] {
+                        try await captureFloatingPanel(filename: filename, isOpen: isOpen, viewport: viewport,
+                                                       dark: dark, root: root, window: window,
+                                                       outputDirectory: outputDirectory,
+                                                       content: HoverCardScreenshotFixture(isOpen: isOpen))
                         count += 1
                     }
                 }
@@ -372,10 +387,20 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
     private func capturePopover(
         _ item: PopoverAuditCase, dark: Bool, root: UIViewController, window: UIWindow, outputDirectory: URL
     ) async throws {
-        let name = "popover-\(item.variant.rawValue)-\(item.status.rawValue)-\(dark ? "dark" : "light")"
+        try await captureFloatingPanel(filename: "popover-\(item.variant.rawValue)-\(item.status.rawValue)",
+                                       isOpen: item.status.isOpen, viewport: item.viewport, dark: dark,
+                                       root: root, window: window, outputDirectory: outputDirectory,
+                                       content: PopoverScreenshotFixture(item: item))
+    }
+
+    private func captureFloatingPanel<Panel: View>(
+        filename: String, isOpen: Bool, viewport: [Int], dark: Bool, root: UIViewController, window: UIWindow,
+        outputDirectory: URL, content: Panel
+    ) async throws {
+        let name = "\(filename)-\(dark ? "dark" : "light")"
         let scheme: ColorScheme = dark ? .dark : .light
         window.overrideUserInterfaceStyle = dark ? .dark : .light
-        let host = UIHostingController(rootView: PopoverScreenshotFixture(item: item)
+        let host = UIHostingController(rootView: content
             .environment(\.colorScheme, scheme)
             .environment(\.layoutDirection, .leftToRight)
             .environment(\.locale, Locale(identifier: "en_US"))
@@ -395,17 +420,17 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         let surfaces = window.windowScene?.windows.filter {
             $0 !== window && !$0.isHidden && $0.windowLevel.rawValue == window.windowLevel.rawValue + 1
         } ?? []
-        guard surfaces.count == (item.status.isOpen ? 1 : 0),
-              item.viewport.count == 2,
-              item.viewport[0] == Int(root.view.bounds.width),
-              item.viewport[1] > 0, item.viewport[1] <= Int(root.view.bounds.height) else {
+        guard surfaces.count == (isOpen ? 1 : 0),
+              viewport.count == 2,
+              viewport[0] == Int(root.view.bounds.width),
+              viewport[1] > 0, viewport[1] <= Int(root.view.bounds.height) else {
             throw CocoaError(.fileWriteUnknown, userInfo: [NSLocalizedDescriptionKey: "Unexpected viewport or panel for \(name)"])
         }
         let format = UIGraphicsImageRendererFormat()
         format.scale = 1
         format.preferredRange = .standard
         format.opaque = true
-        let size = CGSize(width: CGFloat(item.viewport[0]), height: CGFloat(item.viewport[1]))
+        let size = CGSize(width: CGFloat(viewport[0]), height: CGFloat(viewport[1]))
         var rendered = false
         let image = UIGraphicsImageRenderer(size: size, format: format).image { _ in
             rendered = root.view.drawHierarchy(in: root.view.bounds, afterScreenUpdates: true)
@@ -795,6 +820,44 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct HoverCardScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    let isOpen: Bool
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let palette = theme.palette(for: scheme)
+        return Button("Hover Here") {}
+            .font(.custom("Geist-Medium", size: 14))
+            .foregroundColor(palette.foreground)
+            .buttonStyle(PlainButtonStyle())
+            .frame(width: 96, height: 44)
+            .modifier(FoundationHoverCard(isPresented: .constant(isOpen)) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("@nextjs").font(.custom("Geist-Medium", size: 14))
+                        .accessibilityAddTraits(.isHeader)
+                    Text("The React Framework – created and maintained by @vercel.")
+                        .font(.custom("Geist-Regular", size: 14))
+                        .lineSpacing(3)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text("Joined December 2021")
+                        .font(.custom("Geist-Regular", size: 12))
+                        .foregroundColor(palette.mutedForeground)
+                        .padding(.top, 4)
+                }
+                .multilineTextAlignment(.leading)
+            })
+            .foundationTheme(theme)
+            .padding(.leading, 24)
+            .padding(.top, 18)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(palette.background)
+            .ignoresSafeArea()
     }
 }
 
