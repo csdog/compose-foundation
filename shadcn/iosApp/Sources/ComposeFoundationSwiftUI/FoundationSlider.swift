@@ -102,6 +102,7 @@ private struct NovaSlider: View {
                     .updating($dragging) { _, state, _ in state = true }
                     .onChanged { event in
                         guard isEnabled, travel > 0 else { return }
+                        if !focused { focused = true }
                         let x = rightToLeft ? width - event.location.x : event.location.x
                         value = scale.value(at: Double((x - inset) / travel))
                     },
