@@ -69,9 +69,14 @@ private struct PresentationProbe: View {
                 isPresented: $state.presented, title: "Audit sheet", description: "An edge presentation",
                 side: kind.sheetEdge, onDismiss: dismissed
             ) {
-                TextField("Name", text: $state.name)
-                    .textFieldStyle(.plain)
-                    .frame(height: 44)
+                if kind == .sheetRTL {
+                    FoundationInput("الاسم", text: $state.name)
+                        .foundationTheme(FoundationTheme(preset: .nova))
+                } else {
+                    TextField("Name", text: $state.name)
+                        .textFieldStyle(.plain)
+                        .frame(height: 44)
+                }
             }.maximumPanelHeight(kind == .sheetTop || kind == .sheetBottom ? 220 : 330))
             .environment(\.layoutDirection, kind == .sheetRTL ? .rightToLeft : .leftToRight)
         case .sheet:
@@ -154,18 +159,27 @@ struct MacPresentationFocusAudit {
             }
             guard state.backgroundActivations == 0 else { fail("Keyboard activated background content", state) }
             print("PASS: \(kind.rawValue) Escape dismisses the reopened presentation and restores the trigger")
-            if kind == .dialogCentered || kind == .sheetTrailing {
+            if kind == .dialogCentered || kind == .sheetTrailing || kind == .sheetRTL {
                 press(2, "d", app: app)
                 guard await waitUntil({ state.presented }) else { fail("Could not reopen the presentation", state) }
                 try? await Task.sleep(for: .milliseconds(300))
                 let field = kind == .dialogCentered ? NSPoint(x: 85, y: 134) : NSPoint(x: 205, y: 225)
                 click(field, app: app)
                 try? await Task.sleep(for: .milliseconds(120))
-                press(0, "a", app: app)
-                guard await waitUntil({ state.presented && state.name.contains("a") }) else {
-                    fail("The form did not accept typed text", state)
+                if kind == .sheetRTL {
+                    guard let editor = window.firstResponder as? NSTextView, editor.isFieldEditor else {
+                        fail("The RTL input did not activate its native field editor", state)
+                    }
+                    editor.setSelectedRange(NSRange(location: state.name.utf16.count, length: 0))
+                    press(123, String(UnicodeScalar(NSLeftArrowFunctionKey)!), app: app)
                 }
-                click(NSPoint(x: 10, y: 10), app: app)
+                press(0, "a", app: app)
+                guard await waitUntil({
+                    state.presented && (kind == .sheetRTL ? state.name == "Pedrao" : state.name.contains("a"))
+                }) else {
+                    fail("The form did not accept typed text at the expected cursor position", state)
+                }
+                click(NSPoint(x: kind == .sheetRTL ? 410 : 10, y: 10), app: app)
                 guard await waitUntil({ !state.presented && state.dismissals == 3 && state.triggerFocused }) else {
                     fail("The backdrop did not dismiss and restore the trigger", state)
                 }

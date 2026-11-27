@@ -6,6 +6,7 @@ public struct FoundationInput: View {
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.foundationSurface) private var surface
     @Environment(\.font) private var font
+    @Environment(\.layoutDirection) private var layoutDirection
     @ScaledMetric(relativeTo: .subheadline) private var novaFieldHeight: CGFloat = 32
     @ScaledMetric(relativeTo: .body) private var novaFontSize: CGFloat = 16
     @State private var isEditing = false
@@ -40,7 +41,7 @@ public struct FoundationInput: View {
         let fieldHeight = max(32, novaFieldHeight)
         let fill = nova ? (colorScheme == .dark ? palette.novaDarkOutlineFill(in: surface) : .clear) : palette.card
 
-        editor(nova ? "" : placeholder)
+        alignedEditor(nova ? "" : placeholder, nova: nova)
             .textFieldStyle(.plain)
             .background(Group {
                 if nova && text.isEmpty {
@@ -70,6 +71,15 @@ public struct FoundationInput: View {
                 alignment: .bottom
             )
             .opacity(isEnabled ? 1 : 0.5)
+    }
+
+    @ViewBuilder
+    private func alignedEditor(_ prompt: String, nova: Bool) -> some View {
+        if #available(iOS 26, macOS 26, *), nova && layoutDirection == .rightToLeft {
+            editor(prompt).multilineTextAlignment(strategy: .layoutBased)
+        } else {
+            editor(prompt)
+        }
     }
 
     @ViewBuilder

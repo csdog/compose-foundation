@@ -873,7 +873,7 @@ jobs:
           plutil -insert CFBundleIdentifier -string com.composefoundation.presentation-focus-audit "$plist"
           plutil -insert CFBundlePackageType -string APPL "$plist"
           xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
-            "$sources"/Foundation{Theme,ButtonStyle,PresentationHeader,Drawer,Dialog,Sheet}.swift \
+            "$sources"/Foundation{Theme,ButtonStyle,Input,PresentationHeader,Drawer,Dialog,Sheet}.swift \
             "$swiftui/validation/MacPresentationFocusAudit.swift" \
             -o "$app/Contents/MacOS/PresentationFocusAudit"
           failed=0
@@ -882,7 +882,7 @@ jobs:
             open -n -W --stdout "$log" --stderr "$log" "$app" --args "$kind" || failed=1
             cat "$log"
             expected=2
-            if [[ "$kind" == dialog-centered || "$kind" == sheet-trailing ]]; then expected=3; fi
+            if [[ "$kind" == dialog-centered || "$kind" == sheet-trailing || "$kind" == sheet-rtl ]]; then expected=3; fi
             test "$(grep -c '^PASS:' "$log")" -eq "$expected" || failed=1
           done
           exit "$failed"

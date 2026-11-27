@@ -457,11 +457,12 @@
       "platformCases": {
         "swiftui-ios": [
           {"variant": "default", "status": "initial", "viewport": [720, 520]},
-          {"variant": "basic", "status": "initial", "viewport": [720, 520]}
+          {"variant": "basic", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [720, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/input-demo.tsx",
-      "visual": "compare the complete secure API Key field and standalone text field",
+      "visual": "compare secure API Key fields in English and Arabic plus the standalone text field",
       "behavior": "bind input text and use native secure entry for the API Key field",
       "accessibility": "field label and secure entry where applicable",
       "motion": "static settled frames"
