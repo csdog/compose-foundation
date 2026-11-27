@@ -127,13 +127,23 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             throw CocoaError(.fileReadCorruptFile)
         }
 
+        let requested = ProcessInfo.processInfo.arguments.compactMap { argument -> String? in
+            let prefix = "--audit-component="
+            return argument.hasPrefix(prefix) ? String(argument.dropFirst(prefix.count)) : nil
+        }
+        let names = requested.isEmpty ? Set(fixtures.keys) : Set(requested)
+        guard names.isSubset(of: fixtures.keys) else {
+            throw CocoaError(.fileReadCorruptFile, userInfo: [NSLocalizedDescriptionKey: "Unknown audit component"])
+        }
+
         let outputDirectory = try prepareOutputDirectory()
-        let popoverFont = Bundle.main.url(forResource: "geist_medium", withExtension: "ttf")
+        let popoverFont = names.contains("popover")
+            ? Bundle.main.url(forResource: "geist_medium", withExtension: "ttf") : nil
         if let popoverFont, !CTFontManagerRegisterFontsForURL(popoverFont as CFURL, .process, nil) {
             throw CocoaError(.fileReadCorruptFile, userInfo: [NSFilePathErrorKey: popoverFont.path])
         }
         var count = 0
-        for name in fixtures.keys.sorted() {
+        for name in names.sorted() {
             guard let fixture = fixtures[name] else { continue }
             for dark in [false, true] {
                 let scheme: ColorScheme = dark ? .dark : .light
