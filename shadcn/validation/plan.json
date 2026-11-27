@@ -20,6 +20,27 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "accordion": {
+      "title": "Accordion",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "default", "status": "returns-open", "viewport": [720, 520]},
+          {"variant": "disabled", "status": "initial", "viewport": [720, 520]},
+          {"variant": "multiple", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/accordion-demo.tsx",
+      "visual": "compare all headings, item dividers, the directional chevrons, and the expanded panel",
+      "behavior": "single and multiple expansion, independent collapse, and disabled triggers",
+      "accessibility": "named heading buttons with expanded, collapsed, and disabled states",
+      "motion": "static settled frames"
+    },
     "button": {
       "title": "Button",
       "variant": "variants",
