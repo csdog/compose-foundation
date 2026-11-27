@@ -145,7 +145,10 @@ public struct FoundationDrawer<Panel: View>: ViewModifier {
             .accessibilityElement(children: .contain)
             .accessibilityAction(.escape) { close() }
             .onDisappear {
-                if !isPresented { onDismiss() }
+                guard !isPresented else { return }
+                DispatchQueue.main.async {
+                    if !isPresented { onDismiss() }
+                }
             }
     }
 
