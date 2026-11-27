@@ -138,6 +138,40 @@
       "accessibility": "field label and secure entry where applicable",
       "motion": "static settled frames"
     },
+    "toggle": {
+      "title": "Toggle",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520]},
+          {"variant": "default", "status": "pressed", "viewport": [402, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/toggle-demo.tsx",
+      "visual": "compare the complete Bookmark outline button off and on",
+      "behavior": "toggle a bound selection",
+      "accessibility": "button label and selected state",
+      "motion": "static settled frames"
+    },
+    "toggle-group": {
+      "title": "Toggle Group",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520]},
+          {"variant": "default", "status": "bold", "viewport": [402, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/toggle-group-demo.tsx",
+      "visual": "compare all three outline buttons with none or Bold selected",
+      "behavior": "preserve single and multiple selection policies",
+      "accessibility": "each item exposes its label and selection",
+      "motion": "static settled frames"
+    },
     "slider": {
       "title": "Slider",
       "variant": "default",

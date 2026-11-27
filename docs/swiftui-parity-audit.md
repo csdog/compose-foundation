@@ -72,6 +72,12 @@ iPhone 17 Pro（iOS 26.2）深浅色共八张新图，复拍逐字节一致。�
 
 macOS 窗口通过 AppKit 事件验证两种方向的点击、按住拖动、四个方向键、Home/End 和禁用阻止绑定写入。数值断言覆盖范围夹取、步长取整和极小步长。iOS 实际触控、硬件键盘和 VoiceOver 待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46022866497/job/140588878349)
 
+### Toggle 书签和 Toggle Group 格式按钮
+
+Toggle 对照完整描边书签的关闭和选中态。Toggle Group 对照 Bold、Italic、Underline 三个描边按钮，覆盖无选中和 Bold 选中。选中 Bold 后，像素变化局限于该按钮。Nova 的这两组控件保留至少 44 × 44 pt 的操作区域。
+
+iPhone 17 Pro（iOS 26.2）深浅色共八张新图，与复拍逐字节一致。原有 82 张图也与上一轮一致，外边界与 shadcn 参考相差最多 2 px。macOS 窗口通过 AppKit 鼠标事件验证单按钮切换、单选替换、多选保留、最后一项必选及单项和整组禁用。实际 iOS 触控、硬件键盘、VoiceOver 和组内方向键导航仍待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46028364880/artifacts/15214950117) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46028364880/job/140605804826)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -141,8 +147,8 @@ macOS 窗口通过 AppKit 事件验证两种方向的点击、按住拖动、四
 | textarea | 原生 TextEditor 支持多行绑定、独立占位文字及错误边框。Nova 最小高 64 pt，iOS 16 和 macOS 13 起隐藏系统滚动背景。自动增高和自定义焦点样式仍待补齐。 |
 | theme | SwiftUI 环境支持自定义深浅色、圆角及 Vega、Nova、Maia、Lyra、Mira、Luma、Sera、Rhea 八种样式。预设为通用圆角、按钮尺寸、卡片和 Popover 间距、部分字体和动效提供默认值。Compose 的配色集合、图表色及各组件状态样式仍有差别。 |
 | toast | 支持原有单条通知和 `FoundationToastState` 队列。队列默认显示最新三条，支持深浅色、变体图标、可选操作、逐条关闭、清空和独立计时。面板目前纵向展开。堆叠展开、滑动手势、优先级播报和多操作仍待对齐。 |
-| toggle | 可绑定选中、禁用及 slot 内容。Compose 还提供多种样式、尺寸和图标位置。 |
-| toggle-group | 支持单选、多选、是否允许空选择、禁用。Compose 另有方向、附加状态与样式变体。 |
+| toggle | 可绑定选中、禁用及自定义标签。Nova 支持普通、描边和三个尺寸。描边书签的状态已截图。 |
+| toggle-group | 支持单选、多选、是否允许空选择、禁用以及自定义图标标签。Nova 与 Toggle 共用外观。纵向布局和组内方向键导航仍待补齐。 |
 | tooltip | macOS 使用系统 help，iOS 使用长按提示和无障碍 hint。Compose 支持 provider、延迟、位置与更广的触发策略。 |
 | trace | 支持状态、标题和可展开内容。Compose 的多行跟踪、独立图标、描述和链接 slots 未移植。 |
 
