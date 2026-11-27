@@ -38,7 +38,7 @@ Kbd 覆盖四个修饰键与 Ctrl + B 两行。Skeleton 覆盖头像和两条文
 
 对照 Nova 的 `switch-demo.tsx` 和 `switch-disabled.tsx`，每张图保留完整轨道、滑块及标签。最终在 iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集，浅色和深色各三个用例，六张 PNG 与各自复拍逐字节一致。禁用轨道采样点与上游相差一个灰阶，滑块中心采样值一致。字体光栅化与控件轮廓仍有细微像素差异。[最终 Switch Review](https://github.com/csdog/compose-foundation/actions/runs/46006892307/artifacts/15202264774)
 
-整批 Review 验证此前的 40 张原图未变。末次调整仅处理 Nova Switch 的禁用外观，哪一平台使用哪张截图仍由原采集计划决定。最终 macOS Swift Package 构建和 Tabs 导航回归通过。实际触控、硬件键盘、VoiceOver、RTL 和动效仍待单独验收。[整批 Review](https://github.com/csdog/compose-foundation/actions/runs/46005110796) · [最终验证](https://github.com/csdog/compose-foundation/actions/runs/46006892307)
+整批 Review 中，原有的 40 张实拍与上一轮逐字节一致。修订禁用态后的四张开启和关闭截图也与整批 Review 一致。最终 macOS Swift Package 构建和 Tabs 导航回归通过。实际触控、硬件键盘、VoiceOver、RTL 和动效仍待单独验收。[整批 Review](https://github.com/csdog/compose-foundation/actions/runs/46005110796) · [最终验证](https://github.com/csdog/compose-foundation/actions/runs/46006892307)
 
 ## 各条目
 
