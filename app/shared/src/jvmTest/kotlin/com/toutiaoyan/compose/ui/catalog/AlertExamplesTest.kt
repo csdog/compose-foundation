@@ -52,7 +52,11 @@ class AlertExamplesTest {
     @Test fun colorsExampleUpdatesActualTitleColorWhenThemeChanges() {
         var dark by mutableStateOf(false)
         val example = alertDoc.examples.single { it.title == "Custom Colors" }
-        rule.setContent { Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) { example.RenderPreview() } }
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
+                example.RenderPreview()
+            }
+        }
 
         fun assertColor(expected: androidx.compose.ui.graphics.Color) {
             val pixels = rule.onNodeWithText("Your subscription will expire in 3 days.").captureToImage().toPixelMap()

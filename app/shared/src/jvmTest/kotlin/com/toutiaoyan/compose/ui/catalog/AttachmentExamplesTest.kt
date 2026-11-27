@@ -215,7 +215,9 @@ class AttachmentExamplesTest {
         rule.setContent {
             Theme(preset = StylePreset.Nova, fontFamily = catalogFontFamily(), minTouchTarget = null) {
                 CompositionLocalProvider(LocalUriHandler provides handler) {
-                    Box(Modifier.width(638.dp)) { attachmentDoc.examples.single { it.title == "Image" }.RenderPreview() }
+                    Box(Modifier.width(638.dp)) {
+                        attachmentDoc.examples.single { it.title == "Image" }.RenderPreview()
+                    }
                 }
             }
         }
