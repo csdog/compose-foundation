@@ -53,6 +53,7 @@ if [[ "$platform" == swiftui-ios ]]; then
   mkdir "$app"
   cp "$swiftui/validation/IOSAuditInfo.plist" "$app/Info.plist"
   cp "$registry" "$app/registry.json"
+  cp app/shared/src/commonMain/composeResources/font/geist_medium.ttf "$app/"
   xcrun --sdk iphonesimulator swiftc -sdk "$sdk" -parse-as-library -swift-version 6 \
     -target "$(uname -m)-apple-ios14.0-simulator" \
     "$swiftui"/Sources/ComposeFoundationSwiftUI/*.swift \

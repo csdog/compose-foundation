@@ -32,16 +32,24 @@ public struct FoundationButtonStyle: ButtonStyle {
         let shape = RoundedRectangle(cornerRadius: radius)
         let editorial = theme.preset == .sera
         let pressed = isEnabled && configuration.isPressed
+        let novaOutline = theme.preset == .nova && variant == .outline
+        let darkNovaOutline = novaOutline && colorScheme == .dark
 
         configuration.label
             .font(theme.font(editorial ? .caption : .subheadline, weight: editorial ? .semibold : .medium))
             .textCase(editorial ? .uppercase : textCase)
             .foregroundColor(colors.foreground)
-            .padding(.horizontal, horizontalPadding * (metrics?.buttonPadding ?? 12) / 12)
+            .padding(.horizontal, horizontalPadding * (metrics?.buttonPadding ?? 12) / 12 + (novaOutline ? 1 : 0))
             .padding(.vertical, 6)
             .frame(minHeight: height)
-            .background(shape.fill(colors.background))
-            .overlay(shape.strokeBorder(colors.border))
+            .background(Group {
+                if darkNovaOutline {
+                    shape.inset(by: 1).fill(palette.input.opacity(0.3))
+                } else {
+                    shape.fill(colors.background)
+                }
+            })
+            .overlay(shape.strokeBorder(darkNovaOutline ? palette.input : colors.border))
             .opacity(isEnabled ? 1 : 0.5)
             .offset(y: pressed ? 1 : 0)
             .animation(reduceMotion ? nil : .timingCurve(0.4, 0, 0.2, 1, duration: 0.15), value: pressed)
