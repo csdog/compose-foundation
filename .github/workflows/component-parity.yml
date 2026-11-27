@@ -572,6 +572,28 @@ jobs:
           cat "$log"
           grep -q '^PASS:' "$log"
 
+      - name: Verify Nova Empty actions on macOS
+        if: contains(needs.baseline.outputs.matrix, '"empty"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          app="$RUNNER_TEMP/EmptyAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string EmptyAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.empty-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationTheme.swift" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationEmpty.swift" \
+            "$swiftui/validation/MacEmptyInteractionAudit.swift" \
+            -o "$app/Contents/MacOS/EmptyAudit"
+          log="$RUNNER_TEMP/empty.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app"
+          cat "$log"
+          grep -q '^PASS:' "$log"
+
   report:
     name: Component parity report
     needs: [baseline, capture, cmp-behavior, swift-logic, publish]
