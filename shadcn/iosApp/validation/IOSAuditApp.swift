@@ -745,6 +745,7 @@ private struct SliderScreenshotFixture: View {
         case initial = "default-initial"
         case increased = "default-increased"
         case disabled = "disabled-initial"
+        case rtl = "rtl-initial"
     }
 
     let example: Example
@@ -754,7 +755,7 @@ private struct SliderScreenshotFixture: View {
     init(example: Example) {
         self.example = example
         switch example {
-        case .initial: _value = State(initialValue: 75)
+        case .initial, .rtl: _value = State(initialValue: 75)
         case .increased: _value = State(initialValue: 76)
         case .disabled: _value = State(initialValue: 50)
         }
@@ -766,6 +767,7 @@ private struct SliderScreenshotFixture: View {
         let theme = FoundationTheme(preset: .nova, light: light)
         return FoundationSlider("Value", value: $value, in: 0...100)
             .disabled(example == .disabled)
+            .environment(\.layoutDirection, example == .rtl ? .rightToLeft : .leftToRight)
             .foundationTheme(theme)
             .frame(width: 320)
             .padding(.top, 4)
