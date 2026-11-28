@@ -308,6 +308,10 @@ iOS 17 与 macOS 14 起，左右键按布局方向移动一天，上下键移动
 
 macOS 实际窗口已验证左右布局方向、同月和跨月移动、Home/End、翻页、Return/Space、日期上下界和禁用网格。日期区保留一个 Tab 停靠点，已验证 Tab 移到外部控件。状态回归另外覆盖本地周首、夏令时和跨出双月视图后的窗口位置。[macOS 按键日志](https://github.com/csdog/compose-foundation/actions/runs/46113981597/job/140883583347)
 
+iPad mini（A17 Pro，iOS 26.2）的 10 张静态深浅色截图与复拍逐字节一致，也与月份年份菜单那一轮像素一致。[截图与 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/46114339468/artifacts/15250619971)
+
+同一型号的模拟器通过了 USB 键盘事件回归。右键把焦点从 1 月 31 日移到 2 月 1 日，选择值仍是 1 月 31 日。Return 提交 2 月 1 日，下键把焦点移到 2 月 8 日，Space 才提交。查看截图可见独立的日期焦点环。常规 XCUITest 按键未进入网格，此用例由 idb 的 USB HID 路径复现。安装 iOS 审计应用并启动 idb companion 后，运行 `python3 shadcn/iosApp/validation/verify_calendar_keyboard.py --device "$ios_device" --companion "$idb_companion"`。[iPad 按键运行](https://github.com/csdog/compose-foundation/actions/runs/46114246221/job/140884398533) · [焦点截图](https://github.com/csdog/compose-foundation/actions/runs/46114246221/artifacts/15251246540)
+
 ### Calendar Nova 双月区间与阿拉伯语 RTL
 
 对照 `calendar-range.tsx` 和 `calendar-rtl.tsx`。双月区间固定为 2026 年 1 月 12 日到 2 月 11 日。`FoundationCalendar(range:initialMonth:numberOfMonths:)` 可以指定首个月份，原有绑定和范围初始化方式仍可使用。Nova 区间端点在本周本月内连接到相邻的已选日期。未完成区间、同日区间与周月交界处的端点独立显示。
@@ -455,7 +459,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | bubble | 支持 incoming、outgoing、muted 内容气泡。缺少气泡组及定位在气泡边缘的 reactions。 |
 | button | 六种颜色变体、禁用、按压反馈和内容 slot。Compose 另有尺寸、图标位置、焦点环和多种按压动画。 |
 | button-group | 支持纵向和横向布局。iOS 18、macOS 15 起，Nova 的 FoundationButtonStyle 子项合并相邻圆角和边框。分隔符、文本项及子项焦点层级仍待对齐。 |
-| calendar | 支持本地化单月和连续多月、单选、区间、多选及月份年份菜单。Nova 已验收单月、双月区间、RTL 截图，以及 iPhone 上菜单当前值、选中项和触控切换。实际 VoiceOver 朗读待验收。 |
+| calendar | 支持本地化单月和连续多月、单选、区间、多选及月份年份菜单。Nova 已验收单月、双月区间、RTL 截图，以及 iPhone 上菜单当前值、选中项和触控切换。macOS 与 iPad 已验收日期网格的焦点移动和提交，macOS 已验收 Tab 离开网格。实际 VoiceOver 朗读待验收。 |
 | card | 支持主题背景、边框、常规与紧凑尺寸，以及独立的底部操作区。头部、图片与关联操作可通过内容构建器组合。边缘贴图和 RTL 尚待对照。 |
 | carousel | 当前页和相邻页随横向拖动移动，松手后吸附。支持 RTL、底部或侧边翻页、页码无障碍调节和减少动态效果。Nova 已接入默认与 RTL 初始态截图。纵向、部分页宽及分页圆点待对齐。 |
 | chart | 支持柱形、折线、面积、多序列和选点摘要。Compose 的独立图例、工具提示、序列主题配置和 indicator 选项未移植。 |
