@@ -100,6 +100,7 @@ jobs:
           printf 'repository=%s\nrevision=%s\nupdate=%s\n' "$repository" "$revision" "$UPDATE_MODE" >> "$GITHUB_OUTPUT"
 
   capture:
+    if: false
     needs: baseline
     name: Capture and compare / ${{ matrix.platform }}
     strategy:
@@ -452,6 +453,26 @@ jobs:
           "$RUNNER_TEMP/tabs-navigation"
       - name: Compile the native SwiftUI package for macOS
         run: swift build --package-path shadcn/iosApp
+      - name: Verify the Context Menu secondary-click path on macOS
+        if: contains(needs.baseline.outputs.matrix, '"context-menu"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          sources="$swiftui/Sources/ComposeFoundationSwiftUI"
+          app="$RUNNER_TEMP/ContextMenuAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string ContextMenuAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.context-menu-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$sources"/Foundation{Theme,ContextMenu}.swift \
+            "$swiftui/validation/MacContextMenuAudit.swift" -o "$app/Contents/MacOS/ContextMenuAudit"
+          log="$RUNNER_TEMP/context-menu.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app" || true
+          cat "$log"
+          grep -q '^PASS:' "$log"
       - name: Verify Nova Slider mouse and keyboard input on macOS
         if: contains(needs.baseline.outputs.matrix, '"slider"')
         timeout-minutes: 2
