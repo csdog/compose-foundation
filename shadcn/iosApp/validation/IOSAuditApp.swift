@@ -3558,14 +3558,17 @@ private struct ResizableInteractionFixture: View {
     var body: some View {
         VStack(spacing: 16) {
             Text("First pane: \(Int((fraction * 100).rounded()))%")
+            Rectangle()
+                .fill(Color.secondary)
+                .frame(width: 320, height: 1)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(Text("Resize audit ruler"))
             FoundationResizable(vertical ? .vertical : .horizontal, fraction: $fraction, limits: 0.2...0.8) {
                 Text("First")
             } second: {
                 Text("Second")
             }
             .frame(width: 320, height: 180)
-            .accessibilityElement(children: .contain)
-            .accessibilityIdentifier("Resizable split")
             .disabled(!enabled)
         }
         .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
