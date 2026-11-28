@@ -25,7 +25,7 @@ private struct RadioGroupAuditFixture: View {
                 FoundationChoice("Regular", value: "regular"),
                 FoundationChoice("Restricted", value: "restricted", isEnabled: false),
                 FoundationChoice("Compact", value: "compact"),
-            ], selection: Binding(get: { state.selection }, set: state.select))
+            ], selection: Binding(get: { state.selection }, set: { value in state.select(value) }))
                 .disabled(!state.enabled)
             Text("After radio group")
                 .focusable()
