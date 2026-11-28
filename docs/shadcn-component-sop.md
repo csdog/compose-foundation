@@ -69,7 +69,9 @@ python3 shadcn/validation/report.py "$second" --run --platform cmp-desktop \
   --component popover --baselines "$first/cmp-desktop/candidate" --try-candidate
 ```
 
-先在 **Component parity** 手动选择 `update=review` 采集候选图。下载各平台的 `component-parity-shadcn-review-*` 附件，在 `overview.png` 并排查看候选图与同变体、状态和主题的 shadcn 截图。`report.md` 提供原图和来源链接并标注缺少的参考图。索引有变动时，`component-parity-index-preview-*` 附件包含 Markdown 差异。对照上游确认后，从 `main` 手动选择 `update=publish`，使用同一个组件范围重拍。全部采集平台通过检查后，发布任务下载本次候选图，将 PNG 和更新过的各端 `Index.md` 一起提交到基准仓库的 `main` 并输出 SHA。发布使用 `COMPONENT_BASELINES_WRITE_TOKEN`，该 secret 需要对基准仓库有 Contents 写权限。采用默认配置的新运行会读取这版基准。`--try-candidate` 只用于本地验证，报告会标明候选图仍待审核。
+先在 **Component parity** 手动选择 `update=review` 采集候选图。下载各平台的 `component-parity-shadcn-review-*` 附件，在 `overview.png` 并排查看候选图与同变体、状态和主题的 shadcn 截图。`report.md` 提供原图和来源链接并标注缺少的参考图。索引有变动时，`component-parity-index-preview-*` 附件包含 Markdown 差异。审核通过后，可以在组件 PR 上添加 `publish:popover` 等标签，合入 `main` 后由工作流重拍并发布。使用 `publish:swiftui:popover` 只发布 iOS 基准，同时添加多个标签可以发布多个组件。也可以从 `main` 手动选择 `update=publish` 并指定审核过的范围。
+
+全部采集平台通过检查后，发布任务下载本次候选图，将 PNG 和更新过的各端 `Index.md` 一起提交到基准仓库的 `main` 并输出 SHA。发布使用 `COMPONENT_BASELINES_WRITE_TOKEN`，该 secret 需要对基准仓库有 Contents 写权限。采用默认配置的新运行会读取这版基准。`--try-candidate` 只用于本地验证，报告会标明候选图仍待审核。
 
 Popover 的上游参考图可以用固定版本的 shadcn 源码在本地预览中重拍。生成器用 Playwright 打开正式示例的弹层，按深浅色截图，并保存上游提交和浏览器等来源信息。对已有报告使用 `--report-only --shadcn-references <目录>`，保留原生比对结果并加入参考图。
 
