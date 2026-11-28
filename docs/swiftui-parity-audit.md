@@ -102,6 +102,8 @@ iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集四张深浅色图，复�
 
 iPhone 17 Pro（iOS 26.2）的六张深浅色截图与复拍逐字节一致，原有 94 张图也与上一轮逐字节一致。macOS 实际窗口通过 AppKit 鼠标事件验证点击标签和复选框会更新同一绑定，禁用时点击不写入。iOS 触控、键盘、VoiceOver 和独立标签的焦点关联待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46034351670/artifacts/15218125719) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46034351670/job/140625952242)
 
+FieldSet 对照地址示例的分区标题、说明、街道地址及并排的城市和邮编。地址组在 iPhone 17 Pro Max（iOS 26.2）以 440 × 520 画布采集，两种主题复拍一致。浅色图内容横向范围与 shadcn 同为 x=24–408，SwiftUI 保留原生输入操作高度，表单底部在深浅色相差 19–20 pt。输入框和文本域继续在 iPhone 17 Pro 采集，四张旧图与此前审核逐字节一致。macOS Swift Package 构建通过。实际 VoiceOver 朗读待验。[FieldSet Review](https://github.com/csdog/compose-foundation/actions/runs/46128614892/artifacts/15257237939) · [macOS 构建](https://github.com/csdog/compose-foundation/actions/runs/46128614892/job/140928698622)
+
 ### Alert 成功与错误、Card 登录与小尺寸
 
 对照 shadcn Base UI / Nova 的 `alert-basic.tsx`、`alert-destructive.tsx`、`card-demo.tsx` 和 `card-small.tsx`。Alert 保留完整标题、说明及状态图标。可见外边界与参考相差最多 1 pt。两行说明的换行位置和原生 SF Symbols 图标仍有差异。Card 保留完整登录表单和小尺寸报告卡的操作区。以浅暗两种主题抽样，输入框、底部描边按钮和底部背景与 shadcn 的六处填色一致。登录卡和小尺寸卡的底部仍分别低 45–46 pt 和 32–33 pt，原生输入控件和按钮保留 44 pt 操作高度。
