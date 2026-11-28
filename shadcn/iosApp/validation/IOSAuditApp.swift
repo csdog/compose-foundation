@@ -150,6 +150,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "navigation-menu": [
+                ("navigation-menu-default-initial", { AnyView(NavigationMenuScreenshotFixture(rightToLeft: false)) }),
+                ("navigation-menu-rtl-initial", { AnyView(NavigationMenuScreenshotFixture(rightToLeft: true)) }),
+            ],
             "menubar": [
                 ("menubar-default-initial", { AnyView(MenubarScreenshotFixture(rightToLeft: false)) }),
                 ("menubar-rtl-initial", { AnyView(MenubarScreenshotFixture(rightToLeft: true)) }),
@@ -871,6 +875,37 @@ private struct SeparatorInitialScreenshotFixture: View {
     }
 }
 
+private struct NavigationMenuScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    let rightToLeft: Bool
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let groups: [FoundationMenuGroup] = [
+            .init(id: "start", title: rightToLeft ? "البدء" : "Getting started",
+                  actions: [.init(id: "intro", title: rightToLeft ? "مقدمة" : "Introduction") {}]),
+            .init(id: "icons", title: rightToLeft ? "مع أيقونة" : "With Icon",
+                  actions: [.init(id: "resources", title: rightToLeft ? "الموارد" : "Resources") {}]),
+        ]
+        return FoundationNavigationMenu {
+            FoundationMenuGroups(groups: groups, spacing: 16, novaStyle: .novaNavigation)
+            Button(rightToLeft ? "الوثائق" : "Docs") {}
+                .buttonStyle(PlainButtonStyle())
+                .padding(.horizontal, 10)
+                .frame(minHeight: 44)
+        }
+        .frame(width: rightToLeft ? 216 : 320)
+        .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
+        .foundationTheme(theme)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+}
+
 private struct MenubarScreenshotFixture: View {
     @Environment(\.colorScheme) private var scheme
     let rightToLeft: Bool
@@ -882,7 +917,7 @@ private struct MenubarScreenshotFixture: View {
         let titles = rightToLeft ? ["ملف", "تعديل", "عرض", "الملفات الشخصية"] : ["File", "Edit", "View", "Profiles"]
         let groups = titles.map { FoundationMenuGroup(id: $0, title: $0, actions: []) }
         return FoundationMenubar {
-            FoundationMenuGroups(groups: groups, spacing: 6, isMenubar: true)
+            FoundationMenuGroups(groups: groups, spacing: 6, novaStyle: .novaMenubar)
                 .frame(width: 282, alignment: .leading)
         }
         .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)

@@ -29,6 +29,6 @@ public struct FoundationMenubar<Menus: View>: View {
 
 public extension FoundationMenubar where Menus == AnyView {
     init(groups: [FoundationMenuGroup]) {
-        self.init { AnyView(FoundationMenuGroups(groups: groups, spacing: 6, isMenubar: true)) }
+        self.init { AnyView(FoundationMenuGroups(groups: groups, spacing: 6, novaStyle: .novaMenubar)) }
     }
 }

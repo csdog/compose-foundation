@@ -32,7 +32,7 @@ private struct MenuProbe: View {
             }
         }
         .disabled(!result.isEnabled)
-        .foundationTheme(navigation ? FoundationTheme() : FoundationTheme(preset: .nova))
+        .foundationTheme(FoundationTheme(preset: .nova))
         .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
         .frame(width: 400, height: 240)
     }

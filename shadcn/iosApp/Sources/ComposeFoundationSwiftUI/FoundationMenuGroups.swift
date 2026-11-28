@@ -28,17 +28,26 @@ public struct FoundationMenuGroup: Identifiable {
     }
 }
 
+enum FoundationMenuTriggerStyle {
+    case standard, novaMenubar, novaNavigation
+}
+
 struct FoundationMenuGroups: View {
     @Environment(\.foundationTheme) private var theme
     let groups: [FoundationMenuGroup]
     let spacing: CGFloat
-    var isMenubar = false
+    var novaStyle: FoundationMenuTriggerStyle = .standard
 
     var body: some View {
-        let novaMenubar = isMenubar && theme.preset == .nova
-        let triggerSpacing = novaMenubar ? 2 : spacing
+        let style = theme.preset == .nova ? novaStyle : .standard
+        let triggerSpacing: CGFloat
+        switch style {
+        case .standard: triggerSpacing = spacing
+        case .novaMenubar: triggerSpacing = 2
+        case .novaNavigation: triggerSpacing = 0
+        }
         if #available(iOS 17, macOS 14, *) {
-            FoundationKeyboardMenuGroups(groups: groups, spacing: triggerSpacing, novaMenubar: novaMenubar)
+            FoundationKeyboardMenuGroups(groups: groups, spacing: triggerSpacing, style: style)
         } else {
             HStack(spacing: triggerSpacing) {
                 ForEach(groups) { group in
@@ -73,7 +82,7 @@ private struct FoundationKeyboardMenuGroups: View {
 
     let groups: [FoundationMenuGroup]
     let spacing: CGFloat
-    let novaMenubar: Bool
+    let style: FoundationMenuTriggerStyle
 
     private var enabledGroups: [FoundationMenuGroup] { isEnabled ? groups.filter(\.isEnabled) : [] }
     private var openGroup: FoundationMenuGroup? { enabledGroups.first { $0.id == openID } }
@@ -104,7 +113,7 @@ private struct FoundationKeyboardMenuGroups: View {
         HStack(spacing: spacing) {
             ForEach(groups) { group in
                 FoundationMenuGroupButton(title: group.title, enabled: group.isEnabled, focused: triggerIsFocused(group),
-                                          novaTrigger: novaMenubar, expanded: openID == group.id) {
+                                          style: style, expanded: openID == group.id) {
                     open(group)
                 }
                 .accessibilityValue(openID == group.id ? Text("Expanded") : Text("Collapsed"))
@@ -348,31 +357,54 @@ private struct FoundationMenuGroupButton: View {
     let enabled: Bool
     let focused: Bool
     var fillsWidth = false
-    var novaTrigger = false
+    var style: FoundationMenuTriggerStyle = .standard
     var expanded = false
     let action: () -> Void
 
     var body: some View {
         let palette = theme.palette(for: colorScheme)
-        let shape = RoundedRectangle(cornerRadius: novaTrigger ? max(0, theme.cornerRadius - 6) : theme.cornerRadius)
+        let shape = RoundedRectangle(cornerRadius: style == .novaMenubar ? max(0, theme.cornerRadius - 6) : theme.cornerRadius)
         #if os(macOS)
-        let hitHeight: CGFloat = novaTrigger ? 26 : 44
+        let hitHeight: CGFloat
+        switch style {
+        case .standard: hitHeight = 44
+        case .novaMenubar: hitHeight = 26
+        case .novaNavigation: hitHeight = 36
+        }
         #else
         let hitHeight: CGFloat = 44
         #endif
-        let activeFill = novaTrigger && ancestorEnabled && enabled && (expanded || hovered)
+        let available = ancestorEnabled && enabled
+        let activeFill: Color
+        if style != .standard, available, hovered || (style == .novaNavigation && focused) {
+            activeFill = palette.secondary
+        } else if style != .standard, available, expanded {
+            activeFill = palette.secondary.opacity(style == .novaNavigation ? 0.5 : 1)
+        } else {
+            activeFill = .clear
+        }
         Button(action: action) {
-            Text(title)
-                .padding(.horizontal, novaTrigger ? 6 : 10)
+            HStack(spacing: 4) {
+                Text(title)
+                if style == .novaNavigation {
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 8, weight: .medium))
+                        .frame(width: 12, height: 12)
+                        .rotationEffect(.degrees(expanded ? 180 : 0))
+                        .offset(y: 1)
+                        .accessibilityHidden(true)
+                }
+            }
+                .padding(.horizontal, style == .novaMenubar ? 6 : 10)
                 .frame(maxWidth: fillsWidth ? .infinity : nil, minHeight: hitHeight, alignment: .leading)
                 .foregroundColor(enabled ? palette.foreground : palette.mutedForeground)
-                .background(shape.fill(activeFill ? palette.secondary : .clear))
+                .background(shape.fill(activeFill))
                 .overlay(shape.strokeBorder(focused ? palette.ring : .clear, lineWidth: 2).allowsHitTesting(false))
                 .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(!enabled)
-        .onHover { hovered = novaTrigger && $0 }
+        .onHover { hovered = style != .standard && $0 }
     }
 }
 
