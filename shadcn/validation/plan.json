@@ -787,12 +787,15 @@
       "platformCases": {
         "swiftui-ios": [
           {"variant": "default", "status": "initial", "viewport": [720, 520]},
-          {"variant": "field", "status": "initial", "viewport": [720, 520]}
+          {"variant": "field", "status": "initial", "viewport": [720, 520]},
+          {"variant": "disabled", "status": "initial", "viewport": [720, 520]},
+          {"variant": "invalid", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [720, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/textarea-demo.tsx",
-      "visual": "compare the complete editor, placeholder, label and helper text",
-      "behavior": "bind multiline text",
+      "visual": "compare the editor, disabled surface, invalid outline, and Arabic placeholder",
+      "behavior": "bind multiline text and show and clear the focus ring",
       "accessibility": "named multiline editor",
       "motion": "static settled frames"
     },
