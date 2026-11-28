@@ -340,6 +340,14 @@ macOS 实际窗口点击 Undo 后回调恰好执行一次，对应通知退出�
 
 iPad mini（A17 Pro，iOS 26.2）在 720 × 520 画布上采集默认触发和展开、类型触发、成功及错误共 10 张深浅色图。复拍逐字节一致。通知卡片的取样底色与 shadcn 一致，浅色为 `#FFFFFF`，深色为 `#171717`。Nova 的阴影应用于卡片轮廓。审计应用以 iOS 14 模拟器部署目标编译。[iOS 截图及 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/46092913983/artifacts/15241424116)
 
+### Carousel Nova 双侧翻页与 RTL
+
+对照 shadcn Base UI / Nova 的 `carousel-demo.tsx` 和 RTL 示例。新增 `navigation: .sides` 可把前后按钮放在视口两侧，原有初始化器使用底部控件。Nova 使用 28 pt 圆形描边按钮及 44 pt 点按区。RTL 镜像按钮位置和箭头方向，视口继续提供带页码的无障碍调节操作。
+
+macOS 实际窗口在 LTR 与 RTL 下均验证拖动过程中相邻页已进入视口，绑定等到松手吸附后才更新。侧边按钮可以翻页，向首屏边界外拖动停在第一页。[macOS 拖动日志](https://github.com/csdog/compose-foundation/actions/runs/46094533306/job/140822790736)
+
+iPad mini（A17 Pro，iOS 26.2）的默认和 RTL 共 4 张深浅色截图复拍逐字节一致。RTL 使用阿拉伯文页码。卡片取样底色与 shadcn 一致，浅色 `#FFFFFF`，深色 `#171717`。左侧按钮在截图中随上游示例画布裁切。SwiftUI 审计应用以 iOS 14 模拟器部署目标编译。[iOS 截图与差异报告](https://github.com/csdog/compose-foundation/actions/runs/46094533306/artifacts/15242433307)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -357,7 +365,7 @@ iPad mini（A17 Pro，iOS 26.2）在 720 × 520 画布上采集默认触发和�
 | button-group | 支持纵向和横向布局。iOS 18、macOS 15 起，Nova 的 FoundationButtonStyle 子项合并相邻圆角和边框。分隔符、文本项及子项焦点层级仍待对齐。 |
 | calendar | 支持本地化单月和连续多月、单选、区间、多选及月份年份菜单。Nova 已接入单月和双月区间截图，以及阿拉伯语 RTL。月份年份菜单开合和 VoiceOver 的 Nova 验收待补。 |
 | card | 支持主题背景、边框、常规与紧凑尺寸，以及独立的底部操作区。头部、图片与关联操作可通过内容构建器组合。边缘贴图和 RTL 尚待对照。 |
-| carousel | 当前页和相邻页随横向拖动连续移动，松手后吸附到当前或相邻页。支持 RTL、前后按钮、页码无障碍调节和减少动态效果。视口高度由当前页决定。Compose 另有纵向模式、部分页宽及 dots API。 |
+| carousel | 当前页和相邻页随横向拖动移动，松手后吸附。支持 RTL、底部或侧边翻页、页码无障碍调节和减少动态效果。Nova 已接入默认与 RTL 初始态截图。纵向、部分页宽及分页圆点待对齐。 |
 | chart | 支持柱形、折线、面积、多序列和选点摘要。Compose 的独立图例、工具提示、序列主题配置和 indicator 选项未移植。 |
 | checkbox | 支持未选中、已选中和部分选中。部分选中使用减号、独立无障碍值和点按转全选。Nova 使用 16 pt 标记、深色未选中底色和首行文字对齐。Bool ToggleStyle 和 SwiftUI 混合状态均受支持。 |
 | chip | 可切换选中状态，支持内容标签和选中语义。缺少 Compose 的独立 chip 样式变体。 |
