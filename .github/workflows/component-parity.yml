@@ -138,6 +138,7 @@ jobs:
             ${{ steps.baseline-path.outputs.directory }}
             shadcn
           path: build/component-baselines
+          submodules: true
           persist-credentials: false
 
       - uses: actions/setup-java@v4
@@ -335,6 +336,7 @@ jobs:
           ref: main
           token: ${{ secrets.COMPONENT_BASELINES_WRITE_TOKEN }}
           path: baseline-repository
+          submodules: true
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

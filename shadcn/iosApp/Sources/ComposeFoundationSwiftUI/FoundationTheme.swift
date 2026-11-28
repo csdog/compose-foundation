@@ -45,9 +45,6 @@ public struct FoundationPalette: Sendable {
     )
 
     var novaDarkOutlineFill: Color {
-        if background == Self.neutralDark.background && input == Self.neutralDark.input {
-            return Color(rgb: 0x141414)
-        }
         return input.opacity(0.3)
     }
 }

@@ -397,24 +397,39 @@ private struct PopoverScreenshotFixture: View {
         let shape = RoundedRectangle(cornerRadius: radius)
         let mutedTrigger = open.wrappedValue && (item.variant != .default || item.status != .open)
         let fill = dark ? (mutedTrigger ? grey(28) : palette.novaDarkOutlineFill) : (open.wrappedValue ? grey(245) : .white)
-        return Button {
-            open.wrappedValue.toggle()
-        } label: {
-            Text(title)
-                .font(rightToLeft ? .system(size: 14) : .custom("Geist-Medium", size: compact ? 12.8 : 14))
-                .foregroundColor(dark ? palette.foreground : .black)
-                .padding(.horizontal, 11)
-                .frame(minWidth: minimumTriggerWidth)
-                .frame(height: height)
-                .background(shape.fill(fill))
-                .overlay(shape.strokeBorder(focus && !dark ? grey(161) : dark ? grey(46) : grey(229)))
-                .overlay(
-                    RoundedRectangle(cornerRadius: radius + 1.5)
-                        .strokeBorder(focus ? (dark ? grey(63) : grey(208)) : .clear, lineWidth: 3)
-                        .padding(-3).allowsHitTesting(false)
-                )
+        return Group {
+            if item.variant == .default && item.status == .initial {
+                Button {
+                    open.wrappedValue.toggle()
+                } label: {
+                    Text(title)
+                        .font(.custom("Geist-Medium", size: 14, relativeTo: .subheadline))
+                        .foregroundColor(dark ? palette.foreground : .black)
+                }
+                .buttonStyle(FoundationButtonStyle(.outline))
+                // Position the visual border, centered within the 44-point hit target, at the canvas inset.
+                .padding(.top, -(44 - 32) / 2)
+            } else {
+                Button {
+                    open.wrappedValue.toggle()
+                } label: {
+                    Text(title)
+                        .font(rightToLeft ? .system(size: 14) : .custom("Geist-Medium", size: compact ? 12.8 : 14))
+                        .foregroundColor(dark ? palette.foreground : .black)
+                        .padding(.horizontal, 11)
+                        .frame(minWidth: minimumTriggerWidth)
+                        .frame(height: height)
+                        .background(shape.fill(fill))
+                        .overlay(shape.strokeBorder(focus && !dark ? grey(161) : dark ? grey(46) : grey(229)))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: radius + 1.5)
+                                .strokeBorder(focus ? (dark ? grey(63) : grey(208)) : .clear, lineWidth: 3)
+                                .padding(-3).allowsHitTesting(false)
+                        )
+                }
+                .buttonStyle(.plain)
+            }
         }
-        .buttonStyle(.plain)
         .modifier(PopoverAuditTriggerFocus(requestFocus: focus))
         .modifier(FoundationPopover(isPresented: open, arrowEdge: edge, alignment: alignment, width: width) {
             panel()
