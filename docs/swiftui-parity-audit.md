@@ -376,7 +376,7 @@ iPad mini（A17 Pro，iOS 26.2）在 720 × 520 画布上采集默认与阿拉�
 
 iPhone 17 Pro（iOS 26.2）的两项 XCUITest 验证实际点按。菜单展开后可查询分组标题和禁用项，点击禁用项不执行操作且保留展开。点击普通项或子菜单动作会更新结果并关闭菜单，点击外部会关闭菜单并保留结果。默认展开与子菜单的系统圆角、阴影和定位仍有别于 shadcn。iOS 测试记录了 UIKit 的 `_UIReparentingView` 层级警告，两项测试均通过。方向键遍历、Escape 后焦点归还和 VoiceOver 仍待验收。手动运行 Component parity 时选择 `update=review`、`platform=swiftui-ios`、`component=dropdown-menu` 可复验。[触控验证日志](https://github.com/csdog/compose-foundation/actions/runs/46098555210/job/140835528786) · [展开截图](https://github.com/csdog/compose-foundation/actions/runs/46098555210/artifacts/15244991195)
 
-在相同 iPhone 模拟器上另用 XCUITest 探测键盘。触控展开后连续发送两次 Down，菜单区域两张截图逐像素一致。Return 未执行动作，Escape 未关闭菜单。macOS 托管 runner 缺少系统输入注入权限，键盘探针未打开原生菜单。两项结果只覆盖所使用的输入方式。[iOS 键盘探针日志](https://github.com/csdog/compose-foundation/actions/runs/46099999639/job/140840079576) · [按键截图](https://github.com/csdog/compose-foundation/actions/runs/46099999639/artifacts/15245630046) · [macOS 探针日志](https://github.com/csdog/compose-foundation/actions/runs/46100117185/job/140840481645)
+在相同 iPhone 模拟器上，XCUITest 的按键方式未改变菜单高亮，也未关闭菜单。使用 idb USB HID 事件复测后，Escape 关闭菜单且不执行动作。触控重开后输入两次 Down 和 Return，跳过禁用的 API 并选中 Settings。触控打开、Escape 关闭后，Space 未重新打开，键盘打开后的焦点归还仍待验收。可用已安装审计应用的模拟器 UDID 和 idb companion 地址运行 `python3 shadcn/iosApp/validation/verify_dropdown_menu_keyboard.py --device "$device" --companion "$companion"`，复验已确认的两条键盘路径。macOS 托管 runner 缺少系统输入注入权限，键盘探针未打开原生菜单。[iOS HID 探针日志](https://github.com/csdog/compose-foundation/actions/runs/46101756296/job/140845596818) · [XCUITest 探针日志](https://github.com/csdog/compose-foundation/actions/runs/46099999639/job/140840079576) · [macOS 探针日志](https://github.com/csdog/compose-foundation/actions/runs/46100117185/job/140840481645)
 
 ## 各条目
 
@@ -406,7 +406,7 @@ iPhone 17 Pro（iOS 26.2）的两项 XCUITest 验证实际点按。菜单展开�
 | context-menu | 使用系统右键或长按菜单。调用方可传入系统菜单视图，Compose 的位置、portal、子菜单和条目 DSL 有独立 API。 |
 | dialog | 支持系统 sheet 及带遮罩的可选居中面板、滚动内容和固定页脚。默认编辑资料示例覆盖深浅色。其他变体、iOS 居中版触控、键盘焦点和 VoiceOver 待验收。 |
 | drawer | 支持原有底部面板，以及 Nova、Rhea 的说明文字、可滚动内容和固定页脚。原布局已验收关闭焦点、Return、Escape、向下拖动和焦点归还。侧边面板、吸附点、嵌套面板和无模态示例待对齐。 |
-| dropdown-menu | Nova 触发器覆盖默认与阿拉伯语 RTL 收起态。iOS 已验证分组、禁用项、子菜单及外点关闭。展开面板保留系统样式，菜单项键盘遍历、Escape 焦点恢复和 VoiceOver 待验收。 |
+| dropdown-menu | Nova 触发器覆盖默认与阿拉伯语 RTL 收起态。iOS 已验证分组、禁用项、子菜单、外点关闭、方向键选择和 Escape 关闭。展开面板保留系统样式，键盘焦点归还和 VoiceOver 待验收。 |
 | emoji-text | Apple 系统彩色 emoji，可保留 ZWJ 等 Unicode 序列。Compose 使用自己的 emoji 图形与替换逻辑。 |
 | empty | 支持符号、标题、说明和操作 slot，以及标准和虚线边框样式。Nova 对齐基本排版。自定义头像等媒体及其余示例布局待对照。 |
 | field | 纵向显示标题、说明、错误及任意输入。Nova 使用 14 pt 支持文字与 8 pt 间距，说明可放在控件前或后。FieldSet、Legend、横向及响应式排列待补齐。 |
