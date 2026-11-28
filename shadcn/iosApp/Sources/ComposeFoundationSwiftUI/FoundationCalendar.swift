@@ -85,7 +85,8 @@ public struct FoundationCalendar: View {
         let shape = RoundedRectangle(cornerRadius: theme.cornerRadius)
 
         Group {
-            if #available(iOS 17, macOS 14, *) {
+            if #available(iOS 17, macOS 14, *),
+               !ProcessInfo.processInfo.arguments.contains("--fka-calendar-native-grid") {
                 let entry = navigation.focusEntry(in: months, selected: selected.navigationDate,
                                                   today: referenceDate ?? Date())
                 FoundationCalendarKeyboardGrid(entry: entry, acceptsFocus: { date in
@@ -196,6 +197,7 @@ public struct FoundationCalendar: View {
                                 column: index % 7, selection: selection, palette: palette, enabled: enabled
                             )
                             .modifier(decorate(focusDay, enabled))
+                            .modifier(CalendarProbeInteractive(enabled: enabled))
                             .id(focusDay)
                         } else {
                             Text(number)
@@ -323,6 +325,7 @@ public struct FoundationCalendar: View {
         .accessibilityLabel(Text(label))
         .disabled(destination == nil)
         .opacity(destination == nil ? 0.4 : 1)
+        .modifier(CalendarProbeInteractive(enabled: destination != nil))
     }
 
     private func dayButton(
@@ -395,6 +398,20 @@ public struct FoundationCalendar: View {
         formatter.timeZone = calendar.timeZone
         formatter.setLocalizedDateFormatFromTemplate(template)
         return formatter
+    }
+}
+
+private struct CalendarProbeInteractive: ViewModifier {
+    let enabled: Bool
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if #available(iOS 15, macOS 12, *),
+           ProcessInfo.processInfo.arguments.contains("--fka-calendar-ax-interactive") {
+            content.accessibilityRespondsToUserInteraction(enabled)
+        } else {
+            content
+        }
     }
 }
 
