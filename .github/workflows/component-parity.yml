@@ -111,7 +111,7 @@ jobs:
       PLATFORM: ${{ matrix.platform }}
       UPDATE_MODE: ${{ needs.baseline.outputs.update }}
       UPDATE_BASELINES: ${{ needs.baseline.outputs.update == 'review' || needs.baseline.outputs.update == 'publish' }}
-      MENU_INTERACTION: ${{ matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && contains(fromJSON('["dropdown-menu","context-menu","command","calendar"]'), inputs.component) }}
+      MENU_INTERACTION: ${{ matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && contains(fromJSON('["dropdown-menu","context-menu","command","calendar","chart"]'), inputs.component) }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -177,6 +177,7 @@ jobs:
             context-menu) test_class=ContextMenuUITests ;;
             command) test_class=CommandUITests ;;
             calendar) test_class=CalendarUITests ;;
+            chart) test_class=ChartUITests ;;
             *) exit 1 ;;
           esac
           validation=shadcn/iosApp/validation

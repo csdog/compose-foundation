@@ -39,6 +39,7 @@ public struct FoundationChart: View {
     private let series: [Series]
     private let variant: Variant
     private let axes: Axes?
+    private let showsLegend: Bool
 
     public init(
         labels: [String],
@@ -56,11 +57,24 @@ public struct FoundationChart: View {
         selection: Binding<Int?> = .constant(nil),
         axes: Axes?
     ) {
+        self.init(labels: labels, series: series, variant: variant, selection: selection,
+                  axes: axes, showsLegend: false)
+    }
+
+    public init(
+        labels: [String],
+        series: [Series],
+        variant: Variant = .bar,
+        selection: Binding<Int?> = .constant(nil),
+        axes: Axes? = nil,
+        showsLegend: Bool
+    ) {
         self.labels = labels
         self.series = series
         self.variant = variant
         self._selection = selection
         self.axes = axes
+        self.showsLegend = showsLegend
     }
 
     public var body: some View {
@@ -94,6 +108,9 @@ public struct FoundationChart: View {
                     .foregroundColor(palette.mutedForeground)
                     .accessibilityHidden(true)
                 }
+                if showsLegend {
+                    legend(palette: palette)
+                }
                 if let selection, labels.indices.contains(selection) {
                     Text(summary(at: selection)).font(.caption).foregroundColor(palette.foreground)
                 }
@@ -113,6 +130,30 @@ public struct FoundationChart: View {
                 break
             }
         }
+    }
+
+    private func legend(palette: FoundationPalette) -> some View {
+        HStack(spacing: 16) {
+            ForEach(series.indices, id: \.self) { index in
+                HStack(spacing: 6) {
+                    RoundedRectangle(cornerRadius: 2)
+                        .fill(seriesColor(at: index, palette: palette))
+                        .frame(width: 8, height: 8)
+                        .fixedSize()
+                    Text(series[index].id)
+                        .font(.caption)
+                        .foregroundColor(palette.foreground)
+                        .lineLimit(1)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 8)
+        .accessibilityHidden(true)
+    }
+
+    private func seriesColor(at index: Int, palette: FoundationPalette) -> Color {
+        series[index].color ?? palette.primary.opacity(1 / (1 + Double(index) * 0.35))
     }
 
     private func axisLabels(_ axes: Axes, palette: FoundationPalette) -> some View {
@@ -162,8 +203,8 @@ public struct FoundationChart: View {
                         ? CGPoint(x: step * (CGFloat(position) + 0.5), y: size.height * (upper - value / scale) / span)
                         : nil
                 }
-                let color = series[index].color ?? palette.primary.opacity(1 / (1 + Double(index) * 0.35))
-                marks(points: points, index: index, step: step, baseline: baseline, color: color)
+                marks(points: points, index: index, step: step, baseline: baseline,
+                      color: seriesColor(at: index, palette: palette))
             }
             if let selection, labels.indices.contains(selection) {
                 Path { path in
@@ -218,7 +259,8 @@ public struct FoundationChart: View {
     private var accessibleSummary: String {
         guard !labels.isEmpty else { return "No chart data" }
         if let selection, labels.indices.contains(selection) { return summary(at: selection) }
-        return "Chart, \(labels.count) data points"
+        let chart = "Chart, \(labels.count) data points"
+        return showsLegend ? ([chart] + series.map(\.id)).joined(separator: ", ") : chart
     }
 
     private func summary(at index: Int) -> String {

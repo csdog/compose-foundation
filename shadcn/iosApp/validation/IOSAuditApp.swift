@@ -34,6 +34,14 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             return
         }
 
+        if ProcessInfo.processInfo.arguments.contains("--chart-interaction") {
+            window.rootViewController = UIHostingController(rootView: ChartAxesScreenshotFixture(
+                showsLegend: true, fixedViewport: false
+            ))
+            window.makeKeyAndVisible()
+            return
+        }
+
         if ProcessInfo.processInfo.arguments.contains("--carousel-interaction") {
             let rightToLeft = ProcessInfo.processInfo.arguments.contains("--carousel-rtl")
             window.rootViewController = UIHostingController(rootView: CarouselInteractionFixture(rightToLeft: rightToLeft))
@@ -183,7 +191,8 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
             "chart": [
-                ("chart-example-axis-initial", { AnyView(ChartAxesScreenshotFixture()) }),
+                ("chart-example-axis-initial", { AnyView(ChartAxesScreenshotFixture(showsLegend: false)) }),
+                ("chart-example-legend-initial", { AnyView(ChartAxesScreenshotFixture(showsLegend: true)) }),
             ],
             "theme": FoundationStylePreset.allCases.map { preset in
                 ("theme-\(preset.rawValue)-initial", { AnyView(ThemePresetScreenshotFixture(preset: preset)) })
@@ -3538,6 +3547,8 @@ private struct SwitchScreenshotFixture: View {
 }
 
 private struct ChartAxesScreenshotFixture: View {
+    let showsLegend: Bool
+    var fixedViewport = true
     @Environment(\.colorScheme) private var scheme
     @State private var selection: Int?
 
@@ -3546,10 +3557,12 @@ private struct ChartAxesScreenshotFixture: View {
         FoundationChart(labels: ["January", "February", "March", "April", "May", "June"], series: [
             .init("Desktop", values: [186, 305, 237, 73, 209, 214], color: Color(rgb: 0x2563eb)),
             .init("Mobile", values: [80, 200, 120, 190, 130, 140], color: Color(rgb: 0x60a5fa)),
-        ], selection: $selection, axes: FoundationChart.Axes(preferredUpperBound: 320) { String($0.prefix(3)) })
-            .frame(width: 662, height: 364)
+        ], selection: $selection, axes: FoundationChart.Axes(preferredUpperBound: 320) { String($0.prefix(3)) },
+           showsLegend: showsLegend)
+            .frame(width: fixedViewport ? 662 : nil, height: fixedViewport ? 364 : 260)
             .padding(.leading, 29)
-            .padding(.top, 29)
+            .padding(.trailing, fixedViewport ? 0 : 29)
+            .padding(.top, fixedViewport ? 29 : 96)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(theme.palette(for: scheme).background)
             .foundationTheme(theme)

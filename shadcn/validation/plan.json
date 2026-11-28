@@ -602,13 +602,14 @@
       "swiftuiDevice": "iPad-mini-A17-Pro",
       "platformCases": {
         "swiftui-ios": [
-          {"variant": "example-axis", "status": "initial", "viewport": [720, 520]}
+          {"variant": "example-axis", "status": "initial", "viewport": [720, 520]},
+          {"variant": "example-legend", "status": "initial", "viewport": [720, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/chart-example-axis.tsx",
-      "visual": "compare the six-month bar chart, horizontal guide lines and month labels",
-      "behavior": "optionally format the horizontal axis and set the minimum positive extent",
-      "accessibility": "existing adjustable point selection with full month and series names",
+      "visual": "compare the six-month bar chart, horizontal guide lines, month labels and centered series legend",
+      "behavior": "optionally format the horizontal axis, set the minimum positive extent and show series swatches",
+      "accessibility": "adjustable point selection with full month and series names, plus series names before selection when the legend is visible",
       "motion": "static settled frames"
     },
     "progress": {
