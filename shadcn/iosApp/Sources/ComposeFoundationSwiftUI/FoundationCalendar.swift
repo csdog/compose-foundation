@@ -197,7 +197,7 @@ public struct FoundationCalendar: View {
                                 column: index % 7, selection: selection, palette: palette, enabled: enabled
                             )
                             .modifier(decorate(focusDay, enabled))
-                            .modifier(CalendarProbeInteractive(enabled: enabled))
+                            .modifier(CalendarProbeInteractive(enabled: enabled, activate: { activate(date) }))
                             .id(focusDay)
                         } else {
                             Text(number)
@@ -403,10 +403,14 @@ public struct FoundationCalendar: View {
 
 private struct CalendarProbeInteractive: ViewModifier {
     let enabled: Bool
+    var activate: (() -> Void)?
 
     @ViewBuilder
     func body(content: Content) -> some View {
-        if #available(iOS 15, macOS 12, *),
+        if enabled, let activate,
+           ProcessInfo.processInfo.arguments.contains("--fka-calendar-default-action") {
+            content.accessibilityAction(.default, activate)
+        } else if #available(iOS 15, macOS 12, *),
            ProcessInfo.processInfo.arguments.contains("--fka-calendar-ax-interactive") {
             content.accessibilityRespondsToUserInteraction(enabled)
         } else {
@@ -462,8 +466,7 @@ private struct FoundationCalendarKeyboardDay: ViewModifier {
     @ViewBuilder
     func body(content: Content) -> some View {
         if enabled && isEnabled && isTabStop {
-            content
-                .focusable()
+            focusTarget(content)
                 .focused(focus, equals: date)
                 .focusEffectDisabled(ring != nil)
                 .overlay {
@@ -481,6 +484,17 @@ private struct FoundationCalendarKeyboardDay: ViewModifier {
             content
         } else {
             content.focusable(false)
+        }
+    }
+
+    @ViewBuilder
+    private func focusTarget(_ content: Content) -> some View {
+        if ProcessInfo.processInfo.arguments.contains("--fka-calendar-native-tab-stop") {
+            content
+        } else if ProcessInfo.processInfo.arguments.contains("--fka-calendar-activate-interaction") {
+            content.focusable(interactions: .activate)
+        } else {
+            content.focusable()
         }
     }
 

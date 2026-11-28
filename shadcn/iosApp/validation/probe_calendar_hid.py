@@ -130,7 +130,7 @@ def launch(label, *arguments):
 def probe(name, initial, accepted, *arguments):
     launch(initial, *arguments)
     capture(f"{name}-initial.png")
-    for tabs in range(5):
+    for tabs in range(8):
         key(44)  # Space performs the current Full Keyboard Access action.
         current = labels()
         destination = accepted(current)
@@ -139,7 +139,7 @@ def probe(name, initial, accepted, *arguments):
             capture(f"{name}-activated.png")
             return True
         key(43)  # Tab moves Full Keyboard Access focus.
-    print(f"INPUT {name}: no activation after five attempts; labels={sorted(current)}", flush=True)
+    print(f"INPUT {name}: no activation after eight attempts; labels={sorted(current)}", flush=True)
     capture(f"{name}-last.png")
     return False
 
@@ -173,11 +173,12 @@ for name, arguments in (
 ):
     probe(name, "SwiftUI result: none", lambda current: selected("SwiftUI result: ", current), *arguments)
 for name, flags in (
-    ("calendar-no-preferred-focus", ("--fka-calendar-no-preferred-focus",)),
-    ("calendar-native-other-days", ("--fka-calendar-native-other-days",)),
-    ("calendar-no-preferred-and-native-other", ("--fka-calendar-no-preferred-focus", "--fka-calendar-native-other-days")),
+    ("calendar-native-grid", ("--fka-calendar-native-grid",)),
+    ("calendar-native-tab-stop", ("--fka-calendar-native-tab-stop", "--fka-calendar-native-other-days")),
+    ("calendar-activate-interaction", ("--fka-calendar-activate-interaction", "--fka-calendar-native-other-days")),
+    ("calendar-default-action", ("--fka-calendar-default-action",)),
 ):
     probe(name, "Selected: 2025-01-31",
-          lambda current: next((label for label in current if label == "February 2025" or
-                                label.startswith("Selected: ") and label != "Selected: 2025-01-31"), None),
+          lambda current: next((label for label in current if label.startswith("Selected: ")
+                               and label != "Selected: 2025-01-31"), None),
           "--fka-calendar-toggle-date", *flags)
