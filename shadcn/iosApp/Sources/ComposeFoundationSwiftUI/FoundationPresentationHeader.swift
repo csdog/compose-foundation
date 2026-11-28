@@ -22,6 +22,7 @@ struct FoundationPresentationHeader<Close: View>: View {
     let alignment: VerticalAlignment
     let close: Close
     let dismiss: () -> Void
+    var initiallyFocusClose = true
 
     var body: some View {
         let heading = Text(title)
@@ -30,7 +31,9 @@ struct FoundationPresentationHeader<Close: View>: View {
             .accessibilityAddTraits(.isHeader)
         let dismissButton = close.keyboardShortcut(.cancelAction)
         if #available(iOS 17, macOS 14, *) {
-            FoundationPresentationFocus(heading: heading, close: dismissButton, onActivate: dismiss) { heading, close in
+            FoundationPresentationFocus(
+                heading: heading, close: dismissButton, onActivate: dismiss, initiallyFocusClose: initiallyFocusClose
+            ) { heading, close in
                 FoundationPresentationHeaderRow(
                     heading: heading, description: description, alignment: alignment, close: close
                 )
@@ -52,6 +55,7 @@ struct FoundationPresentationFocus<Heading: View, Close: View, Layout: View>: Vi
     let heading: Heading
     let close: Close
     let onActivate: () -> Void
+    var initiallyFocusClose = true
     @ViewBuilder let layout: (AnyView, AnyView) -> Layout
 
     private var closeFocusInteractions: FocusInteractions {
@@ -75,13 +79,13 @@ struct FoundationPresentationFocus<Heading: View, Close: View, Layout: View>: Vi
                     return .handled
                 })
         )
-        .defaultFocus($closeFocused, !voiceOverEnabled)
+        .defaultFocus($closeFocused, initiallyFocusClose && !voiceOverEnabled)
         .task {
             await Task.yield()
             guard !Task.isCancelled else { return }
             if voiceOverEnabled {
                 headingFocused = true
-            } else {
+            } else if initiallyFocusClose {
                 closeFocused = true
             }
         }

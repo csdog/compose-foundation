@@ -38,10 +38,39 @@ final class CommandUITests: XCTestCase {
     }
 
     @MainActor
-    private func launchFixture() -> XCUIApplication {
+    func testDialogFocusesSearchAndClearsItBetweenPresentations() {
+        let app = launchFixture("--command-dialog-interaction")
+        let trigger = app.buttons["Open command palette"]
+        let field = app.textFields["Search commands"]
+        let search = app.keyboards.buttons.matching(NSPredicate(format: "label =[c] %@", "Search")).firstMatch
+        let result = app.staticTexts["command-dialog-result"]
+
+        trigger.tap()
+        XCTAssertTrue(field.waitForExistence(timeout: 5))
+        XCTAssertTrue(search.waitForExistence(timeout: 5))
+        let opened = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        opened.name = "Command Dialog with search focused"
+        opened.lifetime = .keepAlways
+        add(opened)
+        field.typeText("bi")
+        XCTAssertFalse(app.buttons["Calendar"].exists)
+        app.buttons["Billing"].tap()
+        XCTAssertTrue(field.waitForNonExistence(timeout: 5))
+        XCTAssertEqual(result.label, "Billing")
+
+        trigger.tap()
+        XCTAssertTrue(field.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Calendar"].exists)
+        app.buttons["Close"].tap()
+        XCTAssertTrue(field.waitForNonExistence(timeout: 5))
+        XCTAssertEqual(result.label, "Billing")
+    }
+
+    @MainActor
+    private func launchFixture(_ mode: String = "--command-interaction") -> XCUIApplication {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchArguments = ["--command-interaction", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchArguments = [mode, "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launch()
         return app
     }

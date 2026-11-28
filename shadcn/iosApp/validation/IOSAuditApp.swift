@@ -69,6 +69,12 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             return
         }
 
+        if ProcessInfo.processInfo.arguments.contains("--command-dialog-interaction") {
+            window.rootViewController = UIHostingController(rootView: CommandDialogInteractionFixture())
+            window.makeKeyAndVisible()
+            return
+        }
+
         if #available(iOS 17, *), ProcessInfo.processInfo.arguments.contains("--overlay-focus") {
             window.rootViewController = UIHostingController(rootView: OverlayFocusInteractionFixture())
             window.makeKeyAndVisible()
@@ -327,6 +333,8 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 ("command-default-initial", { AnyView(CommandScreenshotFixture(query: "")) }),
                 ("command-default-filtered", { AnyView(CommandScreenshotFixture(query: "Calendar")) }),
                 ("command-default-empty", { AnyView(CommandScreenshotFixture(query: "xyz")) }),
+                ("command-dialog-initial", { AnyView(CommandDialogScreenshotFixture(open: false)) }),
+                ("command-dialog-open", { AnyView(CommandDialogScreenshotFixture(open: true)) }),
             ],
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
@@ -2993,6 +3001,80 @@ private struct CommandInteractionFixture: View {
         .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .foundationTheme(FoundationTheme(preset: .nova))
+    }
+}
+
+private struct CommandDialogInteractionFixture: View {
+    @State private var presented = false
+    @State private var result = "No action"
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Button("Open command palette") { presented = true }
+                .keyboardShortcut("j")
+            Text(result).accessibilityIdentifier("command-dialog-result")
+            Spacer(minLength: 0)
+        }
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .modifier(FoundationCommandDialog(isPresented: $presented, sections: [
+            .init(id: "suggestions", title: "Suggestions", actions: [.init("Calendar", value: "Calendar")]),
+            .init(id: "settings", title: "Settings", actions: [.init("Billing", value: "Billing")]),
+        ]) { result = $0 })
+        .foundationTheme(FoundationTheme(preset: .nova))
+    }
+}
+
+private struct CommandDialogScreenshotFixture: View {
+    @State private var presented: Bool
+    @Environment(\.colorScheme) private var scheme
+
+    init(open: Bool) { _presented = State(initialValue: open) }
+
+    var body: some View {
+        let theme = FoundationTheme(preset: .nova)
+        let palette = theme.palette(for: scheme)
+        return Button {
+            presented = true
+        } label: {
+            HStack(spacing: 4) {
+                Text("Press").font(.system(size: 14))
+                Text("⌘ J").font(.system(size: 10, weight: .medium, design: .monospaced))
+                    .padding(.horizontal, 6)
+                    .frame(height: 20)
+                    .background(RoundedRectangle(cornerRadius: 4).fill(palette.secondary))
+                    .overlay(RoundedRectangle(cornerRadius: 4).strokeBorder(palette.border))
+            }
+            .foregroundColor(palette.mutedForeground)
+            .accessibilityLabel(Text("Open command palette"))
+        }
+        .buttonStyle(PlainButtonStyle())
+        .keyboardShortcut("j")
+        .padding(24)
+        .frame(width: 720, height: 520, alignment: .topLeading)
+        .background(palette.background)
+        .modifier(FoundationCommandDialog(isPresented: $presented, sections: [
+            .init(id: "suggestions", title: "Suggestions", actions: [
+                .init("Calendar", value: "calendar"), .init("Search Emoji", value: "emoji"),
+                .init("Calculator", value: "calculator"),
+            ]),
+            .init(id: "settings", title: "Settings", actions: [
+                .init("Profile", value: "profile"), .init("Billing", value: "billing"),
+                .init("Settings", value: "settings"),
+            ]),
+        ], searchPrompt: "Type a command or search...", emptyMessage: "No results found.",
+           actionAppearance: [
+                "calendar": .init(systemImage: "calendar"),
+                "emoji": .init(systemImage: "face.smiling"),
+                "calculator": .init(systemImage: "plus.forwardslash.minus"),
+                "profile": .init(systemImage: "person", shortcutLabel: "⌘P"),
+                "billing": .init(systemImage: "creditcard", shortcutLabel: "⌘B"),
+                "settings": .init(systemImage: "gearshape", shortcutLabel: "⌘S"),
+           ], focusSearchOnOpen: false) { _ in })
+        .foundationTheme(theme)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
+        .ignoresSafeArea()
     }
 }
 

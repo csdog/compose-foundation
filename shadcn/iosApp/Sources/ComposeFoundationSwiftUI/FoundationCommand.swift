@@ -46,6 +46,8 @@ public struct FoundationCommand<Value: Hashable>: View {
     private let emptyMessage: String
     private let actionAppearance: [Value: ActionAppearance]
     private let onAction: (Value) -> Void
+    private var focusSearchOnOpen = false
+    private var dismiss: (() -> Void)?
 
     public init(sections: [Section], onAction: @escaping (Value) -> Void) {
         self.init(sections: sections, query: nil, onAction: onAction)
@@ -65,6 +67,13 @@ public struct FoundationCommand<Value: Hashable>: View {
         self.emptyMessage = emptyMessage
         self.actionAppearance = actionAppearance
         self.onAction = onAction
+    }
+
+    func presentedInDialog(focusSearch: Bool, dismiss: @escaping () -> Void) -> Self {
+        var command = self
+        command.focusSearchOnOpen = focusSearch
+        command.dismiss = dismiss
+        return command
     }
 
     public var body: some View {
@@ -89,8 +98,8 @@ public struct FoundationCommand<Value: Hashable>: View {
         }
         .padding(nova ? 5 : 10)
         .foregroundColor(palette.foreground)
-        .background(shape.fill(palette.card))
-        .overlay(shape.strokeBorder(palette.border).allowsHitTesting(false))
+        .background(shape.fill(dismiss == nil ? palette.card : .clear))
+        .overlay(shape.strokeBorder(dismiss == nil ? palette.border : .clear).allowsHitTesting(false))
         .onChange(of: search.wrappedValue) { _ in activeRow = nil }
     }
 
@@ -145,9 +154,11 @@ public struct FoundationCommand<Value: Hashable>: View {
             }
             #if os(iOS)
             FoundationCommandSearch(prompt: searchPrompt, query: search, fontSize: nova ? novaFontSize : nil,
-                                    foreground: palette.foreground, move: move, submit: submit)
+                                    foreground: palette.foreground, focusSearchOnOpen: focusSearchOnOpen,
+                                    move: move, submit: submit, dismiss: dismiss)
             #else
-            FoundationCommandSearch(prompt: searchPrompt, query: search, move: move, submit: submit)
+            FoundationCommandSearch(prompt: searchPrompt, query: search, focusSearchOnOpen: focusSearchOnOpen,
+                                    move: move, submit: submit, dismiss: dismiss)
             #endif
         } else {
             TextField(searchPrompt, text: search, onCommit: submit)
@@ -254,11 +265,14 @@ private struct FoundationCommandSearch: UIViewRepresentable {
     @Binding var query: String
     let fontSize: CGFloat?
     let foreground: Color
+    let focusSearchOnOpen: Bool
     let move: (Int) -> Bool
     let submit: () -> Void
+    let dismiss: (() -> Void)?
 
     func makeUIView(context: Context) -> FoundationSearchTextField {
         let field = FoundationSearchTextField()
+        field.activatesOnAttach = focusSearchOnOpen
         field.borderStyle = .none
         field.autocapitalizationType = .none
         field.returnKeyType = .search
@@ -278,6 +292,7 @@ private struct FoundationCommandSearch: UIViewRepresentable {
         field.writeQuery = { query = $0 }
         field.move = move
         field.submit = submit
+        field.dismiss = dismiss
     }
 
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: FoundationSearchTextField, context: Context) -> CGSize? {
@@ -288,23 +303,36 @@ private struct FoundationCommandSearch: UIViewRepresentable {
 #else
 @available(macOS 14, *)
 private struct FoundationCommandSearch: View {
+    @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
     @FocusState private var focused: Bool
     let prompt: String
     @Binding var query: String
+    let focusSearchOnOpen: Bool
     let move: (Int) -> Bool
     let submit: () -> Void
+    let dismiss: (() -> Void)?
 
     var body: some View {
         TextField(prompt, text: $query)
             .focused($focused)
             .onSubmit(submit)
-            .onKeyPress(keys: [.upArrow, .downArrow, .return], phases: [.down, .repeat]) { press in
+            .onKeyPress(keys: [.upArrow, .downArrow, .return, .escape], phases: [.down, .repeat]) { press in
                 guard press.modifiers.intersection([.control, .command, .option, .shift]).isEmpty else { return .ignored }
+                if press.key == .escape {
+                    guard let dismiss else { return .ignored }
+                    if press.phase == .down { dismiss() }
+                    return .handled
+                }
                 if press.key == .return {
                     if press.phase == .down { submit() }
                     return .handled
                 }
                 return move(press.key == .downArrow ? 1 : -1) ? .handled : .ignored
+            }
+            .task {
+                guard focusSearchOnOpen, !voiceOverEnabled else { return }
+                await Task.yield()
+                if !Task.isCancelled { focused = true }
             }
     }
 }
