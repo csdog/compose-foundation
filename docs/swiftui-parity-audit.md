@@ -364,6 +364,14 @@ macOS 实际窗口点击编辑器后出现焦点环。逐键输入字符及回�
 
 iPad mini（A17 Pro，iOS 26.2）的 10 张 720 × 520 截图复拍逐字节一致。禁用编辑区的取样色与 shadcn 一致，浅色 `#F8F8F8`，深色 `#181818`。错误环取样每通道最多相差 2 个色阶。SwiftUI 编辑器外观保留原生滚动区域，浏览器拖动调节尺寸的手柄待对齐。审计应用以 iOS 14 模拟器部署目标编译。[iOS 截图与对照报告](https://github.com/csdog/compose-foundation/actions/runs/46097044679/artifacts/15243936930)
 
+### Dropdown Menu Nova 收起态与 RTL
+
+对照 shadcn Base UI / Nova 的 `dropdown-menu-demo.tsx` 和 `dropdown-menu-rtl.tsx`。Nova 触发器使用 32 pt 可见描边、随字号调整的文字和至少 44 × 44 pt 的点按区域。深色描边底色跟随页面或卡片表面。调用方仍可提供触发器内容和字体。分组、子菜单和禁用项通过既有 SwiftUI `Menu` 内容闭包传入。
+
+macOS 实际窗口验证调用方更改标签后触发器即时更新，禁用后重新启用可恢复原外观。展开面板、方向键遍历、Escape 后焦点归还和 VoiceOver 继续单独验收。[macOS 验证日志](https://github.com/csdog/compose-foundation/actions/runs/46097918360/job/140833511445)
+
+iPad mini（A17 Pro，iOS 26.2）在 720 × 520 画布上采集默认与阿拉伯语 RTL 共四张深浅色截图，复拍逐字节一致。深色触发器底色取样与 shadcn 同为 `#141414`。浅色阿拉伯语触发器因字形和字距差异比参考窄 8 px。审计应用以 iOS 14 模拟器部署目标编译。[iOS 截图与差异报告](https://github.com/csdog/compose-foundation/actions/runs/46097918360/artifacts/15244128043)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -392,7 +400,7 @@ iPad mini（A17 Pro，iOS 26.2）的 10 张 720 × 520 截图复拍逐字节一�
 | context-menu | 使用系统右键或长按菜单。调用方可传入系统菜单视图，Compose 的位置、portal、子菜单和条目 DSL 有独立 API。 |
 | dialog | 支持系统 sheet 及带遮罩的可选居中面板、滚动内容和固定页脚。默认编辑资料示例覆盖深浅色。其他变体、iOS 居中版触控、键盘焦点和 VoiceOver 待验收。 |
 | drawer | 支持原有底部面板，以及 Nova、Rhea 的说明文字、可滚动内容和固定页脚。原布局已验收关闭焦点、Return、Escape、向下拖动和焦点归还。侧边面板、吸附点、嵌套面板和无模态示例待对齐。 |
-| dropdown-menu | 自定义外部触发器外观，菜单内容走 SwiftUI Menu。Compose 可控制菜单锚点、portal、焦点和自定义条目状态。 |
+| dropdown-menu | Nova 触发器覆盖默认与阿拉伯语 RTL 收起态。展开样式、菜单项键盘遍历、Escape 焦点恢复和 VoiceOver 待验收。 |
 | emoji-text | Apple 系统彩色 emoji，可保留 ZWJ 等 Unicode 序列。Compose 使用自己的 emoji 图形与替换逻辑。 |
 | empty | 支持符号、标题、说明和操作 slot，以及标准和虚线边框样式。Nova 对齐基本排版。自定义头像等媒体及其余示例布局待对照。 |
 | field | 纵向显示标题、说明、错误及任意输入。Nova 使用 14 pt 支持文字与 8 pt 间距，说明可放在控件前或后。FieldSet、Legend、横向及响应式排列待补齐。 |
