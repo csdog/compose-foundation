@@ -4,7 +4,7 @@
   "style": "nova",
   "baseline": {
     "repository": "csdog/compose-foundation-baselines",
-    "revision": null,
+    "revision": "16ca7b3a721b99806b1fb5e5fc77097a82b95b63",
     "paths": {
       "cmp-web": "web",
       "cmp-android": "mobile/cmp-android",
@@ -813,7 +813,8 @@
           {"variant": "default", "status": "loading", "viewport": [720, 520]},
           {"variant": "footer", "status": "initial", "viewport": [720, 520]},
           {"variant": "dialog", "status": "initial", "viewport": [720, 520]},
-          {"variant": "dialog", "status": "open", "viewport": [720, 520]}
+          {"variant": "dialog", "status": "open", "viewport": [720, 520]},
+          {"variant": "shortcuts", "status": "open", "viewport": [720, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/command-demo.tsx",

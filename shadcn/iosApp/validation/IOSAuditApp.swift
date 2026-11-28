@@ -343,6 +343,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 ("command-footer-initial", { AnyView(CommandScreenshotFixture(query: "", showsFooter: true)) }),
                 ("command-dialog-initial", { AnyView(CommandDialogScreenshotFixture(open: false)) }),
                 ("command-dialog-open", { AnyView(CommandDialogScreenshotFixture(open: true)) }),
+                ("command-shortcuts-open", { AnyView(CommandShortcutsScreenshotFixture()) }),
             ],
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
@@ -3083,6 +3084,36 @@ private struct CommandDialogScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct CommandShortcutsScreenshotFixture: View {
+    @State private var presented = true
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        let theme = FoundationTheme(preset: .nova)
+        let palette = theme.palette(for: scheme)
+        return Button("Open Menu") { presented = true }
+            .buttonStyle(FoundationButtonStyle(.outline))
+            .padding(.top, 18)
+            .padding(.horizontal, 24)
+            .frame(width: 720, height: 520, alignment: .topLeading)
+            .background(palette.background)
+            .modifier(FoundationCommandDialog(isPresented: $presented, sections: [
+                .init(id: "settings", title: "Settings", actions: [
+                    .init("Profile", value: "profile"), .init("Billing", value: "billing"),
+                    .init("Settings", value: "settings"),
+                ]),
+            ], searchPrompt: "Type a command or search...", actionAppearance: [
+                "profile": .init(systemImage: "person", shortcutLabel: "⌘P", shortcut: KeyboardShortcut("p")),
+                "billing": .init(systemImage: "creditcard", shortcutLabel: "⌘B", shortcut: KeyboardShortcut("b")),
+                "settings": .init(systemImage: "gearshape", shortcutLabel: "⌘S", shortcut: KeyboardShortcut("s")),
+            ], focusSearchOnOpen: false) { _ in })
+            .foundationTheme(theme)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(palette.background)
+            .ignoresSafeArea()
     }
 }
 
