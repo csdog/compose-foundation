@@ -887,7 +887,7 @@ jobs:
           done
           exit "$failed"
 
-      - name: Verify grouped Select native menu interaction on macOS
+      - name: Verify grouped Select binding and appearance on macOS
         if: contains(needs.baseline.outputs.matrix, '"select"')
         timeout-minutes: 2
         run: |
