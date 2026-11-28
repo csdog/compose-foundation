@@ -90,7 +90,11 @@ public struct FoundationSidebar<Sidebar: View, Main: View>: View {
             HStack {
                 Text(title).font(.headline).accessibilityAddTraits(.isHeader)
                 Spacer(minLength: 0)
-                closeButton.keyboardShortcut(compact ? .cancelAction : nil)
+                if compact {
+                    closeButton.keyboardShortcut(KeyboardShortcut.cancelAction)
+                } else {
+                    closeButton
+                }
             }
             ScrollView { sidebar.frame(maxWidth: .infinity, alignment: .leading) }
         }
@@ -131,9 +135,17 @@ public struct FoundationSidebarTrigger<Label: View>: View {
         self.label = label()
     }
 
+    @ViewBuilder
     public var body: some View {
+        if let shortcut {
+            button.keyboardShortcut(shortcut)
+        } else {
+            button
+        }
+    }
+
+    private var button: some View {
         Button { isOpen.toggle() } label: { label }
-            .keyboardShortcut(shortcut)
             .accessibilityValue(isOpen ? Text("Expanded") : Text("Collapsed"))
     }
 }
