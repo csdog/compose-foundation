@@ -34,6 +34,12 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             return
         }
 
+        if #available(iOS 15, *), ProcessInfo.processInfo.arguments.contains("--calendar-priority-probe") {
+            window.rootViewController = CalendarPriorityProbeController()
+            window.makeKeyAndVisible()
+            return
+        }
+
         if ProcessInfo.processInfo.arguments.contains("--carousel-interaction") {
             let rightToLeft = ProcessInfo.processInfo.arguments.contains("--carousel-rtl")
             window.rootViewController = UIHostingController(rootView: CarouselInteractionFixture(rightToLeft: rightToLeft))
@@ -3593,5 +3599,50 @@ private struct StatusInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+@available(iOS 15, *)
+@MainActor
+private final class CalendarPriorityProbeState: ObservableObject {
+    @Published var pressed = "none"
+}
+
+@available(iOS 15, *)
+private struct CalendarPriorityProbeView: View {
+    @ObservedObject var state: CalendarPriorityProbeState
+
+    var body: some View {
+        ScrollView {
+            VStack {
+                Text("Priority probe: \(state.pressed)")
+                CalendarNavigationFixture()
+            }
+        }
+        .foundationTheme(FoundationTheme(preset: .nova))
+    }
+}
+
+@available(iOS 15, *)
+private final class CalendarPriorityProbeController: UIHostingController<CalendarPriorityProbeView> {
+    private let probe: CalendarPriorityProbeState
+
+    init() {
+        let probe = CalendarPriorityProbeState()
+        self.probe = probe
+        super.init(rootView: CalendarPriorityProbeView(state: probe))
+    }
+
+    @MainActor required dynamic init?(coder: NSCoder) { nil }
+
+    override var keyCommands: [UIKeyCommand]? {
+        let command = UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: [], action: #selector(receiveRight))
+        command.wantsPriorityOverSystemBehavior = true
+        return (super.keyCommands ?? []) + [command]
+    }
+
+    @objc private func receiveRight() {
+        probe.pressed = "Right"
+        print("PRIORITY_PROBE received Right")
     }
 }

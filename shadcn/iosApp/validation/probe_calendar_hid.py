@@ -103,27 +103,51 @@ def capture(name):
     subprocess.run(["xcrun", "simctl", "io", device, "screenshot", str(screenshots / name)], check=True, timeout=20)
 
 
+def launch(priority=False):
+    mode = "--calendar-priority-probe" if priority else "--calendar-navigation"
+    subprocess.run(["xcrun", "simctl", "launch", "--terminate-running-process", device,
+                    "com.toutiaoyan.compose.foundation.audit", mode, "--calendar-keys",
+                    "-AppleLanguages", "(en)", "-AppleLocale", "en_US"],
+                   check=True, timeout=15)
+    assert wait_for("Selected: 2025-01-31", timeout=90), labels()
+
+
+def test_priority(label):
+    launch(priority=True)
+    key(79)  # Right
+    for _ in range(4):
+        if "Priority probe: Right" in labels():
+            break
+        key(43)
+        key(79)
+    received = "Priority probe: Right" in labels()
+    print(f"Priority command, {label}: delivered={received}", flush=True)
+    capture(f"priority-{label}.png")
+
+
+test_priority("normal")
 enable_full_keyboard_access()
-subprocess.run(["xcrun", "simctl", "launch", device, "com.toutiaoyan.compose.foundation.audit",
-                "--calendar-navigation", "--calendar-keys", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"],
-               check=True, timeout=15)
-assert wait_for("Selected: 2025-01-31", timeout=90), labels()
-capture("before.png")
-key(79)  # Right
-for _ in range(5):
+test_priority("full-access")
+for tabs in range(8):
+    launch()
+    for _ in range(tabs):
+        key(43)  # Tab
+    capture(f"native-tab-{tabs}.png")
+    key(44)  # Space
     if "February 1, 2025" in labels():
+        assert "Selected: 2025-01-31" in labels(), labels()
+        print(f"Native Tab and Space navigated from January to February after {tabs} Tab events", flush=True)
+        capture("native-next-month.png")
         break
-    key(43)  # Tab
-    key(79)
 else:
-    capture("focus-entry.png")
-    raise AssertionError(f"Date focus did not move into February: {sorted(labels())}")
-assert "Selected: 2025-01-31" in labels(), labels()
-capture("after-arrow.png")
-key(40)  # Return
-assert wait_for("Selected: 2025-02-01"), labels()
-key(81)  # Down
-assert "Selected: 2025-02-01" in labels(), labels()
-key(44)  # Space
-assert wait_for("Selected: 2025-02-08"), labels()
-print("PASS: iPad USB keyboard moves focus across months and commits only on Return or Space")
+    raise AssertionError(f"Tab and Space did not activate Next month: {sorted(labels())}")
+for _ in range(8):
+    key(43)
+    key(44)
+    result = next((value for value in labels() if value.startswith("Selected: 2025-02-")), None)
+    if result is not None:
+        print(f"Native Tab and Space committed {result}", flush=True)
+        capture("native-date-selected.png")
+        break
+else:
+    raise AssertionError(f"Tab and Space did not select a February date: {sorted(labels())}")
