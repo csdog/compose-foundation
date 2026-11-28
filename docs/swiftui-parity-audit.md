@@ -348,6 +348,14 @@ macOS 实际窗口在 LTR 与 RTL 下均验证拖动过程中相邻页已进入�
 
 iPad mini（A17 Pro，iOS 26.2）的默认和 RTL 共 4 张深浅色截图复拍逐字节一致。RTL 使用阿拉伯文页码。卡片取样底色与 shadcn 一致，浅色 `#FFFFFF`，深色 `#171717`。左侧按钮在截图中随上游示例画布裁切。SwiftUI 审计应用以 iOS 14 模拟器部署目标编译。[iOS 截图与差异报告](https://github.com/csdog/compose-foundation/actions/runs/46094533306/artifacts/15242433307)
 
+### Theme 预设输入框高度与切换
+
+在同一 SwiftUI 表单中切换 Vega、Nova、Maia、Lyra、Mira、Luma、Sera、Rhea。常规字号的可见输入框高度分别为 36、32、36、32、28、36、40、32 pt，来自对应的 `style-*.css` 输入框高度。Sera 使用底部线条，常规文本编辑区域至少 44 pt 高，字号放大时可见框随之增高。[上游预设样式表](https://github.com/shadcn-ui/ui/tree/0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4/apps/v4/registry/styles)
+
+macOS 在实际窗口用原生按键写入文本并点击保存，然后切换 16 种预设及深浅色组合。每种组合产生独立的画面，输入内容和保存次数保持。[macOS 预设验收日志](https://github.com/csdog/compose-foundation/actions/runs/46095932842/job/140828070077)
+
+iPad mini（A17 Pro，iOS 26.2）的 16 张 720 × 520 截图复拍逐字节一致。按中心空白列测量上下描边，七套有描边的预设在深浅色下均得到对应的 28、32 或 36 pt 高度。Sera 的取样只出现底线。Theme 表单以预设样式表为上游依据，报告中的独立 shadcn 截图标为缺参考图。审计应用以 iOS 14 模拟器部署目标编译。[iOS 预设图与报告](https://github.com/csdog/compose-foundation/actions/runs/46095932842/artifacts/15243740986)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -415,7 +423,7 @@ iPad mini（A17 Pro，iOS 26.2）的默认和 RTL 共 4 张深浅色截图复拍
 | tabs | 支持选择绑定、禁用、横向 tabs 与内容切换。iOS 17 / macOS 14 起提供左右键、Home / End、禁用项跳过，以及自动或手动激活。iOS 26.2 模拟器已验证 LTR、RTL、跨组 Tab、长列表滚动、自动激活及手动模式的独立焦点与提交。macOS 15.6.1 已验证自动模式跳过禁用项、跨组 Tab 和手动激活。Compose 另有纵向、list variant 和独立焦点移动 API。 |
 | text | 支持标题、headline、正文、caption 和 muted 文本。Compose 有更多主题字体角色及自定义内容和样式参数。 |
 | textarea | 原生 TextEditor 支持多行绑定、独立占位文字及错误边框。Nova 最小高 64 pt，iOS 16 和 macOS 13 起隐藏系统滚动背景。自动增高和自定义焦点样式仍待补齐。 |
-| theme | SwiftUI 环境支持自定义深浅色、圆角及 Vega、Nova、Maia、Lyra、Mira、Luma、Sera、Rhea 八种样式。预设为通用圆角、按钮尺寸、卡片和 Popover 间距、部分字体和动效提供默认值。Compose 的配色集合、图表色及各组件状态样式仍有差别。 |
+| theme | SwiftUI 环境支持自定义深浅色、圆角及八种预设。按钮、输入框、卡片和 Popover 使用预设尺寸。各预设的完整配色、图表色和逐组件状态样式仍待对齐。 |
 | toast | 支持单条通知和 `FoundationToastState` 队列，默认显示最新三条，支持操作、逐条关闭、清空及独立计时。Nova 已接入默认、成功和错误样式的截图。堆叠展开、滑动关闭、优先级播报和多操作待对齐。 |
 | toggle | 可绑定选中、禁用及自定义标签。Nova 支持普通、描边和三个尺寸。描边书签的状态已截图。 |
 | toggle-group | 支持单选、多选、是否允许空选择、禁用以及自定义图标标签。Nova 与 Toggle 共用外观。纵向布局和组内方向键导航仍待补齐。 |

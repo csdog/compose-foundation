@@ -7,7 +7,7 @@ public struct FoundationInput: View {
     @Environment(\.foundationSurface) private var surface
     @Environment(\.font) private var font
     @Environment(\.layoutDirection) private var layoutDirection
-    @ScaledMetric(relativeTo: .subheadline) private var novaFieldHeight: CGFloat = 32
+    @ScaledMetric(relativeTo: .subheadline) private var scaledFieldHeight: CGFloat = 32
     @ScaledMetric(relativeTo: .body) private var novaFontSize: CGFloat = 16
     @State private var isEditing = false
     @Binding private var text: String
@@ -38,7 +38,10 @@ public struct FoundationInput: View {
         let border = invalid ? palette.destructive : (isEditing ? palette.ring : palette.input)
         let underlined = theme.preset == .sera
         let nova = theme.preset == .nova
-        let fieldHeight = max(32, novaFieldHeight)
+        let fieldHeight = theme.preset.map { preset in
+            let height = preset.metrics.inputHeight
+            return max(height, scaledFieldHeight * height / 32)
+        }
         let fill = nova ? (colorScheme == .dark ? palette.novaDarkOutlineFill(in: surface) : .clear) : palette.card
 
         alignedEditor(nova ? "" : placeholder, nova: nova)
@@ -54,16 +57,19 @@ public struct FoundationInput: View {
             .foregroundColor(palette.foreground)
             .accessibilityLabel(Text(title))
             .padding(.horizontal, (theme.preset?.metrics.inputPadding ?? 12) + (nova ? 1 : 0))
-            .padding(.vertical, nova ? 0 : 6)
-            .frame(minHeight: nova ? max(44, fieldHeight) : 44)
-            .background(shape.fill(underlined ? Color.clear : fill).frame(height: nova ? fieldHeight : nil))
+            .padding(.vertical, fieldHeight == nil ? 6 : 0)
+            .frame(minHeight: max(44, fieldHeight ?? 0))
+            .background(shape.fill(underlined ? Color.clear : fill).frame(height: fieldHeight))
             .overlay(
                 Group {
                     if underlined {
-                        Rectangle().fill(border).frame(height: isEditing ? 2 : 1)
+                        Rectangle().fill(border)
+                            .frame(height: isEditing ? 2 : 1)
+                            .frame(height: fieldHeight, alignment: .bottom)
+                            .frame(maxHeight: .infinity)
                     } else {
                         shape.strokeBorder(border, lineWidth: isEditing ? 2 : 1)
-                            .frame(height: nova ? fieldHeight : nil)
+                            .frame(height: fieldHeight)
                             .frame(maxHeight: .infinity)
                     }
                 }

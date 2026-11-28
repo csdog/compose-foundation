@@ -93,6 +93,7 @@ public enum FoundationStylePreset: String, CaseIterable, Sendable {
         let popoverRadius: CGFloat
         let buttonPadding: CGFloat
         let buttonHeight: CGFloat
+        let inputHeight: CGFloat
         let inputPadding: CGFloat
         let cardPadding: CGFloat
         let popoverPadding: CGFloat
@@ -104,35 +105,35 @@ public enum FoundationStylePreset: String, CaseIterable, Sendable {
         switch self {
         case .vega:
             return Metrics(controlRadius: 8, cardRadius: 14, popoverRadius: 8,
-                           buttonPadding: 10, buttonHeight: 36, inputPadding: 10, cardPadding: 24, popoverPadding: 16,
+                           buttonPadding: 10, buttonHeight: 36, inputHeight: 36, inputPadding: 10, cardPadding: 24, popoverPadding: 16,
                            transition: 0.20, visibility: 0.15)
         case .nova:
             return Metrics(controlRadius: 10, cardRadius: 14, popoverRadius: 10,
-                           buttonPadding: 10, buttonHeight: 32, inputPadding: 10, cardPadding: 16, popoverPadding: 10,
+                           buttonPadding: 10, buttonHeight: 32, inputHeight: 32, inputPadding: 10, cardPadding: 16, popoverPadding: 10,
                            transition: 0.10, visibility: 0.075)
         case .maia:
             return Metrics(controlRadius: 32, cardRadius: 16, popoverRadius: 16,
-                           buttonPadding: 12, buttonHeight: 36, inputPadding: 12, cardPadding: 24, popoverPadding: 16,
+                           buttonPadding: 12, buttonHeight: 36, inputHeight: 36, inputPadding: 12, cardPadding: 24, popoverPadding: 16,
                            transition: 0.30, visibility: 0.20)
         case .lyra:
             return Metrics(controlRadius: 0, cardRadius: 0, popoverRadius: 0,
-                           buttonPadding: 10, buttonHeight: 32, inputPadding: 10, cardPadding: 16, popoverPadding: 10,
+                           buttonPadding: 10, buttonHeight: 32, inputHeight: 32, inputPadding: 10, cardPadding: 16, popoverPadding: 10,
                            transition: 0.15, visibility: 0.10)
         case .mira:
             return Metrics(controlRadius: 4, cardRadius: 6, popoverRadius: 6,
-                           buttonPadding: 8, buttonHeight: 28, inputPadding: 8, cardPadding: 16, popoverPadding: 10,
+                           buttonPadding: 8, buttonHeight: 28, inputHeight: 28, inputPadding: 8, cardPadding: 16, popoverPadding: 10,
                            transition: 0.12, visibility: 0.08)
         case .luma:
             return Metrics(controlRadius: 32, cardRadius: 32, popoverRadius: 24,
-                           buttonPadding: 12, buttonHeight: 36, inputPadding: 12, cardPadding: 24, popoverPadding: 16,
+                           buttonPadding: 12, buttonHeight: 36, inputHeight: 36, inputPadding: 12, cardPadding: 24, popoverPadding: 16,
                            transition: 0.40, visibility: 0.25)
         case .sera:
             return Metrics(controlRadius: 0, cardRadius: 0, popoverRadius: 0,
-                           buttonPadding: 24, buttonHeight: 40, inputPadding: 0, cardPadding: 32, popoverPadding: 16,
+                           buttonPadding: 24, buttonHeight: 40, inputHeight: 40, inputPadding: 0, cardPadding: 32, popoverPadding: 16,
                            transition: 0.20, visibility: 0.15)
         case .rhea:
             return Metrics(controlRadius: 16, cardRadius: 24, popoverRadius: 24,
-                           buttonPadding: 12, buttonHeight: 32, inputPadding: 10, cardPadding: 20, popoverPadding: 16,
+                           buttonPadding: 12, buttonHeight: 32, inputHeight: 32, inputPadding: 10, cardPadding: 20, popoverPadding: 16,
                            transition: 0.35, visibility: 0.20)
         }
     }

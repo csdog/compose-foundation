@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "theme": FoundationStylePreset.allCases.map { preset in
+                ("theme-\(preset.rawValue)-initial", { AnyView(ThemePresetScreenshotFixture(preset: preset)) })
+            },
             "carousel": [
                 ("carousel-default-initial", { AnyView(CarouselScreenshotFixture(rightToLeft: false)) }),
                 ("carousel-rtl-initial", { AnyView(CarouselScreenshotFixture(rightToLeft: true)) }),
@@ -885,6 +888,22 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct ThemePresetScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    let preset: FoundationStylePreset
+
+    var body: some View {
+        let theme = FoundationTheme(preset: preset)
+        ThemePresetSample()
+            .frame(width: 360)
+            .foundationTheme(theme)
+            .padding(24)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
     }
 }
 
