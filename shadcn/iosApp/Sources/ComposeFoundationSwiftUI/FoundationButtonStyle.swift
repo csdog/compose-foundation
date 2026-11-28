@@ -44,7 +44,7 @@ public struct FoundationButtonStyle: ButtonStyle {
             .frame(minHeight: height)
             .background(Group {
                 if darkNovaOutline {
-                    shape.inset(by: 1).fill(palette.input.opacity(0.3))
+                    shape.inset(by: 1).fill(palette.novaDarkOutlineFill)
                 } else {
                     shape.fill(colors.background)
                 }
