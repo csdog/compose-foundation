@@ -12,12 +12,44 @@ final class CalendarKeyRoutingScene: NSObject, UIWindowSceneDelegate {
         guard let scene = scene as? UIWindowScene else { return }
         let window = UIWindow(windowScene: scene)
         self.window = window
-        if #available(iOS 15, *), ProcessInfo.processInfo.arguments.contains("--calendar-priority-probe") {
+        if ProcessInfo.processInfo.arguments.contains("--fka-native-control") {
+            window.rootViewController = CalendarNativeControlProbe()
+        } else if #available(iOS 15, *), ProcessInfo.processInfo.arguments.contains("--calendar-priority-probe") {
             window.rootViewController = CalendarPriorityProbeController()
         } else {
             window.rootViewController = UIHostingController(rootView: CalendarKeyRoutingFixture(probe: nil))
         }
         window.makeKeyAndVisible()
+    }
+}
+
+private final class CalendarNativeControlProbe: UIViewController {
+    private let result = UILabel()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        result.text = "UIKit result: none"
+        let controls = ["First control", "Second control"].map { title in
+            let button = UIButton(type: .system)
+            button.setTitle(title, for: .normal)
+            button.addTarget(self, action: #selector(activate(_:)), for: .touchUpInside)
+            return button
+        }
+        let stack = UIStackView(arrangedSubviews: [result])
+        for control in controls { stack.addArrangedSubview(control) }
+        stack.axis = .vertical
+        stack.spacing = 16
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+        ])
+    }
+
+    @objc private func activate(_ sender: UIButton) {
+        result.text = "UIKit result: \(sender.currentTitle ?? "unknown")"
     }
 }
 

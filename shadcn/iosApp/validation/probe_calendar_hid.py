@@ -112,51 +112,29 @@ def capture(name):
     subprocess.run(["xcrun", "simctl", "io", device, "screenshot", str(screenshots / name)], check=True, timeout=20)
 
 
-def launch(priority=False):
-    mode = "--calendar-priority-probe" if priority else "--calendar-navigation"
+def launch_control():
     subprocess.run(["xcrun", "simctl", "launch", "--terminate-running-process", device,
-                    "com.toutiaoyan.compose.foundation.audit", mode, "--calendar-keys",
+                    "com.toutiaoyan.compose.foundation.audit", "--fka-native-control",
                     "-AppleLanguages", "(en)", "-AppleLocale", "en_US"],
                    check=True, timeout=50)
-    assert wait_for("Selected: 2025-01-31", timeout=90), labels()
+    assert wait_for("UIKit result: none", timeout=90), labels()
 
 
-def test_priority(label):
-    launch(priority=True)
-    key(79)  # Right
-    for _ in range(4):
-        if "Priority probe: Right" in labels():
-            break
-        key(43)
-        key(79)
-    received = "Priority probe: Right" in labels()
-    print(f"Priority command, {label}: delivered={received}", flush=True)
-    capture(f"priority-{label}.png")
-
-
-test_priority("normal")
+launch_control()
+tap(choose({"First control"}))
+assert wait_for("UIKit result: First control"), labels()
+print("UIKit control, ordinary touch: activated", flush=True)
 enable_full_keyboard_access()
-test_priority("full-access")
+launch_control()
 for tabs in range(8):
-    launch()
-    for _ in range(tabs):
-        key(43)  # Tab
-    capture(f"native-tab-{tabs}.png")
+    capture(f"uikit-control-tab-{tabs}.png")
     key(44)  # Space
-    if "February 1, 2025" in labels():
-        assert "Selected: 2025-01-31" in labels(), labels()
-        print(f"Native Tab and Space navigated from January to February after {tabs} Tab events", flush=True)
-        capture("native-next-month.png")
-        break
-else:
-    raise AssertionError(f"Tab and Space did not activate Next month: {sorted(labels())}")
-for _ in range(8):
-    key(43)
-    key(44)
-    result = next((value for value in labels() if value.startswith("Selected: 2025-02-")), None)
+    result = next((label for label in labels() if label.startswith("UIKit result: ") and
+                   label != "UIKit result: none"), None)
     if result is not None:
-        print(f"Native Tab and Space committed {result}", flush=True)
-        capture("native-date-selected.png")
+        print(f"UIKit control, Full Keyboard Access: activated after {tabs} Tab events: {result}", flush=True)
+        capture("uikit-control-activated.png")
         break
+    key(43)  # Tab
 else:
-    raise AssertionError(f"Tab and Space did not select a February date: {sorted(labels())}")
+    raise AssertionError("Simulated Tab and Space did not activate either standard UIKit button")
