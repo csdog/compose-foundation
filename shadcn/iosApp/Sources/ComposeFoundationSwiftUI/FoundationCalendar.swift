@@ -403,8 +403,10 @@ private struct FoundationCalendarKeyboardGrid<Content: View>: View {
     var body: some View {
         content($focused, { pending = $0 })
             .defaultFocus($focused, entry, priority: .userInitiated)
+            .onChange(of: focused) { old, new in print("CAL_FOCUS", old as Any, new as Any) }
             .task(id: pending) {
                 guard let pending else { return }
+                print("CAL_PENDING", pending)
                 // A cross-month move inserts its destination after the key event.
                 await Task.yield()
                 guard !Task.isCancelled else { return }
@@ -449,6 +451,7 @@ private struct FoundationCalendarKeyboardDay: ViewModifier {
         guard enabled, isEnabled, key.modifiers.intersection([.command, .control, .option]).isEmpty else {
             return .ignored
         }
+        print("CAL_KEY", date, key.key)
         let shift = key.modifiers.contains(.shift)
         switch key.key {
         case .leftArrow, .rightArrow:

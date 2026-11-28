@@ -106,6 +106,9 @@ enum MacCalendarAudit {
                     "\(scenario): wanted \(month)/\(day), got \(String(describing: state.selection))")
         }
 
+        print("CAL_RESPONDER", window.firstResponder as Any)
+        await send((48, "\t"))
+        print("CAL_AFTER_TAB", window.firstResponder as Any)
         await send(forward)
         expect(11, 30, "Focus must not write the binding")
         await send(enter)
