@@ -339,6 +339,7 @@ private struct FoundationMenuGroupPanel: View {
 }
 
 private struct FoundationMenuGroupButton: View {
+    @Environment(\.isEnabled) private var ancestorEnabled
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
     @State private var hovered = false
@@ -359,7 +360,7 @@ private struct FoundationMenuGroupButton: View {
         #else
         let hitHeight: CGFloat = 44
         #endif
-        let activeFill = novaTrigger && enabled && (expanded || hovered)
+        let activeFill = novaTrigger && ancestorEnabled && enabled && (expanded || hovered)
         Button(action: action) {
             Text(title)
                 .padding(.horizontal, novaTrigger ? 6 : 10)

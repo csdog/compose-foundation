@@ -21,7 +21,8 @@ private struct MenuProbe: View {
                 action("Save"),
             ]),
             .init(id: "disabled", title: "Unavailable", isEnabled: false, actions: []),
-            .init(id: "last", title: "Edit", actions: [action("Copy"), action("Paste")]),
+            .init(id: "edit", title: "Edit", actions: [action("Copy"), action("Paste")]),
+            .init(id: "last", title: "View", actions: [action("Reload")]),
         ]
         Group {
             if navigation {
