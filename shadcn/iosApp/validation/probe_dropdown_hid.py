@@ -7,16 +7,21 @@ client = [sys.argv[1], "--companion", "127.0.0.1:10882", "ui"]
 
 
 def rows():
-    output = subprocess.check_output([*client, "describe-all", "--api", "ax"], timeout=20)
+    output = subprocess.check_output([*client, "describe-all", "--api", "ax"], timeout=28)
     return {item["AXLabel"]: item for item in json.loads(output) if item.get("AXLabel")}
 
 
 def require(label):
-    for _ in range(12):
-        found = rows()
+    deadline = time.monotonic() + 90
+    found = {}
+    while time.monotonic() < deadline:
+        try:
+            found = rows()
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
+            print(f"TRACE: simulator accessibility is still starting ({type(error).__name__})", flush=True)
         if label in found:
             return found[label]
-        time.sleep(0.25)
+        time.sleep(1)
     raise RuntimeError(f"Expected {label!r}, got {list(found)}")
 
 
