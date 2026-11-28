@@ -23,8 +23,9 @@ jobs:
         run: |
           platform=jetpack-compose
           base="$RUNNER_TEMP/reference/$platform/sheet-open"
-          gh run download 46120538588 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$base"
-          for replay in 46119244198 46119696300 46120083893; do
+          gh run download 46120977722 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$base"
+          for replay in 46120538588 46120083893 46119244198 46119696300; do
+            echo "Comparing against run $replay"
             candidate="$RUNNER_TEMP/repeat/$replay/$platform/sheet-open/actual"
             gh run download "$replay" -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$candidate"
             if python shadcn/validation/animation_baseline.py "$platform" sheet-open --strict --gif \
@@ -57,7 +58,7 @@ jobs:
             {
               printf '# Sheet opening on %s\n\n' "$platform"
               printf 'API 35 x86_64 Android emulator, Pixel 7 profile, Nova light. The Compose test clock samples every 16 ms through 480 ms.\n\n'
-              printf 'Initial capture: https://github.com/csdog/compose-foundation/actions/runs/46120538588\n\n'
+              printf 'Initial capture: https://github.com/csdog/compose-foundation/actions/runs/46120977722\n\n'
               printf 'Independent replay: https://github.com/csdog/compose-foundation/actions/runs/%s\n' "$(cat "$RUNNER_TEMP/verified-replay")"
             } > "$target/README.md"
           done
