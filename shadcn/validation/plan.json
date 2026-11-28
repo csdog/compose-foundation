@@ -20,6 +20,26 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "select": {
+      "title": "Select",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "groups", "status": "initial", "viewport": [720, 520]},
+          {"variant": "disabled", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/select-demo.tsx",
+      "visual": "compare the Nova input outline, placeholder, disabled state, and logical chevron placement",
+      "behavior": "activate an enabled native menu choice across group sections",
+      "accessibility": "preserve native section labels and expose the selection",
+      "motion": "static initial frames"
+    },
     "combobox": {
       "title": "Combobox",
       "variant": "default",

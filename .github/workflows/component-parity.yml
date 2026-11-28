@@ -887,6 +887,27 @@ jobs:
           done
           exit "$failed"
 
+      - name: Verify grouped Select native menu interaction on macOS
+        if: contains(needs.baseline.outputs.matrix, '"select"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          sources="$swiftui/Sources/ComposeFoundationSwiftUI"
+          app="$RUNNER_TEMP/GroupedSelectAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string GroupedSelectAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.select-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$sources"/Foundation{Theme,Select}.swift \
+            "$swiftui/validation/MacGroupedSelectAudit.swift" -o "$app/Contents/MacOS/GroupedSelectAudit"
+          log="$RUNNER_TEMP/select.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app"
+          cat "$log"
+          grep -q '^PASS:' "$log"
+
       - name: Verify grouped Combobox keyboard interaction on macOS
         if: contains(needs.baseline.outputs.matrix, '"combobox"')
         timeout-minutes: 2
