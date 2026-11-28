@@ -320,6 +320,8 @@ iPad mini（A17 Pro，iOS 26.2）的 10 张静态深浅色截图与复拍逐字�
 
 同设备对照进一步确认，开启完全键盘控制时，普通 SwiftUI 按钮和 ScrollView 内的按钮均可激活。以多选模式验证后，Calendar 现有焦点层下 Tab 与 Space 循环五次没有改变已选日期或月份。绕过自定义焦点层的一次 Tab 和 Space 成功切换到二月；保留焦点层、只显式标记按钮可交互仍未改变日期或月份。后续诊断分别核对根视图的默认焦点和非当前日期的焦点资格。[执行日志](https://github.com/csdog/compose-foundation/actions/runs/46128710323/job/140929013721) · [对照截图](https://github.com/csdog/compose-foundation/actions/runs/46128710323/artifacts/15256803869)
 
+在 iPad 模拟器上移除默认焦点后，普通键盘模式依然可以用右键跨到 2 月 1 日，按 Return 后才更新选择。开启完全键盘控制时，移除默认焦点、恢复其他日期的原生焦点资格，以及同时应用两项变更，均未让 Tab 和 Space 激活 Calendar。新一轮对照直接检查日期选择是否变化，分别验证原生日期按钮、SwiftUI 的激活焦点和无障碍默认操作。[上一轮日志](https://github.com/csdog/compose-foundation/actions/runs/46129588715/job/140931677362) · [截图](https://github.com/csdog/compose-foundation/actions/runs/46129588715/artifacts/15258020587) · [日期激活对照](https://github.com/csdog/compose-foundation/actions/runs/46131266148)
+
 最新全量 macOS 行为检查通过，包括 Calendar 的 LTR 和 RTL 选中、日期限制、跨月键盘焦点及焦点与选择独立。[macOS 日志](https://github.com/csdog/compose-foundation/actions/runs/46125132325/job/140918007879)
 
 全量截图回归的 Popover 深色关闭态差异 PNG 与 Popover PR #6 保存的差异逐字节一致。差异只在触发器区域，包含 3,107 个像素。已发布基准的填充取样是 `#151515`，审核过的 SwiftUI 截图和 shadcn 参考是 `#141414`。Calendar 专项截图仍逐像素一致。[全量回归差异](https://github.com/csdog/compose-foundation/actions/runs/46118576344/artifacts/15253650171) · [Popover 审核](https://github.com/csdog/compose-foundation/pull/6)
