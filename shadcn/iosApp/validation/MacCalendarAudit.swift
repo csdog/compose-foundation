@@ -5,6 +5,7 @@ import SwiftUI
 private final class CalendarAuditState: ObservableObject {
     @Published var selection: Date? = CalendarAuditState.date(11, 27)
     @Published var enabled = true
+    var afterActivated = false
 
     static let calendar: Calendar = {
         var value = Calendar(identifier: .gregorian)
@@ -21,12 +22,16 @@ private final class CalendarAuditState: ObservableObject {
 private struct CalendarAuditFixture: View {
     @ObservedObject var state: CalendarAuditState
     let rightToLeft: Bool
+    let keyboard: Bool
 
     var body: some View {
         VStack(spacing: 0) {
             FoundationCalendar(selection: $state.selection, in: CalendarAuditState.date(11, 4)...CalendarAuditState.date(12, 15))
                 .frame(width: 324)
                 .disabled(!state.enabled)
+            if keyboard {
+                Button("After calendar") { state.afterActivated = true }.focusable()
+            }
             Spacer(minLength: 0)
         }
         .frame(width: 360, height: 390)
@@ -48,7 +53,8 @@ enum MacCalendarAudit {
         app.setActivationPolicy(.regular)
         let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 360, height: 390),
                               styleMask: [.titled, .closable], backing: .buffered, defer: false)
-        window.contentView = NSHostingView(rootView: CalendarAuditFixture(state: state, rightToLeft: rightToLeft))
+        window.contentView = NSHostingView(rootView: CalendarAuditFixture(state: state, rightToLeft: rightToLeft,
+                                                                         keyboard: keyboard))
         window.center()
         window.makeKeyAndOrderFront(nil)
 
@@ -130,6 +136,10 @@ enum MacCalendarAudit {
         await send(backward)
         await send(enter)
         expect(11, 4, "Navigation stops on the first selectable date")
+        await send((48, "\t"))
+        await send(enter)
+        require(state.afterActivated, "Tab should leave the date grid for the next control")
+        await send((48, "\u{19}"), modifiers: .shift)
         state.enabled = false
         try? await Task.sleep(for: .milliseconds(180))
         await send(forward)
