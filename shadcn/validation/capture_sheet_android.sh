@@ -12,18 +12,26 @@ adb shell am broadcast -a com.android.systemui.demo -e command battery -e level 
 adb shell am broadcast -a com.android.systemui.demo -e command notifications -e visible false
 case "$platform" in
   cmp-android)
-    ./gradlew :shadcn:core:connectedAndroidDeviceTest "-Pandroid.testInstrumentationRunnerArguments.class=$test_class" --rerun
+    ./gradlew :shadcn:core:packageAndroidDeviceTest
+    test_package=com.toutiaoyan.compose.ui.test
+    package="$test_package"
+    test_apk=shadcn/shared/build/outputs/apk/androidTest/core-androidTest.apk
     ;;
   jetpack-compose)
     project="$PWD/build/shadcn-audit/jetpack-sheet"
     python3 shadcn/validation/prepare_jetpack_sheet.py "$project"
-    ./gradlew -p "$project" connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=$test_class" --rerun
+    ./gradlew -p "$project" assembleDebug assembleDebugAndroidTest
+    package=com.toutiaoyan.compose.ui.animation
+    test_package="$package.test"
+    adb install -r "$project/build/outputs/apk/debug/jetpack-sheet-animation-debug.apk"
+    test_apk="$project/build/outputs/apk/androidTest/debug/jetpack-sheet-animation-debug-androidTest.apk"
     ;;
   *) echo "Unsupported Android platform $platform" >&2; exit 2 ;;
 esac
-package="$(adb shell pm list instrumentation | tr -d '\r' |
-  awk '/^instrumentation:com\.toutiaoyan\.compose\.ui\./ { sub(/^\(target=/, "", $2); sub(/\)$/, "", $2); print $2 }' |
-  sort -u)"
-[[ "$package" =~ ^[a-zA-Z0-9_.]+$ ]]
+adb install -r "$test_apk"
+adb shell pm clear "$package"
+result="$(adb shell am instrument -w -e class "$test_class" "$test_package/androidx.test.runner.AndroidJUnitRunner")"
+printf '%s\n' "$result"
+grep -Fq 'OK (1 test)' <<<"$result"
 mkdir -p "$output"
 adb pull "/sdcard/Android/data/$package/files/sheet-animation/." "$output"
