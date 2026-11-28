@@ -24,8 +24,8 @@ jobs:
           for platform in cmp-ios; do
             base="$RUNNER_TEMP/reference/$platform/sheet-open"
             candidate="$RUNNER_TEMP/repeat/$platform/sheet-open/actual"
-            gh run download 46119244198 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$base"
-            gh run download 46119696300 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$candidate"
+            gh run download 46119696300 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$base"
+            gh run download 46120538588 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$candidate"
             python - "$base" "$candidate" <<'PYFI'
           import sys
           from pathlib import Path
@@ -65,8 +65,8 @@ jobs:
             {
               printf '# Sheet opening on %s\n\n' "$platform"
               printf 'iPhone 17 Pro simulator, iOS 26.2, Nova light. The video trigger marker aligns samples every 16 ms through 768 ms.\n\n'
-              printf 'Initial capture: https://github.com/csdog/compose-foundation/actions/runs/46119244198\n\n'
-              printf 'Independent replay: https://github.com/csdog/compose-foundation/actions/runs/46119696300\n'
+              printf 'Initial capture: https://github.com/csdog/compose-foundation/actions/runs/46119696300\n\n'
+              printf 'Independent replay: https://github.com/csdog/compose-foundation/actions/runs/46120538588\n'
             } > "$target/README.md"
           done
           git -C baseline-repository add -- animations/cmp-ios/sheet-open
