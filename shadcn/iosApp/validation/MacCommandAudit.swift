@@ -61,7 +61,7 @@ enum MacCommandAudit {
             await press(125, "\u{F701}", in: window)
             await press(125, "\u{F701}", in: window)
             await press(36, "\r", in: window)
-            require(state.actions == ["profile"], "Down did not skip the disabled row and cross the group")
+            require(state.actions == ["profile"], "Down did not skip the disabled row and cross the group: \(state.actions)")
 
             await press(11, "b", in: window)
             await press(34, "i", in: window)
@@ -72,7 +72,7 @@ enum MacCommandAudit {
             state.query = "no results"
             try? await Task.sleep(for: .milliseconds(180))
             await press(36, "\r", in: window)
-            require(state.actions == ["profile", "billing"], "Escape or an empty result must leave the action list unchanged")
+            require(state.actions == ["profile", "billing"], "An empty result must leave the action list unchanged")
             state.query = ""
             try? await Task.sleep(for: .milliseconds(180))
             await press(126, "\u{F700}", in: window)
