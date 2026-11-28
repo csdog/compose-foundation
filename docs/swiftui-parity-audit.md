@@ -104,6 +104,8 @@ iPhone 17 Pro（iOS 26.2）的六张深浅色截图与复拍逐字节一致，�
 
 FieldSet 对照地址示例的分区标题、说明、街道地址及并排的城市和邮编。地址组在 iPhone 17 Pro Max（iOS 26.2）以 440 × 520 画布采集，两种主题复拍一致。浅色图内容横向范围与 shadcn 同为 x=24–408，SwiftUI 保留原生输入操作高度，表单底部在深浅色相差 19–20 pt。输入框和文本域继续在 iPhone 17 Pro 采集，四张旧图与此前审核逐字节一致。macOS Swift Package 构建通过。实际 VoiceOver 朗读待验。[FieldSet Review](https://github.com/csdog/compose-foundation/actions/runs/46128614892/artifacts/15257237939) · [macOS 构建](https://github.com/csdog/compose-foundation/actions/runs/46128614892/job/140928698622)
 
+横向开关在 iPhone 17 Pro（iOS 26.2）上两种主题复拍一致。该行受 44 pt 原生操作高度影响，可见内容比 shadcn 参考低约 12 pt。分机型复跑时原有六张输入、文本域与 FieldSet PNG 逐字节一致。macOS 验证横向控制位置、响应式宽窄切换、RTL 和控件状态身份保留。上游容器在 447 CSS px 仍为纵向，448 CSS px 切换成横向。[Field Review](https://github.com/csdog/compose-foundation/actions/runs/46128628278/artifacts/15257580149) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46128628278/job/140928759603)
+
 ### Alert 成功与错误、Card 登录与小尺寸
 
 对照 shadcn Base UI / Nova 的 `alert-basic.tsx`、`alert-destructive.tsx`、`card-demo.tsx` 和 `card-small.tsx`。Alert 保留完整标题、说明及状态图标。可见外边界与参考相差最多 1 pt。两行说明的换行位置和原生 SF Symbols 图标仍有差异。Card 保留完整登录表单和小尺寸报告卡的操作区。以浅暗两种主题抽样，输入框、底部描边按钮和底部背景与 shadcn 的六处填色一致。登录卡和小尺寸卡的底部仍分别低 45–46 pt 和 32–33 pt，原生输入控件和按钮保留 44 pt 操作高度。
@@ -479,7 +481,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | dropdown-menu | Nova 触发器覆盖默认与阿拉伯语 RTL 收起态。iOS 已验证分组、禁用项、子菜单、外点关闭、方向键选择和 Escape 关闭。展开面板保留系统样式，键盘焦点归还和 VoiceOver 待验收。 |
 | emoji-text | Apple 系统彩色 emoji，可保留 ZWJ 等 Unicode 序列。Compose 使用自己的 emoji 图形与替换逻辑。 |
 | empty | 支持符号、标题、说明和操作 slot，以及标准和虚线边框样式。Nova 对齐基本排版。自定义头像等媒体及其余示例布局待对照。 |
-| field | 支持纵向、横向、响应式以及逻辑起始侧或末尾侧的控件。iOS 16 / macOS 13 起，响应式分区在 448 pt 切换布局，保留同一个控件实例；旧系统使用纵向。FieldSet、Legend 和 FieldGroup 可组合分区与相关字段。地址、横向开关截图及宽窄布局回归待验。 |
+| field | 支持纵向、横向、响应式以及逻辑起始侧或末尾侧的控件。iOS 16 / macOS 13 起，响应式分区在 448 pt 切换布局，保留同一个控件实例；旧系统使用纵向。FieldSet、Legend 和 FieldGroup 可组合分区与相关字段。地址和开关截图、宽窄布局及 RTL 已验收，VoiceOver 待验。 |
 | hover-card | 支持延迟开关、触发器与卡片间的指针切换、长按和受控展开。Nova 使用锚定弹层，悬停保持原窗口焦点。共享 provider、位置变体及触控回归待对齐。 |
 | icon | 支持 SF Symbols、动态字号和可选无障碍标签。Compose 可传入任意 ImageVector 并选择图标变体。 |
 | input | 原生单行输入支持独立占位文字、SecureField、错误和禁用状态。Nova 边框视觉高 32 pt，字段布局至少高 44 pt。iOS 26 与 macOS 26 的 Nova RTL 字段按界面起始边对齐。混合脚本输入、iOS 光标及 VoiceOver 待单独验收。 |
