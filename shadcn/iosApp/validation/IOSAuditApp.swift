@@ -41,6 +41,17 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             return
         }
 
+        if ProcessInfo.processInfo.arguments.contains("--resizable-interaction") {
+            let arguments = ProcessInfo.processInfo.arguments
+            window.rootViewController = UIHostingController(rootView: ResizableInteractionFixture(
+                vertical: arguments.contains("--resizable-vertical"),
+                rightToLeft: arguments.contains("--resizable-rtl"),
+                enabled: !arguments.contains("--resizable-disabled")
+            ))
+            window.makeKeyAndVisible()
+            return
+        }
+
         if ProcessInfo.processInfo.arguments.contains("--theme-presets") {
             window.rootViewController = UIHostingController(rootView: ThemePresetsInteractionFixture())
             window.makeKeyAndVisible()
@@ -182,6 +193,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "resizable": ResizableScreenshotFixture.Example.allCases.map { example in
+                ("resizable-\(example.rawValue)-initial", { AnyView(ResizableScreenshotFixture(example: example)) })
+            },
             "theme": FoundationStylePreset.allCases.map { preset in
                 ("theme-\(preset.rawValue)-initial", { AnyView(ThemePresetScreenshotFixture(preset: preset)) })
             },
@@ -353,7 +367,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             || !names.isDisjoint(with: Set(comparisonFixtures.keys).union(variantFixtures.keys)))
             && Bundle.main.url(forResource: "geist_medium", withExtension: "ttf") != nil
         if useComparisonFixtures || !popoverCases.isEmpty {
-            try registerParityFonts()
+            try registerParityFonts(includeSemibold: names.contains("resizable"))
         }
         if useComparisonFixtures, names.contains("scroll-area"),
            !(0..<3).allSatisfy({ Bundle.main.url(forResource: "scroll_area_art_\($0)", withExtension: "jpg") != nil }) {
@@ -449,8 +463,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         return count
     }
 
-    private func registerParityFonts() throws {
-        for name in ["geist_regular", "geist_medium"] {
+    private func registerParityFonts(includeSemibold: Bool) throws {
+        let fonts = ["geist_regular", "geist_medium"] + (includeSemibold ? ["geist_semibold"] : [])
+        for name in fonts {
             guard let font = Bundle.main.url(forResource: name, withExtension: "ttf"),
                   CTFontManagerRegisterFontsForURL(font as CFURL, .process, nil) else {
                 throw CocoaError(.fileReadCorruptFile, userInfo: [NSFilePathErrorKey: name])
@@ -3531,6 +3546,88 @@ private struct SwitchScreenshotFixture: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(theme.palette(for: scheme).background)
             .ignoresSafeArea()
+    }
+}
+
+private struct ResizableInteractionFixture: View {
+    let vertical: Bool
+    let rightToLeft: Bool
+    let enabled: Bool
+    @State private var fraction: CGFloat = 0.25
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("First pane: \(Int((fraction * 100).rounded()))%")
+            Rectangle()
+                .fill(Color.secondary)
+                .frame(width: 320, height: 1)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(Text("Resize audit ruler"))
+            FoundationResizable(vertical ? .vertical : .horizontal, fraction: $fraction, limits: 0.2...0.8) {
+                Text("First")
+            } second: {
+                Text("Second")
+            }
+            .frame(width: 320, height: 180)
+            .disabled(!enabled)
+        }
+        .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
+        .foundationTheme(FoundationTheme(preset: .nova))
+    }
+}
+
+private struct ResizableScreenshotFixture: View {
+    enum Example: String, CaseIterable { case `default`, handle, vertical, rtl }
+    let example: Example
+    @Environment(\.colorScheme) private var scheme
+    @State private var primaryFraction: CGFloat
+    @State private var nestedFraction: CGFloat = 0.25
+
+    init(example: Example) {
+        self.example = example
+        _primaryFraction = State(initialValue: example == .handle || example == .vertical ? 0.25 : 0.5)
+    }
+
+    var body: some View {
+        let theme = FoundationTheme(preset: .nova)
+        let palette = theme.palette(for: scheme)
+        let nested = example == .default || example == .rtl
+        return Group {
+            if nested {
+                FoundationResizable(fraction: $primaryFraction) {
+                    label(example == .rtl ? "واحد" : "One")
+                } second: {
+                    FoundationResizable(.vertical, fraction: $nestedFraction) {
+                        label(example == .rtl ? "اثنان" : "Two")
+                    } second: {
+                        label(example == .rtl ? "ثلاثة" : "Three")
+                    }
+                }
+            } else {
+                FoundationResizable(example == .vertical ? .vertical : .horizontal, fraction: $primaryFraction,
+                                     showsHandle: example == .handle) {
+                    label(example == .vertical ? "Header" : "Sidebar")
+                } second: {
+                    label("Content")
+                }
+            }
+        }
+        .padding(1)
+        .frame(width: 384, height: nested ? 202 : 200)
+        .foregroundColor(palette.foreground)
+        .clipShape(RoundedRectangle(cornerRadius: theme.cornerRadius))
+        .overlay(RoundedRectangle(cornerRadius: theme.cornerRadius).strokeBorder(palette.border).allowsHitTesting(false))
+        .foundationTheme(theme)
+        .environment(\.layoutDirection, example == .rtl ? .rightToLeft : .leftToRight)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
+        .ignoresSafeArea()
+    }
+
+    private func label(_ text: String) -> some View {
+        Text(text)
+            .font(example == .rtl ? .system(size: 16, weight: .semibold) : .custom("Geist-SemiBold", size: 16))
     }
 }
 

@@ -26,6 +26,7 @@ targets:
       - ContextMenuUITests.swift
       - CommandUITests.swift
       - CalendarUITests.swift
+      - ResizableUITests.swift
     dependencies:
       - target: ComposeFoundationAudit
     settings:
