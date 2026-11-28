@@ -1,0 +1,166 @@
+name: Animation baselines
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/animation-*.yml'
+      - 'app/**'
+      - 'shadcn/**'
+      - 'tailwind/**'
+      - 'scripts/*component_browser*.mjs'
+  workflow_dispatch:
+    inputs:
+      review:
+        description: Capture candidate frames without enforcing the baseline
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sheet-animation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  reference:
+    name: Resolve animation baseline revision
+    runs-on: ubuntu-24.04
+    outputs:
+      repository: ${{ steps.resolve.outputs.repository }}
+      revision: ${{ steps.resolve.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Read the animation baseline commit
+        id: resolve
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          repository="$(jq -er '.baseline.repository' shadcn/validation/plan.json)"
+          revision="$(jq -r '.baseline.revision // empty' shadcn/validation/plan.json)"
+          if [[ -z "$revision" ]]; then
+            revision="$(gh api "repos/$repository/commits/main" --jq .sha)"
+          fi
+          [[ "$revision" =~ ^[0-9a-f]{40}$ ]]
+          printf 'repository=%s\nrevision=%s\n' "$repository" "$revision" >> "$GITHUB_OUTPUT"
+
+  capture:
+    needs: reference
+    name: Capture / ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: cmp-desktop
+            runner: ubuntu-24.04
+          - platform: cmp-web
+            runner: ubuntu-24.04
+          - platform: cmp-android
+            runner: ubuntu-24.04
+          - platform: jetpack-compose
+            runner: ubuntu-24.04
+          - platform: cmp-ios
+            runner: macos-15
+          - platform: swiftui-ios
+            runner: macos-15
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 50
+    env:
+      PLATFORM: ${{ matrix.platform }}
+      OUTPUT: build/animation-candidates
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        if: startsWith(matrix.platform, 'cmp-') || matrix.platform == 'jetpack-compose'
+        with:
+          distribution: zulu
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+        if: startsWith(matrix.platform, 'cmp-') || matrix.platform == 'jetpack-compose'
+      - name: Capture JVM frames
+        if: matrix.platform == 'cmp-desktop'
+        run: |
+          ./gradlew :shadcn:core:jvmTest --tests '*SheetAnimationBaselineTest' --rerun
+          mkdir -p "$OUTPUT/$PLATFORM/sheet-open"
+          cp -r shadcn/shared/build/reports/animation-baselines/cmp-desktop/sheet-open/actual "$OUTPUT/$PLATFORM/sheet-open/"
+      - uses: actions/setup-node@v4
+        if: matrix.platform == 'cmp-web'
+        with:
+          node-version: '24'
+      - name: Capture Web frames
+        if: matrix.platform == 'cmp-web'
+        run: |
+          ./gradlew :app:webApp:wasmJsBrowserDistribution
+          npm install --prefix "$RUNNER_TEMP/animation-browser" --no-save playwright@1.62.1
+          "$RUNNER_TEMP/animation-browser/node_modules/.bin/playwright" install --with-deps chromium
+          export PLAYWRIGHT_MODULE="$RUNNER_TEMP/animation-browser/node_modules/playwright/index.mjs"
+          node scripts/verify_component_browser.mjs --slug sheet --title Sheet --animation sheet-open \
+            --output "$OUTPUT/$PLATFORM/sheet-open/actual"
+      - name: Build Android fixture APKs
+        if: matrix.platform == 'cmp-android' || matrix.platform == 'jetpack-compose'
+        run: bash shadcn/validation/capture_sheet_android.sh "$PLATFORM" "$OUTPUT" --build-only
+      - name: Enable Android emulator hardware acceleration
+        if: matrix.platform == 'cmp-android' || matrix.platform == 'jetpack-compose'
+        run: sudo chown "$(id -u)" /dev/kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        if: matrix.platform == 'cmp-android' || matrix.platform == 'jetpack-compose'
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_7
+          disable-animations: false
+          script: bash shadcn/validation/capture_sheet_android.sh "$PLATFORM" "$OUTPUT" --skip-build
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install Pillow==11.3.0
+      - name: Capture iOS frames
+        if: runner.os == 'macOS'
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
+          if ! command -v ffmpeg >/dev/null; then brew install ffmpeg; fi
+          bash shadcn/validation/capture_sheet_ios.sh "$PLATFORM" "$OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: animation-candidate-${{ matrix.platform }}-sheet-open-attempt-${{ github.run_attempt }}
+          path: build/animation-candidates/${{ matrix.platform }}/sheet-open/actual/
+          if-no-files-found: error
+
+      - uses: actions/checkout@v4
+        if: inputs.review != true
+        with:
+          repository: ${{ needs.reference.outputs.repository }}
+          ref: ${{ needs.reference.outputs.revision }}
+          path: build/animation-references
+          sparse-checkout: animations/${{ matrix.platform }}/sheet-open
+          persist-credentials: false
+      - name: Compare Sheet animation
+        if: inputs.review != true
+        run: |
+          python3 shadcn/validation/animation_baseline.py "$PLATFORM" sheet-open --strict \
+            --baselines build/animation-references/animations --output "$OUTPUT"
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: animation-diffs-${{ matrix.platform }}-sheet-open-attempt-${{ github.run_attempt }}
+          path: |
+            build/animation-candidates/*/sheet-open/comparison.gif
+            build/animation-candidates/*/sheet-open/*-diff.png
+            build/animation-candidates/*/sheet-open/recording.mov
+          if-no-files-found: ignore
+
+  gate:
+    name: All platform animation baselines
+    if: ${{ always() && inputs.review != true }}
+    needs: [reference, capture]
+    runs-on: ubuntu-24.04
+    steps:
+      - env:
+          REFERENCE: ${{ needs.reference.result }}
+          CAPTURE: ${{ needs.capture.result }}
+        run: '[[ "$REFERENCE" == success && "$CAPTURE" == success ]]'

@@ -44,7 +44,7 @@ GitHub Actions 的 **Component parity** 在相关 PR 上采集 Button、Tabs、P
 
 [`shadcn/validation/plan.json`](../shadcn/validation/plan.json) 记录每个组件的 shadcn Base UI / Nova 源码版本和示例。日常回归和手动运行的默认模式 `update=no` 每个用例采集一遍，并与本次选定的基准做像素比较。手动选择 `review` 或 `publish` 时采集两遍，只有可复现的截图会成为候选图。对照上游示例审核候选图的内容、排版、主题和组件状态，并在 PR 上说明有意保留的平台差异。初始截图只覆盖当前 fixture 的状态。例如 Popover 展开态要单独验收。
 
-审核通过的实际图提交到独立的 `csdog/compose-foundation-baselines` 仓库。目录按 Web 和移动端组织，各平台路径由 `plan.json` 的 `baseline.paths` 定义。文件名保留组件、变体、状态和深浅色。
+审核通过的实际图提交到独立的 `csdog/compose-foundation-baselines` 仓库。目录按 Web 和移动端组织，各平台路径由 `plan.json` 的 `baseline.paths` 定义。文件名保留组件、变体、状态和深浅色。上游参考图存放在 [shadcn-baselines](https://github.com/csdog/shadcn-baselines)，通过基准仓库的 `shadcn/` 子模块锁定版本。本地对照上游截图时，用 `git clone --recurse-submodules` 初始化。
 
 | 截图 | 试点路径 |
 | --- | --- |
@@ -153,6 +153,31 @@ cp "$sim_data"/Documents/ParityAudit/*.png "$sim_data/Documents/ParityAudit/resu
 ```
 
 ### 动画逐帧对照
+
+Compose JVM 的 Sheet 入场用例通过真实触发按钮打开面板，每 16 ms 采一帧。CI 对比按下前、入场中和稳定后的关键 PNG，并检查画面进入稳定态的时间。失败时下载 `animation-baseline-diffs`，其中的 `comparison.gif` 同步播放基准和当前画面，并标出差异像素最多的帧。
+
+从仓库根目录重跑。Python 需要 `Pillow==11.3.0`，`baseline_checkout` 指向已检出的基准仓库。
+
+```sh
+./gradlew :shadcn:core:jvmTest --tests '*SheetAnimationBaselineTest'
+python3 shadcn/validation/animation_baseline.py cmp-desktop sheet-open --strict --gif \
+  --baselines "$baseline_checkout/animations" \
+  --output shadcn/shared/build/reports/animation-baselines
+```
+
+确认动效变更后，将本次 `actual/` 的完整 PNG 序列及采集环境提交到基准仓库的 `animations/<platform>/<case>/`。
+
+各平台也可以导入实录做评审。先以同样的视口、主题和 Reduce Motion 设置录制基准与候选，记录触发时间，保留触发前的画面和稳定态。在下面的 iOS 示例中，`baseline_trigger_ms` 和 `candidate_trigger_ms` 分别是两段录屏内的触发时间。将经过评审的基准帧放入参考目录，再生成并排 GIF。
+
+```sh
+python3 shadcn/validation/animation_baseline.py swiftui-ios sheet-open --capture-only \
+  --video "$baseline_video" --trigger-ms "$baseline_trigger_ms" --output "$audit/reference-capture"
+mkdir -p "$audit/baselines/swiftui-ios/sheet-open"
+cp "$audit/reference-capture/swiftui-ios/sheet-open/actual/"*.png "$audit/baselines/swiftui-ios/sheet-open/"
+python3 shadcn/validation/animation_baseline.py swiftui-ios sheet-open --gif \
+  --video "$candidate_video" --trigger-ms "$candidate_trigger_ms" \
+  --baselines "$audit/baselines" --output "$audit/candidate"
+```
 
 用测试框架的可控时钟生成确定性截图。真实手势的 SwiftUI 实录可以用 `xcrun simctl io "$ios_device" recordVideo "$audit/ios/gesture.mov"` 开始录屏，操作后按 Ctrl+C 停止。在同一操作路径采集 Web 基准。若使用外部输入驱动，记录实际注入时刻，保留按住和松手两段。以下命令逐帧导出并保存时间轴。Android 可以用 `adb shell screenrecord` 加 `adb pull` 取得同类实录。
 

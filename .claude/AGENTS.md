@@ -30,7 +30,7 @@ The Gradle project paths `:shadcn:core` and `:app:androidApp` point to the reloc
 
 ## Screenshot review and baseline publication
 
-`shadcn/validation/plan.json` defines the capture cases, platform paths, and upstream source revision. [compose-foundation-baselines](https://github.com/csdog/compose-foundation-baselines) stores both the shadcn visual references under `shadcn/` and the platform PNGs used for pixel regression. Match upstream references by component, variant, state, and light or dark theme. Each Actions run resolves one baseline commit for all platforms. Use `baseline.revision` to pin a specific commit, or leave it unset to resolve the baseline repository's `main`.
+`shadcn/validation/plan.json` defines the capture cases, platform paths, and upstream source revision. [compose-foundation-baselines](https://github.com/csdog/compose-foundation-baselines) stores the platform PNGs and pins [shadcn-baselines](https://github.com/csdog/shadcn-baselines) as its `shadcn/` submodule. Initialize that submodule when reviewing against upstream shadcn reference images. Match upstream references by component, variant, state, and light or dark theme. Each Actions run resolves one baseline commit for all platforms. Use `baseline.revision` to pin a specific commit, or leave it unset to resolve the baseline repository's `main`.
 
 Use the **Component parity** workflow in `compose-foundation` (`.github/workflows/component-parity.yml`).
 
@@ -39,6 +39,25 @@ Use the **Component parity** workflow in `compose-foundation` (`.github/workflow
 - **Publish (`update=publish`)** is manually triggered by the maintainer from the source repository's `main` after review and merge. Select the same component scope. The workflow recaptures the candidates and uses `COMPONENT_BASELINES_WRITE_TOKEN` to commit validated PNGs and updated platform `Index.md` files to the baseline repository. The Actions summary records the new baseline commit. Use the PR and review flow for proposed changes.
 
 Use the Actions UI to pick the branch and component, or dispatch a review with `gh workflow run component-parity.yml --ref "$review_ref" -f update=review -f component=popover`. Set `review_ref` to the PR branch. Omit `component` to run every case currently in the plan. Find the run with `gh run list --workflow component-parity.yml`, then use `gh run watch` and `gh run download` with its run ID.
+
+## Animation baseline review and publication
+
+`shadcn/validation/animation-plan.json` defines the platform identifiers, sampling interval, capture window, and keyframes. Match platform, component, interaction, theme, viewport, scale, runtime, and motion accessibility setting across captures. Start from the same state and define time zero at the same input event. For gestures, record press, release, and interruption timestamps when they affect the result. Verify Reduce Motion behavior in its own case.
+
+| Platform | Capture path |
+| --- | --- |
+| Compose Desktop (`cmp-desktop`) | Use the Compose test clock with auto-advance disabled. The Sheet opening case runs in JVM CI. |
+| Compose Web (`cmp-web`) | Build the Wasm catalog and use `scripts/verify_component_browser.mjs --slug sheet --title Sheet --animation sheet-open --output <dir>` with Playwright and the Chromium version recorded in the baseline. Playwright freezes the browser clock and advances it by the sampling interval. |
+| Compose Android / Jetpack Compose (`cmp-android`, `jetpack-compose`) | Use `capture_sheet_android.sh` on the pinned emulator. The Jetpack Compose run installs the generated Sheet registry item in an Android-only fixture. Both tests use the Compose test clock. |
+| Compose iOS / SwiftUI iOS (`cmp-ios`, `swiftui-ios`) | Use `capture_sheet_ios.sh` with the pinned iPhone simulator. The native fixture marks the presentation trigger in the recording. The comparer crops the marker and allows the channel, pixel, and display-refresh tolerances in the animation plan. |
+
+- **Regression** compares a platform's captured keyframe PNGs with its approved PNGs. Use `--strict` to gate on keyframe differences and changes in the first stable sample. Test-clock captures use exact comparison. Simulator captures use the tolerance recorded in the plan. Use device performance metrics separately for playback hitches.
+- **Review** captures the same case twice before proposing a new deterministic baseline. Inspect the PNG diffs and synchronized `comparison.gif`. The GIF labels elapsed time and the frame with the most changed pixels. Record the source SHA, fixture and interaction, viewport and scale, runtime, appearance, and trigger timestamp for recordings. Save evidence under `build/shadcn-audit/` or the CI artifacts.
+- **Publish** after the animation change is reviewed. Store the reviewed PNG sequence and capture provenance in `animations/<platform>/<case>/` in [compose-foundation-baselines](https://github.com/csdog/compose-foundation-baselines). Record the reference commit used for comparison and follow the maintainer review and publication process. GIFs are review artifacts.
+
+The **Animation baselines** workflow captures and compares every platform listed in the animation plan on a PR using one pinned reference commit. It uploads candidate PNGs before checking for missing reference frames or pixel mismatches. The aggregate **All platform animation baselines** check requires all six jobs to pass. Dispatch with `review=true` to capture candidates for baseline review.
+
+Use `shadcn/validation/animation_baseline.py` with the platform and case from the animation plan. It reads candidate frames from `<output>/<platform>/<case>/actual/` and reference frames from `<baselines>/<platform>/<case>/`. A recorded capture additionally takes `--video <file> --trigger-ms <timestamp>`. Add `--capture-only` to extract frames for a proposed baseline or `--gif` to generate the review GIF even when the frames match. See [the local animation commands](docs/shadcn-component-sop.md#动画逐帧对照).
 
 ## Local screenshots and diffs
 

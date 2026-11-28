@@ -8,11 +8,47 @@ final class IOSAuditApp: NSObject, UIApplicationDelegate {}
 @objc(IOSAuditSceneDelegate)
 final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
     var window: UIWindow?
+    private var animationMarker: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         let window = UIWindow(windowScene: windowScene)
         self.window = window
+
+        if ProcessInfo.processInfo.arguments.contains("--sheet-animation") {
+            window.overrideUserInterfaceStyle = .light
+            let marker = UIWindow(windowScene: windowScene)
+            marker.rootViewController = UIViewController()
+            marker.windowLevel = .alert
+            marker.isUserInteractionEnabled = false
+            marker.backgroundColor = .clear
+            let signal = UIView(frame: CGRect(x: 0, y: 64, width: 16, height: 16))
+            signal.backgroundColor = .red
+            let heartbeat = UIView(frame: CGRect(x: 20, y: 64, width: 16, height: 16))
+            heartbeat.backgroundColor = .blue
+            // Keep simulator video emitting frames without changing the cropped comparison region.
+            let pulse = CABasicAnimation(keyPath: "opacity")
+            pulse.fromValue = 0.2
+            pulse.toValue = 1
+            pulse.duration = 0.5
+            pulse.autoreverses = true
+            pulse.repeatCount = .infinity
+            heartbeat.layer.add(pulse, forKey: "recordingHeartbeat")
+            marker.rootViewController?.view.backgroundColor = .clear
+            marker.rootViewController?.view.addSubview(signal)
+            marker.rootViewController?.view.addSubview(heartbeat)
+            animationMarker = marker
+            let state = SheetAnimationState {
+                signal.backgroundColor = .green
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
+                    signal.backgroundColor = .blue
+                }
+            }
+            window.rootViewController = UIHostingController(rootView: SheetAnimationFixture(state: state))
+            window.makeKeyAndVisible()
+            marker.isHidden = false
+            return
+        }
 
         if ProcessInfo.processInfo.arguments.contains("--combobox-interaction") {
             window.rootViewController = UIHostingController(rootView: ComboboxInteractionFixture())
@@ -263,6 +299,42 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             throw CocoaError(.fileWriteUnknown, userInfo: [NSFilePathErrorKey: name])
         }
         try data.write(to: outputDirectory.appendingPathComponent(name + ".png"))
+    }
+}
+
+@MainActor
+private final class SheetAnimationState: ObservableObject {
+    @Published var presented = false
+    private let markTrigger: () -> Void
+
+    init(markTrigger: @escaping () -> Void) {
+        self.markTrigger = markTrigger
+    }
+
+    func open() {
+        guard !presented else { return }
+        markTrigger()
+        presented = true
+    }
+}
+
+private struct SheetAnimationFixture: View {
+    @ObservedObject var state: SheetAnimationState
+    @State private var scheduled = false
+
+    var body: some View {
+        Button("Edit profile", action: state.open)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .modifier(FoundationSheet(isPresented: $state.presented, title: "Profile") {
+                Text("Update your profile details.")
+            })
+            .onAppear {
+                guard !scheduled else { return }
+                scheduled = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 12) {
+                    state.open()
+                }
+            }
     }
 }
 

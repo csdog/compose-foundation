@@ -96,9 +96,9 @@ async function waitForApp(page) {
   await page.waitForTimeout(700);
 }
 
-async function capture(page, name) {
+async function capture(page, name, screenshotOptions = {}) {
   const path = join(options.output, `${name}.png`);
-  const bytes = await page.screenshot({ path, animations: "disabled" });
+  const bytes = await page.screenshot({ path, animations: "disabled", ...screenshotOptions });
   const record = {
     name,
     path,
@@ -173,7 +173,46 @@ try {
   throw new Error("Cannot launch Chromium. Install the matching browser with npx playwright install chromium or pass --browser-executable /path/to/chromium (PLAYWRIGHT_EXECUTABLE_PATH). " + error.message);
 }
 
-try {
+async function captureAnimation() {
+  if (options.slug !== "sheet" || options.animation !== "sheet-open") {
+    throw new Error("Expected --slug sheet --animation sheet-open");
+  }
+  const plan = JSON.parse(await fs.readFile(join(projectRoot, "shadcn/validation/animation-plan.json"), "utf8"));
+  const { stepMs, endMs } = plan.cases[options.animation];
+  const context = await browser.newContext({
+    viewport: { width: 1440, height: 1000 },
+    deviceScaleFactor: 1,
+    colorScheme: "light",
+    reducedMotion: "no-preference",
+  });
+  try {
+    await context.addInitScript(() => localStorage.setItem("compose-foundation.theme", "light"));
+    // The English fixture uses the catalog’s bundled fonts.
+    await context.route("https://fonts.gstatic.com/**", (route) => route.abort());
+    const page = await context.newPage();
+    await page.clock.install({ time: new Date("2026-01-01T12:00:00Z") });
+    await page.goto(localUrl, { waitUntil: "domcontentloaded", timeout: 90000 });
+    await waitForApp(page);
+    const trigger = await page.getByRole("button", { name: "Open", exact: true }).first().boundingBox();
+    if (!trigger) throw new Error("Sheet trigger is missing");
+    await page.clock.pauseAt(await page.evaluate(() => Date.now()) + 100);
+
+    // Keep the panel, its moving edge, and the backdrop inside the comparison image.
+    const clip = { x: 800, y: 0, width: 640, height: 600 };
+    const screenshot = (name) => capture(page, name, { animations: "allow", clip, timeout: 5000 });
+    await screenshot("before");
+    await page.mouse.click(trigger.x + trigger.width / 2, trigger.y + trigger.height / 2);
+    for (let time = 0; time <= endMs; time += stepMs) {
+      if (time) await page.clock.runFor(stepMs);
+      await screenshot(String(time).padStart(3, "0"));
+    }
+    check((await accessibilityText(page)).includes("Save changes"), "sheet-open");
+  } finally {
+    await context.close();
+  }
+}
+
+async function captureStaticViews() {
   for (const view of views) {
     const context = await browser.newContext({
       viewport: { width: view.width, height: view.height },
@@ -289,6 +328,11 @@ try {
     );
   }
   await context.close();
+}
+
+try {
+  if (options.animation) await captureAnimation();
+  else await captureStaticViews();
 } finally {
   await browser.close();
   await new Promise((closed) => server.close(closed));
@@ -304,7 +348,9 @@ const summary = {
   generatedAt: new Date().toISOString(),
   localUrl,
   provenance,
-  coverageLimits: [
+  coverageLimits: options.animation ? [
+    "Capture uses a virtual clock. Pixel comparison and playback performance are measured separately.",
+  ] : [
     "Theme checks verify stored preference and browser color-scheme, not rendered Compose canvas palette or live theme switching.",
     "DOM overflow does not detect clipping or horizontal overflow inside the Compose canvas.",
     "TOC checks verify click dispatch and URL fragment, not the rendered heading's scroll destination.",
