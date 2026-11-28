@@ -3051,7 +3051,7 @@ private struct CommandDialogScreenshotFixture: View {
         .buttonStyle(PlainButtonStyle())
         .keyboardShortcut("j")
         .padding(24)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(width: 720, height: 520, alignment: .topLeading)
         .background(palette.background)
         .modifier(FoundationCommandDialog(isPresented: $presented, sections: [
             .init(id: "suggestions", title: "Suggestions", actions: [
@@ -3072,6 +3072,8 @@ private struct CommandDialogScreenshotFixture: View {
                 "settings": .init(systemImage: "gearshape", shortcutLabel: "⌘S"),
            ], focusSearchOnOpen: false) { _ in })
         .foundationTheme(theme)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
         .ignoresSafeArea()
     }
 }
