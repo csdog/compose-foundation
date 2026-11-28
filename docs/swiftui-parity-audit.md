@@ -274,6 +274,8 @@ iPad mini（A17 Pro，iOS 26.2）以 720 × 520 画布采集 16 张深浅色图�
 
 macOS 实际窗口验证 RTL 与四个逻辑边的 Return、Escape、单次关闭和焦点归还。右侧 Sheet 与居中 Dialog 在输入文字后点击遮罩，均释放了 macOS 原生字段编辑器并归还焦点。原版 Sheet、Drawer 和 Tabs 的回归通过。iOS 实际触控和 VoiceOver 待验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46080011895/job/140776652762)
 
+完整回归复现了右侧与 RTL Sheet 在编辑后点遮罩关闭时的焦点丢失。macOS 边缘 Sheet 现在等退场后执行关闭回调，重新打开时取消尚未执行的回调。复验从原触发器发键重新打开，再按 Escape 关闭。四个方向、RTL、居中 Dialog 和 Drawer 的原生窗口回归通过。iPad 上 16 张深浅色截图复拍逐字节一致，也与上版逐字节一致。[失败日志](https://github.com/csdog/compose-foundation/actions/runs/46099461922/job/140838502806) · [修复后日志](https://github.com/csdog/compose-foundation/actions/runs/46100539546/job/140841789598) · [截图回归](https://github.com/csdog/compose-foundation/actions/runs/46100539546/artifacts/15244414624)
+
 ### Input 阿拉伯语布局和光标编辑
 
 Nova 的 RTL 单行输入在 iOS 26 和 macOS 26 上使用系统布局对齐策略，英文值可沿界面的起始边放置。TextField、SecureField、文本绑定和无障碍标签继续由 SwiftUI 提供。旧 SDK 与早期系统沿用原有对齐策略，部署目标仍为 iOS 14、macOS 11。[Apple 对齐策略文档](https://developer.apple.com/documentation/swiftui/view/multilinetextalignment(strategy:))
