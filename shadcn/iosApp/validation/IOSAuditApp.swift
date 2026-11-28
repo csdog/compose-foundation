@@ -3179,7 +3179,7 @@ private struct CommandScreenshotFixture: View {
                     HStack {
                         Text("Command palette").font(.caption)
                         Spacer()
-                        Text("↑ ↓  Navigate   ↵  Select").font(.caption.monospaced())
+                        Text("↑ ↓  Navigate   ↵  Select").font(.system(.caption, design: .monospaced))
                     }
                 }
             } else {
