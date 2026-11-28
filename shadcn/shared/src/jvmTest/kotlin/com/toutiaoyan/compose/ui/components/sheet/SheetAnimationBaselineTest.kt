@@ -54,7 +54,10 @@ class SheetAnimationBaselineTest : ScreenshotTest() {
         }
     }
 
-    private fun captureFrame(output: File, name: String) {
+    private fun captureFrame(
+        output: File,
+        name: String,
+    ) {
         val image = captureCompositeRoot().captureToImage().toAwtImage()
         check(ImageIO.write(image, "png", output.resolve("$name.png")))
     }
