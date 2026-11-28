@@ -47,9 +47,11 @@ def key(code):
     time.sleep(0.35)
 
 
+bundle = "com.toutiaoyan.compose.foundation.audit"
 for direction in ("ltr", "rtl"):
-    subprocess.run(["xcrun", "simctl", "launch", "--terminate-running-process", device,
-                    "com.toutiaoyan.compose.foundation.audit", f"--{direction}"], check=True, timeout=50)
+    if direction == "rtl":
+        subprocess.run(["xcrun", "simctl", "terminate", device, bundle], check=True, timeout=40)
+    subprocess.run(["xcrun", "simctl", "launch", device, bundle, f"--{direction}"], check=True, timeout=60)
     expect("Selected: none", timeout=90)
     key(44)  # Space
     for _ in range(4):

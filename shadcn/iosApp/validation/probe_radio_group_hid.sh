@@ -29,6 +29,7 @@ xcrun --sdk iphonesimulator swiftc -sdk "$sdk" -parse-as-library -swift-version 
     "$swiftui"/Sources/ComposeFoundationSwiftUI/Foundation{Theme,RadioGroup,TabsNavigation}.swift \
     "$swiftui"/validation/RadioGroupHIDAudit.swift -o "$app/ComposeFoundationAudit"
 xcrun simctl bootstatus "$device" -b
+open -a Simulator --args -CurrentDeviceUDID "$device"
 xcrun simctl install "$device" "$app"
 "$work/companion/idb_companion" --udid "$device" --grpc-port 10882 > "$work/companion.log" 2>&1 &
 server=$!

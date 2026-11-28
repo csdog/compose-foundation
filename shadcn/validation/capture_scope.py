@@ -7,7 +7,7 @@ from pathlib import Path
 RUNNERS = {
     "cmp-web": "ubuntu-24.04",
     "cmp-android": "ubuntu-24.04",
-    "swiftui-ios": "macos-15",
+    "swiftui-ios": "macos-26",
 }
 
 
