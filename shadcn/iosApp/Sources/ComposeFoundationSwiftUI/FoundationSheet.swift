@@ -10,6 +10,7 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
     @Binding private var isPresented: Bool
     #if os(macOS)
     @State private var pendingDismissal: Task<Void, Never>?
+    @State private var backdropDismissalID: UUID?
     #endif
 
     private let transitionDuration: TimeInterval = 0.20
@@ -114,7 +115,10 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
                 .animation(reduceMotion ? nil : .easeInOut(duration: transitionDuration), value: isPresented)
                 #if os(macOS)
                 .onChange(of: isPresented) { presented in
-                    if presented { pendingDismissal?.cancel() }
+                    if presented {
+                        pendingDismissal?.cancel()
+                        backdropDismissalID = nil
+                    }
                 }
                 .onDisappear { pendingDismissal?.cancel() }
                 #endif
@@ -250,12 +254,31 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
 
     private func closeFromBackdrop() {
         foundationEndEditingBeforeBackdropDismissal()
+        #if os(macOS)
+        if #available(macOS 14, *) {
+            // Wait for the panel and its native field to leave the hierarchy before the caller sets focus.
+            let id = UUID()
+            backdropDismissalID = id
+            withAnimation(
+                reduceMotion ? nil : .easeInOut(duration: transitionDuration), completionCriteria: .removed,
+                { close() },
+                completion: {
+                    DispatchQueue.main.async {
+                        guard !isPresented, backdropDismissalID == id else { return }
+                        onDismiss()
+                    }
+                }
+            )
+            return
+        }
+        #endif
         close()
     }
 
     private func notifyAfterDismissal() {
         guard !isPresented else { return }
         #if os(macOS)
+        guard backdropDismissalID == nil else { return }
         // A departing AppKit field editor can clear focus while the edge transition is still running.
         pendingDismissal?.cancel()
         let delay = reduceMotion ? 0 : UInt64(transitionDuration * 1_000_000_000)
