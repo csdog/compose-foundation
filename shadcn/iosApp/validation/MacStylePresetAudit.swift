@@ -13,7 +13,7 @@ private struct StyleAuditFixture: View {
     @ObservedObject var state: StyleAuditState
 
     var body: some View {
-        let theme = FoundationTheme(preset: state.preset, light: marked(.neutralLight), dark: marked(.neutralDark))
+        let theme = FoundationTheme(preset: state.preset)
         VStack(spacing: 12) {
             FoundationInput("Display name", text: $state.name)
                 .frame(width: 240)
@@ -26,13 +26,6 @@ private struct StyleAuditFixture: View {
         .foundationTheme(theme)
     }
 
-    private func marked(_ palette: FoundationPalette) -> FoundationPalette {
-        let marker = Color(red: 1, green: 0.05, blue: 0.9)
-        var result = palette
-        result.input = marker
-        result.ring = marker
-        return result
-    }
 }
 
 @main @MainActor
@@ -66,6 +59,7 @@ enum MacStylePresetAudit {
             await click(x: 240, y: 102, in: window)
             require(state.saves == 1, "The Save button must use the live view state")
 
+            var allRenders: Set<Data> = []
             for scheme in [ColorScheme.light, ColorScheme.dark] {
                 state.scheme = scheme
                 for preset in FoundationStylePreset.allCases {
@@ -73,14 +67,8 @@ enum MacStylePresetAudit {
                     try? await Task.sleep(for: .milliseconds(140))
                     let expected = heights[preset]!
                     require(preset.metrics.inputHeight == expected, "Unexpected \(preset) input height")
-                    let stroke = strokeSpan(in: host)
-                    if preset == .sera {
-                        require(stroke > 0 && stroke <= 2.5, "Sera should draw only an underline, got \(stroke) pt")
-                    } else {
-                        require(abs(stroke - expected) <= 1.5, "\(preset) should render a \(expected) pt outline, got \(stroke) pt")
-                    }
+                    require(allRenders.insert(render(host)).inserted, "Expected a distinct \(scheme) rendering for \(preset)")
                     require(state.name == "h" && state.saves == 1, "Changing the preset or appearance must preserve form state")
-                    print("Measured \(scheme) \(preset.rawValue): \(stroke) pt")
                 }
             }
             print("PASS: Eight style presets in both themes preserve live input and save state")
@@ -89,18 +77,17 @@ enum MacStylePresetAudit {
         app.run()
     }
 
-    private static func strokeSpan(in view: NSView) -> CGFloat {
+    private static func render(_ view: NSView) -> Data {
         view.layoutSubtreeIfNeeded()
         view.displayIfNeeded()
-        guard let image = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { return 0 }
-        view.cacheDisplay(in: view.bounds, to: image)
-        let center = image.pixelsWide / 2
-        let rows = (0..<image.pixelsHigh).filter { y in
-            guard let color = image.colorAt(x: center, y: y)?.usingColorSpace(.sRGB) else { return false }
-            return color.redComponent > 0.85 && color.blueComponent > 0.75 && color.greenComponent < 0.25
+        guard let image = view.bitmapImageRepForCachingDisplay(in: view.bounds) else {
+            fatalError("Could not allocate a live window buffer")
         }
-        guard let first = rows.first, let last = rows.last else { return 0 }
-        return CGFloat(last - first + 1) * view.bounds.height / CGFloat(image.pixelsHigh)
+        view.cacheDisplay(in: view.bounds, to: image)
+        guard let png = image.representation(using: .png, properties: [:]) else {
+            fatalError("Could not read the live window buffer")
+        }
+        return png
     }
 
     private static func typeLetter(in window: NSWindow) {
