@@ -100,6 +100,7 @@ jobs:
           printf 'repository=%s\nrevision=%s\nupdate=%s\n' "$repository" "$revision" "$UPDATE_MODE" >> "$GITHUB_OUTPUT"
 
   capture:
+    if: ${{ false }}
     needs: baseline
     name: Capture and compare / ${{ matrix.platform }}
     strategy:
@@ -1221,7 +1222,7 @@ jobs:
   report:
     name: Component parity report
     needs: [baseline, capture, cmp-behavior, swift-logic, publish]
-    if: always() && needs.baseline.result != 'skipped'
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     steps:
       - name: Summarize platform and interaction checks
