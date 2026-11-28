@@ -410,6 +410,7 @@ private struct FoundationCalendarKeyboardGrid<Content: View>: View {
         let target = cursor.flatMap { acceptsFocus($0) ? $0 : nil } ?? entry
         content($focused, target, { cursor = $0 })
             .defaultFocus($focused, target)
+            .onChange(of: focused) { old, new in print("CAL_FOCUS", old as Any, new as Any) }
             .task(id: cursor) {
                 guard let cursor, cursor == target else { return }
                 // The destination becomes focusable on this update, including dates in a newly shown month.
