@@ -12,6 +12,7 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
     @ScaledMetric(relativeTo: .body) private var titleSize: CGFloat = 16
     @ScaledMetric(relativeTo: .subheadline) private var descriptionSize: CGFloat = 14
     @Binding private var isPresented: Bool
+    @State private var presentedPanel: UUID?
 
     private let title: String
     private let description: String?
@@ -19,7 +20,7 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
     private let onDismiss: () -> Void
     private let footer: AnyView?
     private let dialogContent: () -> DialogContent
-    private var initiallyFocusClose = true
+    private var commandFocusSearchOnOpen: Bool?
 
     public init(
         isPresented: Binding<Bool>,
@@ -81,9 +82,9 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
         self.dialogContent = content
     }
 
-    func focusesCloseOnAppear(_ enabled: Bool) -> Self {
+    func commandPresentation(focusSearchOnOpen: Bool) -> Self {
         var dialog = self
-        dialog.initiallyFocusClose = enabled
+        dialog.commandFocusSearchOnOpen = focusSearchOnOpen
         return dialog
     }
 
@@ -91,7 +92,7 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
     public func body(content: Content) -> some View {
         let palette = theme.palette(for: colorScheme)
         if presentation == .centered {
-            content
+            animateCentered(content
                 .disabled(isPresented)
                 .allowsHitTesting(!isPresented)
                 .accessibilityHidden(isPresented)
@@ -114,15 +115,17 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
                         .transition(.opacity)
+                        .onAppear {
+                            if waitsForAnimationCompletion { presentedPanel = UUID() }
+                        }
                         .onDisappear {
-                            guard !isPresented else { return }
+                            guard !waitsForAnimationCompletion, !isPresented else { return }
                             DispatchQueue.main.async {
                                 if !isPresented { onDismiss() }
                             }
                         }
                     }
-                })
-                .animation(reduceMotion ? nil : .easeOut(duration: 0.10), value: isPresented)
+                }))
         } else {
             content.sheet(isPresented: $isPresented, onDismiss: onDismiss) {
                 VStack(alignment: .leading, spacing: 14) {
@@ -141,6 +144,30 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
                 .background(palette.card)
                 .accessibilityAction(.escape) { close() }
             }
+        }
+    }
+
+    private var waitsForAnimationCompletion: Bool {
+        if #available(iOS 17, macOS 14, *) { return commandFocusSearchOnOpen != nil }
+        return false
+    }
+
+    @ViewBuilder
+    private func animateCentered<Panel: View>(_ content: Panel) -> some View {
+        let animated = content.animation(reduceMotion ? nil : .easeOut(duration: 0.10), value: isPresented)
+        if #available(iOS 17, macOS 14, *), waitsForAnimationCompletion {
+            animated.transaction(value: isPresented) { transaction in
+                guard !isPresented, let panel = presentedPanel else { return }
+                transaction.addAnimationCompletion(criteria: .removed) {
+                    DispatchQueue.main.async {
+                        guard !isPresented, presentedPanel == panel else { return }
+                        presentedPanel = nil
+                        onDismiss()
+                    }
+                }
+            }
+        } else {
+            animated
         }
     }
 
@@ -167,7 +194,7 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
         return Group {
             if #available(iOS 17, macOS 14, *) {
                 FoundationPresentationFocus(
-                    heading: heading, close: closeControl, onActivate: close, initiallyFocusClose: initiallyFocusClose
+                    heading: heading, close: closeControl, onActivate: close, initiallyFocusClose: commandFocusSearchOnOpen != true
                 ) { heading, close in
                     regions(heading: heading, close: close, palette: palette)
                 }

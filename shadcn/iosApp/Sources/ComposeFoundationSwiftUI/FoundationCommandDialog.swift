@@ -44,7 +44,7 @@ public struct FoundationCommandDialog<Value: Hashable>: ViewModifier {
                 onAction(value)
             }
             .presentedInDialog(focusSearch: focusSearchOnOpen, dismiss: close)
-        }.focusesCloseOnAppear(!focusSearchOnOpen))
+        }.commandPresentation(focusSearchOnOpen: focusSearchOnOpen))
         .onChange(of: isPresented) { presented in
             if !presented { query = "" }
         }
