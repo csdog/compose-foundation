@@ -316,7 +316,9 @@ iPad mini（A17 Pro，iOS 26.2）的 10 张静态深浅色截图与复拍逐字�
 
 同一模拟器上的 UIKit 诊断确认，优先右键命令在普通模式下能到达应用，完全键盘控制开启后该命令未收到事件。在 Calendar 测试页试用系统 Tab 和 Space，也未激活下一月按钮。诊断命令只在测试应用注册。[按键路由日志](https://github.com/csdog/compose-foundation/actions/runs/46122376521/job/140909507890) · [设置与逐次 Tab 截图](https://github.com/csdog/compose-foundation/actions/runs/46122376521/artifacts/15255475042)
 
-标准 UIKit 按钮对照确认普通触控能激活按钮，随后 iPad 设置页的无障碍服务超时，未执行完全键盘控制下的按钮用例。诊断加上无障碍读数重试，并在前台 Simulator 重新运行。[首次对照日志](https://github.com/csdog/compose-foundation/actions/runs/46123973218/job/140914401875) · [复跑](https://github.com/csdog/compose-foundation/actions/runs/46126207498)
+标准 UIKit 按钮对照在同型号 iPad 模拟器上确认了普通触控及完全键盘控制下的 Tab 和 Space。首次在系统设置页读取无障碍数据超时。加入重试后，以系统开关的无障碍值确认完全键盘控制已开启，再用一次 Tab 和 Space 激活第二个 UIKit 按钮。新的同设备对照将比较 UIKit、普通 SwiftUI 按钮、ScrollView 中的按钮和 Calendar。[UIKit 对照日志](https://github.com/csdog/compose-foundation/actions/runs/46126207498/job/140921306365) · [设置与激活截图](https://github.com/csdog/compose-foundation/actions/runs/46126207498/artifacts/15256062827) · [SwiftUI 对照](https://github.com/csdog/compose-foundation/actions/runs/46127200773)
+
+最新全量 macOS 行为检查通过，包括 Calendar 的 LTR 和 RTL 选中、日期限制、跨月键盘焦点及焦点与选择独立。[macOS 日志](https://github.com/csdog/compose-foundation/actions/runs/46125132325/job/140918007879)
 
 全量截图回归的 Popover 深色关闭态差异 PNG 与 Popover PR #6 保存的差异逐字节一致。差异只在触发器区域，包含 3,107 个像素。已发布基准的填充取样是 `#151515`，审核过的 SwiftUI 截图和 shadcn 参考是 `#141414`。Calendar 专项截图仍逐像素一致。[全量回归差异](https://github.com/csdog/compose-foundation/actions/runs/46118576344/artifacts/15253650171) · [Popover 审核](https://github.com/csdog/compose-foundation/pull/6)
 
