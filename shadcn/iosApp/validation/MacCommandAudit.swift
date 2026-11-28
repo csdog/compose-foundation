@@ -4,6 +4,8 @@ import SwiftUI
 @MainActor
 private final class CommandAuditState: ObservableObject {
     @Published var query = ""
+    @Published var loading = false
+    @Published var enabled = true
     var actions: [String] = []
 }
 
@@ -18,9 +20,21 @@ private struct CommandAuditFixture: View {
                     .init("Calculator", value: "calculator", isEnabled: false),
                 ]),
                 .init(id: "settings", title: "Settings", actions: [
-                    .init("Profile", value: "profile"), .init("Billing", value: "billing"),
+                    .init("Profile", value: "profile"),
+                ] + (1...8).map { .init("Preferences \($0)", value: "preferences-\($0)") } + [
+                    .init("Billing", value: "billing"),
                 ]),
-            ], query: $state.query) { state.actions.append($0) }
+            ], query: $state.query, actionAppearance: [
+                "profile": .init(shortcutLabel: "⌘P", shortcut: KeyboardShortcut("p")),
+                "billing": .init(shortcutLabel: "⌘B", shortcut: KeyboardShortcut("b")),
+                "calculator": .init(shortcutLabel: "⌘R", shortcut: KeyboardShortcut("r")),
+            ]) { state.actions.append($0) }
+            .loading(state.loading ? "Loading commands" : nil)
+            .footer {
+                Button("Command help") { state.actions.append("help") }
+                    .keyboardShortcut("l", modifiers: [.command, .option])
+            }
+            .disabled(!state.enabled)
             .frame(width: 360)
             Spacer()
         }
@@ -79,15 +93,47 @@ enum MacCommandAudit {
             await press(36, "\r", in: window)
             require(state.actions == ["profile", "billing", "billing"], "Up did not wrap to the last enabled result")
             print("PASS: Command filters live, skips disabled rows, wraps, and activates one eligible result")
+
+            state.query = "Calendar"
+            try? await Task.sleep(for: .milliseconds(180))
+            await press(11, "b", flags: .command, in: window)
+            require(state.actions.count == 3, "A filtered-out shortcut was active")
+
+            state.query = ""
+            try? await Task.sleep(for: .milliseconds(180))
+            await press(11, "b", flags: .command, in: window)
+            await press(15, "r", flags: .command, in: window)
+            require(state.actions == ["profile", "billing", "billing", "billing"],
+                    "The offscreen shortcut did not execute, or a disabled shortcut executed: \(state.actions)")
+
+            state.loading = true
+            state.query = "Profile"
+            try? await Task.sleep(for: .milliseconds(180))
+            await press(35, "p", flags: .command, in: window)
+            require(state.actions.last == "profile", "A matching command became unavailable during loading")
+
+            state.query = "no results"
+            try? await Task.sleep(for: .milliseconds(180))
+            await press(37, "l", flags: [.command, .option], in: window)
+            require(state.actions.last == "help", "The footer was unavailable while loading")
+
+            state.query = "Profile"
+            state.enabled = false
+            try? await Task.sleep(for: .milliseconds(180))
+            await press(35, "p", flags: .command, in: window)
+            require(state.actions.last == "help", "A shortcut executed while the command palette was disabled")
+            print("PASS: Command shortcuts respect filtering and disabled states; loading preserves results and its fixed footer")
             exit(0)
         }
         app.run()
     }
 
-    private static func press(_ code: UInt16, _ characters: String, in window: NSWindow) async {
+    private static func press(
+        _ code: UInt16, _ characters: String, flags: NSEvent.ModifierFlags = [], in window: NSWindow
+    ) async {
         for type in [NSEvent.EventType.keyDown, .keyUp] {
             guard let event = NSEvent.keyEvent(
-                with: type, location: .zero, modifierFlags: [],
+                with: type, location: .zero, modifierFlags: flags,
                 timestamp: ProcessInfo.processInfo.systemUptime, windowNumber: window.windowNumber, context: nil,
                 characters: characters, charactersIgnoringModifiers: characters, isARepeat: false, keyCode: code
             ) else { continue }

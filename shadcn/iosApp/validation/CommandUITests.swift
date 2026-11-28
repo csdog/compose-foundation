@@ -67,6 +67,37 @@ final class CommandUITests: XCTestCase {
     }
 
     @MainActor
+    func testFooterRemainsAvailableDuringLoadingAndWhenSearchIsEmpty() {
+        let app = launchFixture("--command-states-interaction")
+        let help = app.buttons["Command help"]
+        let state = app.staticTexts["command-state-result"]
+        let loading = app.staticTexts["Loading commands"]
+        let field = app.textFields["Search commands"]
+
+        XCTAssertTrue(loading.waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["No matching commands"].exists)
+        help.tap()
+        XCTAssertEqual(state.label, "Help selected")
+
+        app.buttons["Finish loading"].tap()
+        XCTAssertTrue(loading.waitForNonExistence(timeout: 5))
+        field.tap()
+        field.typeText("zzz")
+        XCTAssertTrue(app.staticTexts["No matching commands"].waitForExistence(timeout: 5))
+        XCTAssertTrue(help.isHittable)
+    }
+
+    @MainActor
+    func testActionShortcutWhileSearchIsFocused() {
+        let app = launchFixture("--command-states-interaction")
+        app.buttons["Finish loading"].tap()
+        let field = app.textFields["Search commands"]
+        field.tap()
+        field.typeKey("p", modifierFlags: .command)
+        XCTAssertEqual(app.staticTexts["command-state-result"].label, "Profile")
+    }
+
+    @MainActor
     private func launchFixture(_ mode: String = "--command-interaction") -> XCUIApplication {
         continueAfterFailure = false
         let app = XCUIApplication()

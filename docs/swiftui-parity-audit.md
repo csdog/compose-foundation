@@ -412,6 +412,20 @@ iPhone 17 Pro（iOS 26.2）触控打开后直接向搜索框输入，验证查�
 
 iPad mini（A17 Pro，iOS 26.2）在 720 × 520 画布重拍 Command 的十张深浅色图，全部与复拍逐字节一致。六张原有内联图也与上一轮逐字节一致。新增收起态触发器与 shadcn 参考的边界相差最多 3 px，展开面板完整落在画布内，结果区可滚动。[iPad 截图与差异报告](https://github.com/csdog/compose-foundation/actions/runs/46108707115/artifacts/15249145767)
 
+### Command 加载状态、固定页脚与快捷键
+
+内联 `FoundationCommand` 和 `FoundationCommandDialog` 都支持 `.loading(_:)` 与 `.footer {}`。加载时仍可执行当前匹配且可用的结果。加载指示存在时暂停显示空态提示，开启减少动态效果时使用静态图标。页脚位于滚动区域下方，在零匹配结果时也可使用。
+
+shadcn 的 `command-shortcuts` 在 Settings 分组的每行显示快捷键提示。SwiftUI 保留 `shortcutLabel`，并可通过 `ActionAppearance` 的 `shortcut` 参数绑定原生按键。该绑定仅适用于当前匹配且启用的行，包括滚动区域外的行。官方快捷键示例的深浅色展开态各独立采集两次，结果逐字节一致。加载与页脚为原生扩展，视觉审核使用 SwiftUI 截图。[shadcn 快捷键示例](https://ui.shadcn.com/examples/base/command-shortcuts) · [参考图 PR](https://github.com/csdog/compose-foundation-baselines/pull/12)
+
+macOS 实际窗口验证了过滤后快捷键失效、视口外的结果仍可触发、禁用行和禁用面板拦截按键、加载中执行已有匹配项，以及加载中没有匹配项时仍可通过键盘执行页脚操作。Command Dialog 的搜索自动聚焦和关闭后焦点归还也通过回归。[macOS 运行记录](https://github.com/csdog/compose-foundation/actions/runs/46109901238/job/140870935386)
+
+iPhone 17 Pro（iOS 26.2）通过 XCUITest 验证了搜索框聚焦期间用 `⌘P` 执行动作、加载状态期间点按页脚、完成加载后恢复空态提示，以及零匹配时页脚仍可交互。原有搜索、方向键与 Command Dialog 触控测试同样通过。[iOS 运行记录](https://github.com/csdog/compose-foundation/actions/runs/46109899451/job/140870954906)
+
+iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节一致，之前的 10 张保持像素和文件一致。新增快捷键展开态使用三项相同内容与 384 pt 宽的面板。SwiftUI 面板保留标题和关闭按钮，iOS 行高至少为 44 pt。上游展开图显示首项高亮，原生静态采集未激活搜索键盘，初始行高亮仍有差异。[iPad 截图及 shadcn 差异](https://github.com/csdog/compose-foundation/actions/runs/46109901238/artifacts/15249263011)
+
+快捷键展开图约 80% 的差异像素来自遮罩下的一档灰度差。浅色背景为 SwiftUI `#E6E6E6`、shadcn `#E5E5E5`，深色为 `#090909`、`#080808`。面板与搜索框取样色在两端一致。
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -436,7 +450,7 @@ iPad mini（A17 Pro，iOS 26.2）在 720 × 520 画布重拍 Command 的十张�
 | code-block | 支持横向滚动、语言标签和行号。缺少复制按钮、行状态、页脚和操作栏。 |
 | collapsible | 保留原生 DisclosureGroup，支持可单独摆放的按钮和内容 slots、共享展开状态和自定义标签。展开动画由调用方决定。 |
 | combobox | 支持搜索、空态、禁用选项、分组、单选和可移除的多选 chips。Nova 已接入默认、分组和禁用初始态对照。此前已验证分组导航、隐藏空组、多选、软键盘提交和 VoiceOver 朗读。Nova 展开面板的 iOS 截图和定位待验收。 |
-| command | 支持 Nova 搜索、分组、空态、禁用项和方向键高亮。Command Dialog 支持绑定呈现和搜索焦点，macOS 已验证关闭后归还焦点。加载状态、页脚、逐项快捷键动作与 VoiceOver 待对齐或验收。 |
+| command | 支持 Nova 搜索、分组、空态、禁用项、方向键高亮、加载状态、固定页脚和原生逐项快捷键。Command Dialog 支持绑定呈现和搜索焦点，macOS 已验证关闭后归还焦点。实际 VoiceOver 仍待验收。 |
 | context-menu | Nova 可选虚线触发区，iOS 原生长按和 macOS 右键已验。普通项、禁用项、子菜单及外点关闭已有实测，macOS 已验证方向键跳过禁用项。展开样式、iOS 键盘及 VoiceOver 待对齐或验收。 |
 | dialog | 支持系统 sheet 及带遮罩的可选居中面板、滚动内容和固定页脚。默认编辑资料示例覆盖深浅色。其他变体、iOS 居中版触控、键盘焦点和 VoiceOver 待验收。 |
 | drawer | 支持原有底部面板，以及 Nova、Rhea 的说明文字、可滚动内容和固定页脚。原布局已验收关闭焦点、Return、Escape、向下拖动和焦点归还。侧边面板、吸附点、嵌套面板和无模态示例待对齐。 |

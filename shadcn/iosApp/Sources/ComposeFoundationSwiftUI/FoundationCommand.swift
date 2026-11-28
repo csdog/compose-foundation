@@ -19,10 +19,18 @@ public struct FoundationCommand<Value: Hashable>: View {
     public struct ActionAppearance {
         public let systemImage: String?
         public let shortcutLabel: String?
+        public let shortcut: KeyboardShortcut?
 
         public init(systemImage: String? = nil, shortcutLabel: String? = nil) {
             self.systemImage = systemImage
             self.shortcutLabel = shortcutLabel
+            self.shortcut = nil
+        }
+
+        public init(systemImage: String? = nil, shortcutLabel: String? = nil, shortcut: KeyboardShortcut) {
+            self.systemImage = systemImage
+            self.shortcutLabel = shortcutLabel
+            self.shortcut = shortcut
         }
     }
 
@@ -34,6 +42,7 @@ public struct FoundationCommand<Value: Hashable>: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @ScaledMetric(relativeTo: .subheadline) private var novaFontSize: CGFloat = 14
     @ScaledMetric(relativeTo: .subheadline) private var novaRowHeight: CGFloat = 32
     @ScaledMetric(relativeTo: .caption) private var novaHeadingHeight: CGFloat = 28
@@ -48,6 +57,8 @@ public struct FoundationCommand<Value: Hashable>: View {
     private let onAction: (Value) -> Void
     private var focusSearchOnOpen = false
     private var dismiss: (() -> Void)?
+    private var loadingMessage: String?
+    private var footerContent: AnyView?
 
     public init(sections: [Section], onAction: @escaping (Value) -> Void) {
         self.init(sections: sections, query: nil, onAction: onAction)
@@ -76,6 +87,24 @@ public struct FoundationCommand<Value: Hashable>: View {
         return command
     }
 
+    /// Shows loading alongside existing matches and suppresses the empty state until loading ends.
+    public func loading(_ message: String?) -> Self {
+        var command = self
+        command.loadingMessage = message
+        return command
+    }
+
+    /// Adds a footer below the results, outside the result list's scrolling region.
+    public func footer<Footer: View>(@ViewBuilder _ content: () -> Footer) -> Self {
+        settingFooter(AnyView(content()))
+    }
+
+    func settingFooter(_ content: AnyView?) -> Self {
+        var command = self
+        command.footerContent = content
+        return command
+    }
+
     public var body: some View {
         let palette = theme.palette(for: colorScheme)
         let matches = filteredSections
@@ -86,14 +115,27 @@ public struct FoundationCommand<Value: Hashable>: View {
 
         VStack(alignment: .leading, spacing: nova ? 0 : 8) {
             searchField(palette, enabled: enabled, highlighted: highlighted)
+            if let loadingMessage {
+                loadingStatus(loadingMessage, palette: palette)
+            }
             if matches.isEmpty {
-                Text(emptyMessage)
-                    .font(nova ? .system(size: novaFontSize) : .subheadline)
-                    .foregroundColor(palette.mutedForeground)
-                    .frame(maxWidth: nova ? .infinity : nil)
-                    .padding(.vertical, nova ? 24 : 0)
+                if loadingMessage == nil {
+                    Text(emptyMessage)
+                        .font(nova ? .system(size: novaFontSize) : .subheadline)
+                        .foregroundColor(palette.mutedForeground)
+                        .frame(maxWidth: nova ? .infinity : nil)
+                        .padding(.vertical, nova ? 24 : 0)
+                }
             } else {
                 results(matches, highlighted: highlighted, palette: palette)
+            }
+            if let footerContent {
+                VStack(spacing: 0) {
+                    Rectangle().fill(palette.border).frame(height: 1).accessibilityHidden(true)
+                    footerContent.frame(maxWidth: .infinity, alignment: .leading).padding(8)
+                }
+                .background(nova ? palette.novaCardFooterFill(for: colorScheme) : palette.secondary)
+                .environment(\.foundationSurface, .cardFooter)
             }
         }
         .padding(nova ? 5 : 10)
@@ -105,6 +147,25 @@ public struct FoundationCommand<Value: Hashable>: View {
 
     private var nova: Bool { theme.preset == .nova }
     private var search: Binding<String> { boundQuery ?? $localQuery }
+
+    private func loadingStatus(_ message: String, palette: FoundationPalette) -> some View {
+        HStack(spacing: 8) {
+            Group {
+                if reduceMotion {
+                    Image(systemName: "hourglass")
+                } else {
+                    ProgressView().scaleEffect(0.75).accentColor(palette.mutedForeground)
+                }
+            }
+            .frame(width: 20, height: 20)
+            .accessibilityHidden(true)
+            Text(message)
+        }
+        .font(nova ? .system(size: novaFontSize) : .subheadline)
+        .foregroundColor(palette.mutedForeground)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 16)
+    }
 
     private var rowHeight: CGFloat {
         #if os(iOS)
@@ -168,27 +229,14 @@ public struct FoundationCommand<Value: Hashable>: View {
     private func results(_ matches: [Section], highlighted: RowID?, palette: FoundationPalette) -> some View {
         ScrollViewReader { scroll in
             ScrollView(showsIndicators: !nova) {
-                LazyVStack(alignment: .leading, spacing: nova ? 0 : 3) {
-                    ForEach(matches) { section in
-                        if nova && section.id != matches.first?.id {
-                            Rectangle().fill(palette.border).frame(height: 1).accessibilityHidden(true)
-                        }
-                        VStack(alignment: .leading, spacing: nova ? 0 : 3) {
-                            if let title = section.title {
-                                Text(title)
-                                    .font(.caption.weight(nova ? .medium : .regular))
-                                    .foregroundColor(palette.mutedForeground)
-                                    .padding(.horizontal, nova ? 8 : 0)
-                                    .frame(minHeight: nova ? novaHeadingHeight : nil)
-                                    .accessibilityAddTraits(.isHeader)
-                            }
-                            ForEach(section.actions) { choice in
-                                let id = RowID(section: section.id, value: choice.value)
-                                row(choice, highlighted: highlighted == id, palette: palette)
-                                    .id(id)
-                            }
-                        }
-                        .padding(nova ? 4 : 0)
+                if actionAppearance.values.contains(where: { $0.shortcut != nil }) {
+                    // Keep native key equivalents registered for matching rows outside the viewport.
+                    VStack(alignment: .leading, spacing: nova ? 0 : 3) {
+                        resultSections(matches, highlighted: highlighted, palette: palette)
+                    }
+                } else {
+                    LazyVStack(alignment: .leading, spacing: nova ? 0 : 3) {
+                        resultSections(matches, highlighted: highlighted, palette: palette)
                     }
                 }
             }
@@ -200,9 +248,33 @@ public struct FoundationCommand<Value: Hashable>: View {
         }
     }
 
+    @ViewBuilder
+    private func resultSections(_ matches: [Section], highlighted: RowID?, palette: FoundationPalette) -> some View {
+        ForEach(matches) { section in
+            if nova && section.id != matches.first?.id {
+                Rectangle().fill(palette.border).frame(height: 1).accessibilityHidden(true)
+            }
+            VStack(alignment: .leading, spacing: nova ? 0 : 3) {
+                if let title = section.title {
+                    Text(title)
+                        .font(.caption.weight(nova ? .medium : .regular))
+                        .foregroundColor(palette.mutedForeground)
+                        .padding(.horizontal, nova ? 8 : 0)
+                        .frame(minHeight: nova ? novaHeadingHeight : nil)
+                        .accessibilityAddTraits(.isHeader)
+                }
+                ForEach(section.actions) { choice in
+                    let id = RowID(section: section.id, value: choice.value)
+                    row(choice, highlighted: highlighted == id, palette: palette).id(id)
+                }
+            }
+            .padding(nova ? 4 : 0)
+        }
+    }
+
     private func row(_ choice: FoundationChoice<Value>, highlighted: Bool, palette: FoundationPalette) -> some View {
         let appearance = actionAppearance[choice.value]
-        return Button {
+        let button = Button {
             onAction(choice.value)
         } label: {
             HStack(spacing: 8) {
@@ -233,6 +305,20 @@ public struct FoundationCommand<Value: Hashable>: View {
         .disabled(!choice.isEnabled)
         .opacity(nova && !choice.isEnabled ? 0.5 : 1)
         .accessibilityAddTraits(highlighted ? .isSelected : [])
+        return withShortcut(isEnabled && choice.isEnabled ? appearance?.shortcut : nil, on: button)
+    }
+
+    @ViewBuilder
+    private func withShortcut<Row: View>(_ shortcut: KeyboardShortcut?, on row: Row) -> some View {
+        if let shortcut {
+            if #available(iOS 15.4, macOS 12.3, *) {
+                row.keyboardShortcut(shortcut)
+            } else {
+                row.keyboardShortcut(shortcut.key, modifiers: shortcut.modifiers)
+            }
+        } else {
+            row
+        }
     }
 
     private func resultsHeight(_ matches: [Section]) -> CGFloat {

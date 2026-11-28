@@ -75,6 +75,12 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             return
         }
 
+        if ProcessInfo.processInfo.arguments.contains("--command-states-interaction") {
+            window.rootViewController = UIHostingController(rootView: CommandStatesInteractionFixture())
+            window.makeKeyAndVisible()
+            return
+        }
+
         if #available(iOS 17, *), ProcessInfo.processInfo.arguments.contains("--overlay-focus") {
             window.rootViewController = UIHostingController(rootView: OverlayFocusInteractionFixture())
             window.makeKeyAndVisible()
@@ -333,8 +339,11 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 ("command-default-initial", { AnyView(CommandScreenshotFixture(query: "")) }),
                 ("command-default-filtered", { AnyView(CommandScreenshotFixture(query: "Calendar")) }),
                 ("command-default-empty", { AnyView(CommandScreenshotFixture(query: "xyz")) }),
+                ("command-default-loading", { AnyView(CommandScreenshotFixture(query: "xyz", loading: true, showsFooter: true)) }),
+                ("command-footer-initial", { AnyView(CommandScreenshotFixture(query: "", showsFooter: true)) }),
                 ("command-dialog-initial", { AnyView(CommandDialogScreenshotFixture(open: false)) }),
                 ("command-dialog-open", { AnyView(CommandDialogScreenshotFixture(open: true)) }),
+                ("command-shortcuts-open", { AnyView(CommandShortcutsScreenshotFixture()) }),
             ],
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
@@ -3078,8 +3087,65 @@ private struct CommandDialogScreenshotFixture: View {
     }
 }
 
+private struct CommandShortcutsScreenshotFixture: View {
+    @State private var presented = true
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        let theme = FoundationTheme(preset: .nova)
+        let palette = theme.palette(for: scheme)
+        return Button("Open Menu") { presented = true }
+            .buttonStyle(FoundationButtonStyle(.outline))
+            .padding(.top, 18)
+            .padding(.horizontal, 24)
+            .frame(width: 720, height: 520, alignment: .topLeading)
+            .background(palette.background)
+            .modifier(FoundationCommandDialog(isPresented: $presented, sections: [
+                .init(id: "settings", title: "Settings", actions: [
+                    .init("Profile", value: "profile"), .init("Billing", value: "billing"),
+                    .init("Settings", value: "settings"),
+                ]),
+            ], searchPrompt: "Type a command or search...", actionAppearance: [
+                "profile": .init(systemImage: "person", shortcutLabel: "⌘P", shortcut: KeyboardShortcut("p")),
+                "billing": .init(systemImage: "creditcard", shortcutLabel: "⌘B", shortcut: KeyboardShortcut("b")),
+                "settings": .init(systemImage: "gearshape", shortcutLabel: "⌘S", shortcut: KeyboardShortcut("s")),
+            ], focusSearchOnOpen: false) { _ in })
+            .foundationTheme(theme)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(palette.background)
+            .ignoresSafeArea()
+    }
+}
+
+private struct CommandStatesInteractionFixture: View {
+    @State private var loading = true
+    @State private var result = "No action"
+
+    var body: some View {
+        VStack(spacing: 14) {
+            Button("Finish loading") { loading = false }
+            FoundationCommand(sections: loading ? [] : [
+                .init(id: "settings", title: "Settings", actions: [.init("Profile", value: "Profile")]),
+            ], query: nil, actionAppearance: [
+                "Profile": .init(shortcutLabel: "⌘P", shortcut: KeyboardShortcut("p")),
+            ]) { result = $0 }
+            .loading(loading ? "Loading commands" : nil)
+            .footer {
+                Button("Command help") { result = "Help selected" }
+            }
+            Text(result).accessibilityIdentifier("command-state-result")
+            Spacer(minLength: 0)
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foundationTheme(FoundationTheme(preset: .nova))
+    }
+}
+
 private struct CommandScreenshotFixture: View {
     let query: String
+    var loading = false
+    var showsFooter = false
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
@@ -3096,7 +3162,7 @@ private struct CommandScreenshotFixture: View {
                 .init("Settings", value: "settings"),
             ]),
         ]
-        return FoundationCommand(sections: sections, query: .constant(query),
+        let command = FoundationCommand(sections: sections, query: .constant(query),
                                  searchPrompt: "Type a command or search...", emptyMessage: "No results found.",
                                  actionAppearance: [
                                     "calendar": .init(systemImage: "calendar"),
@@ -3106,6 +3172,20 @@ private struct CommandScreenshotFixture: View {
                                     "billing": .init(systemImage: "creditcard", shortcutLabel: "⌘B"),
                                     "settings": .init(systemImage: "gearshape", shortcutLabel: "⌘S"),
                                  ]) { _ in }
+            .loading(loading ? "Loading commands" : nil)
+        return Group {
+            if showsFooter {
+                command.footer {
+                    HStack {
+                        Text("Command palette").font(.caption)
+                        Spacer()
+                        Text("↑ ↓  Navigate   ↵  Select").font(.system(.caption, design: .monospaced))
+                    }
+                }
+            } else {
+                command
+            }
+        }
             .foundationTheme(theme)
             .frame(width: 384)
             .padding(24)
