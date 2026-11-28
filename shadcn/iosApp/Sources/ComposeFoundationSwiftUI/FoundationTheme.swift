@@ -51,7 +51,7 @@ public struct FoundationPalette: Sendable {
     func novaDarkOutlineFill(in surface: FoundationSurface) -> Color {
         if background == Self.neutralDark.background && input == Self.neutralDark.input {
             switch surface {
-            case .page: return Color(rgb: 0x141414)
+            case .page: break
             case .card where card == Self.neutralDark.card: return Color(rgb: 0x212121)
             case .cardFooter where card == Self.neutralDark.card && secondary == Self.neutralDark.secondary:
                 return Color(rgb: 0x272727)
