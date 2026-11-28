@@ -175,6 +175,7 @@ public struct FoundationToaster: ViewModifier {
 private struct FoundationToastCard: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.font) private var inheritedFont
     @ScaledMetric(relativeTo: .subheadline) private var novaTextSize: CGFloat = 14
 
     let title: String
@@ -192,7 +193,7 @@ private struct FoundationToastCard: View {
         HStack(spacing: nova ? 8 : 12) {
             if let variant {
                 Image(systemName: nova && variant == .error ? "xmark.octagon" : variant.icon)
-                    .font(nova ? .system(size: 14, weight: .medium) : nil)
+                    .font(nova ? .system(size: 14, weight: .medium) : inheritedFont)
                     .frame(width: nova ? 16 : nil, height: nova ? 16 : nil)
                     .foregroundColor(variant == .error ? palette.destructive : palette.foreground)
                     .accessibilityHidden(true)
@@ -212,6 +213,7 @@ private struct FoundationToastCard: View {
             if let actionTitle {
                 Button(actionTitle, action: performAction)
                     .buttonStyle(nova ? FoundationButtonStyle(.outline, size: .small) : FoundationButtonStyle(.outline))
+                    .environment(\.foundationSurface, .card)
             }
             Button(action: dismiss) {
                 if nova {

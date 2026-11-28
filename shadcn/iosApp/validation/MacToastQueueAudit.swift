@@ -29,7 +29,7 @@ enum MacToastQueueAudit {
         let second = queue.show("Second notice", variant: .info, durationMilliseconds: 0)
         let third = queue.show("Third notice", variant: .warning, durationMilliseconds: 0)
         let saved = queue.show("Saved", variant: .success, durationMilliseconds: 0,
-                               action: FoundationToastAction("Undo") { state.undoCount += 1 })
+                               action: FoundationToastAction("Undo") { [weak state] in state?.undoCount += 1 })
         require(queue.visibleMessages(limit: 3).map(\.id) == [second, third, saved], "The queue shows the latest three")
 
         let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 540, height: 340),
