@@ -52,7 +52,7 @@ def tap(row):
 
 
 def enable_full_keyboard_access():
-    subprocess.run(["xcrun", "simctl", "launch", device, "com.apple.Preferences"], check=True, timeout=15)
+    subprocess.run(["xcrun", "simctl", "launch", device, "com.apple.Preferences"], check=True, timeout=50)
     assert wait_for("Sidebar", timeout=90) or "Accessibility" in labels(), labels()
     capture("settings-initial.png")
     if "Accessibility" in labels():
@@ -112,7 +112,7 @@ def launch(priority=False):
     subprocess.run(["xcrun", "simctl", "launch", "--terminate-running-process", device,
                     "com.toutiaoyan.compose.foundation.audit", mode, "--calendar-keys",
                     "-AppleLanguages", "(en)", "-AppleLocale", "en_US"],
-                   check=True, timeout=15)
+                   check=True, timeout=50)
     assert wait_for("Selected: 2025-01-31", timeout=90), labels()
 
 
