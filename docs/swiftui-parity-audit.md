@@ -302,6 +302,12 @@ iPad mini（A17 Pro，iOS 26.2）复拍五个用例的 10 张深浅色图，均�
 
 iPhone 17 Pro（iOS 26.2）的 XCUITest 验证了触发器名称及当前值、菜单当前项的选中语义、月份和年份的触控切换、日期区间绑定保留，以及边界外选项不可用。两个展开态保留 iOS 系统菜单样式。实际 VoiceOver 朗读仍待验收。[iOS 交互回归](https://github.com/csdog/compose-foundation/actions/runs/46111945303/job/140877342187) · [月份和年份展开截图](https://github.com/csdog/compose-foundation/actions/runs/46111945303/artifacts/15250770536)
 
+#### Calendar 日期网格键盘导航
+
+iOS 17 与 macOS 14 起，左右键按布局方向移动一天，上下键移动一周。Home 和 End 按日历的周首设置移动；Page Up 和 Page Down 移动一个月。Shift 配合左右键移动一个月，配合上下键或翻页键移动一年。跨出可见月份时只翻到足以显示目标日期的位置。按 Return 或 Space 才更新选择绑定，单选、区间和多选继续使用原有选择规则。较早系统沿用原生日期按钮。[shadcn Calendar 源码](https://github.com/shadcn-ui/ui/blob/0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4/apps/v4/registry/bases/base/ui/calendar.tsx) · [DayPicker 9.8.1 键盘行为](https://github.com/gpbl/react-day-picker/blob/v9.8.1/src/DayPicker.tsx)
+
+macOS 实际窗口已验证左右布局方向、同月和跨月移动、Home/End、翻页、Return/Space、日期上下界和禁用网格。日期区保留一个 Tab 停靠点，已验证 Tab 移到外部控件。状态回归另外覆盖本地周首、夏令时和跨出双月视图后的窗口位置。[macOS 按键日志](https://github.com/csdog/compose-foundation/actions/runs/46113981597/job/140883583347)
+
 ### Calendar Nova 双月区间与阿拉伯语 RTL
 
 对照 `calendar-range.tsx` 和 `calendar-rtl.tsx`。双月区间固定为 2026 年 1 月 12 日到 2 月 11 日。`FoundationCalendar(range:initialMonth:numberOfMonths:)` 可以指定首个月份，原有绑定和范围初始化方式仍可使用。Nova 区间端点在本周本月内连接到相邻的已选日期。未完成区间、同日区间与周月交界处的端点独立显示。
