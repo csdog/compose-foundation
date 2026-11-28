@@ -769,12 +769,13 @@
         "swiftui-ios": [
           {"variant": "default", "status": "initial", "viewport": [402, 520]},
           {"variant": "four-digits", "status": "initial", "viewport": [402, 520]},
-          {"variant": "disabled", "status": "initial", "viewport": [402, 520]}
+          {"variant": "disabled", "status": "initial", "viewport": [402, 520]},
+          {"variant": "alphanumeric", "status": "initial", "viewport": [402, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/input-otp-demo.tsx",
-      "visual": "compare six filled slots, four empty slots, and a disabled three-plus-three group",
-      "behavior": "bind one numeric code with configurable grouping",
+      "visual": "compare filled slots, four empty slots and grouped disabled or alphanumeric codes",
+      "behavior": "bind one numeric or ASCII alphanumeric code with configurable grouping",
       "accessibility": "one editable field with code and disabled state",
       "motion": "static settled frames"
     },

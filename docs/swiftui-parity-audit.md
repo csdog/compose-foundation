@@ -482,7 +482,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | icon | 支持 SF Symbols、动态字号和可选无障碍标签。Compose 可传入任意 ImageVector 并选择图标变体。 |
 | input | 原生单行输入支持独立占位文字、SecureField、错误和禁用状态。Nova 边框视觉高 32 pt，字段布局至少高 44 pt。iOS 26 与 macOS 26 的 Nova RTL 字段按界面起始边对齐。混合脚本输入、iOS 光标及 VoiceOver 待单独验收。 |
 | input-group | 支持横向和纵向附加区域、共用边框与由调用方控制的焦点/错误外观。输入和操作可通过原生 SwiftUI 控件组合。 |
-| input-otp | 使用一个定长数字绑定和原生编辑字段，iOS 字段标记为一次性验证码。Nova 使用连续的 32 pt 格，可通过 `groupBreaks` 加入分隔符。字母数字模式及逐槽选区控制仍待补齐。 |
+| input-otp | 使用一个定长绑定和原生编辑字段，iOS 字段标记为一次性验证码。支持数字及 ASCII 字母数字模式，后者保留大小写。Nova 使用连续的 32 pt 格，可通过 `groupBreaks` 加入分隔符。字母数字键入及截图待验，逐槽选区控制待补齐。 |
 | item | 支持媒体、标题、说明、操作、三种表面样式和三种尺寸。群组、图片媒体尺寸和独立 header/footer 待对齐。 |
 | kbd | 显示单个键符及 themed 键帽。Compose 另有组合键分组 slot。 |
 | label | Nova 标签使用 14 pt Medium，支持禁用淡化。作为原生 Toggle 的内容时，文字和复选框使用同一绑定。独立表单标签的焦点关联待补齐。 |

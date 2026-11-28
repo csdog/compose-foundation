@@ -1,6 +1,10 @@
 import SwiftUI
 
 public struct FoundationInputOtp: View {
+    public enum Pattern: Sendable {
+        case digits, alphanumeric
+    }
+
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.isEnabled) private var isEnabled
@@ -10,6 +14,7 @@ public struct FoundationInputOtp: View {
 
     private let length: Int
     private let groupBreaks: [Int]
+    private let pattern: Pattern
     private let label: String
 
     public init(code: Binding<String>, length: Int = 6, accessibilityLabel: String = "Verification code") {
@@ -23,24 +28,35 @@ public struct FoundationInputOtp: View {
         groupBreaks: [Int],
         accessibilityLabel: String = "Verification code"
     ) {
+        self.init(code: code, length: length, groupBreaks: groupBreaks, pattern: .digits, accessibilityLabel: accessibilityLabel)
+    }
+
+    public init(
+        code: Binding<String>,
+        length: Int = 6,
+        groupBreaks: [Int] = [],
+        pattern: Pattern,
+        accessibilityLabel: String = "Verification code"
+    ) {
         let limit = max(1, length)
         self._code = code
         self.length = limit
         self.groupBreaks = Set(groupBreaks.filter { $0 > 0 && $0 < limit }).sorted()
+        self.pattern = pattern
         self.label = accessibilityLabel
     }
 
     @ViewBuilder
     public var body: some View {
         let palette = theme.palette(for: colorScheme)
-        let digits = Array(sanitized(code))
+        let characters = Array(sanitized(code))
         let shape = RoundedRectangle(cornerRadius: theme.cornerRadius)
 
         if theme.preset == .nova {
             HStack(spacing: 0) {
                 ForEach(groups, id: \.lowerBound) { group in
                     if group.lowerBound > 0 { separator(palette: palette) }
-                    novaGroup(group, digits: digits, palette: palette, shape: shape)
+                    novaGroup(group, characters: characters, palette: palette, shape: shape)
                 }
             }
             .compositingGroup()
@@ -57,12 +73,12 @@ public struct FoundationInputOtp: View {
                         if group.lowerBound > 0 { separator(palette: palette) }
                         HStack(spacing: 5) {
                             ForEach(group, id: \.self) { index in
-                                Text(index < digits.count ? String(digits[index]) : " ")
+                                Text(index < characters.count ? String(characters[index]) : " ")
                                     .font(.body.monospacedDigit())
                                     .frame(maxWidth: .infinity, minHeight: 44)
                                     .foregroundColor(palette.foreground)
                                     .background(shape.fill(palette.card))
-                                    .overlay(shape.strokeBorder(index == digits.count ? palette.ring : palette.border))
+                                    .overlay(shape.strokeBorder(index == characters.count ? palette.ring : palette.border))
                             }
                         }
                     }
@@ -84,13 +100,13 @@ public struct FoundationInputOtp: View {
     }
 
     private func novaGroup(
-        _ group: Range<Int>, digits: [Character], palette: FoundationPalette, shape: RoundedRectangle
+        _ group: Range<Int>, characters: [Character], palette: FoundationPalette, shape: RoundedRectangle
     ) -> some View {
         let fill = colorScheme == .dark ? palette.novaDarkOutlineFill : Color.clear
-        let active = isEnabled && isEditing ? min(digits.count, length - 1) : nil
+        let active = isEnabled && isEditing ? min(characters.count, length - 1) : nil
         return HStack(spacing: 0) {
             ForEach(group, id: \.self) { index in
-                Text(index < digits.count ? String(digits[index]) : " ")
+                Text(index < characters.count ? String(characters[index]) : " ")
                     .font(font ?? .system(size: 14).monospacedDigit())
                     .foregroundColor(palette.foreground)
                     .frame(minWidth: 0, idealWidth: 32, maxWidth: 32, minHeight: 32, maxHeight: 32)
@@ -112,6 +128,7 @@ public struct FoundationInputOtp: View {
         .clipShape(shape)
     }
 
+    @ViewBuilder
     private var field: some View {
         let value = Binding(get: { sanitized(code) }, set: { code = sanitized($0) })
         let field = TextField("", text: value, onEditingChanged: { isEditing = $0 })
@@ -120,13 +137,32 @@ public struct FoundationInputOtp: View {
             .textFieldStyle(PlainTextFieldStyle())
             .accessibilityLabel(Text(label))
         #if os(iOS)
-        return field.keyboardType(.numberPad).textContentType(.oneTimeCode)
+        if pattern == .alphanumeric {
+            field.keyboardType(.asciiCapable)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textContentType(.oneTimeCode)
+        } else {
+            field.keyboardType(.numberPad).textContentType(.oneTimeCode)
+        }
         #else
-        return field
+        if pattern == .alphanumeric {
+            field.disableAutocorrection(true)
+        } else {
+            field
+        }
         #endif
     }
 
     private func sanitized(_ value: String) -> String {
-        value.compactMap(\.wholeNumberValue).filter { (0...9).contains($0) }.prefix(length).map(String.init).joined()
+        switch pattern {
+        case .digits:
+            return value.compactMap(\.wholeNumberValue).filter { (0...9).contains($0) }.prefix(length).map(String.init).joined()
+        case .alphanumeric:
+            let accepted = value.utf8.lazy.filter { byte in
+                (48...57).contains(byte) || (65...90).contains(byte) || (97...122).contains(byte)
+            }
+            return String(decoding: accepted.prefix(length), as: UTF8.self)
+        }
     }
 }

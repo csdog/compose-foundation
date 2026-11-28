@@ -41,6 +41,12 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             return
         }
 
+        if ProcessInfo.processInfo.arguments.contains("--input-otp-interaction") {
+            window.rootViewController = UIHostingController(rootView: InputOtpInteractionFixture())
+            window.makeKeyAndVisible()
+            return
+        }
+
         if ProcessInfo.processInfo.arguments.contains("--theme-presets") {
             window.rootViewController = UIHostingController(rootView: ThemePresetsInteractionFixture())
             window.makeKeyAndVisible()
@@ -2929,11 +2935,25 @@ private struct SliderScreenshotFixture: View {
     }
 }
 
+private struct InputOtpInteractionFixture: View {
+    @State private var code = ""
+
+    var body: some View {
+        VStack(spacing: 16) {
+            FoundationInputOtp(code: $code, groupBreaks: [3], pattern: .alphanumeric)
+            Text("Accepted: \(code.isEmpty ? "empty" : code)")
+        }
+        .padding(24)
+        .foundationTheme(FoundationTheme(preset: .nova))
+    }
+}
+
 private struct InputOtpScreenshotFixture: View {
     enum Example: String, CaseIterable {
         case complete = "default-initial"
         case fourDigits = "four-digits-initial"
         case disabled = "disabled-initial"
+        case alphanumeric = "alphanumeric-initial"
     }
 
     let example: Example
@@ -2942,7 +2962,7 @@ private struct InputOtpScreenshotFixture: View {
 
     init(example: Example) {
         self.example = example
-        _code = State(initialValue: example == .fourDigits ? "" : "123456")
+        _code = State(initialValue: example == .fourDigits || example == .alphanumeric ? "" : "123456")
     }
 
     var body: some View {
@@ -2953,7 +2973,8 @@ private struct InputOtpScreenshotFixture: View {
         return FoundationInputOtp(
             code: $code,
             length: example == .fourDigits ? 4 : 6,
-            groupBreaks: disabled ? [3] : []
+            groupBreaks: disabled || example == .alphanumeric ? [3] : [],
+            pattern: example == .alphanumeric ? .alphanumeric : .digits
         )
         .disabled(disabled)
         .font(.custom("Geist-Regular", size: 14))
