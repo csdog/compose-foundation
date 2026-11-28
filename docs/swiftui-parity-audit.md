@@ -8,6 +8,21 @@
 
 Web 兼容分发在 Chromium 的 Wasm 路径和 JS 回退路径均显示原生安装选项。实际点击复制按钮核对了两端命令。Date Picker 的 Copy Page 同时包含 Calendar 和 Popover。两项 JVM 文档回归测试通过。
 
+## shadcn 视觉对齐范围
+
+SwiftUI registry 当前有 69 个条目。基准仓库为其中 63 个条目提供 shadcn 截图。chip、emoji-text、icon、stepper、text、theme 缺少直接参考截图，现有原生样例继续用各自功能验收。各条目的视觉审核按变体、状态和主题记录。[shadcn 基准索引](https://github.com/csdog/compose-foundation-baselines/blob/b19fcbf62f182422a5f26d7b8ce3dd8006695858/shadcn/Index.md)
+
+### Tabs 和 Button 初始态
+
+Button 的字号由 `Size` 决定，省略尺寸时走主题字体，Sera 使用 caption / semibold。Nova Tabs 保留组件字号，祖先的 `.font` 不会改变标签样式。截图用例使用组件实际的 SwiftUI 字体，Web 侧保留 Geist。
+
+
+- Tabs 使用 `tabs-disabled.tsx`。Home 为选中项，Disabled 保持禁用，方向键仍跳过禁用项。Web 的 Disabled 焦点环示例与这一规则不同，后续键盘视觉对照使用可聚焦项。
+- Button 使用现有 `button-variants-initial` 参考，覆盖描边文字按钮和向上箭头图标按钮。两个控件均保留 44 pt 高的点按范围，图标按钮的宽度也至少为 44 pt。
+- 比对使用 402 × 520 共用画布，每个用例分别采集浅色和深色。
+
+iPhone 17 Pro（iOS 26.2）上两轮各四张原图逐文件一致。复验确认默认深色 Tabs 的选中填充为 `#2f2f2f`。shadcn 和 SwiftUI 在文字抗锯齿及轮廓边缘仍有像素差异。macOS Swift Package 构建通过。[验证运行](https://github.com/csdog/compose-foundation/actions/runs/45993072773) · [四张原图及差异](https://github.com/csdog/compose-foundation/actions/runs/45993072773/artifacts/15194918019)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |

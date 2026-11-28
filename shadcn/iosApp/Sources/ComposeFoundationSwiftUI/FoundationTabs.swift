@@ -31,21 +31,22 @@ public struct FoundationTabs<Value: Hashable, Panel: View>: View {
 
     public var body: some View {
         let palette = theme.palette(for: colorScheme)
+        let nova = theme.preset == .nova
         let shape = RoundedRectangle(cornerRadius: theme.cornerRadius)
 
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: nova ? 8 : 10) {
             ScrollViewReader { scroll in
                 ScrollView(.horizontal, showsIndicators: false) {
                     Group {
                         if #available(iOS 17, macOS 14, *) {
                             FoundationKeyboardTabs(
                                 choices: choices, selection: $selection, activationMode: activationMode,
-                                scrollTo: { scroll.scrollTo($0) }
+                                spacing: nova ? 0 : 2, scrollTo: { scroll.scrollTo($0) }
                             ) { choice, focused in
                                 tab(choice, focused: focused, palette: palette, shape: shape)
                             }
                         } else {
-                            HStack(spacing: 2) {
+                            HStack(spacing: nova ? 0 : 2) {
                                 ForEach(choices) { choice in
                                     tab(choice, focused: false, palette: palette, shape: shape)
                                 }
@@ -53,7 +54,7 @@ public struct FoundationTabs<Value: Hashable, Panel: View>: View {
                         }
                     }
                     .padding(.horizontal, 3)
-                    .background(shape.fill(palette.secondary))
+                    .background(shape.fill(palette.secondary).frame(height: nova ? 32 : nil))
                 }
             }
             if choices.contains(where: { $0.value == selection }) {
@@ -69,20 +70,47 @@ public struct FoundationTabs<Value: Hashable, Panel: View>: View {
         return Button {
             selection = choice.value
         } label: {
-            Text(choice.title)
-                .font(.subheadline.weight(selected ? .semibold : .medium))
-                .foregroundColor(selected ? palette.foreground : palette.mutedForeground)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(shape.fill(selected ? palette.card : Color.clear))
-                .overlay(shape.strokeBorder(focused ? palette.ring : .clear, lineWidth: 2).allowsHitTesting(false))
-                .frame(minHeight: 44)
-                .contentShape(Rectangle())
+            if theme.preset == .nova {
+                novaLabel(choice.title, selected: selected, focused: focused, palette: palette)
+            } else {
+                Text(choice.title)
+                    .font(.subheadline.weight(selected ? .semibold : .medium))
+                    .foregroundColor(selected ? palette.foreground : palette.mutedForeground)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(shape.fill(selected ? palette.card : Color.clear))
+                    .overlay(shape.strokeBorder(focused ? palette.ring : .clear, lineWidth: 2).allowsHitTesting(false))
+                    .frame(minHeight: 44)
+                    .contentShape(Rectangle())
+            }
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(!choice.isEnabled)
-        .opacity(choice.isEnabled ? 1 : 0.5)
+        .opacity(theme.preset == .nova || choice.isEnabled ? 1 : 0.5)
         .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+    private func novaLabel(_ title: String, selected: Bool, focused: Bool, palette: FoundationPalette) -> some View {
+        let dark = colorScheme == .dark
+        let shape = RoundedRectangle(cornerRadius: max(0, theme.cornerRadius - 2))
+        let neutral = palette.secondary == FoundationPalette.neutralDark.secondary
+            && palette.input == FoundationPalette.neutralDark.input
+        let referenceGrey = 47.0 / 255
+        let darkFill = neutral ? Color(.sRGB, red: referenceGrey, green: referenceGrey, blue: referenceGrey, opacity: 1)
+            : palette.input.opacity(0.30)
+        let selectedFill = dark ? darkFill : palette.background
+        let foreground = selected ? palette.foreground : dark ? palette.mutedForeground : palette.foreground.opacity(0.60)
+        return Text(title)
+            .font(.system(size: 14, weight: .medium))
+            .foregroundColor(foreground)
+            .lineLimit(1)
+            .padding(.horizontal, 7)
+            .frame(minHeight: 26)
+            .background(shape.fill(selected ? selectedFill : .clear)
+                .shadow(color: selected ? .black.opacity(0.10) : .clear, radius: 1, y: 1))
+            .overlay(shape.strokeBorder(focused ? palette.ring : selected && dark ? palette.input : .clear)
+                .allowsHitTesting(false))
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
     }
 }
 
@@ -94,6 +122,7 @@ private struct FoundationKeyboardTabs<Value: Hashable, Row: View>: View {
     let choices: [FoundationChoice<Value>]
     @Binding var selection: Value
     let activationMode: FoundationTabsActivationMode
+    let spacing: CGFloat
     let scrollTo: (Value) -> Void
     let row: (FoundationChoice<Value>, Bool) -> Row
 
@@ -102,7 +131,7 @@ private struct FoundationKeyboardTabs<Value: Hashable, Row: View>: View {
     }
 
     var body: some View {
-        HStack(spacing: 2) {
+        HStack(spacing: spacing) {
             ForEach(choices) { choice in
                 row(choice, focused == choice.value)
                     .focusable(isEnabled && choice.isEnabled)

@@ -155,9 +155,16 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 let scheme: ColorScheme = dark ? .dark : .light
                 let palette = FoundationTheme().palette(for: scheme)
                 window.overrideUserInterfaceStyle = dark ? .dark : .light
-                let content = fixture().padding(16)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(palette.background)
+                let useComparisonViewport = name == "tabs" || name == "button"
+                let content: AnyView
+                switch name {
+                case "tabs": content = AnyView(TabsInitialScreenshotFixture())
+                case "button": content = AnyView(ButtonInitialScreenshotFixture())
+                default:
+                    content = AnyView(fixture().padding(16)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(palette.background))
+                }
                 let host = UIHostingController(rootView: content
                     .environment(\.colorScheme, scheme)
                     .environment(\.locale, Locale(identifier: "en_US")))
@@ -169,8 +176,15 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 try await Task.sleep(nanoseconds: 32_000_000)
                 let format = UIGraphicsImageRendererFormat()
                 format.scale = 1
+                var bounds = root.view.bounds
+                if useComparisonViewport {
+                    // Compare the shared viewport at one pixel per layout point.
+                    bounds.size.height = min(bounds.height, 520)
+                    format.preferredRange = .standard
+                    format.opaque = true
+                }
                 var captureSucceeded = false
-                let image = UIGraphicsImageRenderer(bounds: root.view.bounds, format: format).image { _ in
+                let image = UIGraphicsImageRenderer(bounds: bounds, format: format).image { _ in
                     captureSucceeded = root.view.drawHierarchy(in: root.view.bounds, afterScreenUpdates: true)
                 }
                 guard captureSucceeded, let data = image.pngData() else {
@@ -530,5 +544,66 @@ private struct PopoverAuditTextField: UIViewRepresentable {
         init(value: Binding<String>) { self.value = value }
 
         @objc func changed(_ field: UITextField) { value.wrappedValue = field.text ?? "" }
+    }
+}
+
+private struct TabsInitialScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    @State private var selection = "home"
+
+    var body: some View {
+        let theme = novaTheme
+        FoundationTabs([
+            FoundationChoice("Home", value: "home"),
+            FoundationChoice("Disabled", value: "settings", isEnabled: false),
+        ], selection: $selection) { _ in
+            EmptyView()
+        }
+        .foundationTheme(theme)
+        .padding(.horizontal, 24)
+        // The 32-point rail is centered inside its 44-point touch targets.
+        .padding(.top, 18)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+
+    private var novaTheme: FoundationTheme {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        return FoundationTheme(preset: .nova, light: light)
+    }
+}
+
+private struct ButtonInitialScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        return HStack(spacing: 2) {
+            Button("Button") {}
+                .buttonStyle(FoundationButtonStyle(.outline))
+            Button {} label: {
+                Path { path in
+                    path.move(to: CGPoint(x: 8, y: 12.67))
+                    path.addLine(to: CGPoint(x: 8, y: 3.33))
+                    path.move(to: CGPoint(x: 3.33, y: 8))
+                    path.addLine(to: CGPoint(x: 8, y: 3.33))
+                    path.addLine(to: CGPoint(x: 12.67, y: 8))
+                }
+                .stroke(style: StrokeStyle(lineWidth: 1.33, lineCap: .round, lineJoin: .round))
+                .frame(width: 16, height: 16)
+            }
+            .buttonStyle(FoundationButtonStyle(.outline, size: .icon))
+            .accessibilityLabel("Arrow up")
+        }
+        .foundationTheme(theme)
+        .padding(.horizontal, 24)
+        .padding(.top, 18)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
     }
 }

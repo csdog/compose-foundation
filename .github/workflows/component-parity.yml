@@ -379,6 +379,14 @@ jobs:
       - name: Compile the native SwiftUI package for macOS
         run: swift build --package-path shadcn/iosApp
 
+      - name: Verify SwiftUI Button and Tabs typography
+        run: |
+          swiftui=shadcn/iosApp
+          xcrun swiftc -swift-version 6 -parse-as-library \
+            "$swiftui"/Sources/ComposeFoundationSwiftUI/*.swift \
+            "$swiftui/validation/MacControlTypographyAudit.swift" -o "$RUNNER_TEMP/control-typography"
+          "$RUNNER_TEMP/control-typography"
+
   report:
     name: Component parity report
     needs: [capture, cmp-behavior, swift-logic, publish]
