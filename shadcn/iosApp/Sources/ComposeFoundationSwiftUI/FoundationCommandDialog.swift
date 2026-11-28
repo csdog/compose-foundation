@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Presents a command palette over the modified container.
+/// Presents a command palette in the modified container or its macOS sheet.
 public struct FoundationCommandDialog<Value: Hashable>: ViewModifier {
     @Binding private var isPresented: Bool
     @State private var query = ""
@@ -36,8 +36,14 @@ public struct FoundationCommandDialog<Value: Hashable>: ViewModifier {
     }
 
     public func body(content: Content) -> some View {
-        content.modifier(FoundationDialog(isPresented: $isPresented, title: title, presentation: .centered,
-                                          onDismiss: onDismiss) {
+        let presentation: FoundationDialog<FoundationCommand<Value>>.Presentation
+        #if os(macOS)
+        presentation = .sheet
+        #else
+        presentation = .centered
+        #endif
+        return content.modifier(FoundationDialog(isPresented: $isPresented, title: title, presentation: presentation,
+                                                 onDismiss: onDismiss) {
             FoundationCommand(sections: sections, query: $query, searchPrompt: searchPrompt,
                               emptyMessage: emptyMessage, actionAppearance: actionAppearance) { value in
                 close()
@@ -51,7 +57,6 @@ public struct FoundationCommandDialog<Value: Hashable>: ViewModifier {
     }
 
     private func close() {
-        foundationEndEditingBeforeBackdropDismissal()
         isPresented = false
     }
 }

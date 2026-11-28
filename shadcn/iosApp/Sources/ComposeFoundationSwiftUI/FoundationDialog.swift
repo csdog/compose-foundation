@@ -134,7 +134,8 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
                         description: description.map {
                             Text($0).font(.subheadline).foregroundColor(palette.mutedForeground)
                         },
-                        alignment: .top, close: closeButton, dismiss: close
+                        alignment: .top, close: closeButton, dismiss: close,
+                        initiallyFocusClose: commandFocusSearchOnOpen != true
                     )
                     dialogContent()
                     footer

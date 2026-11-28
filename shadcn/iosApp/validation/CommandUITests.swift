@@ -48,8 +48,13 @@ final class CommandUITests: XCTestCase {
         trigger.tap()
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         XCTAssertTrue(search.waitForExistence(timeout: 5))
+        let opened = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        opened.name = "Command Dialog with search focused"
+        opened.lifetime = .keepAlways
+        add(opened)
         field.typeText("bi")
-        search.tap()
+        XCTAssertFalse(app.buttons["Calendar"].exists)
+        app.buttons["Billing"].tap()
         XCTAssertTrue(field.waitForNonExistence(timeout: 5))
         XCTAssertEqual(result.label, "Billing")
 
