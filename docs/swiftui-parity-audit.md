@@ -300,6 +300,14 @@ RTL 用例使用阿拉伯语标题和星期名，保留参考图中的西文日�
 
 iPad mini（A17 Pro，iOS 26.2）的 10 张深浅色候选图复拍逐字节一致。原有三种单月用例的 6 张图与上一轮像素一致。双月图使用 720 × 680 画布，容纳两个完整月份和 44 pt 日期触控行。shadcn 双月参考为 720 × 532。SwiftUI 的前后箭头分布于首末月份标题，区间色带的换行边缘为直角。[iOS 截图和对照报告](https://github.com/csdog/compose-foundation/actions/runs/46084778506/artifacts/15239270143)
 
+### Menubar Nova 默认和阿拉伯语 RTL
+
+对照 shadcn Base UI / Nova 的 `menubar-demo.tsx`、RTL 示例及同版本样式。Nova 菜单栏使用 3 pt 水平内边距、2 pt 触发器间距和可缩放的 14 pt Medium 字号。展开及指针悬停使用次要表面色，键盘焦点由现有焦点环显示。iOS 触发器保留至少 44 pt 高的点击区域，macOS 菜单栏至少高 32 pt。
+
+macOS 实际窗口的 Menubar LTR、Menubar RTL 和 Navigation Menu LTR 均通过完整键盘回归。三个启用组与一个禁用组验证了正确的移动方向、禁用组及禁用项跳过、Return 只执行目标操作、Escape 归还焦点、整组禁用后关闭。[macOS 键盘日志](https://github.com/csdog/compose-foundation/actions/runs/46085948252/job/140795596981)
+
+iPad mini（A17 Pro，iOS 26.2）的 4 张 720 × 520 候选图复拍逐字节一致。LTR 与阿拉伯语 RTL 审核用例的菜单栏宽 288 pt，高 44 pt，shadcn 对照为 288 × 32 CSS px。两边浅色画布为 `#FFFFFF`，深色为 `#0A0A0A`。截图应用以 iOS 14 模拟器部署目标编译。[iOS 截图与参考图](https://github.com/csdog/compose-foundation/actions/runs/46085948252/artifacts/15239227471)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -341,7 +349,7 @@ iPad mini（A17 Pro，iOS 26.2）的 10 张深浅色候选图复拍逐字节一�
 | kbd | 显示单个键符及 themed 键帽。Compose 另有组合键分组 slot。 |
 | label | Nova 标签使用 14 pt Medium，支持禁用淡化。作为原生 Toggle 的内容时，文字和复选框使用同一绑定。独立表单标签的焦点关联待补齐。 |
 | marker | plain、separator、border 三种文本标记。缺少 Compose 的独立图标和内容 slots。 |
-| menubar | 分组入口支持共享打开状态、键盘移动、跳过禁用项、Return 执行和 Escape 关闭。iOS 26.2 模拟器已验证打开后的项目导航及跨菜单切换。Compose 另有子菜单和独立 radio/checkbox 条目。 |
+| menubar | 分组入口支持共享打开状态、键盘移动、跳过禁用项、Return 执行和 Escape 关闭。Nova 菜单栏覆盖默认和阿拉伯语 RTL。展开面板对照、子菜单、复选和单选项待补齐。 |
 | message | 收发对齐、作者、时间和内容。没有 Compose 的头像、消息组、独立 header/footer slots。 |
 | message-scroller | 内容更新时跟随末尾、触摸拖动暂停、恢复跟随和到达顶部回调。缺少 Compose 的任意锚点寻址、可见 ID，以及对桌面滚轮的完整跟随判定。 |
 | navigation-menu | 支持横向内容 slot、分组触发器和关联弹层。iOS 26.2 模拟器已验证打开后通过方向键切换导航组和以 Return 执行操作。Compose 另有独立 viewport 和 indicator API。 |
@@ -505,8 +513,11 @@ xcrun swiftc -whole-module-optimization -parse-as-library -target "$(uname -m)-a
   shadcn/iosApp/Sources/ComposeFoundationSwiftUI/*.swift shadcn/iosApp/validation/MacMenuKeyboardAudit.swift \
   -o "$app_bundle/Contents/MacOS/MenuKeyboardAudit"
 open -F -n -W --stdout "$audit_dir/menubar.log" "$app_bundle"
+open -F -n -W --stdout "$audit_dir/menubar-rtl.log" "$app_bundle" --args --rtl
 open -F -n -W --stdout "$audit_dir/navigation.log" "$app_bundle" --args --navigation
-grep '^PASS' "$audit_dir/menubar.log" && grep '^PASS' "$audit_dir/navigation.log"
+for log in "$audit_dir/menubar.log" "$audit_dir/menubar-rtl.log" "$audit_dir/navigation.log"; do
+  grep '^PASS' "$log" || exit 1
+done
 ```
 
 启动审计应用时传入 `--overlay-focus` 可打开 Dialog 和 Sheet 测试页。在 iOS 完全键盘控制服务运行时，通过 `validation/verify_overlay_focus.py` 复验初始关闭焦点、Return 和 Escape 两种关闭方式，以及关闭后按 Space 从同一个触发器重新打开。用重新打开的结果判断系统焦点，关闭次数用于核对每次关闭只触发一次回调。
