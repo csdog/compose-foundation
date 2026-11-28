@@ -27,3 +27,17 @@ public struct FoundationKbd: View {
             .overlay(shape.strokeBorder(nova ? .clear : palette.border))
     }
 }
+
+/// Present the keycaps and separators of a keyboard shortcut as one group.
+public struct FoundationKbdGroup<Content: View>: View {
+    private let content: Content
+
+    public init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+
+    public var body: some View {
+        HStack(spacing: 4) { content }
+            .accessibilityElement(children: .combine)
+    }
+}

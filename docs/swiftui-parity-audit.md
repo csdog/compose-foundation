@@ -30,6 +30,8 @@ iPhone 17 Pro（iOS 26.2）上浅色和深色各拍两遍。四张原图逐文�
 
 Kbd 覆盖四个修饰键与 Ctrl + B 两行。Skeleton 覆盖头像和两条文本占位。Spinner 覆盖静止帧以及完整的支付状态行。各用例使用 402 × 520 的共用画布，浅色和深色均以 iPhone 17 Pro（iOS 26.2）复拍。六张新图逐张一致，集成分支此前的 32 张图也保持逐字节一致。macOS Swift Package 构建通过。符号字体与抗锯齿仍有平台差异，Spinner 动画需单独验收。[Review 报告](https://github.com/csdog/compose-foundation/actions/runs/45998642997/artifacts/15197407696)
 
+`FoundationKbdGroup` 复验两组键帽。iPhone 17 Pro 的默认深浅色截图与原审核逐字节一致。新增 RTL 深浅色用例复拍一致，Ctrl 键帽移到右侧，B 移到左侧，与 shadcn RTL 例子顺序一致。真实 VoiceOver 朗读待验。[Kbd Review](https://github.com/csdog/compose-foundation/actions/runs/46126808324/artifacts/15256331515) · [macOS 构建](https://github.com/csdog/compose-foundation/actions/runs/46126808324/job/140923155551)
+
 ### Progress 默认示例
 
 官方示例在 500 ms 后从 13% 更新到 66%，归档参考图为更新后的状态。SwiftUI Nova 对照完整的 403.2 pt 宽进度条，在 iPhone 17 Pro Max（iOS 26.2）用 440 × 520 共用画布采集。深浅色各拍两遍，PNG 逐字节一致。原有 38 张 iPhone 17 Pro 截图与上一轮逐字节一致。圆角边缘及轨道配色有像素差异。macOS Swift Package 构建通过。进度变化过程及 RTL 待单独验收。[Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46000170133/artifacts/15198731356)
@@ -484,7 +486,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | input-group | 支持横向和纵向附加区域、共用边框与由调用方控制的焦点/错误外观。输入和操作可通过原生 SwiftUI 控件组合。 |
 | input-otp | 使用一个定长数字绑定和原生编辑字段，iOS 字段标记为一次性验证码。Nova 使用连续的 32 pt 格，可通过 `groupBreaks` 加入分隔符。字母数字模式及逐槽选区控制仍待补齐。 |
 | item | 支持媒体、标题、说明、操作、三种表面样式和三种尺寸。群组、图片媒体尺寸和独立 header/footer 待对齐。 |
-| kbd | 显示单个键符及 themed 键帽。Compose 另有组合键分组 slot。 |
+| kbd | 支持主题键帽及 `FoundationKbdGroup` 组合键分组。组内使用 4 pt 间距，可组合键帽和分隔符，并按系统布局方向排列。组合在无障碍树中使用合并语义，实际 VoiceOver 朗读待验。 |
 | label | Nova 标签使用 14 pt Medium，支持禁用淡化。作为原生 Toggle 的内容时，文字和复选框使用同一绑定。独立表单标签的焦点关联待补齐。 |
 | marker | plain、separator、border 三种文本标记。缺少 Compose 的独立图标和内容 slots。 |
 | menubar | 分组入口支持共享打开状态、键盘移动、跳过禁用项、Return 执行和 Escape 关闭。Nova 菜单栏覆盖默认和阿拉伯语 RTL。展开面板对照、子菜单、复选和单选项待补齐。 |

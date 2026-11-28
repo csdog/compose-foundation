@@ -561,12 +561,16 @@
       "status": "initial",
       "platforms": ["swiftui-ios"],
       "reference": "apps/v4/examples/base/kbd-demo.tsx",
-      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
-      "shadcnComparisonOrigin": {"swiftui-ios": [159, 0]},
-      "visual": "review the modifier strip and Ctrl + B combination",
-      "behavior": "static screenshot",
-      "accessibility": "review native semantics",
-      "motion": "verify independently of static capture"
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520], "referenceOrigin": [159, 0]},
+          {"variant": "rtl", "status": "initial", "viewport": [402, 520], "referenceOrigin": [159, 0]}
+        ]
+      },
+      "visual": "review the modifier strip and Ctrl + B combination in LTR and RTL",
+      "behavior": "static keyboard shortcut labels",
+      "accessibility": "combine the keycap labels and omit the decorative plus",
+      "motion": "static reference"
     },
     "skeleton": {
       "title": "Skeleton",
