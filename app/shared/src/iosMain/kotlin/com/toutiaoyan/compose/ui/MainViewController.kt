@@ -20,6 +20,7 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlinx.coroutines.delay
 
 private val iosInboundDeepLinks = InboundDeepLinks()
+private const val SHEET_CAPTURE_WARMUP_MILLIS = 6000L
 
 /** Called from Swift `onOpenURL` to hand the URI to [App]. */
 fun offerIosInboundDeepLink(uri: String) {
@@ -36,7 +37,7 @@ fun sheetAnimationViewController(markTrigger: () -> Unit) =
     ComposeUIViewController {
         var opened by remember { mutableStateOf(false) }
         LaunchedEffect(Unit) {
-            delay(6000)
+            delay(SHEET_CAPTURE_WARMUP_MILLIS)
             markTrigger()
             opened = true
         }

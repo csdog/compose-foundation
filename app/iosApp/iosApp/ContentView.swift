@@ -16,6 +16,7 @@ struct ComposeView: UIViewControllerRepresentable {
 }
 
 struct ContentView: View {
+    @State private var heartbeatVisible = false
     @State private var signal = Color(red: 1, green: 0, blue: 0)
 
     var body: some View {
@@ -27,15 +28,22 @@ struct ContentView: View {
                 }
             })
                 .overlay(
-                    Rectangle()
-                        .fill(signal)
-                        .frame(width: 16, height: 16)
-                        .padding(.top, 64)
-                        .allowsHitTesting(false),
+                    HStack(spacing: 4) {
+                        Rectangle().fill(signal).frame(width: 16, height: 16)
+                        Rectangle().fill(Color.blue).frame(width: 16, height: 16)
+                            .opacity(heartbeatVisible ? 1 : 0.2)
+                    }
+                    .padding(.top, 64)
+                    .allowsHitTesting(false),
                     alignment: .topLeading
                 )
                 .ignoresSafeArea()
                 .preferredColorScheme(.light)
+                .onAppear {
+                    withAnimation(.linear(duration: 0.5).repeatForever(autoreverses: true)) {
+                        heartbeatVisible = true
+                    }
+                }
         } else {
             ComposeView().ignoresSafeArea()
         }

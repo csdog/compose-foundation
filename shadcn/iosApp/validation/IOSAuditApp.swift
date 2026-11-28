@@ -24,8 +24,19 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             marker.backgroundColor = .clear
             let signal = UIView(frame: CGRect(x: 0, y: 64, width: 16, height: 16))
             signal.backgroundColor = .red
+            let heartbeat = UIView(frame: CGRect(x: 20, y: 64, width: 16, height: 16))
+            heartbeat.backgroundColor = .blue
+            // Keep simulator video emitting frames without changing the cropped comparison region.
+            let pulse = CABasicAnimation(keyPath: "opacity")
+            pulse.fromValue = 0.2
+            pulse.toValue = 1
+            pulse.duration = 0.5
+            pulse.autoreverses = true
+            pulse.repeatCount = .infinity
+            heartbeat.layer.add(pulse, forKey: "recordingHeartbeat")
             marker.rootViewController?.view.backgroundColor = .clear
             marker.rootViewController?.view.addSubview(signal)
+            marker.rootViewController?.view.addSubview(heartbeat)
             animationMarker = marker
             window.rootViewController = UIHostingController(rootView: SheetAnimationFixture {
                 signal.backgroundColor = .green
