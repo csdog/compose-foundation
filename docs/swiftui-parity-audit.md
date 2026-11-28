@@ -324,6 +324,14 @@ macOS 实际窗口的 Nova 分组用例通过了点击展开、方向键跨空�
 
 iPad mini（A17 Pro，iOS 26.2）在默认、分组和禁用初始态采集 6 张深浅色图，复拍逐字节一致。触发器在 720 × 520 画布中的宽度为 672 pt。禁用态中心底色与参考一致，浅色为 `#F8F8F8`，深色为 `#181818`。默认和分组图与调整禁用色前的候选图像素一致。审计应用以 iOS 14 模拟器部署目标编译。[iOS 截图与 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/46089020495/artifacts/15239799106)
 
+### Select Nova 默认、分组、禁用和阿拉伯语 RTL
+
+对照 shadcn Base UI / Nova 的 `select-demo.tsx`、分组、禁用和 RTL 示例。Nova 使用可缩放的 14 pt 文字、32 pt 描边和至少 44 pt 的点按区。占位文字和箭头使用弱化色，箭头处于逻辑末端。分组映射到原生菜单分区，空分组在构造时过滤，选中项保留勾选图标及选择语义。
+
+macOS 实际窗口验证了外部绑定切换蔬菜与水果时的触发器重绘、未知值回退到占位文字和整控件禁用时的外观。托管运行器的合成事件未能触发原生菜单项，本轮仍待复验菜单内点选。[macOS 窗口日志](https://github.com/csdog/compose-foundation/actions/runs/46091495270/job/140813282875)
+
+iPad mini（A17 Pro，iOS 26.2）的 8 张深浅色截图复拍逐字节一致。默认、分组与禁用触发器宽 192 pt，阿拉伯语 RTL 宽 128 pt。与 shadcn 对照，浅色中心底面均为 `#FFFFFF`，深色启用为 `#141414`，深色禁用为 `#0F0F0F`。禁用调整前后的 6 张启用用例像素一致。截图程序以 iOS 14 模拟器部署目标编译。[iOS 截图和对照报告](https://github.com/csdog/compose-foundation/actions/runs/46091495270/artifacts/15241042954)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -377,7 +385,7 @@ iPad mini（A17 Pro，iOS 26.2）在默认、分组和禁用初始态采集 6 �
 | resizable | 支持双窗格纵向/横向比例、拖动限制、RTL 和无障碍增减。拖动读取全局坐标，避免手柄移动改变手势参考点。Compose 另有专门的状态与面板 slots。 |
 | scroll-area | 使用原生 ScrollView，支持滚动轴、系统指示器与可选主题边框和圆角裁剪。自定义滚动条及其显隐和拖动配置待对齐。 |
 | scroll-fade | 按所选边缘和固定距离加渐变遮罩。和 Compose 的静态 overload 对应，缺少按可滚动方向和偏移量驱动的 overload。 |
-| select | 原生 Menu 支持单选、占位、选中图标、禁用项和原生分区标题。iOS 模拟器及 macOS 已验证分区、禁用状态、指针选择及无障碍值。Compose 另有尺寸、变体及不同面板位置。 |
+| select | 原生 Menu 支持单选、占位、选中图标、禁用项和原生分区标题。Nova 已接入默认、分组、禁用及阿拉伯语 RTL 初始态截图。展开样式、尺寸和面板位置待对齐。 |
 | separator | 横纵向装饰性分隔线可用。边缘颜色和屏幕像素由 SwiftUI/theme 决定。 |
 | sheet | 支持系统 sheet 及四个逻辑边的面板。可设最大高度，正文可滚动，页脚固定。四个方向和阿拉伯语 RTL 示例覆盖深浅色。iOS 实际触控、滚动及 VoiceOver 待验收。 |
 | shimmer | 支持开关、穿过内容的光带、减少动态效果。Compose 另有文本遮罩及可调颜色、宽度、方向、时序。 |
