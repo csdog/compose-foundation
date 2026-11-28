@@ -947,6 +947,26 @@ jobs:
           cat "$log"
           grep -q '^PASS:' "$log"
 
+      - name: Verify Command search and keyboard selection on macOS
+        if: contains(needs.baseline.outputs.matrix, '"command"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          app="$RUNNER_TEMP/CommandAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string CommandAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.command-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$swiftui"/Sources/ComposeFoundationSwiftUI/Foundation{Theme,Command}.swift \
+            "$swiftui/validation/MacCommandAudit.swift" -o "$app/Contents/MacOS/CommandAudit"
+          log="$RUNNER_TEMP/command.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app" || true
+          cat "$log"
+          grep -q '^PASS:' "$log"
+
       - name: Verify Dropdown Menu trigger state on macOS
         if: contains(needs.baseline.outputs.matrix, '"dropdown-menu"')
         timeout-minutes: 2
