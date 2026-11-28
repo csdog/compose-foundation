@@ -34,6 +34,8 @@ Kbd 覆盖四个修饰键与 Ctrl + B 两行。Skeleton 覆盖头像和两条文
 
 官方示例在 500 ms 后从 13% 更新到 66%，归档参考图为更新后的状态。SwiftUI Nova 对照完整的 403.2 pt 宽进度条，在 iPhone 17 Pro Max（iOS 26.2）用 440 × 520 共用画布采集。深浅色各拍两遍，PNG 逐字节一致。原有 38 张 iPhone 17 Pro 截图与上一轮逐字节一致。圆角边缘及轨道配色有像素差异。macOS Swift Package 构建通过。进度变化过程及 RTL 待单独验收。[Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46000170133/artifacts/15198731356)
 
+带标题的 Progress 对照 56% 的英文示例和阿拉伯语 RTL 示例。iPhone 17 Pro Max 的六张深浅色图复拍一致，原有纯轨道的两张图与此前审核逐字节一致。沿轨道抽样确认英文填充从左开始，RTL 填充从右开始。macOS Swift Package 编译及通用焦点与选择规则通过。进度变化过程及实际 VoiceOver 仍待验。[macOS 日志](https://github.com/csdog/compose-foundation/actions/runs/46129844621/job/140932439657)[iPhone Review](https://github.com/csdog/compose-foundation/actions/runs/46129844621/artifacts/15257840765)
+
 ### Switch 关闭、开启和禁用态
 
 对照 Nova 的 `switch-demo.tsx` 和 `switch-disabled.tsx`，每张图保留完整轨道、滑块及标签。最终在 iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集，浅色和深色各三个用例，六张 PNG 与各自复拍逐字节一致。禁用轨道采样点与上游相差一个灰阶，滑块中心采样值一致。字体光栅化与控件轮廓仍有细微像素差异。[最终 Switch Review](https://github.com/csdog/compose-foundation/actions/runs/46006892307/artifacts/15202264774)
@@ -493,7 +495,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | navigation-menu | 支持横向内容 slot、分组触发器和关联弹层。Nova 初始态覆盖默认和阿拉伯语 RTL。展开面板对照、共享 viewport 和 indicator，以及分组与独立链接间的方向键导航待补齐。 |
 | pagination | 支持前后页图标或文字、纯页码布局、标准和紧凑窗口、省略及当前页绑定。独立的首末按钮和自定义内容 slots 待对齐。 |
 | popover | iOS 和 macOS 使用锚定的无箭头圆角面板，默认居中显示在触发器下方，间距 4 pt，并根据可用空间翻转或调整位置。`arrowEdge` 指定首选方向，`onDismiss` 在窗口关闭后调用。iOS 模拟器已验证面板内键盘焦点、Return、Escape、触控关闭和跨窗口还原触发器焦点。 |
-| progress | 支持范围归一化、动画、减少动态效果与百分比无障碍语义。Compose 可插入 label、value、track 和 indicator。 |
+| progress | 支持范围归一化、动画、减少动态效果与百分比无障碍语义。可选可见标题和当前值，支持自定义值文案。已验收英文标题、阿拉伯语 RTL 填充及纯轨道截图。自定义 Track 和 Indicator slots 待对齐。 |
 | questionnaire | 单选、多选、文本题、验证、回退、跳过及提交可用。缺少 Compose 的快捷键、题定义 slots、重置与部分进度状态 API。 |
 | radio-group | 支持纵向单选和禁用。Nova 使用 16 pt 圆形控件、8 pt 选中圆点和深色未选中底色。iOS 每项至少保留 44 × 44 pt 点按区域。macOS 与 iPad 已验收 LTR、RTL 的方向键，macOS 已验收组内单一 Tab 停靠点，iPad 已验收触控。横向布局与实际 VoiceOver 仍待验收。 |
 | resizable | 支持双窗格纵向/横向比例、拖动限制、RTL 和无障碍增减。拖动读取全局坐标，避免手柄移动改变手势参考点。Compose 另有专门的状态与面板 slots。 |

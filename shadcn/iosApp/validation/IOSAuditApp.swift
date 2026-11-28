@@ -177,11 +177,15 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "kbd": { AnyView(StatusInitialScreenshotFixture(example: .kbd)) },
             "skeleton": { AnyView(StatusInitialScreenshotFixture(example: .skeleton)) },
             "spinner": { AnyView(StatusInitialScreenshotFixture(example: .spinner)) },
-            "progress": { AnyView(StatusInitialScreenshotFixture(example: .progress)) },
             "tabs": { AnyView(TabsInitialScreenshotFixture()) },
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "progress": [
+                ("progress-default-initial", { AnyView(StatusInitialScreenshotFixture(example: .progress)) }),
+                ("progress-label-initial", { AnyView(StatusInitialScreenshotFixture(example: .progressLabel)) }),
+                ("progress-rtl-initial", { AnyView(StatusInitialScreenshotFixture(example: .progressRTL)) }),
+            ],
             "theme": FoundationStylePreset.allCases.map { preset in
                 ("theme-\(preset.rawValue)-initial", { AnyView(ThemePresetScreenshotFixture(preset: preset)) })
             },
@@ -3535,7 +3539,7 @@ private struct SwitchScreenshotFixture: View {
 }
 
 private struct StatusInitialScreenshotFixture: View {
-    enum Example { case kbd, skeleton, spinner, progress }
+    enum Example { case kbd, skeleton, spinner, progress, progressLabel, progressRTL }
 
     let example: Example
     @Environment(\.colorScheme) private var scheme
@@ -3572,6 +3576,13 @@ private struct StatusInitialScreenshotFixture: View {
             case .progress:
                 FoundationProgress(value: 0.66)
                     .frame(width: 403.2)
+            case .progressLabel, .progressRTL:
+                let rtl = example == .progressRTL
+                FoundationProgress(rtl ? "تقدم الرفع" : "Upload progress", value: 56, total: 100,
+                                   valueLabel: rtl ? "٥٦%" : nil)
+                    .font(rtl ? .system(size: 14) : .custom("Geist-Regular", size: 14))
+                    .frame(width: 384)
+                    .environment(\.layoutDirection, rtl ? .rightToLeft : .leftToRight)
             case .spinner:
                 HStack(spacing: 10) {
                     FoundationSpinner(accessibilityLabel: "Processing payment", animates: false)
