@@ -1,6 +1,7 @@
 package com.toutiaoyan.compose.ui.components.sheet
 
 import android.graphics.Bitmap
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
@@ -10,6 +11,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.test.platform.app.InstrumentationRegistry
 import com.toutiaoyan.compose.ui.theme.Theme
+import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import java.io.File
 import org.junit.Rule
@@ -28,7 +30,7 @@ class SheetAndroidAnimationTest {
 
         compose.setContent {
             Theme(preset = StylePreset.Nova, isDark = false) {
-                Box(Modifier.fillMaxSize()) {
+                Box(Modifier.fillMaxSize().background(currentTheme.colors.background)) {
                     Sheet {
                         SheetTrigger("Edit profile")
                         SheetContent(side = SheetSide.End) {

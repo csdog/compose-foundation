@@ -4,6 +4,8 @@ cd "$(dirname "$0")/../.."
 platform="${1:?Pass cmp-android or jetpack-compose}"
 output="${2:?Pass the output root}/$platform/sheet-open/actual"
 test_class=com.toutiaoyan.compose.ui.components.sheet.SheetAndroidAnimationTest
+adb shell settings put system screen_off_timeout 2147483647
+adb shell svc power stayon true
 adb shell settings put global animator_duration_scale 1
 adb shell settings put global sysui_demo_allowed 1
 adb shell am broadcast -a com.android.systemui.demo -e command enter
@@ -30,6 +32,8 @@ case "$platform" in
 esac
 adb install -r "$test_apk"
 adb shell pm clear "$package"
+adb shell input keyevent KEYCODE_WAKEUP
+adb shell wm dismiss-keyguard
 result="$(adb shell am instrument -w -e class "$test_class" "$test_package/androidx.test.runner.AndroidJUnitRunner")"
 printf '%s\n' "$result"
 grep -Fq 'OK (1 test)' <<<"$result"
