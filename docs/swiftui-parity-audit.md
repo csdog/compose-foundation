@@ -118,7 +118,7 @@ SwiftUI iOS 的计划包含默认态的收起、展开、键盘聚焦和键盘�
 
 采集程序将触发器和弹层窗口绘制到同一张 PNG。它按 1 pt 对 1 CSS px 对照参考图。RTL 按计划内的原点裁切 Web 画布，完整保留两排触发器和弹层。键盘截图使用预设状态和原生输入框焦点，实际发送硬件按键的行为由下文焦点脚本独立验收。[shadcn Popover 截图及来源](https://github.com/csdog/compose-foundation-baselines/tree/main/shadcn/popover)
 
-在 iPhone 17 Pro（iOS 26.2）上，两轮各 24 张 PNG 逐文件一致。展开图同时保留触发器、背景和完整面板。默认 Nova 深色按钮中部实测为 `#141414`。Web 和 iOS 的文字光栅化、圆角与阴影仍有像素差异，逐项差异图收录在审核附件。macOS Swift Package 构建通过。[验证运行](https://github.com/csdog/compose-foundation/actions/runs/45988767609) · [24 张实拍与 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/45988767609/artifacts/15192533031)
+在 iPhone 17 Pro（iOS 26.2）上，两轮各 24 张 PNG 逐文件一致。展开图同时保留触发器、背景和完整面板。当时的候选图使用固定深色填充。当前描边触发器使用 `input.opacity(0.3)`，与 shadcn 的 `input/30` 配方一致。Web 和 iOS 的文字光栅化、圆角与阴影仍有像素差异，逐项差异图收录在审核附件。macOS Swift Package 构建通过。[验证运行](https://github.com/csdog/compose-foundation/actions/runs/45988767609) · [24 张实拍与 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/45988767609/artifacts/15192533031)
 
 ## 复现
 
