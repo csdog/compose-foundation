@@ -22,6 +22,8 @@ SWIFT_SUPPORT_FILES = {
     "alert-dialog": ("FoundationButtonStyle.swift",),
     "button-group": ("FoundationButtonStyle.swift",),
     "calendar": ("FoundationCalendarSelection.swift", "FoundationCalendarNavigation.swift"),
+    "combobox": ("FoundationSearchTextField.swift",),
+    "command": ("FoundationSearchTextField.swift",),
     "dialog": ("FoundationPresentationHeader.swift",),
     "drawer": ("FoundationPresentationHeader.swift", "FoundationButtonStyle.swift"),
     "field": ("FoundationLabel.swift",),
