@@ -438,6 +438,8 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 
 macOS 综合回归曾在编辑字段后点击遮罩时观测到居中 Dialog 已关闭且关闭回调已执行，但触发器未重新聚焦。iOS 17 和 macOS 14 起，普通居中 Dialog 和 Command Dialog 共用退场完成后的关闭回调。macOS 实际窗口验证了点击遮罩后用原触发器重新打开并以 Escape 关闭，系统 Dialog、Drawer 及四边 Sheet 回归通过。iOS 的 Dialog 展开、收起和深浅色四张截图复拍一致，像素与上轮相同。[原失败日志](https://github.com/csdog/compose-foundation/actions/runs/46114324112/job/140884631765) · [修复后的 macOS 回归](https://github.com/csdog/compose-foundation/actions/runs/46114621547/job/140885580394) · [iOS 截图报告](https://github.com/csdog/compose-foundation/actions/runs/46114621547/artifacts/15251183091)
 
+macOS 另用禁用动画的事务复验居中 Dialog。Return、Escape 和点遮罩都能关闭并归还焦点。[无动画回归](https://github.com/csdog/compose-foundation/actions/runs/46115520513/job/140888498979)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
