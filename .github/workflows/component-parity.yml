@@ -888,7 +888,7 @@ jobs:
           exit "$failed"
 
       - name: Verify Menubar and Navigation Menu keyboard interaction on macOS
-        if: contains(needs.baseline.outputs.matrix, '"menubar"')
+        if: contains(needs.baseline.outputs.matrix, '"menubar"') || contains(needs.baseline.outputs.matrix, '"navigation-menu"')
         timeout-minutes: 3
         run: |
           swiftui=shadcn/iosApp
@@ -904,9 +904,13 @@ jobs:
             "$sources"/Foundation{Theme,Popover,MenuGroups,Menubar,NavigationMenu}.swift \
             "$swiftui/validation/MacMenuKeyboardAudit.swift" -o "$app/Contents/MacOS/MenuKeyboardAudit"
           failed=0
-          for mode in ltr rtl navigation; do
+          for mode in ltr rtl navigation navigation-rtl; do
             log="$RUNNER_TEMP/menu-$mode.log"
-            open -n -W --stdout "$log" --stderr "$log" "$app" --args "--$mode" || failed=1
+            args=("--$mode")
+            if [[ "$mode" == navigation-rtl ]]; then
+              args=(--navigation --rtl)
+            fi
+            open -n -W --stdout "$log" --stderr "$log" "$app" --args "${args[@]}" || failed=1
             cat "$log"
             grep -q '^PASS ' "$log" || failed=1
           done

@@ -20,6 +20,24 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "navigation-menu": {
+      "title": "Navigation Menu",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/navigation-menu-demo.tsx",
+      "visual": "compare Nova trigger and link typography, chevrons, and Arabic RTL order",
+      "behavior": "navigate enabled groups and items, activate with Return, and restore focus after Escape",
+      "accessibility": "expose expanded and disabled button states without decorative icons",
+      "motion": "static initial frames"
+    },
     "menubar": {
       "title": "Menubar",
       "variant": "default",

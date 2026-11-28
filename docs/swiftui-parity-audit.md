@@ -308,6 +308,14 @@ macOS 实际窗口的 Menubar LTR、Menubar RTL 和 Navigation Menu LTR 均通�
 
 iPad mini（A17 Pro，iOS 26.2）的 4 张 720 × 520 候选图复拍逐字节一致。LTR 与阿拉伯语 RTL 审核用例的菜单栏宽 288 pt，高 44 pt，shadcn 对照为 288 × 32 CSS px。两边浅色画布为 `#FFFFFF`，深色为 `#0A0A0A`。截图应用以 iOS 14 模拟器部署目标编译。[iOS 截图与参考图](https://github.com/csdog/compose-foundation/actions/runs/46085948252/artifacts/15239227471)
 
+### Navigation Menu Nova 默认和阿拉伯语 RTL
+
+对照 shadcn Base UI / Nova 的 `navigation-menu-demo.tsx`、RTL 示例和同版本样式。Nova 横排使用可缩放的 14 pt Medium 字号、零列间距和 10 pt 触发器水平内边距。分组箭头位于逻辑末端，展开时翻转，辅助技术以按钮的展开值读取状态。iOS 触发器至少高 44 pt，macOS 至少高 36 pt。截图用例混排两个分组按钮和一个原生 `Link`。
+
+macOS 实际窗口通过了 Navigation Menu 和 Menubar 各自的 LTR、RTL 按键回归。测试覆盖按布局方向移动、跳过禁用组和禁用项、用 Return 执行、Escape 收起并归还焦点，以及停用整栏时关闭当前面板。[macOS 键盘日志](https://github.com/csdog/compose-foundation/actions/runs/46087089785/job/140799174351)
+
+iPad mini（A17 Pro，iOS 26.2）的 4 张 720 × 520 候选图复拍逐字节一致。浅色画布与参考同为 `#FFFFFF`，深色同为 `#0A0A0A`。iOS 使用系统字形和 44 pt 触控行，RTL 内容在该截图中比参考右移约 9 pt。审计应用以 iOS 14 模拟器部署目标编译。[iOS 截图与 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/46087089785/artifacts/15239234065)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -352,7 +360,7 @@ iPad mini（A17 Pro，iOS 26.2）的 4 张 720 × 520 候选图复拍逐字节�
 | menubar | 分组入口支持共享打开状态、键盘移动、跳过禁用项、Return 执行和 Escape 关闭。Nova 菜单栏覆盖默认和阿拉伯语 RTL。展开面板对照、子菜单、复选和单选项待补齐。 |
 | message | 收发对齐、作者、时间和内容。没有 Compose 的头像、消息组、独立 header/footer slots。 |
 | message-scroller | 内容更新时跟随末尾、触摸拖动暂停、恢复跟随和到达顶部回调。缺少 Compose 的任意锚点寻址、可见 ID，以及对桌面滚轮的完整跟随判定。 |
-| navigation-menu | 支持横向内容 slot、分组触发器和关联弹层。iOS 26.2 模拟器已验证打开后通过方向键切换导航组和以 Return 执行操作。Compose 另有独立 viewport 和 indicator API。 |
+| navigation-menu | 支持横向内容 slot、分组触发器和关联弹层。Nova 初始态覆盖默认和阿拉伯语 RTL。展开面板对照、共享 viewport 和 indicator，以及分组与独立链接间的方向键导航待补齐。 |
 | pagination | 支持前后页图标或文字、纯页码布局、标准和紧凑窗口、省略及当前页绑定。独立的首末按钮和自定义内容 slots 待对齐。 |
 | popover | iOS 和 macOS 使用锚定的无箭头圆角面板，默认居中显示在触发器下方，间距 4 pt，并根据可用空间翻转或调整位置。`arrowEdge` 指定首选方向，`onDismiss` 在窗口关闭后调用。iOS 模拟器已验证面板内键盘焦点、Return、Escape、触控关闭和跨窗口还原触发器焦点。 |
 | progress | 支持范围归一化、动画、减少动态效果与百分比无障碍语义。Compose 可插入 label、value、track 和 indicator。 |
@@ -515,8 +523,9 @@ xcrun swiftc -whole-module-optimization -parse-as-library -target "$(uname -m)-a
 open -F -n -W --stdout "$audit_dir/menubar.log" "$app_bundle"
 open -F -n -W --stdout "$audit_dir/menubar-rtl.log" "$app_bundle" --args --rtl
 open -F -n -W --stdout "$audit_dir/navigation.log" "$app_bundle" --args --navigation
-for log in "$audit_dir/menubar.log" "$audit_dir/menubar-rtl.log" "$audit_dir/navigation.log"; do
-  grep '^PASS' "$log" || exit 1
+open -F -n -W --stdout "$audit_dir/navigation-rtl.log" "$app_bundle" --args --navigation --rtl
+for mode in menubar menubar-rtl navigation navigation-rtl; do
+  grep '^PASS' "$audit_dir/$mode.log" || exit 1
 done
 ```
 
