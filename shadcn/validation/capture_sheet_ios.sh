@@ -6,6 +6,7 @@ output="${2:?Pass the output root}"
 work="$(mktemp -d)"
 device=
 recording=
+diagnostics="$output/$platform/sheet-open/recording.mov"
 cleanup() {
   if [[ -n "$recording" ]]; then kill -INT "$recording" 2>/dev/null || true; fi
   if [[ -n "$device" ]]; then xcrun simctl delete "$device" || true; fi
@@ -51,5 +52,8 @@ sleep 5
 kill -INT "$recording"
 wait "$recording" || test "$?" -eq 130
 recording=
+mkdir -p "$(dirname "$diagnostics")"
+cp "$work/sheet.mov" "$diagnostics"
+ffprobe -v error -select_streams v:0 -show_entries stream=width,height,avg_frame_rate,duration "$diagnostics"
 python3 shadcn/validation/animation_baseline.py "$platform" sheet-open --capture-only \
-  --video "$work/sheet.mov" --trigger-marker 24 216 --crop-top 246 --output "$output"
+  --video "$diagnostics" --trigger-marker 24 216 --crop-top 246 --output "$output"

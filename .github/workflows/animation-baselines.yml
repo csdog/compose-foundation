@@ -144,6 +144,7 @@ jobs:
           path: |
             build/animation-candidates/*/sheet-open/comparison.gif
             build/animation-candidates/*/sheet-open/*-diff.png
+            build/animation-candidates/*/sheet-open/recording.mov
           if-no-files-found: ignore
 
   gate:

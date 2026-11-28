@@ -18,14 +18,20 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         if ProcessInfo.processInfo.arguments.contains("--sheet-animation") {
             window.overrideUserInterfaceStyle = .light
             let marker = UIWindow(windowScene: windowScene)
-            marker.frame = CGRect(x: 0, y: 64, width: 16, height: 16)
             marker.rootViewController = UIViewController()
             marker.windowLevel = .alert
             marker.isUserInteractionEnabled = false
-            marker.rootViewController?.view.backgroundColor = .red
+            marker.backgroundColor = .clear
+            let signal = UIView(frame: CGRect(x: 0, y: 64, width: 16, height: 16))
+            signal.backgroundColor = .red
+            marker.rootViewController?.view.backgroundColor = .clear
+            marker.rootViewController?.view.addSubview(signal)
             animationMarker = marker
             window.rootViewController = UIHostingController(rootView: SheetAnimationFixture {
-                marker.rootViewController?.view.backgroundColor = .green
+                signal.backgroundColor = .green
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
+                    signal.backgroundColor = .blue
+                }
             })
             window.makeKeyAndVisible()
             marker.isHidden = false
