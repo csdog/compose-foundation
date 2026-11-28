@@ -1,12 +1,13 @@
 """Copy validated screenshot candidates into a baseline repository checkout."""
 
 import argparse
+from collections import defaultdict
 import json
 from pathlib import Path
 
 from PIL import Image
 
-from report import baseline_path, copy_image, screenshot_path
+from report import baseline_path, copy_image, screenshot_cases
 
 
 def main():
@@ -21,19 +22,22 @@ def main():
     plan = json.loads(args.plan.read_text())
     if plan["platforms"].get(args.platform) != "automated":
         parser.error(f"no automated capture for {args.platform}")
-    components = args.component or plan["components"]
-    if unknown := set(components) - plan["components"].keys():
+    selected = set(args.component or ())
+    if unknown := selected - plan["components"].keys():
         parser.error(f"unknown components: {', '.join(sorted(unknown))}")
-    pairs = {
-        frozenset(Path(args.platform) / screenshot_path(plan, component, theme, args.platform)
-                  for theme in ("light", "dark"))
-        for component in components
-    }
-    expected = set().union(*pairs)
+    pairs = defaultdict(set)
+    for slug, case, _, screenshot, _ in screenshot_cases(plan, args.platform):
+        supports_platform = args.platform in plan["components"][slug].get("platforms", plan["platforms"])
+        if supports_platform and (not selected or slug in selected):
+            pairs[(slug, case["variant"], case["status"])].add(Path(args.platform) / screenshot)
+    if unsupported := selected - {slug for slug, _, _ in pairs}:
+        parser.error(f"no screenshot cases for {args.platform}: {', '.join(sorted(unsupported))}")
+
+    expected = set().union(*pairs.values())
     files = {path.relative_to(args.candidates) for path in args.candidates.rglob("*") if path.is_file()}
-    if args.component and files != expected:
-        parser.error("candidates must contain exactly the selected components")
-    if not files or not files <= expected or any(files & pair and not pair <= files for pair in pairs):
+    if selected and files != expected:
+        parser.error("candidates must contain exactly the selected components and their screenshot cases")
+    if not files or not files <= expected or any(files & pair and not pair <= files for pair in pairs.values()):
         parser.error("candidates must contain complete light/dark PNG pairs for the selected platform")
 
     root = args.baselines.resolve()
