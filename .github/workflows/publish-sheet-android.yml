@@ -26,6 +26,19 @@ jobs:
             candidate="$RUNNER_TEMP/repeat/$platform/sheet-open/actual"
             gh run download 46117863321 -n "animation-candidate-$platform-sheet-open" -D "$base"
             gh run download 46118449591 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$candidate"
+            python - "$base" "$candidate" <<'PYFI'
+          import sys
+          from pathlib import Path
+          from collections import Counter
+          from PIL import Image, ImageChops, ImageStat
+          a, b = (Path(x) for x in sys.argv[1:])
+          for time in ('before', '096', '480'):
+              left, right = (Image.open(x / f'{time}.png').convert('RGB') for x in (a, b))
+              print(time, left.size, right.size)
+              for img in (left, right):
+                  print(Counter(img.resize((160, 320)).getdata()).most_common(5), img.getpixel((left.width//2,left.height//2)))
+              print(ImageStat.Stat(ImageChops.difference(left, right)).mean)
+          PYFI
             python shadcn/validation/animation_baseline.py "$platform" sheet-open --strict --gif \
               --baselines "$RUNNER_TEMP/reference" --output "$RUNNER_TEMP/repeat"
           done
