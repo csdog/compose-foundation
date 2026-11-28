@@ -230,10 +230,11 @@ private struct FoundationToastCard: View {
             .accessibilityLabel(closeLabel)
         }
         .foregroundColor(palette.foreground)
-        .padding(.horizontal, nova ? 16 : 12)
-        .padding(.vertical, nova ? (message == nil ? 8 : 16) : 12)
-        .background(shape.fill(palette.card))
+        .padding(.leading, nova ? 16 : 12)
+        .padding(.trailing, nova ? 9 : 12)
+        .padding(.vertical, nova ? (message == nil ? 9 : 17) : 12)
+        .background(shape.fill(palette.card).shadow(color: nova ? .black.opacity(0.12) : .clear, radius: 6, y: 4))
         .overlay(shape.strokeBorder(palette.border).allowsHitTesting(false))
-        .shadow(color: Color.black.opacity(0.12), radius: 6, y: 2)
+        .shadow(color: nova ? .clear : .black.opacity(0.12), radius: 6, y: 2)
     }
 }
