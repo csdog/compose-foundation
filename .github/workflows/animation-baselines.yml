@@ -120,7 +120,7 @@ jobs:
           bash shadcn/validation/capture_sheet_ios.sh "$PLATFORM" "$OUTPUT"
       - uses: actions/upload-artifact@v4
         with:
-          name: animation-candidate-${{ matrix.platform }}-sheet-open
+          name: animation-candidate-${{ matrix.platform }}-sheet-open-attempt-${{ github.run_attempt }}
           path: build/animation-candidates/${{ matrix.platform }}/sheet-open/actual/
           if-no-files-found: error
 
@@ -140,7 +140,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: animation-diffs-${{ matrix.platform }}-sheet-open
+          name: animation-diffs-${{ matrix.platform }}-sheet-open-attempt-${{ github.run_attempt }}
           path: |
             build/animation-candidates/*/sheet-open/comparison.gif
             build/animation-candidates/*/sheet-open/*-diff.png
