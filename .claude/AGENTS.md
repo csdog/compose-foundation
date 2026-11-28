@@ -38,6 +38,25 @@ Use the **Component parity** workflow in `compose-foundation` (`.github/workflow
 
 Use the Actions UI to pick the branch and component, or dispatch a review with `gh workflow run component-parity.yml --ref "$review_ref" -f update=review -f component=popover`. Set `review_ref` to the PR branch. Omit `component` to run every case currently in the plan. Find the run with `gh run list --workflow component-parity.yml`, then use `gh run watch` and `gh run download` with its run ID.
 
+## Animation baseline review and publication
+
+`shadcn/validation/animation-plan.json` defines the platform identifiers, sampling interval, capture window, and keyframes. Match platform, component, interaction, theme, viewport, scale, runtime, and motion accessibility setting across captures. Start from the same state and define time zero at the same input event. For gestures, record press, release, and interruption timestamps when they affect the result. Verify Reduce Motion behavior in its own case.
+
+| Platform | Capture path |
+| --- | --- |
+| Compose Desktop (`cmp-desktop`) | Use the Compose test clock with auto-advance disabled. The Sheet opening case runs in JVM CI. |
+| Compose Web (`cmp-web`) | Build the Wasm catalog and use `scripts/verify_component_browser.mjs --slug sheet --title Sheet --animation sheet-open --output <dir>` with Playwright and the Chromium version recorded in the baseline. Playwright freezes the browser clock and advances it by the sampling interval. |
+| Compose Android / Jetpack Compose (`cmp-android`, `jetpack-compose`) | Use the Compose test clock with instrumentation screenshots where available. For visual review, record a matching emulator or device with `adb shell screenrecord` and pull the recording. |
+| Compose iOS / SwiftUI iOS (`cmp-ios`, `swiftui-ios`) | Record a pinned Simulator with `xcrun simctl io <device> recordVideo <path>`. For deterministic SwiftUI fixtures, inject progress or sample the keyframe timeline and render those states. |
+
+- **Regression** compares a platform's captured keyframe PNGs with its approved PNGs. A deterministic capture can use `--strict` to gate on keyframe differences and a change in the first stable sample. Recordings support visual review. Use device performance metrics separately for playback hitches.
+- **Review** captures the same case twice before proposing a new deterministic baseline. Inspect the PNG diffs and synchronized `comparison.gif`. The GIF labels elapsed time and the frame with the most changed pixels. Record the source SHA, fixture and interaction, viewport and scale, runtime, appearance, and trigger timestamp for recordings. Save evidence under `build/shadcn-audit/` or the CI artifacts.
+- **Publish** after the animation change is reviewed. Store the reviewed PNG sequence and capture provenance in `animations/<platform>/<case>/` in [compose-foundation-baselines](https://github.com/csdog/compose-foundation-baselines). Record the reference commit used for comparison and follow the maintainer review and publication process. GIFs are review artifacts.
+
+The **Animation baselines** workflow runs the strict comparison for every platform listed in the animation plan against one baseline commit. Dispatch it on the source ref with a successful candidate run ID from the same source commit. Compose Desktop is captured in the gate itself. Other capture runners supply `animation-candidate-<platform>-sheet-open` artifacts with the deterministic PNGs at the artifact root. Missing artifacts, missing reference frames, and mismatches fail the aggregate check.
+
+Use `shadcn/validation/animation_baseline.py` with the platform and case from the animation plan. It reads candidate frames from `<output>/<platform>/<case>/actual/` and reference frames from `<baselines>/<platform>/<case>/`. A recorded capture additionally takes `--video <file> --trigger-ms <timestamp>`. Add `--capture-only` to extract frames for a proposed baseline or `--gif` to generate the review GIF even when the frames match. See [the local animation commands](docs/shadcn-component-sop.md#动画逐帧对照).
+
 ## Local screenshots and diffs
 
 - **SwiftUI iOS** uses macOS, Xcode, `xcrun swiftc`, and `xcrun simctl`. The capture script builds the audit app and manages a temporary iPhone 17 Pro simulator with the iOS 26.2 runtime. Check the active Xcode and installed runtimes with `xcodebuild -version` and `xcrun simctl list runtimes`. For manual keyboard, focus, and dismissal checks, use the Simulator app and the recipes in `docs/swiftui-parity-audit.md`. From Linux, use the workflow's macOS runner for iOS Simulator coverage.

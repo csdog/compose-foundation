@@ -148,7 +148,7 @@ abstract class ScreenshotTest {
      * 100+ already-tight, already-reviewed non-popup goldens into mostly-blank
      * full-window images for a purely cosmetic gain on the handful of popup tests.
      */
-    private fun captureCompositeRoot(): SemanticsNodeInteraction {
+    protected fun captureCompositeRoot(): SemanticsNodeInteraction {
         val roots = composeRule.onAllNodes(isRoot())
         val lastIndex = roots.fetchSemanticsNodes().size - 1
         return roots[lastIndex]

@@ -106,6 +106,7 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.androidx.testExt.junit)
             implementation(libs.androidx.espresso.core)
+            implementation(libs.compose.uiTestJunit4)
         }
         named("webMain") {
             dependencies { implementation(libs.kotlinx.browser) }
@@ -191,4 +192,8 @@ mavenPublishing {
                 "scm:git:ssh://git@gitlab.devops.toutiaoyan.com:2222/web-foundation/compose-foundation.git"
         }
     }
+}
+
+tasks.named<Test>("jvmTest") {
+    outputs.dir(layout.buildDirectory.dir("reports/animation-baselines/cmp-desktop/sheet-open/actual"))
 }

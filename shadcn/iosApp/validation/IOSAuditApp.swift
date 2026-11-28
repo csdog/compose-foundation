@@ -8,11 +8,29 @@ final class IOSAuditApp: NSObject, UIApplicationDelegate {}
 @objc(IOSAuditSceneDelegate)
 final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
     var window: UIWindow?
+    private var animationMarker: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         let window = UIWindow(windowScene: windowScene)
         self.window = window
+
+        if ProcessInfo.processInfo.arguments.contains("--sheet-animation") {
+            window.overrideUserInterfaceStyle = .light
+            let marker = UIWindow(windowScene: windowScene)
+            marker.frame = CGRect(x: 0, y: 64, width: 16, height: 16)
+            marker.rootViewController = UIViewController()
+            marker.windowLevel = .alert
+            marker.isUserInteractionEnabled = false
+            marker.rootViewController?.view.backgroundColor = .red
+            animationMarker = marker
+            window.rootViewController = UIHostingController(rootView: SheetAnimationFixture {
+                marker.rootViewController?.view.backgroundColor = .green
+            })
+            window.makeKeyAndVisible()
+            marker.isHidden = false
+            return
+        }
 
         if ProcessInfo.processInfo.arguments.contains("--combobox-interaction") {
             window.rootViewController = UIHostingController(rootView: ComboboxInteractionFixture())
@@ -191,6 +209,32 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         }
         window.rootViewController = UIHostingController(rootView: Text("Rendered \(count) audit fixtures"))
         return count
+    }
+}
+
+private struct SheetAnimationFixture: View {
+    var markTrigger: () -> Void
+    @State private var presented = false
+    @State private var scheduled = false
+
+    var body: some View {
+        Button("Edit profile", action: openSheet)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .modifier(FoundationSheet(isPresented: $presented, title: "Profile") {
+                Text("Update your profile details.")
+            })
+            .onAppear {
+                guard !scheduled else { return }
+                scheduled = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    openSheet()
+                }
+            }
+    }
+
+    private func openSheet() {
+        markTrigger()
+        presented = true
     }
 }
 

@@ -5,13 +5,14 @@ import { pathToFileURL } from "node:url";
 
 export function parseArgs(argv, projectRoot, env = process.env) {
   const options = {
-    slug: null, title: null, output: null, sections: [], expects: [],
+    slug: null, title: null, output: null, sections: [], expects: [], animation: null,
     playwrightModule: env.PLAYWRIGHT_MODULE || "playwright",
     browserExecutable: env.PLAYWRIGHT_EXECUTABLE_PATH || undefined,
   };
   const names = new Map([
     ["--slug", "slug"], ["--title", "title"], ["--output", "output"],
     ["--section", "sections"], ["--expect", "expects"],
+    ["--animation", "animation"],
     ["--playwright-module", "playwrightModule"],
     ["--browser-executable", "browserExecutable"],
   ]);

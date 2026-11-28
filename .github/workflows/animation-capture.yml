@@ -1,0 +1,87 @@
+name: Capture Sheet animation
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/animation-*.yml'
+      - 'app/**'
+      - 'shadcn/**'
+      - 'tailwind/**'
+      - 'scripts/*component_browser*.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    name: Capture / ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: cmp-web
+            runner: ubuntu-24.04
+          - platform: cmp-android
+            runner: ubuntu-24.04
+          - platform: cmp-ios
+            runner: macos-15
+          - platform: swiftui-ios
+            runner: macos-15
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 50
+    env:
+      PLATFORM: ${{ matrix.platform }}
+      OUTPUT: build/animation-candidates
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        if: startsWith(matrix.platform, 'cmp-')
+        with:
+          distribution: zulu
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+        if: startsWith(matrix.platform, 'cmp-')
+      - uses: actions/setup-node@v4
+        if: matrix.platform == 'cmp-web'
+        with:
+          node-version: '24'
+      - name: Capture Web frames
+        if: matrix.platform == 'cmp-web'
+        run: |
+          ./gradlew :app:webApp:wasmJsBrowserDistribution
+          npm install --prefix "$RUNNER_TEMP/animation-browser" --no-save playwright@1.62.1
+          "$RUNNER_TEMP/animation-browser/node_modules/.bin/playwright" install --with-deps chromium
+          export PLAYWRIGHT_MODULE="$RUNNER_TEMP/animation-browser/node_modules/playwright/index.mjs"
+          node scripts/verify_component_browser.mjs --slug sheet --title Sheet --animation sheet-open \
+            --output "$OUTPUT/$PLATFORM/sheet-open/actual"
+      - name: Enable Android emulator hardware acceleration
+        if: matrix.platform == 'cmp-android'
+        run: sudo chown "$(id -u)" /dev/kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        if: matrix.platform == 'cmp-android'
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_7
+          disable-animations: false
+          script: bash shadcn/validation/capture_sheet_android.sh build/animation-candidates
+      - uses: actions/setup-python@v5
+        if: runner.os == 'macOS'
+        with:
+          python-version: '3.12'
+      - name: Capture iOS frames
+        if: runner.os == 'macOS'
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
+          brew install ffmpeg
+          python3 -m pip install Pillow==11.3.0
+          bash shadcn/validation/capture_sheet_ios.sh "$PLATFORM" "$OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: animation-candidate-${{ matrix.platform }}-sheet-open
+          path: build/animation-candidates/${{ matrix.platform }}/sheet-open/actual/
+          if-no-files-found: error
