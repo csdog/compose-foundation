@@ -22,7 +22,7 @@ def labels():
     return {item["AXLabel"] for item in rows() if item.get("AXLabel")}
 
 
-def choose(names, scroll=False, switch=False):
+def choose(names, scroll=False, switch=False, x_fraction=0.72):
     for _ in range(7):
         elements = rows()
         for row in elements:
@@ -35,7 +35,7 @@ def choose(names, scroll=False, switch=False):
                 return row
         if scroll:
             app = next(row["frame"] for row in elements if row.get("type") == "Application")
-            x = round(app["width"] * 0.72)
+            x = round(app["width"] * x_fraction)
             subprocess.run([*client, "swipe", str(x), str(round(app["height"] * 0.74)),
                             str(x), str(round(app["height"] * 0.31)), "--duration", "0.45"],
                            check=True, timeout=15)
@@ -53,10 +53,18 @@ def tap(row):
 
 def enable_full_keyboard_access():
     subprocess.run(["xcrun", "simctl", "launch", device, "com.apple.Preferences"], check=True, timeout=15)
-    assert wait_for("Accessibility", timeout=90), labels()
-    tap(choose({"Accessibility"}))
+    assert wait_for("Sidebar", timeout=90) or "Accessibility" in labels(), labels()
+    capture("settings-initial.png")
+    if "Accessibility" not in labels():
+        tap(choose({"Sidebar"}))
+    try:
+        tap(choose({"Accessibility"}, scroll=True, x_fraction=0.22))
+    except AssertionError:
+        capture("settings-accessibility.png")
+        raise
     tap(choose({"Keyboards & Typing", "Keyboards"}, scroll=True))
     tap(choose({"Full Keyboard Access"}))
+    capture("settings-full-keyboard-access.png")
     toggle = choose({"Full Keyboard Access"}, switch=True)
     if str(toggle.get("AXValue")).lower() not in {"1", "on", "true"}:
         tap(toggle)
