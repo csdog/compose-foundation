@@ -68,11 +68,7 @@ capture_ios_group() {
   local type="com.apple.CoreSimulator.SimDeviceType.$1"
   shift
   local runtime='com.apple.CoreSimulator.SimRuntime.iOS-26-2'
-  local -a audit_components=()
-  local component pass container mobile_output attempt
-  for component in "$@"; do
-    audit_components+=("--audit-component=$component")
-  done
+  local pass container mobile_output attempt
   device="$(xcrun simctl create 'Compose Foundation screenshots' "$type" "$runtime")"
   printf '%s %s\n' "$runtime" "$type"
   xcrun simctl boot "$device"
@@ -88,7 +84,7 @@ capture_ios_group() {
     mkdir -p "$work/$pass"
     rm -rf "$mobile_output"
     xcrun simctl launch --terminate-running-process "$device" "$bundle" \
-      -AppleLanguages '(en)' -AppleLocale en_US "${audit_components[@]}"
+      -AppleLanguages '(en)' -AppleLocale en_US "$@"
     for ((attempt = 0; attempt < 180; attempt++)); do
       [[ ! -s "$mobile_output/result.txt" ]] || break
       sleep 1
@@ -119,18 +115,29 @@ import sys
 components = json.load(open(sys.argv[1]))["components"]
 groups = {}
 for component in sys.argv[2:]:
-    device = components[component].get("swiftuiDevice", "iPhone-17-Pro")
-    groups.setdefault(device, []).append(component)
-for device, slugs in groups.items():
-    print(device, *slugs)
+    config = components[component]
+    default = config.get("swiftuiDevice", "iPhone-17-Pro")
+    cases = config.get("platformCases", {}).get("swiftui-ios", [])
+    if any("swiftuiDevice" in case for case in cases):
+        component_devices = {}
+        for case in cases:
+            device = case.get("swiftuiDevice", default)
+            filename = f"{component}-{case['variant']}-{case['status']}"
+            component_devices.setdefault(device, []).append(f"--audit-case={component}:{filename}")
+        for device, arguments in component_devices.items():
+            groups.setdefault(device, []).extend([f"--audit-component={component}", *arguments])
+    else:
+        groups.setdefault(default, []).append(f"--audit-component={component}")
+for device, arguments in groups.items():
+    print(device, *arguments)
 PYTHON
 )"
   for pass in "${passes[@]}"; do
     : > "$output/$pass-render.txt"
   done
   while read -r device_type group; do
-    read -ra slugs <<< "$group"
-    capture_ios_group "$device_type" "${slugs[@]}"
+    read -ra capture_arguments <<< "$group"
+    capture_ios_group "$device_type" "${capture_arguments[@]}"
   done <<< "$groups"
 fi
 
