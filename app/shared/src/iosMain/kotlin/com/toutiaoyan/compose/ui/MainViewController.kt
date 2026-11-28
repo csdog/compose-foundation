@@ -36,7 +36,7 @@ fun sheetAnimationViewController(markTrigger: () -> Unit) =
     ComposeUIViewController {
         var opened by remember { mutableStateOf(false) }
         LaunchedEffect(Unit) {
-            delay(2000)
+            delay(6000)
             markTrigger()
             opened = true
         }

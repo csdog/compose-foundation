@@ -1,6 +1,7 @@
 """Compare animation keyframes and render a synchronized review GIF."""
 
 import argparse
+from collections import Counter
 import json
 from pathlib import Path
 import subprocess
@@ -26,12 +27,14 @@ def find_trigger(video, step, marker):
         check=True,
     ).stdout
     armed = False
-    for index, (red, green, blue) in enumerate(zip(probe[::3], probe[1::3], probe[2::3])):
+    pixels = list(zip(probe[::3], probe[1::3], probe[2::3]))
+    for index, (red, green, blue) in enumerate(pixels):
         if red > 180 and max(green, blue) < 80:
             armed = True
         if armed and green > 180 and max(red, blue) < 80:
             return index * step
-    raise ValueError("Recording does not show the red-to-green trigger marker")
+    colors = Counter(pixels).most_common(6)
+    raise ValueError(f"No red-to-green trigger at ({x}, {y}). Observed RGB colors: {colors}")
 
 
 def extract_frames(video, trigger_ms, step, names, output, crop_top=0):

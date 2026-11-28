@@ -232,7 +232,7 @@ private struct SheetAnimationFixture: View {
             .onAppear {
                 guard !scheduled else { return }
                 scheduled = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
                     openSheet()
                 }
             }

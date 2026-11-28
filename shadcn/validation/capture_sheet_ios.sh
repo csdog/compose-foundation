@@ -48,7 +48,7 @@ xcrun simctl io "$device" recordVideo --codec=h264 "$work/sheet.mov" &
 recording=$!
 sleep 1
 xcrun simctl launch "$device" "$bundle" --sheet-animation
-sleep 5
+sleep 10
 kill -INT "$recording"
 wait "$recording" || test "$?" -eq 130
 recording=
