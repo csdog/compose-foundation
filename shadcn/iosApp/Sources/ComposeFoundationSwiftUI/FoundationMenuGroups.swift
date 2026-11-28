@@ -40,11 +40,10 @@ struct FoundationMenuGroups: View {
 
     var body: some View {
         let style = theme.preset == .nova ? novaStyle : .standard
-        let triggerSpacing: CGFloat
-        switch style {
-        case .standard: triggerSpacing = spacing
-        case .novaMenubar: triggerSpacing = 2
-        case .novaNavigation: triggerSpacing = 0
+        let triggerSpacing: CGFloat = switch style {
+        case .standard: spacing
+        case .novaMenubar: 2
+        case .novaNavigation: 0
         }
         if #available(iOS 17, macOS 14, *) {
             FoundationKeyboardMenuGroups(groups: groups, spacing: triggerSpacing, style: style)
@@ -365,23 +364,21 @@ private struct FoundationMenuGroupButton: View {
         let palette = theme.palette(for: colorScheme)
         let shape = RoundedRectangle(cornerRadius: style == .novaMenubar ? max(0, theme.cornerRadius - 6) : theme.cornerRadius)
         #if os(macOS)
-        let hitHeight: CGFloat
-        switch style {
-        case .standard: hitHeight = 44
-        case .novaMenubar: hitHeight = 26
-        case .novaNavigation: hitHeight = 36
+        let hitHeight: CGFloat = switch style {
+        case .standard: 44
+        case .novaMenubar: 26
+        case .novaNavigation: 36
         }
         #else
         let hitHeight: CGFloat = 44
         #endif
         let available = ancestorEnabled && enabled
-        let activeFill: Color
-        if style != .standard, available, hovered || (style == .novaNavigation && focused) {
-            activeFill = palette.secondary
+        let activeFill: Color = if style != .standard, available, hovered || (style == .novaNavigation && focused) {
+            palette.secondary
         } else if style != .standard, available, expanded {
-            activeFill = palette.secondary.opacity(style == .novaNavigation ? 0.5 : 1)
+            palette.secondary.opacity(style == .novaNavigation ? 0.5 : 1)
         } else {
-            activeFill = .clear
+            .clear
         }
         Button(action: action) {
             HStack(spacing: 4) {
