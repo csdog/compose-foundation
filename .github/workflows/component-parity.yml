@@ -478,7 +478,7 @@ jobs:
             grep -q '^PASS:' "$log"
           done
 
-      - name: Verify Nova Toggle bindings on macOS
+      - name: Verify Nova Toggle bindings and Toggle Group keyboard navigation on macOS
         if: contains(needs.baseline.outputs.matrix, '"toggle"') || contains(needs.baseline.outputs.matrix, '"toggle-group"')
         timeout-minutes: 2
         run: |
@@ -494,12 +494,19 @@ jobs:
             "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationTheme.swift" \
             "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationToggle.swift" \
             "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationToggleGroup.swift" \
+            "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationTabsNavigation.swift" \
             "$swiftui/validation/MacToggleInteractionAudit.swift" \
             -o "$app/Contents/MacOS/ToggleAudit"
           log="$RUNNER_TEMP/toggle.log"
           open -n -W --stdout "$log" --stderr "$log" "$app"
           cat "$log"
           grep -q '^PASS:' "$log"
+          for direction in ltr rtl vertical; do
+            log="$RUNNER_TEMP/toggle-group-$direction.log"
+            open -n -W --stdout "$log" --stderr "$log" "$app" --args --keyboard "--$direction"
+            cat "$log"
+            grep -q '^PASS:' "$log"
+          done
 
       - name: Verify Nova Button Group hit regions on macOS
         if: contains(needs.baseline.outputs.matrix, '"button-group"')
