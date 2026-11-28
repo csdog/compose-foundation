@@ -1193,6 +1193,10 @@ jobs:
             open -n -W --stdout "$log" --stderr "$log" "$app" --args "--$direction"
             cat "$log"
             grep -q '^PASS:' "$log"
+            keyboard_log="$RUNNER_TEMP/calendar-keyboard-$direction.log"
+            open -n -W --stdout "$keyboard_log" --stderr "$keyboard_log" "$app" --args "--$direction" --keyboard
+            cat "$keyboard_log"
+            grep -q '^PASS:' "$keyboard_log"
           done
 
   report:

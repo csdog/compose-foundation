@@ -4,6 +4,7 @@ import SwiftUI
 @MainActor
 private final class CalendarAuditState: ObservableObject {
     @Published var selection: Date? = CalendarAuditState.date(11, 27)
+    @Published var enabled = true
 
     static let calendar: Calendar = {
         var value = Calendar(identifier: .gregorian)
@@ -25,6 +26,7 @@ private struct CalendarAuditFixture: View {
         VStack(spacing: 0) {
             FoundationCalendar(selection: $state.selection, in: CalendarAuditState.date(11, 4)...CalendarAuditState.date(12, 15))
                 .frame(width: 324)
+                .disabled(!state.enabled)
             Spacer(minLength: 0)
         }
         .frame(width: 360, height: 390)
@@ -41,6 +43,8 @@ enum MacCalendarAudit {
         let app = NSApplication.shared
         let state = CalendarAuditState()
         let rightToLeft = CommandLine.arguments.contains("--rtl")
+        let keyboard = CommandLine.arguments.contains("--keyboard")
+        if keyboard { state.selection = CalendarAuditState.date(11, 30) }
         app.setActivationPolicy(.regular)
         let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 360, height: 390),
                               styleMask: [.titled, .closable], backing: .buffered, defer: false)
@@ -54,6 +58,11 @@ enum MacCalendarAudit {
             window.makeKeyAndOrderFront(nil)
             try? await Task.sleep(for: .milliseconds(400))
             require(window.isKeyWindow, "The audit window needs focus")
+
+            if keyboard {
+                await verifyKeyboard(state: state, window: window, rightToLeft: rightToLeft)
+                exit(0)
+            }
 
             @MainActor func clickDateOrArrow(x: CGFloat, y: CGFloat) async {
                 let position = rightToLeft ? window.contentLayoutRect.width - x : x
@@ -75,6 +84,58 @@ enum MacCalendarAudit {
             exit(0)
         }
         app.run()
+    }
+
+    private static func verifyKeyboard(state: CalendarAuditState, window: NSWindow, rightToLeft: Bool) async {
+        let forward: (UInt16, String) = rightToLeft ? (123, "\u{F702}") : (124, "\u{F703}")
+        let backward: (UInt16, String) = rightToLeft ? (124, "\u{F703}") : (123, "\u{F702}")
+        let enter: (UInt16, String) = (36, "\r")
+        let space: (UInt16, String) = (49, " ")
+        func send(_ key: (UInt16, String), modifiers: NSEvent.ModifierFlags = []) async {
+            for type in [NSEvent.EventType.keyDown, .keyUp] {
+                if let event = NSEvent.keyEvent(
+                    with: type, location: .zero, modifierFlags: modifiers,
+                    timestamp: ProcessInfo.processInfo.systemUptime, windowNumber: window.windowNumber, context: nil,
+                    characters: key.1, charactersIgnoringModifiers: key.1, isARepeat: false, keyCode: key.0
+                ) { NSApp.sendEvent(event) }
+            }
+            try? await Task.sleep(for: .milliseconds(180))
+        }
+        func expect(_ month: Int, _ day: Int, _ scenario: String) {
+            require(state.selection == CalendarAuditState.date(month, day),
+                    "\(scenario): wanted \(month)/\(day), got \(String(describing: state.selection))")
+        }
+
+        await send(forward)
+        expect(11, 30, "Focus must not write the binding")
+        await send(enter)
+        expect(12, 1, "Forward should cross the month boundary and Return should commit")
+        await send((125, "\u{F701}"))
+        await send(space)
+        expect(12, 8, "Down should move one week and Space should commit")
+        await send((119, "\u{F72B}"))
+        await send(enter)
+        expect(12, 12, "End moves to the end of the week")
+        await send((115, "\u{F729}"))
+        await send(enter)
+        expect(12, 6, "Home moves to the beginning of the week")
+        await send((116, "\u{F72C}"))
+        await send(enter)
+        expect(11, 6, "Page Up moves one month")
+        await send(forward, modifiers: .shift)
+        await send(enter)
+        expect(12, 6, "Shift plus forward moves one month")
+        await send(backward, modifiers: .shift)
+        await send((126, "\u{F700}"))
+        await send(backward)
+        await send(enter)
+        expect(11, 4, "Navigation stops on the first selectable date")
+        state.enabled = false
+        try? await Task.sleep(for: .milliseconds(180))
+        await send(forward)
+        await send(enter)
+        expect(11, 4, "A disabled grid ignores navigation and activation")
+        print("PASS: \(rightToLeft ? "RTL" : "LTR") Calendar keyboard moves focus independently from selection")
     }
 
     private static func click(x: CGFloat, y: CGFloat, in window: NSWindow) async {

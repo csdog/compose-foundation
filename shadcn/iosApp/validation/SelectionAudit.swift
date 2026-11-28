@@ -80,6 +80,22 @@ enum SelectionAudit {
         let short = FoundationCalendarNavigation(calendar: calendar, bounds: january...february, numberOfMonths: 3)
         try expect(short.visibleMonths(from: february) == [january, february], "Short bounds trim the window")
 
+        let focus = FoundationCalendarNavigation(calendar: calendar, bounds: bounds, numberOfMonths: 1)
+        try expect(focus.focusDestination(from: first, move: .offset(.day, -1)) == nil,
+                   "The lower bound stops backward focus")
+        try expect(focus.focusDestination(from: first, move: .offset(.weekOfYear, 1)) == last,
+                   "A week move stops at the last selectable date")
+        try expect(focus.focusDestination(from: last, move: .weekEdge(last: false)) == middle,
+                   "Home respects the configured week and local midnight across daylight saving")
+        try expect(focus.focusEntry(in: focus.visibleMonths(from: first), selected: laterOnMiddle, today: first) == middle,
+                   "The selected day takes priority over today on keyboard entry")
+        try expect(focus.focusEntry(in: focus.visibleMonths(from: first), selected: outside, today: outside) == first,
+                   "Entry falls back to the first enabled date")
+        try expect(navigation.anchor(containing: february, from: january) == january,
+                   "Moving focus to an already visible month preserves the window")
+        try expect(navigation.anchor(containing: marchNextYear, from: december) == februaryNextYear,
+                   "Moving beyond a two-month window exposes the destination at its trailing edge")
+
         var mondayCalendar = calendar
         mondayCalendar.firstWeekday = 2
         let mondayGrid = FoundationCalendarNavigation(calendar: mondayCalendar, bounds: nil, numberOfMonths: 1)
