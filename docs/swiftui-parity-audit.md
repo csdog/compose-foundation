@@ -316,6 +316,14 @@ macOS 实际窗口通过了 Navigation Menu 和 Menubar 各自的 LTR、RTL 按�
 
 iPad mini（A17 Pro，iOS 26.2）的 4 张 720 × 520 候选图复拍逐字节一致。浅色画布与参考同为 `#FFFFFF`，深色同为 `#0A0A0A`。iOS 使用系统字形和 44 pt 触控行，RTL 内容在该截图中比参考右移约 9 pt。审计应用以 iOS 14 模拟器部署目标编译。[iOS 截图与 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/46087089785/artifacts/15239234065)
 
+### Combobox Nova 描边、占位和分组
+
+对照 shadcn Base UI / Nova 的 `combobox-demo.tsx`、`combobox-disabled.tsx` 和 `combobox-groups.tsx`。触发器使用 32 pt 输入描边、可缩放的 16 pt 文字、弱化占位文案及末端向下箭头。点按区域至少高 44 pt。分组标题保留标题语义，Nova 在筛选后可见的组之间绘制分隔线。macOS 的选项行至少高 28 pt，iOS 至少高 44 pt。
+
+macOS 实际窗口的 Nova 分组用例通过了点击展开、方向键跨空组并跳过禁用项、Return 更新绑定、Escape 保留已选值，以及重新打开后用上键跳到最后一项。[macOS 交互日志](https://github.com/csdog/compose-foundation/actions/runs/46089020495/job/140805392257)
+
+iPad mini（A17 Pro，iOS 26.2）在默认、分组和禁用初始态采集 6 张深浅色图，复拍逐字节一致。触发器在 720 × 520 画布中的宽度为 672 pt。禁用态中心底色与参考一致，浅色为 `#F8F8F8`，深色为 `#181818`。默认和分组图与调整禁用色前的候选图像素一致。审计应用以 iOS 14 模拟器部署目标编译。[iOS 截图与 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/46089020495/artifacts/15239799106)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -339,7 +347,7 @@ iPad mini（A17 Pro，iOS 26.2）的 4 张 720 × 520 候选图复拍逐字节�
 | chip | 可切换选中状态，支持内容标签和选中语义。缺少 Compose 的独立 chip 样式变体。 |
 | code-block | 支持横向滚动、语言标签和行号。缺少复制按钮、行状态、页脚和操作栏。 |
 | collapsible | 保留原生 DisclosureGroup，支持可单独摆放的按钮和内容 slots、共享展开状态和自定义标签。展开动画由调用方决定。 |
-| combobox | 支持搜索、空态、禁用选项、分组、单选和可移除的多选 chips。iOS 模拟器和 macOS 已验证方向键跨组、跳过禁用项、Return 选择、Escape 关闭、多选、移除 chips 和搜索隐藏空分组。iOS 平铺模式此前还验证了软键盘提交和 VoiceOver 朗读。 |
+| combobox | 支持搜索、空态、禁用选项、分组、单选和可移除的多选 chips。Nova 已接入默认、分组和禁用初始态对照。此前已验证分组导航、隐藏空组、多选、软键盘提交和 VoiceOver 朗读。Nova 展开面板的 iOS 截图和定位待验收。 |
 | command | 支持分组过滤、空态、禁用项和回车选择首个可用结果。缺少对话框、加载状态、footer 和逐项快捷键。 |
 | context-menu | 使用系统右键或长按菜单。调用方可传入系统菜单视图，Compose 的位置、portal、子菜单和条目 DSL 有独立 API。 |
 | dialog | 支持系统 sheet 及带遮罩的可选居中面板、滚动内容和固定页脚。默认编辑资料示例覆盖深浅色。其他变体、iOS 居中版触控、键盘焦点和 VoiceOver 待验收。 |

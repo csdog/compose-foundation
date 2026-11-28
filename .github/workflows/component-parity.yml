@@ -887,6 +887,27 @@ jobs:
           done
           exit "$failed"
 
+      - name: Verify grouped Combobox keyboard interaction on macOS
+        if: contains(needs.baseline.outputs.matrix, '"combobox"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          sources="$swiftui/Sources/ComposeFoundationSwiftUI"
+          app="$RUNNER_TEMP/GroupedComboboxAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string GroupedComboboxAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.combobox-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$sources"/Foundation{Theme,Combobox}.swift \
+            "$swiftui/validation/MacGroupedComboboxAudit.swift" -o "$app/Contents/MacOS/GroupedComboboxAudit"
+          log="$RUNNER_TEMP/combobox.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app"
+          cat "$log"
+          grep -q '^PASS:' "$log"
+
       - name: Verify Menubar and Navigation Menu keyboard interaction on macOS
         if: contains(needs.baseline.outputs.matrix, '"menubar"') || contains(needs.baseline.outputs.matrix, '"navigation-menu"')
         timeout-minutes: 3
