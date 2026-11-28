@@ -810,13 +810,15 @@
           {"variant": "default", "status": "initial", "viewport": [720, 520]},
           {"variant": "default", "status": "filtered", "viewport": [720, 520]},
           {"variant": "default", "status": "empty", "viewport": [720, 520]},
+          {"variant": "default", "status": "loading", "viewport": [720, 520]},
+          {"variant": "footer", "status": "initial", "viewport": [720, 520]},
           {"variant": "dialog", "status": "initial", "viewport": [720, 520]},
           {"variant": "dialog", "status": "open", "viewport": [720, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/command-demo.tsx",
       "visual": "compare Nova search, grouped results, highlighted matches, the empty state and the Command Dialog trigger",
-      "behavior": "filter live, skip disabled rows, activate highlighted rows, and restore focus after dialog dismissal",
+      "behavior": "filter live, skip disabled rows, activate by Return or shortcut, keep the footer visible while loading or scrolling, and restore focus after dialog dismissal",
       "accessibility": "named search, group headings, disabled buttons, and highlighted result",
       "motion": "static settled frames"
     },

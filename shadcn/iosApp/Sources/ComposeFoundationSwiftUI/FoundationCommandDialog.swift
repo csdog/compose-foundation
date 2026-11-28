@@ -12,6 +12,8 @@ public struct FoundationCommandDialog<Value: Hashable>: ViewModifier {
     private let focusSearchOnOpen: Bool
     private let onDismiss: () -> Void
     private let onAction: (Value) -> Void
+    private var loadingMessage: String?
+    private var footerContent: AnyView?
 
     public init(
         isPresented: Binding<Bool>,
@@ -35,6 +37,18 @@ public struct FoundationCommandDialog<Value: Hashable>: ViewModifier {
         self.onAction = onAction
     }
 
+    public func loading(_ message: String?) -> Self {
+        var dialog = self
+        dialog.loadingMessage = message
+        return dialog
+    }
+
+    public func footer<Footer: View>(@ViewBuilder _ content: () -> Footer) -> Self {
+        var dialog = self
+        dialog.footerContent = AnyView(content())
+        return dialog
+    }
+
     public func body(content: Content) -> some View {
         let presentation: FoundationDialog<FoundationCommand<Value>>.Presentation
         #if os(macOS)
@@ -49,6 +63,8 @@ public struct FoundationCommandDialog<Value: Hashable>: ViewModifier {
                 close()
                 onAction(value)
             }
+            .loading(loadingMessage)
+            .settingFooter(footerContent)
             .presentedInDialog(focusSearch: focusSearchOnOpen, dismiss: close)
         }.commandPresentation(focusSearchOnOpen: focusSearchOnOpen))
         .onChange(of: isPresented) { presented in
