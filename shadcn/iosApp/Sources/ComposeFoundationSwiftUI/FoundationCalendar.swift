@@ -242,45 +242,24 @@ public struct FoundationCalendar: View {
                 Picker(selection: selection, content: options) { label }
                     .pickerStyle(InlinePickerStyle())
             } label: {
-                captionTrigger(title)
+                HStack(spacing: 4) {
+                    Text(title)
+                    #if os(iOS)
+                    Image(systemName: "chevron.down")
+                        .font(isNova ? .system(size: 10, weight: .medium) : .caption2)
+                        .foregroundColor(isNova ? theme.palette(for: colorScheme).mutedForeground : nil)
+                        .frame(width: isNova ? 14 : nil)
+                        .accessibilityHidden(true)
+                    #endif
+                }
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
             }
             .accessibilityLabel(label)
             .accessibilityValue(Text(title))
         } else {
             Text(title).accessibilityAddTraits(.isHeader)
         }
-    }
-
-    @ViewBuilder
-    private func captionTrigger(_ title: String) -> some View {
-        #if os(iOS)
-        if isNova {
-            let palette = theme.palette(for: colorScheme)
-            HStack(spacing: 4) {
-                Text(title).foregroundColor(palette.foreground)
-                Image(systemName: "chevron.down")
-                    .font(.system(size: 10, weight: .medium))
-                    .foregroundColor(palette.mutedForeground)
-                    .frame(width: 14)
-                    .accessibilityHidden(true)
-            }
-            .padding(.leading, 6)
-            .padding(.trailing, 4)
-            .frame(minHeight: max(26, cellTextSize + 10))
-            .background(RoundedRectangle(cornerRadius: theme.popoverCornerRadius).strokeBorder(palette.input))
-            .frame(minHeight: 44)
-            .contentShape(Rectangle())
-        } else {
-            HStack(spacing: 4) {
-                Text(title)
-                Image(systemName: "chevron.down").font(.caption2).accessibilityHidden(true)
-            }
-            .frame(minHeight: 44)
-            .contentShape(Rectangle())
-        }
-        #else
-        Text(title).frame(minHeight: 44).contentShape(Rectangle())
-        #endif
     }
 
     private var weekdayNames: [String] {
