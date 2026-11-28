@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "accordion": AccordionScreenshotFixture.Example.allCases.map { example in
+                ("accordion-\(example.rawValue)", { AnyView(AccordionScreenshotFixture(example: example)) })
+            },
             "alert": [
                 ("alert-basic-initial", { AnyView(AlertScreenshotFixture(destructive: false)) }),
                 ("alert-destructive-initial", { AnyView(AlertScreenshotFixture(destructive: true)) }),
@@ -761,6 +764,80 @@ private struct SeparatorInitialScreenshotFixture: View {
         .padding(.top, 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct AccordionScreenshotFixture: View {
+    enum Example: String, CaseIterable {
+        case shipping = "default-initial"
+        case returns = "default-returns-open"
+        case disabled = "disabled-initial"
+        case multiple = "multiple-initial"
+        case rtl = "rtl-initial"
+    }
+
+    let example: Example
+    @Environment(\.colorScheme) private var scheme
+
+    private var headings: [String] {
+        switch example {
+        case .shipping, .returns:
+            return ["What are your shipping options?", "What is your return policy?", "How can I contact customer support?"]
+        case .disabled:
+            return ["Can I access my account history?", "Premium feature information", "How do I update my email address?"]
+        case .multiple:
+            return ["Notification Settings", "Privacy & Security", "Billing & Subscription"]
+        case .rtl:
+            return ["كيف يمكنني إعادة تعيين كلمة المرور؟", "هل يمكنني تغيير خطة الاشتراك الخاصة بي؟", "ما هي طرق الدفع التي تقبلونها؟"]
+        }
+    }
+
+    private var expanded: Set<Int> {
+        switch example {
+        case .shipping, .multiple, .rtl: return [0]
+        case .returns: return [1]
+        case .disabled: return []
+        }
+    }
+
+    private var answer: String {
+        switch example {
+        case .shipping:
+            return "We offer standard (5-7 days), express (2-3 days), and overnight shipping. Free shipping on international orders."
+        case .returns:
+            return "Returns accepted within 30 days. Items must be unused and in original packaging. Refunds processed within 5-7 business days."
+        case .disabled:
+            return ""
+        case .multiple:
+            return "Manage how you receive notifications. You can enable email alerts for updates or push notifications for mobile devices."
+        case .rtl:
+            return "انقر على 'نسيت كلمة المرور' في صفحة تسجيل الدخول، أدخل عنوان بريدك الإلكتروني، وسنرسل لك رابطًا لإعادة تعيين كلمة المرور. سينتهي صلاحية الرابط خلال 24 ساعة."
+        }
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        return FoundationAccordion(
+            headings.enumerated().map { index, title in
+                FoundationChoice(title, value: index, isEnabled: example != .disabled || index != 1)
+            },
+            expanded: .constant(expanded),
+            allowsMultiple: example == .multiple
+        ) { _ in
+            Text(answer)
+                .font(example == .rtl ? .system(size: 14) : .custom("Geist-Regular", size: 14))
+                .lineSpacing(3)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .environment(\.layoutDirection, example == .rtl ? .rightToLeft : .leftToRight)
+        .foundationTheme(theme)
+        .frame(width: example == .disabled ? 672 : example == .rtl ? 448 : 512)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
         .ignoresSafeArea()
     }
 }

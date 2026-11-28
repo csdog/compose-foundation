@@ -96,11 +96,23 @@ iPhone 17 Pro（iOS 26.2）的六张深浅色截图与复拍逐字节一致，�
 
 Alert 在 iPad mini（iPadOS 26.2）以 720 × 520 画布容纳 448 pt 宽的参考布局。Card 在 iPhone 17 Pro（iOS 26.2）以 402 × 520 画布采集。两种主题共八张新图，复拍逐字节一致，原有 100 张图也与上一轮逐字节一致。macOS 实际窗口通过 AppKit 鼠标事件验证卡片正文和底部的控件可以独立操作，且禁用底部按钮后正文仍能响应。Alert 操作区和 RTL、Card 边缘布局、iOS 触控、硬件键盘及 VoiceOver 待单独验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46039710034/artifacts/15220152607) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46039710034/job/140644135876)
 
+### Accordion 默认、禁用、多开与 RTL
+
+对照 shadcn Base UI / Nova 默认示例的配送及退货展开状态，以及 `accordion-disabled.tsx`、`accordion-multiple.tsx` 和 `accordion-rtl.tsx`。Nova 的整行标题可以操作，使用 14 pt 字号、末尾方向箭头和项目之间的分隔线。标题提供按钮和标题语义，并报告已展开或已收起。保留原有 `expanded` 绑定和 `allowsMultiple` 参数。
+
+iPad mini（iPadOS 26.2）以 720 × 520 画布采集十张新截图，每张都与复拍逐字节一致，上一轮的 108 张也未变化。英文示例保留 44 pt 操作区，末行比参考低 6–8 pt。阿拉伯文参考图仍使用左侧文字和右侧箭头，SwiftUI 会依照系统布局方向把文字排在右侧、箭头排在左侧。[全量截图报告](https://github.com/csdog/compose-foundation/actions/runs/46042561688/artifacts/15221309670)
+
+移除重复的禁用淡化后，最终 iPad Review 十张复拍逐字节一致。与全量截图相比，两种主题只有禁用标题行的像素发生变化。灰阶字形取样与 shadcn 相差 4–5 个灰阶值，修正前相差 57–62。[最终 Accordion Review](https://github.com/csdog/compose-foundation/actions/runs/46045617662/artifacts/15222572073)
+
+macOS 实际窗口通过 AppKit 点击验证整行命中、单开时替换原面板、多开时独立关闭、单项与整组禁用，以及每次有效操作只写一次绑定。iOS 实际触控、键盘、VoiceOver 和动态过程待单独验收。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46045617662/job/140664093584)
+
+日常 iOS 回归仍报告 `popover-default-initial-dark.png` 与已发布原生基准有 3,107 个像素不同。父 PR #20 的同一用例也是 3,107，Accordion 新用例因等待发布基准而标为待验。[日常 iOS 回归](https://github.com/csdog/compose-foundation/actions/runs/46042899384/job/140654967723) · [父 PR 的回归](https://github.com/csdog/compose-foundation/actions/runs/46042184550/job/140652502470)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
 | --- | --- |
-| accordion | 支持单开或多开、禁用项、绑定展开集合。Compose 另有横向布局和独立组装的触发器、面板。 |
+| accordion | 支持单开或多开、禁用项和绑定展开集合。Nova 使用全宽按钮、标题语义、展开状态和末尾方向箭头。横向布局与独立组装的触发器尚待对齐。 |
 | alert | 支持标题、说明、图标、操作和 destructive。Nova 使用紧凑的图标与文字排版，错误说明采用主题 destructive 色。操作区位置及 RTL 尚待对照。 |
 | alert-dialog | 原生确认框支持取消、确认和 destructive 操作。Compose 的自定义面板、媒体、页脚和叠层由系统确认框替代。 |
 | aspect-ratio | 固定宽高比、裁剪，非法比例回退到 1:1。窄容器和无界布局的精确测量规则需另行比较。 |
