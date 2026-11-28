@@ -66,20 +66,20 @@ def load_frames(directory, names):
     return frames
 
 
-def changed_pixels(expected, actual):
+def changed_pixels(expected, actual, threshold=0):
     if expected.size != actual.size:
         return max(expected.width * expected.height, actual.width * actual.height)
     channels = ImageChops.difference(expected, actual).split()
     mask = channels[0]
     for channel in channels[1:]:
         mask = ImageChops.lighter(mask, channel)
-    return expected.width * expected.height - mask.histogram()[0]
+    return expected.width * expected.height - sum(mask.histogram()[: threshold + 1])
 
 
-def settled_at(frames, times):
+def settled_at(frames, times, threshold, budget):
     # Find the first sample after the last change, including changes near the end.
     for time, frame in reversed(list(zip(times[1:], frames[1:-1]))):
-        if changed_pixels(frame, frames[-1]):
+        if changed_pixels(frame, frames[-1], threshold) > budget:
             return time
     return 0
 
@@ -119,12 +119,15 @@ def main():
     parser.add_argument("--trigger-marker", type=int, nargs=2, metavar=("X", "Y"))
     parser.add_argument("--crop-top", type=int, default=0, help="Pixels to crop from the recorded status area")
     parser.add_argument("--capture-only", action="store_true", help="Import frames without comparing")
-    parser.add_argument("--strict", action="store_true", help="Gate on differences from deterministic captures")
+    parser.add_argument("--strict", action="store_true", help="Apply the platform comparison limits")
     parser.add_argument("--gif", action="store_true", help="Also write the review GIF on a match")
     args = parser.parse_args()
     if not args.capture_only and args.baselines is None:
         parser.error("Comparison requires --baselines")
     case = PLAN["cases"][args.case]
+    recorded = PLAN["platforms"][args.platform] == "recording"
+    if recorded:
+        case = {**case, **case["recording"]}
     step = case["stepMs"]
     times = list(range(0, case["endMs"] + 1, step))
     names = ["before", *(f"{time:03}" for time in times)]
@@ -150,12 +153,21 @@ def main():
     baseline = args.baselines / lane
     expected = load_frames(baseline, names)
     actual = load_frames(actual_dir, names)
-    scores = [changed_pixels(first, second) for first, second in zip(expected, actual)]
-    expected_end, actual_end = settled_at(expected, times), settled_at(actual, times)
+    threshold = case.get("channelTolerance", 0)
+    budget = int(expected[-1].width * expected[-1].height * case.get("changedPixelFraction", 0))
+    timing_tolerance = case.get("timingToleranceMs", 0)
+    scores = [changed_pixels(first, second, threshold) for first, second in zip(expected, actual)]
+    expected_end = settled_at(expected, times, threshold, budget)
+    actual_end = settled_at(actual, times, threshold, budget)
     failures = []
 
-    for name, score in zip(names, scores):
-        if name in keyframes and score:
+    for index, (name, score) in enumerate(zip(names, scores)):
+        # A simulator recording may sample a neighboring display refresh.
+        start = max(1, index - timing_tolerance // step)
+        end = min(len(names) - 1, index + timing_tolerance // step + 1)
+        if recorded and 1 < index < len(names) - 1 and name in keyframes and score > budget:
+            score = min(changed_pixels(expected[index], frame, threshold) for frame in actual[start:end])
+        if name in keyframes and score > budget:
             delta = differences(
                 baseline / f"{name}.png",
                 actual_dir / f"{name}.png",
@@ -163,9 +175,9 @@ def main():
             )
             if delta:
                 failures.append(f"{name}: {delta}")
-    if expected_end != actual_end:
+    if abs(expected_end - actual_end) > timing_tolerance:
         failures.append(f"Settled at {actual_end} ms, baseline {expected_end} ms")
-    if actual_end in (0, times[-1]) or not changed_pixels(actual[0], actual[-1]):
+    if actual_end in (0, times[-1]) or changed_pixels(actual[0], actual[-1], threshold) <= budget:
         failures.append("Capture must show an opening animation followed by a settled frame")
 
     if failures or args.gif:

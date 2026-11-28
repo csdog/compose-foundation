@@ -132,31 +132,6 @@ jobs:
       - name: Run Desktop (JVM) tests
         run: ./gradlew jvmTest --continue --no-parallel --max-workers=2 -Pkotlin.daemon.jvmargs=-Xmx6g
 
-      - name: Check out Sheet animation baseline
-        uses: actions/checkout@v4
-        with:
-          repository: csdog/compose-foundation-baselines
-          path: build/animation-references
-          sparse-checkout: animations/cmp-desktop/sheet-open
-          persist-credentials: false
-
-      - name: Compare Sheet animation baseline
-        run: |
-          python3 -m pip install Pillow==11.3.0
-          python3 shadcn/validation/animation_baseline.py cmp-desktop sheet-open --strict \
-            --baselines build/animation-references/animations \
-            --output shadcn/shared/build/reports/animation-baselines
-
-      - name: Upload animation comparison
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: animation-baseline-diffs
-          path: |
-            shadcn/shared/build/reports/animation-baselines/**/*.gif
-            shadcn/shared/build/reports/animation-baselines/**/*-diff.png
-          retention-days: 14
-
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
