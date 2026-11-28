@@ -37,40 +37,7 @@ jobs:
               print(time, left.size, right.size)
               for img in (left, right):
                   print(Counter(img.resize((160, 320)).getdata()).most_common(5), img.getpixel((left.width//2,left.height//2)))
-              print(ImageStat.Stat(ImageChops.difference(left, right)).mean)
+              diff = ImageChops.difference(left, right)
+              print('bounds', diff.getbbox(), 'bands', [diff.crop((0, y, left.width, min(y + 80, left.height))).getbbox() for y in range(0, left.height, 80)])
           PYFI
-            python shadcn/validation/animation_baseline.py "$platform" sheet-open --strict --gif \
-              --baselines "$RUNNER_TEMP/reference" --output "$RUNNER_TEMP/repeat"
           done
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: android-sheet-reproducibility
-          path: ${{ runner.temp }}/repeat/*/sheet-open/*.gif
-          if-no-files-found: ignore
-      - uses: actions/checkout@v4
-        with:
-          repository: csdog/compose-foundation-baselines
-          ref: main
-          token: ${{ secrets.COMPONENT_BASELINES_WRITE_TOKEN }}
-          path: baseline-repository
-      - name: Publish only the missing Android lanes
-        run: |
-          for platform in cmp-android jetpack-compose; do
-            source="$RUNNER_TEMP/reference/$platform/sheet-open"
-            target="baseline-repository/animations/$platform/sheet-open"
-            test ! -e "$target"
-            mkdir -p "$target"
-            cp "$source/"*.png "$target/"
-            {
-              printf '# Sheet opening on %s\n\n' "$platform"
-              printf 'API 35 x86_64 Android emulator, Pixel 7 profile, Nova light. The Compose test clock samples every 16 ms through 480 ms.\n\n'
-              printf 'Initial capture: https://github.com/csdog/compose-foundation/actions/runs/46119170933\n\n'
-              printf 'Independent replay: https://github.com/csdog/compose-foundation/actions/runs/46119244198\n'
-            } > "$target/README.md"
-          done
-          git -C baseline-repository add -- animations/cmp-android/sheet-open animations/jetpack-compose/sheet-open
-          git -C baseline-repository -c user.name='github-actions[bot]' \
-            -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
-            commit -m 'Add verified Android Sheet opening animation references'
-          git -C baseline-repository push origin HEAD:main
