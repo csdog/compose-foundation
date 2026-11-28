@@ -678,16 +678,18 @@
       "variant": "input",
       "status": "initial",
       "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPhone-17-Pro-Max",
       "platformCases": {
         "swiftui-ios": [
           {"variant": "input", "status": "initial", "viewport": [402, 520]},
-          {"variant": "textarea", "status": "initial", "viewport": [402, 520]}
+          {"variant": "textarea", "status": "initial", "viewport": [402, 520]},
+          {"variant": "fieldset", "status": "initial", "viewport": [440, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/field-input.tsx",
-      "visual": "compare both input fields and the complete feedback textarea",
-      "behavior": "support descriptions before and after content",
-      "accessibility": "named editors and readable descriptions",
+      "visual": "compare both input fields, the complete feedback textarea and the address fieldset",
+      "behavior": "support descriptions before and after content and compose related fields",
+      "accessibility": "section legend heading, named editors and readable descriptions",
       "motion": "static settled frames"
     },
     "button-group": {

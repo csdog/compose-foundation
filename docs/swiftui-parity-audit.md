@@ -477,7 +477,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | dropdown-menu | Nova 触发器覆盖默认与阿拉伯语 RTL 收起态。iOS 已验证分组、禁用项、子菜单、外点关闭、方向键选择和 Escape 关闭。展开面板保留系统样式，键盘焦点归还和 VoiceOver 待验收。 |
 | emoji-text | Apple 系统彩色 emoji，可保留 ZWJ 等 Unicode 序列。Compose 使用自己的 emoji 图形与替换逻辑。 |
 | empty | 支持符号、标题、说明和操作 slot，以及标准和虚线边框样式。Nova 对齐基本排版。自定义头像等媒体及其余示例布局待对照。 |
-| field | 纵向显示标题、说明、错误及任意输入。Nova 使用 14 pt 支持文字与 8 pt 间距，说明可放在控件前或后。FieldSet、Legend、横向及响应式排列待补齐。 |
+| field | 纵向显示标题、说明、错误及任意输入。Nova 使用 14 pt 支持文字与 8 pt 间距，说明可放在控件前或后。FieldSet、Legend 和 FieldGroup 可组合分区与相关字段，地址示例新增深浅色截图验收。横向及响应式排列待补齐。 |
 | hover-card | 支持延迟开关、触发器与卡片间的指针切换、长按和受控展开。Nova 使用锚定弹层，悬停保持原窗口焦点。共享 provider、位置变体及触控回归待对齐。 |
 | icon | 支持 SF Symbols、动态字号和可选无障碍标签。Compose 可传入任意 ImageVector 并选择图标变体。 |
 | input | 原生单行输入支持独立占位文字、SecureField、错误和禁用状态。Nova 边框视觉高 32 pt，字段布局至少高 44 pt。iOS 26 与 macOS 26 的 Nova RTL 字段按界面起始边对齐。混合脚本输入、iOS 光标及 VoiceOver 待单独验收。 |

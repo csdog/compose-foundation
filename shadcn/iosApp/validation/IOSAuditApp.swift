@@ -289,6 +289,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "field": [
                 ("field-input-initial", { AnyView(LabelFieldScreenshotFixture(example: .input)) }),
                 ("field-textarea-initial", { AnyView(LabelFieldScreenshotFixture(example: .textarea)) }),
+                ("field-fieldset-initial", { AnyView(LabelFieldScreenshotFixture(example: .fieldset)) }),
             ],
             "button-group": [
                 ("button-group-size-initial", { AnyView(ButtonGroupScreenshotFixture(vertical: false)) }),
@@ -2660,7 +2661,7 @@ private struct CardScreenshotFixture: View {
 }
 
 private struct LabelFieldScreenshotFixture: View {
-    enum Example { case label, input, textarea }
+    enum Example { case label, input, textarea, fieldset }
 
     let example: Example
     @Environment(\.colorScheme) private var scheme
@@ -2668,6 +2669,9 @@ private struct LabelFieldScreenshotFixture: View {
     @State private var username = ""
     @State private var password = ""
     @State private var feedback = ""
+    @State private var street = ""
+    @State private var city = ""
+    @State private var postalCode = ""
 
     var body: some View {
         var light = FoundationPalette.neutralLight
@@ -2704,6 +2708,18 @@ private struct LabelFieldScreenshotFixture: View {
                 }
                 .font(.custom("Geist-Regular", size: 14))
                 .frame(width: 320)
+            case .fieldset:
+                FoundationFieldSet("Address Information", description: "We need your address to deliver your order.") {
+                    FoundationFieldGroup {
+                        addressField("Street Address", text: $street, placeholder: "123 Main St")
+                        HStack(alignment: .top, spacing: 16) {
+                            addressField("City", text: $city, placeholder: "New York")
+                            addressField("Postal Code", text: $postalCode, placeholder: "90502")
+                        }
+                    }
+                }
+                .font(.custom("Geist-Medium", size: 16))
+                .frame(width: 384)
             }
         }
         .foundationTheme(theme)
@@ -2715,6 +2731,15 @@ private struct LabelFieldScreenshotFixture: View {
     }
 
     private var editorFont: Font { .custom("Geist-Regular", size: 16) }
+
+    private func addressField(_ title: String, text: Binding<String>, placeholder: String) -> some View {
+        FoundationField(title) {
+            FoundationInput(title, text: text, placeholder: placeholder)
+                .font(editorFont)
+        }
+        .font(.custom("Geist-Regular", size: 14))
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
 }
 
 private struct ButtonGroupScreenshotFixture: View {
