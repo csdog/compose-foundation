@@ -28,7 +28,6 @@ case "$platform" in
       "$swiftui"/validation/{AuditFixtures,IOSAuditApp}.swift -o "$app/ComposeFoundationAudit"
     ;;
   cmp-ios)
-    trigger_url=shadcncompose://animation/sheet-open
     xcodebuild -project app/iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug \
       -destination 'generic/platform=iOS Simulator' -derivedDataPath "$work/derived" CODE_SIGNING_ALLOWED=NO build
     app="$work/derived/Build/Products/Debug-iphonesimulator/ShadcnComposeCatalog.app"
@@ -78,14 +77,8 @@ if ! grep -q 'Recording started' "$work/recording.log"; then
   cat "$work/recording.log"
   exit 1
 fi
-if [[ "$platform" == cmp-ios ]]; then
-  sleep 1
-  xcrun simctl openurl "$device" "$trigger_url"
-  sleep 3
-else
-  # SwiftUI schedules the trigger in-process to avoid SpringBoard URL presentation.
-  sleep 15
-fi
+# Each fixture schedules the trigger in-process after allowing the recorder to warm up.
+sleep 15
 kill -INT "$recording"
 wait "$recording" || test "$?" -eq 130
 recording=
