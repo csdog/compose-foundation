@@ -109,6 +109,14 @@ iPhone 17 Pro（iOS 26.2）上两轮各四张原图逐文件一致。复验确�
 
 iPhone 17 Pro（iOS 26.2、Xcode 26.2）每个主题各渲染两次。每对原生 PNG 完全一致。将上游 720 × 520 画布裁到同一 402 × 520 区域，按 1 pt 对 1 CSS px 比较，保留全部可见控件。浅色和深色的按钮均位于左上角 24 pt，文字位置和背景一致。像素差异限于按钮区域，涉及边缘及字形抗锯齿和深色填充的 1 级灰度差。展开态和键盘激活态有独立的参考图，本次审核覆盖收起态。[shadcn 参考与来源](https://github.com/csdog/compose-foundation-baselines/blob/df707eeb146db4b3bb2b23ba8306444039f6e541/shadcn/popover/Index.md) · [浅色与深色审核附件](https://github.com/csdog/compose-foundation/actions/runs/45975773617/artifacts/15187598129)
 
+### 扩展 Popover 截图验收
+
+SwiftUI iOS 的计划包含默认态的收起、展开、键盘聚焦和键盘激活，以及 Basic、Alignments、Form 和 RTL 的收起与展开。每个用例采集浅色和深色，合计 24 张。Alignments 的参考图展开 Start，RTL 的参考图展开「يسار」。两个示例里的其他触发器仍可使用。布局使用 `FoundationPopover` 的 start、center、end 对齐与限宽，常规调用仍以安全区约束弹层。
+
+采集程序将触发器和弹层窗口绘制到同一张 PNG。它按 1 pt 对 1 CSS px 对照参考图。RTL 按计划内的原点裁切 Web 画布，完整保留两排触发器和弹层。键盘截图使用预设状态和原生输入框焦点，实际发送硬件按键的行为由下文焦点脚本独立验收。[shadcn Popover 截图及来源](https://github.com/csdog/compose-foundation-baselines/tree/main/shadcn/popover)
+
+在 iPhone 17 Pro（iOS 26.2）上，两轮各 24 张 PNG 逐文件一致。展开图同时保留触发器、背景和完整面板。当时的候选图使用固定深色填充。当前描边触发器使用 `input.opacity(0.3)`，与 shadcn 的 `input/30` 配方一致。Web 和 iOS 的文字光栅化、圆角与阴影仍有像素差异，逐项差异图收录在审核附件。macOS Swift Package 构建通过。[验证运行](https://github.com/csdog/compose-foundation/actions/runs/45988767609) · [24 张实拍与 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/45988767609/artifacts/15192533031)
+
 ## 复现
 
 ```sh

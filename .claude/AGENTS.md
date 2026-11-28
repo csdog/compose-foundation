@@ -21,7 +21,9 @@ The Gradle project paths `:shadcn:core` and `:app:androidApp` point to the reloc
 - Use Base UI with Nova as the default parity reference. Pin the shadcn commit and read both the component wrapper and its theme CSS. Record approved Figma frame/version references for product-specific overrides.
 - Apply shadcn sizing tokens numerically in logical units. A reference value of 16 CSS px maps to 16 dp in Compose and 16 pt in SwiftUI. Normalize screen scale when comparing images.
 - Use existing theme and style tokens. Prefer matching `TwColors` values, then the existing OKLCH conversion. Preserve container-specific color roles and live theme switching. Follow neighboring components for variant resolution, `rememberTheme`, and caller style overrides.
-- Preserve logical start/end layout, accessibility semantics, and platform input conventions. Keep Material dependencies out of the Compose component library.
+- Match shadcn's component semantics, including state transitions, token roles and formulas, focus, keyboard behavior, and accessibility. Preserve logical start/end layout and platform input conventions. Keep Material dependencies out of the Compose component library.
+- Do not hardcode a color, alpha, size, or platform-specific override solely to match pixels in a shadcn screenshot. Keep the upstream token formula responsive to theme and caller overrides. When equivalent semantics render differently, verify the cause and record the example, measured values, and decision in the alignment plan. Platform pixel regression still compares against the approved baseline for that platform.
+- For SwiftUI, track scope, acceptance criteria, and rendering exceptions in [the alignment plan](../docs/swiftui-parity-plan.md). Update [the progress record](../docs/swiftui-parity-progress.md) when implementation, verification, or publication status changes. Link the exact commit, test run, or report that supports the update.
 - Document composed slots, controlled state, focus, dismissal, and gestures where applicable. Include a working catalog example. `ComponentDetailScreen` already renders the first example in Preview & Code.
 - Keep platform integrations in their source sets and use shared logic for behavior common to multiple targets. For standalone Android export, keep `expect` declarations in dedicated files and supply the matching Android actuals.
 - Run the owning regression tests. Record and verify Roborazzi baselines after Compose visual changes, then review the image diffs before staging. Put run evidence in `build/shadcn-audit/` and durable findings in the corresponding audit record.
@@ -48,7 +50,7 @@ Use `report.py` to capture, compare, and build reports. Install `Pillow==11.3.0`
 ```sh
 mkdir -p build/shadcn-audit
 baseline_checkout="$(mktemp -d "$PWD/build/shadcn-audit/baselines.XXXXXX")"
-git clone https://github.com/csdog/compose-foundation-baselines.git "$baseline_checkout"
+git clone --recurse-submodules https://github.com/csdog/compose-foundation-baselines.git "$baseline_checkout"
 audit="$(mktemp -d "$PWD/build/shadcn-audit/ios-popover.XXXXXX")"
 python3 shadcn/validation/report.py "$audit" --run --platform swiftui-ios \
   --component popover --baselines "$baseline_checkout"

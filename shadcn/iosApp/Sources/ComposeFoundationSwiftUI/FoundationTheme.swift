@@ -43,6 +43,7 @@ public struct FoundationPalette: Sendable {
         ring: Color(rgb: 0x737373),
         destructive: Color(rgb: 0xff6467)
     )
+
     var novaDarkOutlineFill: Color {
         return input.opacity(0.3)
     }

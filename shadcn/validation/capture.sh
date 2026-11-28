@@ -53,7 +53,8 @@ if [[ "$platform" == swiftui-ios ]]; then
   mkdir "$app"
   cp "$swiftui/validation/IOSAuditInfo.plist" "$app/Info.plist"
   cp "$registry" "$app/registry.json"
-  cp app/shared/src/commonMain/composeResources/font/geist_medium.ttf "$app/"
+  cp app/shared/src/commonMain/composeResources/font/geist_{medium,regular}.ttf "$app/"
+  cp "$plan" "$app/parity-plan.json"
   audit_components=()
   for component in "${components[@]}"; do
     audit_components+=("--audit-component=$component")
@@ -108,12 +109,48 @@ for pass in "${passes[@]}"; do
         [[ ! -s "$mobile_output/result.txt" ]] || break
         sleep 1
       done
-      grep '^PASS ' "$mobile_output/result.txt"
+      if ! grep '^PASS ' "$mobile_output/result.txt"; then
+        if [[ -f "$mobile_output/result.txt" ]]; then
+          cat "$mobile_output/result.txt" >&2
+        else
+          echo "iOS audit did not finish before its deadline" >&2
+        fi
+        exit 1
+      fi
       cp "$mobile_output/result.txt" "$output/$pass-render.txt"
       cp "$mobile_output"/*.png "$work/$pass/"
+      python3 - "$work/$pass" <<'PYTHON' || capture_status=1
+from pathlib import Path
+import sys
+
+from PIL import Image
+
+directory = Path(sys.argv[1])
+for theme in ("light", "dark"):
+    initial = directory / f"popover-default-initial-{theme}.png"
+    if not initial.is_file():
+        continue
+    with Image.open(initial) as image:
+        expected_background = image.convert("RGB").getpixel((image.width - 1, image.height - 1))
+    for capture in directory.glob(f"popover-*-{theme}.png"):
+        with Image.open(capture) as image:
+            background = image.convert("RGB").getpixel((image.width - 1, image.height - 1))
+        if background != expected_background:
+            raise ValueError(f"{capture.name}: drawing the overlay changed the empty viewport background")
+PYTHON
       ;;
   esac
   for component in "${components[@]}"; do
+    if [[ "$platform" == swiftui-ios && "$component" == popover ]]; then
+      while IFS= read -r key; do
+        for theme in light dark; do
+          destination="$output/$pass/$component/${key%%:*}/${key##*:}"
+          mkdir -p "$destination"
+          cp "$work/$pass/$component-${key/:/-}-$theme.png" "$destination/$theme.png" || capture_status=1
+        done
+      done < <(python3 -c 'import json, sys; print(*(c["variant"] + ":" + c["status"] for c in json.load(open(sys.argv[1]))["components"]["popover"]["platformCases"]["swiftui-ios"]), sep="\n")' "$plan")
+      continue
+    fi
     destination="$output/$pass/$component/initial"
     mkdir -p "$destination"
     for theme in light dark; do

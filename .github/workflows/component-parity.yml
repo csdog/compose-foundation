@@ -45,7 +45,7 @@ jobs:
       repository: ${{ steps.resolve.outputs.repository }}
       revision: ${{ steps.resolve.outputs.revision }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
       - name: Resolve the pinned commit or the latest main
@@ -92,8 +92,8 @@ jobs:
       PLATFORM: ${{ matrix.platform }}
       UPDATE_BASELINES: ${{ inputs.update == 'review' || inputs.update == 'publish' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - run: python -m pip install Pillow==11.3.0
@@ -105,7 +105,7 @@ jobs:
           directory="$(jq -er --arg platform "$PLATFORM" '.baseline.paths[$platform] // $platform' shadcn/validation/plan.json)"
           printf 'directory=%s\n' "$directory" >> "$GITHUB_OUTPUT"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         if: needs.baseline.outputs.revision != ''
         with:
           repository: ${{ needs.baseline.outputs.repository }}
@@ -115,16 +115,17 @@ jobs:
             ${{ steps.baseline-path.outputs.directory }}
             shadcn
           path: build/component-baselines
+          submodules: true
           persist-credentials: false
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         if: startsWith(matrix.platform, 'cmp-')
         with:
           distribution: zulu
           java-version: "21"
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
         if: startsWith(matrix.platform, 'cmp-')
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         if: matrix.platform == 'cmp-web'
         with:
           node-version: "24.12.0"
@@ -240,7 +241,7 @@ jobs:
           done
       - name: Upload screenshot differences
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: component-parity-differences-${{ matrix.platform }}
           retention-days: 7
@@ -248,7 +249,7 @@ jobs:
           if-no-files-found: ignore
       - name: Upload shadcn visual review
         if: ${{ !cancelled() && inputs.update == 'review' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: component-parity-shadcn-review-${{ matrix.platform }}
           retention-days: 7
@@ -256,7 +257,7 @@ jobs:
           if-no-files-found: ignore
       - name: Upload baseline candidates
         if: ${{ !cancelled() && env.UPDATE_BASELINES == 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: component-parity-candidates-${{ matrix.platform }}
           retention-days: 7
@@ -278,7 +279,7 @@ jobs:
           fi
       - name: Upload baseline index preview
         if: ${{ inputs.update == 'review' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: component-parity-index-preview-${{ matrix.platform }}
           retention-days: 7
@@ -293,20 +294,21 @@ jobs:
     env:
       BASELINE_REPOSITORY: ${{ needs.baseline.outputs.repository }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           pattern: component-parity-candidates-*
           path: ${{ runner.temp }}/candidates
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           repository: ${{ needs.baseline.outputs.repository }}
           ref: main
           token: ${{ secrets.COMPONENT_BASELINES_WRITE_TOKEN }}
           path: baseline-repository
-      - uses: actions/setup-python@v5
+          submodules: true
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - run: python -m pip install Pillow==11.3.0
@@ -342,18 +344,18 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: zulu
           java-version: "21"
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - name: Verify the shared Tabs and Popover behavior
         run: |
           xvfb-run -a ./gradlew :shadcn:core:jvmTest \
             --tests '*TabsBehaviorParityTest' --tests '*PopoverBehaviorTest' \
             --tests '*PopoverFocusTest' --tests '*PopoverMotionTest'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: component-cmp-interaction-tests
@@ -365,7 +367,7 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Verify focus and selection rules
         run: |
           swiftui=shadcn/iosApp
@@ -374,6 +376,8 @@ jobs:
             "$swiftui/Sources/ComposeFoundationSwiftUI/FoundationTabsNavigation.swift" \
             "$swiftui/validation/TabsNavigationAudit.swift" -o "$RUNNER_TEMP/tabs-navigation"
           "$RUNNER_TEMP/tabs-navigation"
+      - name: Compile the native SwiftUI package for macOS
+        run: swift build --package-path shadcn/iosApp
 
       - name: Verify SwiftUI Button and Tabs typography
         run: |
