@@ -318,6 +318,8 @@ iPad mini（A17 Pro，iOS 26.2）的 10 张静态深浅色截图与复拍逐字�
 
 标准 UIKit 按钮对照在同型号 iPad 模拟器上确认了普通触控及完全键盘控制下的 Tab 和 Space。首次在系统设置页读取无障碍数据超时。加入重试后，以系统开关的无障碍值确认完全键盘控制已开启，再用一次 Tab 和 Space 激活第二个 UIKit 按钮。新的同设备对照将比较 UIKit、普通 SwiftUI 按钮、ScrollView 中的按钮和 Calendar。[UIKit 对照日志](https://github.com/csdog/compose-foundation/actions/runs/46126207498/job/140921306365) · [设置与激活截图](https://github.com/csdog/compose-foundation/actions/runs/46126207498/artifacts/15256062827) · [SwiftUI 对照](https://github.com/csdog/compose-foundation/actions/runs/46127200773)
 
+同设备对照进一步确认，开启完全键盘控制时，普通 SwiftUI 按钮和 ScrollView 内的按钮均可激活。以多选模式验证后，Calendar 现有焦点层下 Tab 与 Space 循环五次没有改变已选日期或月份。绕过自定义焦点层的一次 Tab 和 Space 成功切换到二月；保留焦点层、只显式标记按钮可交互仍未改变日期或月份。后续诊断分别核对根视图的默认焦点和非当前日期的焦点资格。[执行日志](https://github.com/csdog/compose-foundation/actions/runs/46128710323/job/140929013721) · [对照截图](https://github.com/csdog/compose-foundation/actions/runs/46128710323/artifacts/15256803869)
+
 最新全量 macOS 行为检查通过，包括 Calendar 的 LTR 和 RTL 选中、日期限制、跨月键盘焦点及焦点与选择独立。[macOS 日志](https://github.com/csdog/compose-foundation/actions/runs/46125132325/job/140918007879)
 
 全量截图回归的 Popover 深色关闭态差异 PNG 与 Popover PR #6 保存的差异逐字节一致。差异只在触发器区域，包含 3,107 个像素。已发布基准的填充取样是 `#151515`，审核过的 SwiftUI 截图和 shadcn 参考是 `#141414`。Calendar 专项截图仍逐像素一致。[全量回归差异](https://github.com/csdog/compose-foundation/actions/runs/46118576344/artifacts/15253650171) · [Popover 审核](https://github.com/csdog/compose-foundation/pull/6)
