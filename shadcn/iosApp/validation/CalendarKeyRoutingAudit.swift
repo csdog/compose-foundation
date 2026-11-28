@@ -20,7 +20,10 @@ final class CalendarKeyRoutingScene: NSObject, UIWindowSceneDelegate {
         } else if #available(iOS 15, *), ProcessInfo.processInfo.arguments.contains("--calendar-priority-probe") {
             window.rootViewController = CalendarPriorityProbeController()
         } else {
-            window.rootViewController = UIHostingController(rootView: CalendarKeyRoutingFixture(probe: nil))
+            let togglesSelection = ProcessInfo.processInfo.arguments.contains("--fka-calendar-toggle-date")
+            window.rootViewController = UIHostingController(rootView: CalendarKeyRoutingFixture(
+                probe: nil, togglesSelection: togglesSelection
+            ))
         }
         window.makeKeyAndVisible()
     }
@@ -85,7 +88,9 @@ private final class CalendarPriorityProbeState: ObservableObject {
 
 private struct CalendarKeyRoutingFixture: View {
     let probe: CalendarPriorityProbeState?
+    var togglesSelection = false
     @State private var selection: Date? = Self.date(1, 31)
+    @State private var selectedDates: Set<Date> = [Self.date(1, 31)]
 
     private static var calendar: Calendar {
         var value = Calendar(identifier: .gregorian)
@@ -102,7 +107,11 @@ private struct CalendarKeyRoutingFixture: View {
             VStack(spacing: 8) {
                 if let probe { CalendarPriorityProbeLabel(state: probe) }
                 Text("Selected: \(dateLabel)")
-                FoundationCalendar(selection: $selection, in: Self.date(1, 20)...Self.date(2, 15))
+                if togglesSelection {
+                    FoundationCalendar(selectedDates: $selectedDates, in: Self.date(1, 20)...Self.date(2, 15))
+                } else {
+                    FoundationCalendar(selection: $selection, in: Self.date(1, 20)...Self.date(2, 15))
+                }
             }
             .padding(12)
         }
@@ -112,7 +121,7 @@ private struct CalendarKeyRoutingFixture: View {
     }
 
     private var dateLabel: String {
-        guard let selection else { return "none" }
+        guard let selection = togglesSelection ? selectedDates.sorted().last : selection else { return "none" }
         let formatter = DateFormatter()
         formatter.calendar = Self.calendar
         formatter.timeZone = Self.calendar.timeZone

@@ -156,10 +156,12 @@ for name, arguments in (
     ("swiftui-scroll", ("--fka-swiftui-control", "--fka-scroll")),
 ):
     probe(name, "SwiftUI result: none", lambda current: selected("SwiftUI result: ", current), *arguments)
-for name, flag in (
-    ("calendar-native-grid", "--fka-calendar-native-grid"),
-    ("calendar-explicit-ax", "--fka-calendar-ax-interactive"),
+for name, flags in (
+    ("calendar-toggle-date", ()),
+    ("calendar-native-grid", ("--fka-calendar-native-grid",)),
+    ("calendar-explicit-ax", ("--fka-calendar-ax-interactive",)),
 ):
     probe(name, "Selected: 2025-01-31",
           lambda current: next((label for label in current if label == "February 2025" or
-                                label.startswith("Selected: ") and label != "Selected: 2025-01-31"), None), flag)
+                                label.startswith("Selected: ") and label != "Selected: 2025-01-31"), None),
+          "--fka-calendar-toggle-date", *flags)
