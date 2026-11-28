@@ -887,6 +887,27 @@ jobs:
           done
           exit "$failed"
 
+      - name: Verify Toast queue and actions on macOS
+        if: contains(needs.baseline.outputs.matrix, '"toast"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          sources="$swiftui/Sources/ComposeFoundationSwiftUI"
+          app="$RUNNER_TEMP/ToastQueueAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string ToastQueueAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.toast-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$sources"/Foundation{Theme,ButtonStyle,Toast}.swift \
+            "$swiftui/validation/MacToastQueueAudit.swift" -o "$app/Contents/MacOS/ToastQueueAudit"
+          log="$RUNNER_TEMP/toast.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app"
+          cat "$log"
+          grep -q '^PASS:' "$log"
+
       - name: Verify grouped Select binding and appearance on macOS
         if: contains(needs.baseline.outputs.matrix, '"select"')
         timeout-minutes: 2

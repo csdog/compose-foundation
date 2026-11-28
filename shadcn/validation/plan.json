@@ -20,6 +20,27 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "toast": {
+      "title": "Toast",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "default", "status": "visible", "viewport": [720, 520]},
+          {"variant": "types", "status": "initial", "viewport": [720, 520]},
+          {"variant": "types", "status": "success", "viewport": [720, 520]},
+          {"variant": "types", "status": "error", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/toast-demo.tsx",
+      "visual": "compare the Nova notification card, action, close control and status icons",
+      "behavior": "backfill the visible queue and preserve per-toast timers and actions",
+      "accessibility": "expose the action and named dismiss controls",
+      "motion": "static settled frames"
+    },
     "select": {
       "title": "Select",
       "variant": "default",

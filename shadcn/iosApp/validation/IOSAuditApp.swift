@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "toast": ToastScreenshotFixture.Example.allCases.map { example in
+                ("toast-\(example.rawValue)", { AnyView(ToastScreenshotFixture(example: example)) })
+            },
             "select": SelectScreenshotFixture.Example.allCases.map { example in
                 ("select-\(example.rawValue)-initial", { AnyView(SelectScreenshotFixture(example: example)) })
             },
@@ -878,6 +881,72 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct ToastScreenshotFixture: View {
+    enum Example: String, CaseIterable {
+        case defaultInitial = "default-initial"
+        case defaultVisible = "default-visible"
+        case typesInitial = "types-initial"
+        case typesSuccess = "types-success"
+        case typesError = "types-error"
+
+        var showsTypes: Bool { self != .defaultInitial && self != .defaultVisible }
+    }
+
+    @Environment(\.colorScheme) private var scheme
+    @StateObject private var toasts: FoundationToastState
+    let example: Example
+
+    init(example: Example) {
+        self.example = example
+        let toasts = FoundationToastState()
+        switch example {
+        case .defaultVisible: Self.showEvent(in: toasts)
+        case .typesSuccess: toasts.show("Event has been created.", variant: .success, durationMilliseconds: 0)
+        case .typesError: toasts.show("The event could not be created.", variant: .error, durationMilliseconds: 0)
+        default: break
+        }
+        _toasts = StateObject(wrappedValue: toasts)
+    }
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        return Group {
+            if example.showsTypes {
+                HStack(spacing: 8) {
+                    typeButton("Default", message: "Event has been created.")
+                    typeButton("Success", message: "Event has been created.", variant: .success)
+                    typeButton("Info", message: "Be at the area 10 minutes before the event time.", variant: .info)
+                    typeButton("Warning", message: "Event start time cannot be earlier than 8am.", variant: .warning)
+                    typeButton("Error", message: "The event could not be created.", variant: .error)
+                }
+            } else {
+                Button("Show Toast") { Self.showEvent(in: toasts) }
+                    .buttonStyle(FoundationButtonStyle(.outline, size: .regular))
+            }
+        }
+        .padding(.leading, 24)
+        .padding(.top, 18)
+        .frame(width: 720, height: 520, alignment: .topLeading)
+        .modifier(FoundationToaster(state: toasts))
+        .foundationTheme(theme)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+
+    private func typeButton(_ title: String, message: String, variant: FoundationToastVariant? = nil) -> some View {
+        Button(title) { toasts.show(message, variant: variant, durationMilliseconds: 0) }
+            .buttonStyle(FoundationButtonStyle(.outline, size: .regular))
+    }
+
+    private static func showEvent(in toasts: FoundationToastState) {
+        toasts.show("Event created", message: "Sunday, December 3 at 9:00 AM", durationMilliseconds: 0,
+                    action: FoundationToastAction("Undo") {})
     }
 }
 

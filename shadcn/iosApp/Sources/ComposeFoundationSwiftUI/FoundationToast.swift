@@ -175,6 +175,7 @@ public struct FoundationToaster: ViewModifier {
 private struct FoundationToastCard: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
+    @ScaledMetric(relativeTo: .subheadline) private var novaTextSize: CGFloat = 14
 
     let title: String
     let message: String?
@@ -186,32 +187,49 @@ private struct FoundationToastCard: View {
 
     var body: some View {
         let palette = theme.palette(for: colorScheme)
-        let shape = RoundedRectangle(cornerRadius: theme.cornerRadius)
-        HStack(spacing: 12) {
+        let nova = theme.preset == .nova
+        let shape = RoundedRectangle(cornerRadius: theme.cornerRadius + (nova ? 6 : 0))
+        HStack(spacing: nova ? 8 : 12) {
             if let variant {
-                Image(systemName: variant.icon)
+                Image(systemName: nova && variant == .error ? "xmark.octagon" : variant.icon)
+                    .font(nova ? .system(size: 14, weight: .medium) : nil)
+                    .frame(width: nova ? 16 : nil, height: nova ? 16 : nil)
                     .foregroundColor(variant == .error ? palette.destructive : palette.foreground)
                     .accessibilityHidden(true)
             }
-            VStack(alignment: .leading, spacing: 3) {
-                Text(title).font(theme.font(.subheadline, weight: .semibold))
+            VStack(alignment: .leading, spacing: nova ? 4 : 3) {
+                Text(title)
+                    .font(nova ? .system(size: novaTextSize, weight: variant == nil ? .medium : .regular)
+                          : theme.font(.subheadline, weight: .semibold))
+                    .foregroundColor(nova && variant != nil && message == nil ? palette.mutedForeground : palette.foreground)
                 if let message {
-                    Text(message).font(theme.font(.caption)).foregroundColor(palette.mutedForeground)
+                    Text(message)
+                        .font(nova ? .system(size: novaTextSize) : theme.font(.caption))
+                        .foregroundColor(palette.mutedForeground)
                 }
             }
             Spacer(minLength: 0)
             if let actionTitle {
                 Button(actionTitle, action: performAction)
-                    .buttonStyle(FoundationButtonStyle(.outline))
+                    .buttonStyle(nova ? FoundationButtonStyle(.outline, size: .small) : FoundationButtonStyle(.outline))
             }
             Button(action: dismiss) {
-                Image(systemName: "xmark").padding(7)
+                if nova {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(palette.mutedForeground)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
+                } else {
+                    Image(systemName: "xmark").padding(7)
+                }
             }
             .buttonStyle(PlainButtonStyle())
             .accessibilityLabel(closeLabel)
         }
         .foregroundColor(palette.foreground)
-        .padding(12)
+        .padding(.horizontal, nova ? 16 : 12)
+        .padding(.vertical, nova ? (message == nil ? 8 : 16) : 12)
         .background(shape.fill(palette.card))
         .overlay(shape.strokeBorder(palette.border).allowsHitTesting(false))
         .shadow(color: Color.black.opacity(0.12), radius: 6, y: 2)
