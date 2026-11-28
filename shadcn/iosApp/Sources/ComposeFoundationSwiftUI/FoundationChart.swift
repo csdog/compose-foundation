@@ -34,7 +34,7 @@ public struct FoundationChart: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
     @Binding private var selection: Int?
-    @State private var hoveredIndex: Int?
+    @State private var hoverLocation: CGPoint?
 
     private let labels: [String]
     private let series: [Series]
@@ -142,7 +142,8 @@ public struct FoundationChart: View {
     }
 
     private func interactivePlot(size: CGSize, values: [Double], palette: FoundationPalette) -> some View {
-        let active = (showsTooltip ? hoveredIndex : nil) ?? selection
+        let hoveredIndex = showsTooltip ? hoverLocation.flatMap { index(at: $0.x, width: size.width) } : nil
+        let active = hoveredIndex ?? selection
         let content = plot(size: size, values: values, palette: palette, active: active)
             .contentShape(Rectangle())
             .gesture(DragGesture(minimumDistance: 0).onChanged { event in
@@ -156,20 +157,20 @@ public struct FoundationChart: View {
                 }
             }.allowsHitTesting(false), alignment: .topLeading)
             .accessibilityHidden(true)
-        return trackHover(content, width: size.width)
+        return trackHover(content)
     }
 
     @ViewBuilder
-    private func trackHover<Content: View>(_ content: Content, width: CGFloat) -> some View {
+    private func trackHover<Content: View>(_ content: Content) -> some View {
         if #available(iOS 16, macOS 13, *), showsTooltip {
             content.onContinuousHover { phase in
                 switch phase {
                 case .active(let location):
-                    hoveredIndex = index(at: location.x, width: width)
+                    hoverLocation = location
                 case .ended:
-                    hoveredIndex = nil
+                    hoverLocation = nil
                 @unknown default:
-                    hoveredIndex = nil
+                    hoverLocation = nil
                 }
             }
         } else {
@@ -184,9 +185,11 @@ public struct FoundationChart: View {
     }
 
     private func tooltip(at index: Int, size: CGSize, palette: FoundationPalette) -> some View {
-        let width = min(156, size.width - 16)
+        let width = min(128, size.width - 16)
         let center = size.width * (CGFloat(index) + 0.5) / CGFloat(labels.count)
         let leading = min(max(center + 12, 8), size.width - width - 8)
+        let top = hoverLocation.map { $0.y + 12 } ?? size.height * 0.55
+        let lastTop = max(8, size.height - 32 - CGFloat(series.count) * 20)
         let shape = RoundedRectangle(cornerRadius: 8)
         return VStack(alignment: .leading, spacing: 6) {
             Text(labels[index]).fontWeight(.medium).lineLimit(1)
@@ -213,7 +216,7 @@ public struct FoundationChart: View {
         .background(shape.fill(palette.background).shadow(color: .black.opacity(0.18), radius: 8, y: 4))
         .overlay(shape.strokeBorder(palette.border.opacity(0.5)))
         .padding(.leading, leading)
-        .padding(.top, 8)
+        .padding(.top, min(max(top, 8), lastTop))
     }
 
     private func legend(palette: FoundationPalette) -> some View {
