@@ -28,7 +28,7 @@ The Gradle project paths `:shadcn:core` and `:app:androidApp` point to the reloc
 
 ## Screenshot review and baseline publication
 
-`shadcn/validation/plan.json` defines the capture cases, platform paths, and upstream source revision. [compose-foundation-baselines](https://github.com/csdog/compose-foundation-baselines) stores both the shadcn visual references under `shadcn/` and the platform PNGs used for pixel regression. Match upstream references by component, variant, state, and light or dark theme. Each Actions run resolves one baseline commit for all platforms. Use `baseline.revision` to pin a specific commit, or leave it unset to resolve the baseline repository's `main`.
+`shadcn/validation/plan.json` defines the capture cases, platform paths, and upstream source revision. [compose-foundation-baselines](https://github.com/csdog/compose-foundation-baselines) stores the platform PNGs and pins [shadcn-baselines](https://github.com/csdog/shadcn-baselines) as its `shadcn/` submodule. Initialize that submodule when reviewing against upstream shadcn reference images. Match upstream references by component, variant, state, and light or dark theme. Each Actions run resolves one baseline commit for all platforms. Use `baseline.revision` to pin a specific commit, or leave it unset to resolve the baseline repository's `main`.
 
 Use the **Component parity** workflow in `compose-foundation` (`.github/workflows/component-parity.yml`).
 
@@ -67,7 +67,7 @@ Use `report.py` to capture, compare, and build reports. Install `Pillow==11.3.0`
 ```sh
 mkdir -p build/shadcn-audit
 baseline_checkout="$(mktemp -d "$PWD/build/shadcn-audit/baselines.XXXXXX")"
-git clone https://github.com/csdog/compose-foundation-baselines.git "$baseline_checkout"
+git clone --recurse-submodules https://github.com/csdog/compose-foundation-baselines.git "$baseline_checkout"
 audit="$(mktemp -d "$PWD/build/shadcn-audit/ios-popover.XXXXXX")"
 python3 shadcn/validation/report.py "$audit" --run --platform swiftui-ios \
   --component popover --baselines "$baseline_checkout"

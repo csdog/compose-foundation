@@ -1,10 +1,12 @@
 """Refresh native screenshot indexes and list the Markdown paths that changed."""
 
 import argparse
+from functools import partial
 import json
 import os
 from pathlib import Path
 import re
+import subprocess
 from urllib.parse import quote
 
 from report import baseline_path
@@ -25,10 +27,14 @@ INTRO = "shadcn 是默认视觉基准。本端截图发布后与同状态的 sha
 FIRST_CELL = re.compile(r"^\| (?:\[([^\]]+)\]\([^)]*\)|([^|]+?)) \|")
 
 
-def link(page, target, label, embed=False):
+def link(page, target, label, embed=False, *, reference_root=None, reference_url=None, reference_revision=None):
     if not target.is_file():
         raise FileNotFoundError(target)
-    path = quote(Path(os.path.relpath(target, page.parent)).as_posix(), safe="/")
+    if reference_url:
+        kind = "raw" if embed else "blob"
+        path = f"{reference_url}/{kind}/{reference_revision}/{quote(target.relative_to(reference_root).as_posix(), safe='/')}"
+    else:
+        path = quote(Path(os.path.relpath(target, page.parent)).as_posix(), safe="/")
     return f"{'!' if embed else ''}[{label}]({path})"
 
 
@@ -66,7 +72,7 @@ def case_label(case, planned_variant, label_variant=False):
     return case
 
 
-def update_component(root, index, platform_title, component, title, cases, variant, numbered):
+def update_component(root, index, platform_title, component, title, cases, variant, numbered, link_reference):
     page = index.parent / component / "Index.md"
     reference_page = root / "shadcn" / component / "Index.md"
     reference_cases = screenshots(reference_page.parent, component)
@@ -84,7 +90,7 @@ def update_component(root, index, platform_title, component, title, cases, varia
         ))
         if upstream:
             upstream_links.append(prefix + " · ".join(
-                link(index, upstream[theme], label) for theme, label in THEMES.items()
+                link_reference(index, upstream[theme], label) for theme, label in THEMES.items()
                 if theme in upstream
             ))
         else:
@@ -93,7 +99,7 @@ def update_component(root, index, platform_title, component, title, cases, varia
             if theme in images:
                 local_image = link(page, images[theme], f"{title} {label}", embed=True)
                 upstream_image = (
-                    link(page, upstream[theme], f"shadcn {label}", embed=True)
+                    link_reference(page, upstream[theme], f"shadcn {label}", embed=True)
                     if theme in upstream else missing
                 )
                 detail_rows.append(f"| {prefix}{label} | {local_image} | {upstream_image} |")
@@ -101,7 +107,7 @@ def update_component(root, index, platform_title, component, title, cases, varia
     first_case = next(iter(cases))
     intro = "按截图变体、状态与主题对照。" if multiple_cases else f"对照状态为{case_label(first_case, variant)}。"
     if reference_page.is_file():
-        intro += " " + link(page, reference_page, "shadcn 示例和采集记录")
+        intro += " " + link_reference(page, reference_page, "shadcn 示例和采集记录")
     state_header = "变体、状态与主题" if multiple_cases else "主题"
     header = f"| {state_header} | {platform_title} | shadcn 视觉基准 |"
     separator = "| --- | --- | --- |"
@@ -121,7 +127,20 @@ def update_platform(root, plan, platform):
         raise ValueError(f"Platform directory resolves outside the baseline checkout: {directory}")
     index = directory / "Index.md"
     platform_title = PLATFORM_TITLES.get(platform, platform)
-    shadcn_index = root / "shadcn/Index.md"
+    reference_root = root / "shadcn"
+    shadcn_index = reference_root / "Index.md"
+    link_reference = link
+    if (root / ".gitmodules").is_file() and (reference_root / ".git").exists():
+        url = subprocess.check_output(
+            ["git", "config", "-f", root / ".gitmodules", "--get", "submodule.shadcn.url"],
+            text=True,
+        ).strip().removesuffix(".git")
+        revision = subprocess.check_output(
+            ["git", "-C", root, "rev-parse", "HEAD:shadcn"], text=True
+        ).strip()
+        link_reference = partial(
+            link, reference_root=reference_root, reference_url=url, reference_revision=revision
+        )
     table = TABLE
     if index.is_file():
         existing = index.read_text(encoding="utf-8")
@@ -133,7 +152,7 @@ def update_platform(root, plan, platform):
     else:
         intro = INTRO
         if shadcn_index.is_file():
-            intro += " " + link(index, shadcn_index, "上游组件索引")
+            intro += " " + link_reference(index, shadcn_index, "上游组件索引")
         before, after = f"# {platform_title}\n\n{intro}\n\n", "\n"
 
     rows = []
@@ -149,7 +168,9 @@ def update_platform(root, plan, platform):
             continue
         title = item["title"]
         key = title.casefold()
-        row = update_component(root, index, platform_title, component, title, cases, item["variant"], numbered)
+        row = update_component(
+            root, index, platform_title, component, title, cases, item["variant"], numbered, link_reference
+        )
         for position, existing in enumerate(rows):
             number = ROW_NUMBER.match(existing) if numbered else None
             cells = existing[number.end():] if number else existing

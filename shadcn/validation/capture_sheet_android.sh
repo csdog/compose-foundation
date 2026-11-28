@@ -4,6 +4,36 @@ cd "$(dirname "$0")/../.."
 platform="${1:?Pass cmp-android or jetpack-compose}"
 output="${2:?Pass the output root}/$platform/sheet-open/actual"
 test_class=com.toutiaoyan.compose.ui.components.sheet.SheetAndroidAnimationTest
+mode="${3:-build-and-capture}"
+case "$mode" in
+  build-and-capture|--build-only|--skip-build) ;;
+  *) echo "Unsupported build mode $mode" >&2; exit 2 ;;
+esac
+app_apk=
+case "$platform" in
+  cmp-android)
+    build_args=(:shadcn:core:packageAndroidDeviceTest)
+    test_package=com.toutiaoyan.compose.ui.test
+    package="$test_package"
+    test_apk=shadcn/shared/build/outputs/apk/androidTest/core-androidTest.apk
+    ;;
+  jetpack-compose)
+    project="$PWD/build/shadcn-audit/jetpack-sheet"
+    build_args=(-p "$project" assembleDebug assembleDebugAndroidTest)
+    package=com.toutiaoyan.compose.ui.animation
+    test_package="$package.test"
+    app_apk="$project/build/outputs/apk/debug/jetpack-sheet-animation-debug.apk"
+    test_apk="$project/build/outputs/apk/androidTest/debug/jetpack-sheet-animation-debug-androidTest.apk"
+    ;;
+  *) echo "Unsupported Android platform $platform" >&2; exit 2 ;;
+esac
+if [[ "$mode" != --skip-build ]]; then
+  if [[ "$platform" == jetpack-compose ]]; then
+    python3 shadcn/validation/prepare_jetpack_sheet.py "$project"
+  fi
+  ./gradlew "${build_args[@]}" --max-workers=2 --stacktrace
+fi
+if [[ "$mode" == --build-only ]]; then exit 0; fi
 adb shell settings put system screen_off_timeout 2147483647
 adb shell svc power stayon true
 adb shell settings put global window_animation_scale 0
@@ -14,24 +44,7 @@ adb shell am broadcast -a com.android.systemui.demo -e command enter
 adb shell am broadcast -a com.android.systemui.demo -e command clock -e hhmm 0941
 adb shell am broadcast -a com.android.systemui.demo -e command battery -e level 100 -e plugged false
 adb shell am broadcast -a com.android.systemui.demo -e command notifications -e visible false
-case "$platform" in
-  cmp-android)
-    ./gradlew :shadcn:core:packageAndroidDeviceTest
-    test_package=com.toutiaoyan.compose.ui.test
-    package="$test_package"
-    test_apk=shadcn/shared/build/outputs/apk/androidTest/core-androidTest.apk
-    ;;
-  jetpack-compose)
-    project="$PWD/build/shadcn-audit/jetpack-sheet"
-    python3 shadcn/validation/prepare_jetpack_sheet.py "$project"
-    ./gradlew -p "$project" assembleDebug assembleDebugAndroidTest
-    package=com.toutiaoyan.compose.ui.animation
-    test_package="$package.test"
-    adb install -r "$project/build/outputs/apk/debug/jetpack-sheet-animation-debug.apk"
-    test_apk="$project/build/outputs/apk/androidTest/debug/jetpack-sheet-animation-debug-androidTest.apk"
-    ;;
-  *) echo "Unsupported Android platform $platform" >&2; exit 2 ;;
-esac
+if [[ -n "$app_apk" ]]; then adb install -r "$app_apk"; fi
 adb install -r "$test_apk"
 adb shell pm clear "$package"
 adb shell input keyevent KEYCODE_WAKEUP
