@@ -149,14 +149,14 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
     }
 
     private var waitsForAnimationCompletion: Bool {
-        if #available(iOS 17, macOS 14, *) { return commandFocusSearchOnOpen != nil }
+        if #available(iOS 17, macOS 14, *) { return true }
         return false
     }
 
     @ViewBuilder
     private func animateCentered<Panel: View>(_ content: Panel) -> some View {
         let animated = content.animation(reduceMotion ? nil : .easeOut(duration: 0.10), value: isPresented)
-        if #available(iOS 17, macOS 14, *), waitsForAnimationCompletion {
+        if #available(iOS 17, macOS 14, *) {
             animated.transaction(value: isPresented) { transaction in
                 guard !isPresented, let panel = presentedPanel else { return }
                 transaction.addAnimationCompletion(criteria: .removed) {
