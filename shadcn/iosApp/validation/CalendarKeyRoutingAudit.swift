@@ -14,12 +14,37 @@ final class CalendarKeyRoutingScene: NSObject, UIWindowSceneDelegate {
         self.window = window
         if ProcessInfo.processInfo.arguments.contains("--fka-native-control") {
             window.rootViewController = CalendarNativeControlProbe()
+        } else if ProcessInfo.processInfo.arguments.contains("--fka-swiftui-control") {
+            let scrolls = ProcessInfo.processInfo.arguments.contains("--fka-scroll")
+            window.rootViewController = UIHostingController(rootView: CalendarSwiftUIControlProbe(scrolls: scrolls))
         } else if #available(iOS 15, *), ProcessInfo.processInfo.arguments.contains("--calendar-priority-probe") {
             window.rootViewController = CalendarPriorityProbeController()
         } else {
             window.rootViewController = UIHostingController(rootView: CalendarKeyRoutingFixture(probe: nil))
         }
         window.makeKeyAndVisible()
+    }
+}
+
+private struct CalendarSwiftUIControlProbe: View {
+    let scrolls: Bool
+    @State private var result = "none"
+
+    var body: some View {
+        if scrolls {
+            ScrollView { controls }
+        } else {
+            controls
+        }
+    }
+
+    private var controls: some View {
+        VStack(spacing: 16) {
+            Text("SwiftUI result: \(result)")
+            Button("First SwiftUI control") { result = "First control" }
+            Button("Second SwiftUI control") { result = "Second control" }
+        }
+        .padding(24)
     }
 }
 

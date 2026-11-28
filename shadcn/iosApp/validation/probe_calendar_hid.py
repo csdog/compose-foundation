@@ -119,29 +119,43 @@ def capture(name):
     subprocess.run(["xcrun", "simctl", "io", device, "screenshot", str(screenshots / name)], check=True, timeout=35)
 
 
-def launch_control():
+def launch(label, *arguments):
     subprocess.run(["xcrun", "simctl", "launch", "--terminate-running-process", device,
-                    "com.toutiaoyan.compose.foundation.audit", "--fka-native-control",
+                    "com.toutiaoyan.compose.foundation.audit", *arguments,
                     "-AppleLanguages", "(en)", "-AppleLocale", "en_US"],
                    check=True, timeout=50)
-    assert wait_for("UIKit result: none", timeout=90), labels()
+    assert wait_for(label, timeout=90), labels()
 
 
-launch_control()
-tap(choose({"First control"}))
-assert wait_for("UIKit result: First control"), labels()
-print("UIKit control, ordinary touch: activated", flush=True)
+def probe(name, initial, accepted, *arguments):
+    launch(initial, *arguments)
+    capture(f"{name}-initial.png")
+    for tabs in range(5):
+        key(44)  # Space performs the current Full Keyboard Access action.
+        current = labels()
+        destination = accepted(current)
+        if destination is not None:
+            print(f"INPUT {name}: activated after {tabs} Tab events: {destination}", flush=True)
+            capture(f"{name}-activated.png")
+            return True
+        key(43)  # Tab moves Full Keyboard Access focus.
+    print(f"INPUT {name}: no activation after five attempts; labels={sorted(current)}", flush=True)
+    capture(f"{name}-last.png")
+    return False
+
+
+def selected(prefix, current):
+    return next((label for label in current if label.startswith(prefix) and label != f"{prefix}none"), None)
+
+
 enable_full_keyboard_access()
-launch_control()
-for tabs in range(8):
-    capture(f"uikit-control-tab-{tabs}.png")
-    key(44)  # Space
-    result = next((label for label in labels() if label.startswith("UIKit result: ") and
-                   label != "UIKit result: none"), None)
-    if result is not None:
-        print(f"UIKit control, Full Keyboard Access: activated after {tabs} Tab events: {result}", flush=True)
-        capture("uikit-control-activated.png")
-        break
-    key(43)  # Tab
-else:
-    raise AssertionError("Simulated Tab and Space did not activate either standard UIKit button")
+assert probe("uikit", "UIKit result: none", lambda current: selected("UIKit result: ", current),
+             "--fka-native-control"), "The UIKit control must receive focus and activation"
+for name, arguments in (
+    ("swiftui-plain", ("--fka-swiftui-control",)),
+    ("swiftui-scroll", ("--fka-swiftui-control", "--fka-scroll")),
+):
+    probe(name, "SwiftUI result: none", lambda current: selected("SwiftUI result: ", current), *arguments)
+probe("calendar", "Selected: 2025-01-31",
+      lambda current: next((label for label in current if label == "February 2025" or
+                            label.startswith("Selected: ") and label != "Selected: 2025-01-31"), None))
