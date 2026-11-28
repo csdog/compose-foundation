@@ -356,6 +356,14 @@ macOS 在实际窗口用原生按键写入文本并点击保存，然后切换 1
 
 iPad mini（A17 Pro，iOS 26.2）的 16 张 720 × 520 截图复拍逐字节一致。按中心空白列测量上下描边，七套有描边的预设在深浅色下均得到对应的 28、32 或 36 pt 高度。Sera 的取样只出现底线。Theme 表单以预设样式表为上游依据，报告中的独立 shadcn 截图标为缺参考图。审计应用以 iOS 14 模拟器部署目标编译。[iOS 预设图与报告](https://github.com/csdog/compose-foundation/actions/runs/46095932842/artifacts/15243740986)
 
+### Textarea Nova 焦点、禁用、错误与 RTL
+
+对照 shadcn Base UI / Nova 的默认、Field、禁用、错误和 RTL 示例。Nova 保持至少 64 pt 高的编辑区，使用主题色区分焦点、禁用底色和错误环。焦点覆盖从 iOS 15、macOS 12 启用。新 SDK 的 RTL 编辑采用逻辑方向对齐，阿拉伯语用例的占位文字、标题和说明也随布局方向排列。
+
+macOS 实际窗口点击编辑器后出现焦点环。逐键输入字符及回车写入两行绑定值。点击另一字段后焦点环消失，切换到错误态时仍显示错误环并保留两行文字。[macOS 多行编辑日志](https://github.com/csdog/compose-foundation/actions/runs/46097044679/job/140830735599)
+
+iPad mini（A17 Pro，iOS 26.2）的 10 张 720 × 520 截图复拍逐字节一致。禁用编辑区的取样色与 shadcn 一致，浅色 `#F8F8F8`，深色 `#181818`。错误环取样每通道最多相差 2 个色阶。SwiftUI 编辑器外观保留原生滚动区域，浏览器拖动调节尺寸的手柄待对齐。审计应用以 iOS 14 模拟器部署目标编译。[iOS 截图与对照报告](https://github.com/csdog/compose-foundation/actions/runs/46097044679/artifacts/15243936930)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -422,7 +430,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张 720 × 520 截图复拍逐字节一�
 | table | 支持列标题、数据行、水平滚动、排序、说明文字、页脚和自定义正文单元格。Nova 的完整发票、紧凑页脚、阿拉伯语 RTL 和商品操作示例覆盖深浅色。跨列合并、iOS 实际菜单操作和 VoiceOver 待验收。 |
 | tabs | 支持选择绑定、禁用、横向 tabs 与内容切换。iOS 17 / macOS 14 起提供左右键、Home / End、禁用项跳过，以及自动或手动激活。iOS 26.2 模拟器已验证 LTR、RTL、跨组 Tab、长列表滚动、自动激活及手动模式的独立焦点与提交。macOS 15.6.1 已验证自动模式跳过禁用项、跨组 Tab 和手动激活。Compose 另有纵向、list variant 和独立焦点移动 API。 |
 | text | 支持标题、headline、正文、caption 和 muted 文本。Compose 有更多主题字体角色及自定义内容和样式参数。 |
-| textarea | 原生 TextEditor 支持多行绑定、独立占位文字及错误边框。Nova 最小高 64 pt，iOS 16 和 macOS 13 起隐藏系统滚动背景。自动增高和自定义焦点样式仍待补齐。 |
+| textarea | 原生 TextEditor 支持多行绑定、独立占位文字、禁用和错误环。Nova 最小高 64 pt，iOS 16 和 macOS 13 起隐藏系统滚动背景。自动增高、RTL 实际键入和焦点态 iOS 截图待验收。 |
 | theme | SwiftUI 环境支持自定义深浅色、圆角及八种预设。按钮、输入框、卡片和 Popover 使用预设尺寸。各预设的完整配色、图表色和逐组件状态样式仍待对齐。 |
 | toast | 支持单条通知和 `FoundationToastState` 队列，默认显示最新三条，支持操作、逐条关闭、清空及独立计时。Nova 已接入默认、成功和错误样式的截图。堆叠展开、滑动关闭、优先级播报和多操作待对齐。 |
 | toggle | 可绑定选中、禁用及自定义标签。Nova 支持普通、描边和三个尺寸。描边书签的状态已截图。 |

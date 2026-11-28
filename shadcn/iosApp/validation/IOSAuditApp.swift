@@ -293,6 +293,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "textarea": [
                 ("textarea-default-initial", { AnyView(TextFieldScreenshotFixture(example: .textarea)) }),
                 ("textarea-field-initial", { AnyView(TextFieldScreenshotFixture(example: .textareaField)) }),
+                ("textarea-disabled-initial", { AnyView(TextFieldScreenshotFixture(example: .textareaDisabled)) }),
+                ("textarea-invalid-initial", { AnyView(TextFieldScreenshotFixture(example: .textareaInvalid)) }),
+                ("textarea-rtl-initial", { AnyView(TextFieldScreenshotFixture(example: .textareaRTL)) }),
             ],
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
@@ -2914,7 +2917,7 @@ private struct InputOtpScreenshotFixture: View {
 }
 
 private struct TextFieldScreenshotFixture: View {
-    enum Example { case input, basicInput, rtlInput, textarea, textareaField }
+    enum Example { case input, basicInput, rtlInput, textarea, textareaField, textareaDisabled, textareaInvalid, textareaRTL }
 
     let example: Example
     @State private var value = ""
@@ -2952,13 +2955,32 @@ private struct TextFieldScreenshotFixture: View {
                     .font(fieldFont)
                     .frame(height: 64)
                     .padding(.top, 8)
+            case .textareaDisabled, .textareaInvalid, .textareaRTL:
+                let rtl = example == .textareaRTL
+                let disabled = example == .textareaDisabled
+                let invalid = example == .textareaInvalid
+                let title = rtl ? "التعليقات" : "Message"
+                fieldLabel(title)
+                    .foregroundColor(invalid ? palette.destructive : palette.foreground)
+                    .opacity(disabled ? 0.5 : 1)
+                FoundationTextarea(title, text: $value,
+                                   placeholder: rtl ? "تعليقاتك تساعدنا على التحسين..." : "Type your message here.",
+                                   invalid: invalid)
+                    .font(fieldFont)
+                    .frame(height: 64)
+                    .disabled(disabled)
+                    .padding(.top, 8)
+                if rtl || invalid {
+                    description(rtl ? "شاركنا أفكارك حول خدمتنا." : "Please enter a valid message.", palette: palette)
+                        .padding(.top, 7)
+                }
             }
         }
         .font(.custom("Geist-Regular", size: 14))
         .foregroundColor(palette.foreground)
         .foundationTheme(theme)
-        .frame(width: 672, alignment: .leading)
-        .environment(\.layoutDirection, example == .rtlInput ? .rightToLeft : .leftToRight)
+        .frame(width: example == .textareaRTL ? 320 : 672, alignment: .leading)
+        .environment(\.layoutDirection, example == .rtlInput || example == .textareaRTL ? .rightToLeft : .leftToRight)
         .padding(.leading, 24)
         .padding(.top, example == .basicInput ? 18 : 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
