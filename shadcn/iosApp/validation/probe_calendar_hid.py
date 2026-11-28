@@ -69,14 +69,18 @@ def enable_full_keyboard_access():
     tap(choose({"Full Keyboard Access", "Full Keyboard Access, Off", "Full Keyboard Access, On"}))
     capture("settings-full-keyboard-access.png")
     options = {"Full Keyboard Access", "Full Keyboard Access, Off", "Full Keyboard Access, On"}
-    toggle = choose(options, switch=True)
-    if str(toggle.get("AXValue")).lower() not in {"1", "on", "true"}:
+    time.sleep(1.6)
+    for offset in (32, 26, 36):
+        toggle = choose(options, switch=True)
+        if str(toggle.get("AXValue")).lower() in {"1", "on", "true"}:
+            break
         frame = toggle["frame"]
-        x = round(frame["x"] + frame["width"] - 32)
+        x = round(frame["x"] + frame["width"] - offset)
         y = round(frame["y"] + frame["height"] / 2)
-        subprocess.run([*client, "tap", str(x), str(y)], check=True, timeout=15)
-        time.sleep(1)
+        subprocess.run([*client, "tap", str(x), str(y), "--duration", "0.12"], check=True, timeout=15)
+        time.sleep(2)
     enabled = choose(options, switch=True)
+    capture("settings-after-toggle.png")
     assert str(enabled.get("AXValue")).lower() in {"1", "on", "true"}, enabled
     capture("settings-enabled.png")
     print("Enabled Full Keyboard Access in iPad Settings", flush=True)

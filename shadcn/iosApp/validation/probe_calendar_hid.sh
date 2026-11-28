@@ -26,8 +26,8 @@ xcrun simctl boot "$device"
 sdk="$(xcrun --sdk iphonesimulator --show-sdk-path)"
 xcrun --sdk iphonesimulator swiftc -sdk "$sdk" -parse-as-library -swift-version 6 \
     -target "$(uname -m)-apple-ios14.0-simulator" \
-    "$swiftui"/Sources/ComposeFoundationSwiftUI/*.swift \
-    "$swiftui"/validation/{AuditFixtures,IOSAuditApp}.swift -o "$app/ComposeFoundationAudit"
+    "$swiftui"/Sources/ComposeFoundationSwiftUI/Foundation{Theme,Calendar,CalendarNavigation,CalendarSelection}.swift \
+    "$swiftui"/validation/CalendarKeyRoutingAudit.swift -o "$app/ComposeFoundationAudit"
 xcrun simctl bootstatus "$device" -b
 xcrun simctl install "$device" "$app"
 "$work/companion/idb_companion" --udid "$device" --grpc-port 10882 > "$work/companion.log" 2>&1 &
