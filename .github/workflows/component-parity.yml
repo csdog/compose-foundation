@@ -926,6 +926,10 @@ jobs:
             if [[ "$kind" == dialog-centered || "$kind" == sheet-trailing || "$kind" == sheet-rtl ]]; then expected=3; fi
             test "$(grep -c '^PASS:' "$log")" -eq "$expected" || failed=1
           done
+          log="$RUNNER_TEMP/presentation-dialog-centered-reduced-motion.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app" --args dialog-centered --reduce-motion || failed=1
+          cat "$log"
+          test "$(grep -c '^PASS:' "$log")" -eq 3 || failed=1
           exit "$failed"
 
       - name: Verify the Context Menu secondary-click path on macOS

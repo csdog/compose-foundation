@@ -126,7 +126,9 @@ struct MacPresentationFocusAudit {
             styleMask: [.titled, .closable], backing: .buffered, defer: false
         )
         window.title = "\(kind.rawValue.capitalized) Focus Audit"
-        window.contentView = NSHostingView(rootView: PresentationProbe(state: state, kind: kind))
+        let reduceMotion = CommandLine.arguments.contains("--reduce-motion")
+        window.contentView = NSHostingView(rootView: PresentationProbe(state: state, kind: kind)
+            .environment(\.accessibilityReduceMotion, reduceMotion))
         window.center()
         app.activate()
         window.makeKeyAndOrderFront(nil)
