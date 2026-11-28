@@ -321,6 +321,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "toggle-group": [
                 ("toggle-group-default-initial", { AnyView(ToggleScreenshotFixture(grouped: true, selected: false)) }),
                 ("toggle-group-default-bold", { AnyView(ToggleScreenshotFixture(grouped: true, selected: true)) }),
+                ("toggle-group-vertical-initial", {
+                    AnyView(ToggleScreenshotFixture(grouped: true, selected: true, vertical: true))
+                }),
             ],
             "textarea": [
                 ("textarea-default-initial", { AnyView(TextFieldScreenshotFixture(example: .textarea)) }),
@@ -2782,14 +2785,16 @@ private struct ButtonGroupScreenshotFixture: View {
 
 private struct ToggleScreenshotFixture: View {
     let grouped: Bool
+    let vertical: Bool
     @State private var isOn: Bool
     @State private var selection: Set<ToggleScreenshotIcon>
     @Environment(\.colorScheme) private var scheme
 
-    init(grouped: Bool, selected: Bool) {
+    init(grouped: Bool, selected: Bool, vertical: Bool = false) {
         self.grouped = grouped
+        self.vertical = vertical
         _isOn = State(initialValue: selected)
-        _selection = State(initialValue: selected ? [.bold] : [])
+        _selection = State(initialValue: vertical ? [.bold, .italic] : selected ? [.bold] : [])
     }
 
     var body: some View {
@@ -2803,12 +2808,13 @@ private struct ToggleScreenshotFixture: View {
         ]
         return Group {
             if grouped {
-                FoundationToggleGroup(icons, selection: $selection, variant: .outline, allowsMultiple: true) { choice in
+                FoundationToggleGroup(icons, selection: $selection, orientation: vertical ? .vertical : .horizontal,
+                                      variant: vertical ? .plain : .outline, allowsMultiple: true) { choice in
                     choice.value.stroke(style: StrokeStyle(lineWidth: 4.0 / 3, lineCap: .round, lineJoin: .round))
                         .frame(width: 16, height: 16)
                         .accessibilityHidden(true)
                 }
-                .frame(height: 44)
+                .frame(height: vertical ? nil : 44)
             } else {
                 FoundationToggle(isOn: $isOn, variant: .outline, size: .small) {
                     HStack(spacing: 4) {
@@ -2826,8 +2832,8 @@ private struct ToggleScreenshotFixture: View {
             }
         }
         .foundationTheme(theme)
-        .padding(.leading, grouped ? 21 : 24)
-        .padding(.top, grouped ? 18 : 16)
+        .padding(.leading, grouped && !vertical ? 21 : 24)
+        .padding(.top, grouped && !vertical ? 18 : 16)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(theme.palette(for: scheme).background)
         .ignoresSafeArea()

@@ -732,12 +732,13 @@
       "platformCases": {
         "swiftui-ios": [
           {"variant": "default", "status": "initial", "viewport": [402, 520]},
-          {"variant": "default", "status": "bold", "viewport": [402, 520]}
+          {"variant": "default", "status": "bold", "viewport": [402, 520]},
+          {"variant": "vertical", "status": "initial", "viewport": [402, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/toggle-group-demo.tsx",
-      "visual": "compare all three outline buttons with none or Bold selected",
-      "behavior": "preserve single and multiple selection policies",
+      "visual": "compare the horizontal outline buttons and the vertical example with Bold and Italic selected",
+      "behavior": "preserve single and multiple selection policies and move keyboard focus independently of pressed state",
       "accessibility": "each item exposes its label and selection",
       "motion": "static settled frames"
     },

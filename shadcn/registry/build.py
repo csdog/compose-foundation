@@ -36,7 +36,7 @@ SWIFT_SUPPORT_FILES = {
     "sheet": ("FoundationPresentationHeader.swift",),
     "tabs": ("FoundationTabsNavigation.swift",),
     "toast": ("FoundationButtonStyle.swift",),
-    "toggle-group": ("FoundationToggle.swift",),
+    "toggle-group": ("FoundationToggle.swift", "FoundationTabsNavigation.swift"),
 }
 PACKAGE = re.compile(r"^package ([\w.]+)", re.MULTILINE)
 IMPORT = re.compile(r"^import (com\.toutiaoyan\.compose\.[\w.]+)", re.MULTILINE)
