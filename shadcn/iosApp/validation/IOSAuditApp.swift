@@ -3375,6 +3375,7 @@ private struct RadioGroupScreenshotFixture: View {
         case initial = "default-initial"
         case compactSelected = "default-compact"
         case disabled = "disabled-initial"
+        case descriptions = "description-initial"
     }
 
     @Environment(\.colorScheme) private var scheme
@@ -3384,7 +3385,7 @@ private struct RadioGroupScreenshotFixture: View {
     init(example: Example) {
         self.example = example
         switch example {
-        case .initial: _selection = State(initialValue: "comfortable")
+        case .initial, .descriptions: _selection = State(initialValue: "comfortable")
         case .compactSelected: _selection = State(initialValue: "compact")
         case .disabled: _selection = State(initialValue: "option2")
         }
@@ -3405,11 +3406,16 @@ private struct RadioGroupScreenshotFixture: View {
             FoundationChoice("Comfortable", value: "comfortable"),
             FoundationChoice("Compact", value: "compact"),
         ]
-        return FoundationRadioGroup(choices, selection: $selection)
+        let descriptions = example == .descriptions ? [
+            "default": "Standard spacing for most use cases.",
+            "comfortable": "More space between elements.",
+            "compact": "Minimal spacing for dense layouts.",
+        ] : [:]
+        return FoundationRadioGroup(choices, selection: $selection, descriptions: descriptions)
             .font(.custom(disabled ? "Geist-Regular" : "Geist-Medium", size: 14))
             .foundationTheme(theme)
             .padding(.horizontal, 24)
-            .padding(.top, disabled ? 12 : 10)
+            .padding(.top, example == .descriptions ? 20 : (disabled ? 12 : 10))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(theme.palette(for: scheme).background)
             .ignoresSafeArea()

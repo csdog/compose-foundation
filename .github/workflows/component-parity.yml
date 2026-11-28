@@ -540,9 +540,9 @@ jobs:
           xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
             "$sources"/Foundation{Theme,RadioGroup,TabsNavigation}.swift \
             "$swiftui/validation/MacRadioGroupKeyboardAudit.swift" -o "$app/Contents/MacOS/RadioGroupAudit"
-          for direction in ltr rtl; do
-            log="$RUNNER_TEMP/radio-group-$direction.log"
-            open -n -W --stdout "$log" --stderr "$log" "$app" --args "--$direction"
+          for mode in ltr rtl descriptions; do
+            log="$RUNNER_TEMP/radio-group-$mode.log"
+            open -n -W --stdout "$log" --stderr "$log" "$app" --args "--$mode"
             cat "$log"
             grep -q '^PASS:' "$log"
           done
