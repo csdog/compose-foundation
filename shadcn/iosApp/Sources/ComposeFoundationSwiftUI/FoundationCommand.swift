@@ -134,7 +134,7 @@ public struct FoundationCommand<Value: Hashable>: View {
                     Rectangle().fill(palette.border).frame(height: 1).accessibilityHidden(true)
                     footerContent.frame(maxWidth: .infinity, alignment: .leading).padding(8)
                 }
-                .background(palette.novaCardFooterFill(for: colorScheme))
+                .background(nova ? palette.novaCardFooterFill(for: colorScheme) : palette.secondary)
                 .environment(\.foundationSurface, .cardFooter)
             }
         }
@@ -274,7 +274,7 @@ public struct FoundationCommand<Value: Hashable>: View {
 
     private func row(_ choice: FoundationChoice<Value>, highlighted: Bool, palette: FoundationPalette) -> some View {
         let appearance = actionAppearance[choice.value]
-        return Button {
+        let button = Button {
             onAction(choice.value)
         } label: {
             HStack(spacing: 8) {
@@ -303,9 +303,22 @@ public struct FoundationCommand<Value: Hashable>: View {
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(!choice.isEnabled)
-        .keyboardShortcut(isEnabled && choice.isEnabled ? appearance?.shortcut : nil)
         .opacity(nova && !choice.isEnabled ? 0.5 : 1)
         .accessibilityAddTraits(highlighted ? .isSelected : [])
+        return withShortcut(isEnabled && choice.isEnabled ? appearance?.shortcut : nil, on: button)
+    }
+
+    @ViewBuilder
+    private func withShortcut<Row: View>(_ shortcut: KeyboardShortcut?, on row: Row) -> some View {
+        if let shortcut {
+            if #available(iOS 15.4, macOS 12.3, *) {
+                row.keyboardShortcut(shortcut)
+            } else {
+                row.keyboardShortcut(shortcut.key, modifiers: shortcut.modifiers)
+            }
+        } else {
+            row
+        }
     }
 
     private func resultsHeight(_ matches: [Section]) -> CGFloat {
