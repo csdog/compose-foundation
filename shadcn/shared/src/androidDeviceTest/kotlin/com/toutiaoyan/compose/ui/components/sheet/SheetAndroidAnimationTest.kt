@@ -46,6 +46,10 @@ class SheetAndroidAnimationTest {
             }
         }
         compose.waitForIdle()
+        val targetPackage = instrumentation.targetContext.packageName
+        compose.waitUntil {
+            instrumentation.uiAutomation.rootInActiveWindow?.packageName?.toString() == targetPackage
+        }
 
         fun capture(name: String) {
             compose.waitForIdle()

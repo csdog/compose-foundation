@@ -12,6 +12,10 @@
       "stepMs": 16,
       "endMs": 480,
       "keyframes": [0, 48, 96, 192, 224, 480],
+      "cropTopByPlatform": {
+        "cmp-android": 96,
+        "jetpack-compose": 96
+      },
       "recording": {
         "endMs": 768,
         "keyframes": [0, 80, 160, 320, 480, 768],
