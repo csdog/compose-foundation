@@ -85,16 +85,29 @@ public struct FoundationCalendar: View {
         let shape = RoundedRectangle(cornerRadius: theme.cornerRadius)
 
         Group {
-            if months.count == 1, let month = months.first {
-                monthView(month, offset: 0, last: true, selection: selected, palette: palette)
-            } else {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 264), spacing: 16)], alignment: .leading, spacing: 16) {
-                    ForEach(months.indices, id: \.self) { index in
-                        monthView(months[index], offset: index, last: index == months.count - 1,
-                                  selection: selected, palette: palette)
+            if #available(iOS 17, macOS 14, *) {
+                let entry = navigation.focusEntry(in: months, selected: selected.navigationDate,
+                                                  today: referenceDate ?? Date())
+                FoundationCalendarKeyboardGrid(entry: entry, acceptsFocus: { date in
+                    months.contains { calendar.isDate($0, equalTo: date, toGranularity: .month) }
+                        && FoundationCalendarSelection.isSelectable(date, calendar: calendar, bounds: bounds)
+                }) { focus, tabStop, requestFocus in
+                    monthGrid(months, selection: selected, palette: palette) { date, enabled in
+                        FoundationCalendarKeyboardDay(date: date, enabled: enabled, focus: focus,
+                                                      isTabStop: date == tabStop,
+                                                      ring: isNova ? palette.ring : nil, ringSize: dayHighlightSize,
+                                                      cornerRadius: max(0, theme.cornerRadius - 2),
+                                                      activate: { activate(date) }) { move in
+                            guard let destination = navigation.focusDestination(from: date, move: move) else { return }
+                            visibleDate = navigation.anchor(containing: destination, from: visibleDate)
+                            requestFocus(destination)
+                        }
                     }
                 }
-                .frame(maxWidth: CGFloat(months.count) * 344 - 16)
+            } else {
+                monthGrid(months, selection: selected, palette: palette) { _, _ in
+                    EmptyModifier()
+                }
             }
         }
         .foregroundColor(palette.foreground)
@@ -121,8 +134,27 @@ public struct FoundationCalendar: View {
         FoundationCalendarNavigation(calendar: calendar, bounds: bounds, numberOfMonths: numberOfMonths)
     }
 
-    private func monthView(
-        _ month: Date, offset: Int, last: Bool, selection: FoundationCalendarSelection, palette: FoundationPalette
+    @ViewBuilder
+    private func monthGrid<Day: ViewModifier>(
+        _ months: [Date], selection: FoundationCalendarSelection, palette: FoundationPalette,
+        decorate: @escaping (Date, Bool) -> Day
+    ) -> some View {
+        if months.count == 1, let month = months.first {
+            monthView(month, offset: 0, last: true, selection: selection, palette: palette, decorate: decorate)
+        } else {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 264), spacing: 16)], alignment: .leading, spacing: 16) {
+                ForEach(months.indices, id: \.self) { index in
+                    monthView(months[index], offset: index, last: index == months.count - 1,
+                              selection: selection, palette: palette, decorate: decorate)
+                }
+            }
+            .frame(maxWidth: CGFloat(months.count) * 344 - 16)
+        }
+    }
+
+    private func monthView<Day: ViewModifier>(
+        _ month: Date, offset: Int, last: Bool, selection: FoundationCalendarSelection, palette: FoundationPalette,
+        decorate: @escaping (Date, Bool) -> Day
     ) -> some View {
         let weekdays = weekdayNames
         let days = navigation.gridDays(in: month, includesOutsideDays: isNova)
@@ -157,10 +189,14 @@ public struct FoundationCalendar: View {
                     if let date = days[index] {
                         let number = dayNumbers.string(from: date)
                         if calendar.isDate(date, equalTo: month, toGranularity: .month) {
+                            let focusDay = calendar.startOfDay(for: date)
+                            let enabled = FoundationCalendarSelection.isSelectable(date, calendar: calendar, bounds: bounds)
                             dayButton(
                                 date, title: number, accessibilityLabel: dayLabels.string(from: date),
-                                column: index % 7, selection: selection, palette: palette
+                                column: index % 7, selection: selection, palette: palette, enabled: enabled
                             )
+                            .modifier(decorate(focusDay, enabled))
+                            .id(focusDay)
                         } else {
                             Text(number)
                                 .font(.system(size: cellTextSize))
@@ -295,20 +331,15 @@ public struct FoundationCalendar: View {
         accessibilityLabel: String,
         column: Int,
         selection value: FoundationCalendarSelection,
-        palette: FoundationPalette
+        palette: FoundationPalette,
+        enabled: Bool
     ) -> some View {
         let presentation = value.presentation(of: date, calendar: calendar)
         let connection = isNova ? value.endpointConnection(for: presentation, on: date, column: column, calendar: calendar) : nil
-        let enabled = FoundationCalendarSelection.isSelectable(date, calendar: calendar, bounds: bounds)
         let today = isNova && calendar.isDate(date, inSameDayAs: referenceDate ?? Date())
 
         return Button {
-            let previous = selection.value
-            let next = previous.selecting(date, calendar: calendar, bounds: bounds)
-            if next != previous {
-                selection.write(next)
-                lastLocalSelection = selection.value == next ? next : nil
-            }
+            activate(date)
         } label: {
             Text(title)
                 .font(isNova ? .system(size: cellTextSize) : .subheadline)
@@ -322,6 +353,15 @@ public struct FoundationCalendar: View {
         .opacity(enabled ? 1 : 0.4)
         .accessibilityLabel(Text(accessibilityLabel))
         .accessibilityAddTraits(presentation != .ordinary ? .isSelected : [])
+    }
+
+    private func activate(_ date: Date) {
+        let previous = selection.value
+        let next = previous.selecting(date, calendar: calendar, bounds: bounds)
+        if next != previous {
+            selection.write(next)
+            lastLocalSelection = selection.value == next ? next : nil
+        }
     }
 
     @ViewBuilder
@@ -355,5 +395,88 @@ public struct FoundationCalendar: View {
         formatter.timeZone = calendar.timeZone
         formatter.setLocalizedDateFormatFromTemplate(template)
         return formatter
+    }
+}
+
+@available(iOS 17, macOS 14, *)
+private struct FoundationCalendarKeyboardGrid<Content: View>: View {
+    @FocusState private var focused: Date?
+    @State private var cursor: Date?
+    let entry: Date?
+    let acceptsFocus: (Date) -> Bool
+    let content: (FocusState<Date?>.Binding, Date?, @escaping (Date) -> Void) -> Content
+
+    var body: some View {
+        let target = cursor.flatMap { acceptsFocus($0) ? $0 : nil } ?? entry
+        content($focused, target, { cursor = $0 })
+            .defaultFocus($focused, target)
+            .task(id: cursor) {
+                guard let cursor, cursor == target else { return }
+                // The destination becomes focusable on this update, including dates in a newly shown month.
+                await Task.yield()
+                guard !Task.isCancelled else { return }
+                focused = cursor
+            }
+    }
+}
+
+@available(iOS 17, macOS 14, *)
+private struct FoundationCalendarKeyboardDay: ViewModifier {
+    @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.layoutDirection) private var layoutDirection
+    let date: Date
+    let enabled: Bool
+    let focus: FocusState<Date?>.Binding
+    let isTabStop: Bool
+    let ring: Color?
+    let ringSize: CGFloat?
+    let cornerRadius: CGFloat
+    let activate: () -> Void
+    let move: (FoundationCalendarNavigation.FocusMove) -> Void
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if enabled && isEnabled && isTabStop {
+            content
+                .focusable()
+                .focused(focus, equals: date)
+                .focusEffectDisabled(ring != nil)
+                .overlay {
+                    if let ring, focus.wrappedValue == date {
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .strokeBorder(ring.opacity(0.55), lineWidth: 3)
+                            .frame(width: ringSize, height: ringSize)
+                            .allowsHitTesting(false)
+                            .accessibilityHidden(true)
+                    }
+                }
+                .onKeyPress(keys: [.leftArrow, .rightArrow, .upArrow, .downArrow, .home, .end,
+                                  .pageUp, .pageDown, .return, .space], phases: [.down, .repeat], action: handle)
+        } else {
+            content.focusable(false)
+        }
+    }
+
+    private func handle(_ key: KeyPress) -> KeyPress.Result {
+        guard enabled, isEnabled, key.modifiers.intersection([.command, .control, .option]).isEmpty else {
+            return .ignored
+        }
+        let shift = key.modifiers.contains(.shift)
+        switch key.key {
+        case .leftArrow, .rightArrow:
+            let forward = (key.key == .rightArrow) == (layoutDirection == .leftToRight)
+            move(.offset(shift ? .month : .day, forward ? 1 : -1))
+        case .upArrow, .downArrow:
+            move(.offset(shift ? .year : .weekOfYear, key.key == .downArrow ? 1 : -1))
+        case .pageUp, .pageDown:
+            move(.offset(shift ? .year : .month, key.key == .pageDown ? 1 : -1))
+        case .home, .end:
+            move(.weekEdge(last: key.key == .end))
+        case .return, .space:
+            if key.phase == .down { activate() }
+        default:
+            return .ignored
+        }
+        return .handled
     }
 }

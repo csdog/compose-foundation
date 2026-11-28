@@ -302,6 +302,32 @@ iPad mini（A17 Pro，iOS 26.2）复拍五个用例的 10 张深浅色图，均�
 
 iPhone 17 Pro（iOS 26.2）的 XCUITest 验证了触发器名称及当前值、菜单当前项的选中语义、月份和年份的触控切换、日期区间绑定保留，以及边界外选项不可用。两个展开态保留 iOS 系统菜单样式。实际 VoiceOver 朗读仍待验收。[iOS 交互回归](https://github.com/csdog/compose-foundation/actions/runs/46111945303/job/140877342187) · [月份和年份展开截图](https://github.com/csdog/compose-foundation/actions/runs/46111945303/artifacts/15250770536)
 
+#### Calendar 日期网格键盘导航
+
+iOS 17 与 macOS 14 起，左右键按布局方向移动一天，上下键移动一周。Home 和 End 按日历的周首设置移动；Page Up 和 Page Down 移动一个月。Shift 配合左右键移动一个月，配合上下键或翻页键移动一年。跨出可见月份时只翻到足以显示目标日期的位置。按 Return 或 Space 才更新选择绑定，单选、区间和多选继续使用原有选择规则。较早系统沿用原生日期按钮。[shadcn Calendar 源码](https://github.com/shadcn-ui/ui/blob/0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4/apps/v4/registry/bases/base/ui/calendar.tsx) · [DayPicker 9.8.1 键盘行为](https://github.com/gpbl/react-day-picker/blob/v9.8.1/src/DayPicker.tsx)
+
+macOS 实际窗口已验证左右布局方向、同月和跨月移动、Home/End、翻页、Return/Space、日期上下界和禁用网格。日期区保留一个 Tab 停靠点，已验证 Tab 移到外部控件。状态回归另外覆盖本地周首、夏令时和跨出双月视图后的窗口位置。[macOS 按键日志](https://github.com/csdog/compose-foundation/actions/runs/46113981597/job/140883583347)
+
+iPad mini（A17 Pro，iOS 26.2）的 10 张静态深浅色截图与复拍逐字节一致，也与月份年份菜单那一轮像素一致。[截图与 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/46114339468/artifacts/15250619971)
+
+同一型号的模拟器通过了 USB 键盘事件回归。右键把焦点从 1 月 31 日移到 2 月 1 日，选择值仍是 1 月 31 日。Return 提交 2 月 1 日，下键把焦点移到 2 月 8 日，Space 才提交。查看截图可见独立的日期焦点环。常规 XCUITest 按键未进入网格，此用例由 idb 的 USB HID 路径复现。安装 iOS 审计应用并启动 idb companion 后，运行 `python3 shadcn/iosApp/validation/verify_calendar_keyboard.py --device "$ios_device" --companion "$idb_companion"`。[iPad 按键运行](https://github.com/csdog/compose-foundation/actions/runs/46114246221/job/140884398533) · [焦点截图](https://github.com/csdog/compose-foundation/actions/runs/46114246221/artifacts/15251246540)
+
+单独开启 iPad 的「完全键盘控制」后复现了差异。设置开关已确认开启，同样的 USB HID 用例发送 Tab 和右键后仍停在 1 月 31 日，跨月键盘操作待继续对齐。实际 VoiceOver 朗读仍待验收。[完全键盘控制运行](https://github.com/csdog/compose-foundation/actions/runs/46117478557/job/140894477836) · [设置与焦点截图](https://github.com/csdog/compose-foundation/actions/runs/46117478557/artifacts/15251859139)
+
+同一模拟器上的 UIKit 诊断确认，优先右键命令在普通模式下能到达应用，完全键盘控制开启后该命令未收到事件。在 Calendar 测试页试用系统 Tab 和 Space，也未激活下一月按钮。诊断命令只在测试应用注册。[按键路由日志](https://github.com/csdog/compose-foundation/actions/runs/46122376521/job/140909507890) · [设置与逐次 Tab 截图](https://github.com/csdog/compose-foundation/actions/runs/46122376521/artifacts/15255475042)
+
+标准 UIKit 按钮对照在同型号 iPad 模拟器上确认了普通触控及完全键盘控制下的 Tab 和 Space。首次在系统设置页读取无障碍数据超时。加入重试后，以系统开关的无障碍值确认完全键盘控制已开启，再用一次 Tab 和 Space 激活第二个 UIKit 按钮。新的同设备对照将比较 UIKit、普通 SwiftUI 按钮、ScrollView 中的按钮和 Calendar。[UIKit 对照日志](https://github.com/csdog/compose-foundation/actions/runs/46126207498/job/140921306365) · [设置与激活截图](https://github.com/csdog/compose-foundation/actions/runs/46126207498/artifacts/15256062827) · [SwiftUI 对照](https://github.com/csdog/compose-foundation/actions/runs/46127200773)
+
+同设备对照进一步确认，开启完全键盘控制时，普通 SwiftUI 按钮和 ScrollView 内的按钮均可激活。以多选模式验证后，Calendar 现有焦点层下 Tab 与 Space 循环五次没有改变已选日期或月份。绕过自定义焦点层的一次 Tab 和 Space 成功切换到二月；保留焦点层、只显式标记按钮可交互仍未改变日期或月份。后续诊断分别核对根视图的默认焦点和非当前日期的焦点资格。[执行日志](https://github.com/csdog/compose-foundation/actions/runs/46128710323/job/140929013721) · [对照截图](https://github.com/csdog/compose-foundation/actions/runs/46128710323/artifacts/15256803869)
+
+在 iPad 模拟器上移除默认焦点后，普通键盘模式依然可以用右键跨到 2 月 1 日，按 Return 后才更新选择。开启完全键盘控制时，移除默认焦点、恢复其他日期的原生焦点资格，以及同时应用两项变更，均未让 Tab 和 Space 激活 Calendar。新一轮对照直接检查日期选择是否变化，分别验证原生日期按钮、SwiftUI 的激活焦点和无障碍默认操作。[上一轮日志](https://github.com/csdog/compose-foundation/actions/runs/46129588715/job/140931677362) · [截图](https://github.com/csdog/compose-foundation/actions/runs/46129588715/artifacts/15258020587) · [日期激活对照](https://github.com/csdog/compose-foundation/actions/runs/46131727819)
+
+最新全量 macOS 行为检查通过，包括 Calendar 的 LTR 和 RTL 选中、日期限制、跨月键盘焦点及焦点与选择独立。[macOS 日志](https://github.com/csdog/compose-foundation/actions/runs/46125132325/job/140918007879)
+
+全量截图回归的 Popover 深色关闭态差异 PNG 与 Popover PR #6 保存的差异逐字节一致。差异只在触发器区域，包含 3,107 个像素。已发布基准的填充取样是 `#151515`，审核过的 SwiftUI 截图和 shadcn 参考是 `#141414`。Calendar 专项截图仍逐像素一致。[全量回归差异](https://github.com/csdog/compose-foundation/actions/runs/46118576344/artifacts/15253650171) · [Popover 审核](https://github.com/csdog/compose-foundation/pull/6)
+
+独立的 UIKit 按钮对照用于区分模拟键盘输入路径与 Calendar 本身的问题。该运行在 Apple runner 队列中，结论待验证。[UIKit 对照任务](https://github.com/csdog/compose-foundation/actions/runs/46123973218)
+
 ### Calendar Nova 双月区间与阿拉伯语 RTL
 
 对照 `calendar-range.tsx` 和 `calendar-rtl.tsx`。双月区间固定为 2026 年 1 月 12 日到 2 月 11 日。`FoundationCalendar(range:initialMonth:numberOfMonths:)` 可以指定首个月份，原有绑定和范围初始化方式仍可使用。Nova 区间端点在本周本月内连接到相邻的已选日期。未完成区间、同日区间与周月交界处的端点独立显示。
@@ -449,7 +475,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | bubble | 支持 incoming、outgoing、muted 内容气泡。缺少气泡组及定位在气泡边缘的 reactions。 |
 | button | 六种颜色变体、禁用、按压反馈和内容 slot。Compose 另有尺寸、图标位置、焦点环和多种按压动画。 |
 | button-group | 支持纵向和横向布局。iOS 18、macOS 15 起，Nova 的 FoundationButtonStyle 子项合并相邻圆角和边框。分隔符、文本项及子项焦点层级仍待对齐。 |
-| calendar | 支持本地化单月和连续多月、单选、区间、多选及月份年份菜单。Nova 已验收单月、双月区间、RTL 截图，以及 iPhone 上菜单当前值、选中项和触控切换。实际 VoiceOver 朗读待验收。 |
+| calendar | 支持本地化单月和连续多月、单选、区间、多选及月份年份菜单。Nova 已验收单月、双月区间、RTL 截图，以及 iPhone 上菜单当前值、选中项和触控切换。macOS 与 iPad 已验收日期网格的焦点移动和提交，macOS 已验收 Tab 离开网格。实际 VoiceOver 朗读待验收。 |
 | card | 支持主题背景、边框、常规与紧凑尺寸，以及独立的底部操作区。头部、图片与关联操作可通过内容构建器组合。边缘贴图和 RTL 尚待对照。 |
 | carousel | 当前页和相邻页随横向拖动移动，松手后吸附。支持 RTL、底部或侧边翻页、页码无障碍调节和减少动态效果。Nova 已接入默认与 RTL 初始态截图。纵向、部分页宽及分页圆点待对齐。 |
 | chart | 支持柱形、折线、面积、多序列和选点摘要。Compose 的独立图例、工具提示、序列主题配置和 indicator 选项未移植。 |

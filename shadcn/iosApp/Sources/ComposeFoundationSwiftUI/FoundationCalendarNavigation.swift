@@ -11,6 +11,11 @@ public enum FoundationCalendarCaptionLayout: Sendable {
 }
 
 struct FoundationCalendarNavigation {
+    enum FocusMove {
+        case offset(Calendar.Component, Int)
+        case weekEdge(last: Bool)
+    }
+
     let calendar: Calendar
     let bounds: ClosedRange<Date>?
     let numberOfMonths: Int
@@ -61,6 +66,45 @@ struct FoundationCalendarNavigation {
 
     func anchor(showing month: Date, at offset: Int) -> Date {
         anchor(for: addingMonths(-offset, to: month) ?? month)
+    }
+
+    func focusDestination(from date: Date, move: FocusMove) -> Date? {
+        let target: Date?
+        switch move {
+        case let .offset(component, count):
+            target = calendar.date(byAdding: component, value: count, to: date)
+        case let .weekEdge(last):
+            let weekday = calendar.component(.weekday, from: date)
+            let index = (weekday - calendar.firstWeekday + 7) % 7
+            target = calendar.date(byAdding: .day, value: last ? 6 - index : -index, to: date)
+        }
+        guard let target else { return nil }
+        var destination = calendar.startOfDay(for: target)
+        if let bounds {
+            destination = min(max(destination, calendar.startOfDay(for: bounds.lowerBound)),
+                              calendar.startOfDay(for: bounds.upperBound))
+        }
+        return calendar.isDate(destination, inSameDayAs: date) ? nil : destination
+    }
+
+    func focusEntry(in months: [Date], selected: Date?, today: Date) -> Date? {
+        guard let first = months.first, let last = months.last,
+              let end = calendar.dateInterval(of: .month, for: last)?.end else { return nil }
+        let earliest = max(first, bounds.map { calendar.startOfDay(for: $0.lowerBound) } ?? first)
+        let latest = bounds.map { calendar.startOfDay(for: $0.upperBound) }
+        for date in [selected, today, earliest].compactMap({ $0 }) {
+            let day = calendar.startOfDay(for: date)
+            if day >= earliest && day < end && latest.map({ day <= $0 }) != false { return day }
+        }
+        return nil
+    }
+
+    func anchor(containing date: Date, from visibleDate: Date) -> Date {
+        let months = visibleMonths(from: visibleDate)
+        let month = monthStart(date)
+        if months.contains(month) { return anchor(for: visibleDate) }
+        let offset = months.first.map { month < $0 } == true ? 0 : max(0, months.count - 1)
+        return anchor(showing: month, at: offset)
     }
 
     func months(inYearOf date: Date) -> [Date] {
