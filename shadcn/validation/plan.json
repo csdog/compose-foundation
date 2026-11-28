@@ -20,6 +20,24 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "menubar": {
+      "title": "Menubar",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/menubar-demo.tsx",
+      "visual": "compare the Nova menubar frame, trigger typography and Arabic RTL order",
+      "behavior": "skip disabled groups or actions, use arrows and Return, and restore focus after Escape",
+      "accessibility": "expose native buttons with expanded and disabled states",
+      "motion": "static initial frames"
+    },
     "calendar": {
       "title": "Calendar",
       "variant": "default",

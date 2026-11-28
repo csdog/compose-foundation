@@ -150,6 +150,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "menubar": [
+                ("menubar-default-initial", { AnyView(MenubarScreenshotFixture(rightToLeft: false)) }),
+                ("menubar-rtl-initial", { AnyView(MenubarScreenshotFixture(rightToLeft: true)) }),
+            ],
             "calendar": CalendarScreenshotFixture.Example.allCases.map { example in
                 ("calendar-\(example.rawValue)-initial", { AnyView(CalendarScreenshotFixture(example: example)) })
             },
@@ -863,6 +867,29 @@ private struct SeparatorInitialScreenshotFixture: View {
         .padding(.top, 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct MenubarScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    let rightToLeft: Bool
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let titles = rightToLeft ? ["ملف", "تعديل", "عرض", "الملفات الشخصية"] : ["File", "Edit", "View", "Profiles"]
+        let groups = titles.map { FoundationMenuGroup(id: $0, title: $0, actions: []) }
+        return FoundationMenubar {
+            FoundationMenuGroups(groups: groups, spacing: 6, isMenubar: true)
+                .frame(width: 282, alignment: .leading)
+        }
+        .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
+        .foundationTheme(theme)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
         .ignoresSafeArea()
     }
 }
