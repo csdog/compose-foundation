@@ -88,11 +88,11 @@ macOS 窗口通过 AppKit 事件验证两种方向的点击、按住拖动、四
 
 Toggle 对照完整描边书签的关闭和选中态。Toggle Group 对照 Bold、Italic、Underline 三个描边按钮，覆盖无选中和 Bold 选中。选中 Bold 后，像素变化局限于该按钮。Nova 的这两组控件保留至少 44 × 44 pt 的操作区域。
 
-Toggle Group 的纵向截图对应 [shadcn Base UI Nova 纵向示例](https://github.com/shadcn-ui/ui/blob/0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4/apps/v4/examples/base/toggle-group-vertical.tsx)，初始按下 Bold 和 Italic。浏览器参考使用 402 × 520 视口，三个按钮均为 36 × 32 CSS px，纵向间距为 4 CSS px。SwiftUI 保留 44 pt 的最小触控高度。横向初始和 Bold 选中的四张 iPhone 截图与 #17 审核实拍逐字节一致。纵向深浅色新图待验。[横向截图](https://github.com/csdog/compose-foundation/actions/runs/46125826564/artifacts/15255799024)
+Toggle Group 的纵向截图对应 [shadcn Base UI Nova 纵向示例](https://github.com/shadcn-ui/ui/blob/0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4/apps/v4/examples/base/toggle-group-vertical.tsx)，初始按下 Bold 和 Italic。浏览器参考使用 402 × 520 视口，三个按钮均为 36 × 32 CSS px，纵向间距为 4 CSS px。SwiftUI 保留 44 pt 的最小触控高度。横向初始和 Bold 选中的四张 iPhone 截图与 #17 审核实拍逐字节一致。iPhone 17 Pro 的横向初始、Bold 选中和纵向初始共六张图，均与复拍逐字节一致。用此次运行锁定的 shadcn 子模块提交补齐了六个用例的上游对照。[横向截图](https://github.com/csdog/compose-foundation/actions/runs/46125826564/artifacts/15255799024) · [六张 iPhone 截图及复拍](https://github.com/csdog/compose-foundation/actions/runs/46127910706/artifacts/15257996626)
 
 macOS 和 iPad mini（iOS 26.2，普通键盘模式）验证横向 LTR/RTL 和纵向键盘。方向键跳过禁用项、循环移动焦点，Space 切换按下状态，Tab 进入一次并离开。按下状态不会随方向键移动。macOS 还验证 Home、End、Return、Shift+Tab 和鼠标；iPad 触控验证禁用项不动作、可用项能切换。焦点截图中 Bold 仍按下，系统焦点环已移到 Underline。通过 Component parity 的手动 Review 选择 `component=toggle-group` 和 `platform=swiftui-ios` 复跑 iPad HID 用例。VoiceOver 待验。[macOS 日志](https://github.com/csdog/compose-foundation/actions/runs/46126047434/job/140920837857) · [iPad 焦点截图](https://github.com/csdog/compose-foundation/actions/runs/46126047434/artifacts/15255904282)
 
-iPhone 17 Pro（iOS 26.2）深浅色共八张新图，与复拍逐字节一致。原有 82 张图也与上一轮一致，外边界与 shadcn 参考相差最多 2 px。macOS 窗口通过 AppKit 鼠标事件验证单按钮切换、单选替换、多选保留、最后一项必选及单项和整组禁用。实际 iOS 触控、硬件键盘、VoiceOver 和组内方向键导航仍待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46028364880/artifacts/15214950117) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46028364880/job/140605804826)
+iPhone 17 Pro（iOS 26.2）深浅色共八张新图，与复拍逐字节一致。原有 82 张图也与上一轮一致，外边界与 shadcn 参考相差最多 2 px。macOS 窗口通过 AppKit 鼠标事件验证单按钮切换、单选替换、多选保留、最后一项必选及单项和整组禁用。Toggle 单按钮的 iOS 触控及硬件键盘、实际 VoiceOver 仍待验收。Toggle Group 的后续 iPad 测试见上文。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46028364880/artifacts/15214950117) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46028364880/job/140605804826)
 
 ### Button Group 三种尺寸和纵向布局
 
