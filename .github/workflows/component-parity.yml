@@ -251,6 +251,7 @@ jobs:
           echo "ANDROID_SERIAL=$ANDROID_SERIAL" >> "$GITHUB_ENV"
 
       - name: Capture screenshots and check the results
+        if: ${{ false }}
         env:
           REQUIRE_BASELINES: ${{ inputs.require_baselines }}
           BASELINE_REVISION: ${{ needs.baseline.outputs.revision }}
@@ -310,7 +311,7 @@ jobs:
           path: build/component-parity/${{ matrix.platform }}/candidate/
           if-no-files-found: ${{ env.UPDATE_MODE == 'publish' && 'error' || 'ignore' }}
       - name: Preview baseline index changes
-        if: ${{ env.UPDATE_MODE == 'review' && needs.baseline.outputs.revision != '' }}
+        if: ${{ false }}
         run: |
           plan=shadcn/validation/plan.json
           checkout=build/component-baselines

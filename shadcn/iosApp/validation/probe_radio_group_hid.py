@@ -13,9 +13,21 @@ screenshots = Path(os.environ["RUNNER_TEMP"]) / "radio-hid"
 screenshots.mkdir(exist_ok=True)
 
 
-def labels():
+def rows():
     output = subprocess.check_output([*client, "describe-all", "--api", "ax"], timeout=25)
-    return {item["AXLabel"] for item in json.loads(output) if item.get("AXLabel")}
+    return {item["AXLabel"]: item for item in json.loads(output) if item.get("AXLabel")}
+
+
+def labels():
+    return set(rows())
+
+
+def tap(label):
+    frame = rows()[label]["frame"]
+    x = round(frame["x"] + frame["width"] / 2)
+    y = round(frame["y"] + frame["height"] / 2)
+    subprocess.run([*client, "tap", str(x), str(y)], check=True, timeout=15)
+    time.sleep(0.4)
 
 
 def expect(label, timeout=8):
@@ -37,7 +49,7 @@ def key(code):
 
 for direction in ("ltr", "rtl"):
     subprocess.run(["xcrun", "simctl", "launch", "--terminate-running-process", device,
-                    "com.toutiaoyan.compose.foundation.audit", f"--{direction}"], check=True, timeout=15)
+                    "com.toutiaoyan.compose.foundation.audit", f"--{direction}"], check=True, timeout=50)
     expect("Selected: none", timeout=90)
     key(44)  # Space
     for _ in range(4):
@@ -54,4 +66,9 @@ for direction in ("ltr", "rtl"):
     expect("Selected: regular")
     key(81)
     expect("Selected: compact")
-    print(f"PASS: {direction} Radio Group selected by arrow, skipped disabled, and wrapped", flush=True)
+    assert not rows()["Restricted"]["enabled"], rows()["Restricted"]
+    tap("Restricted")
+    expect("Selected: compact")
+    tap("Regular")
+    expect("Selected: regular")
+    print(f"PASS: {direction} Radio Group skipped disabled, wrapped, and selected by keyboard or touch", flush=True)
