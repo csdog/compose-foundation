@@ -12,6 +12,8 @@ private final class CommandDialogState: ObservableObject {
 @available(macOS 14, *)
 private struct CommandDialogFixture: View {
     @ObservedObject var state: CommandDialogState
+    @Environment(\.resetFocus) private var resetFocus
+    @Namespace private var triggerScope
     @FocusState private var triggerFocused: Bool
 
     var body: some View {
@@ -20,6 +22,7 @@ private struct CommandDialogFixture: View {
                 .keyboardShortcut("j")
                 .focusable(interactions: [.edit, .activate])
                 .focused($triggerFocused)
+                .prefersDefaultFocus(in: triggerScope)
                 .onChange(of: triggerFocused) { _, value in state.triggerFocused = value }
                 .onKeyPress("d") {
                     state.presented = true
@@ -29,12 +32,13 @@ private struct CommandDialogFixture: View {
         }
         .padding(20)
         .frame(width: 480, height: 420)
+        .focusScope(triggerScope)
         .modifier(FoundationCommandDialog(isPresented: $state.presented, sections: [
             .init(id: "suggestions", title: "Suggestions", actions: [.init("Calendar", value: "calendar")]),
             .init(id: "settings", title: "Settings", actions: [.init("Billing", value: "billing")]),
         ], onDismiss: {
             state.dismissals += 1
-            triggerFocused = true
+            resetFocus(in: triggerScope)
         }) { state.actions.append($0) })
         .foundationTheme(FoundationTheme(preset: .nova))
     }
