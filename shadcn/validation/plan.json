@@ -601,9 +601,15 @@
       "platforms": ["swiftui-ios"],
       "swiftuiDevice": "iPhone-17-Pro-Max",
       "reference": "apps/v4/examples/base/progress-demo.tsx",
-      "shadcnComparisonViewport": {"swiftui-ios": [440, 520]},
-      "visual": "compare the complete 403-point track at 66 percent",
-      "behavior": "read the percentage from the supplied value",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [440, 520]},
+          {"variant": "label", "status": "initial", "viewport": [440, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [440, 520]}
+        ]
+      },
+      "visual": "compare the plain 403-point track and the labeled LTR and RTL examples",
+      "behavior": "read the percentage from the supplied value and mirror the progress fill in RTL",
       "accessibility": "progress label and percentage value",
       "motion": "static settled frame"
     },
