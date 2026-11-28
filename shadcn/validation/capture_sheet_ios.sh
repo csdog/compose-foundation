@@ -47,6 +47,27 @@ xcrun simctl status_bar "$device" override --time '9:41' --dataNetwork wifi \
   --batteryState discharging --batteryLevel 100
 xcrun simctl install "$device" "$app"
 xcrun simctl launch "$device" "$bundle" --sheet-animation
+ready=false
+for ((attempt = 0; attempt < 30; attempt++)); do
+  xcrun simctl io "$device" screenshot "$work/ready.png" >/dev/null 2>&1
+  if python3 - "$work/ready.png" <<'PY'
+from PIL import Image
+import sys
+
+with Image.open(sys.argv[1]) as screenshot:
+    red, green, blue = screenshot.convert("RGB").getpixel((24, 216))
+sys.exit(0 if red > 180 and max(green, blue) < 80 else 1)
+PY
+  then
+    ready=true
+    break
+  fi
+  sleep 1
+done
+if [[ "$ready" != true ]]; then
+  echo "The Sheet fixture did not render its readiness marker" >&2
+  exit 1
+fi
 xcrun simctl io "$device" recordVideo --codec=h264 "$work/sheet.mov" >"$work/recording.log" 2>&1 &
 recording=$!
 for ((attempt = 0; attempt < 60; attempt++)); do
