@@ -262,7 +262,7 @@ public struct FoundationCombobox<Value: Hashable>: View {
         #else
         let height: CGFloat = 44
         #endif
-        Button {
+        return Button {
             select(choice)
         } label: {
             HStack {
