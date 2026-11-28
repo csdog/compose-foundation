@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "select": SelectScreenshotFixture.Example.allCases.map { example in
+                ("select-\(example.rawValue)-initial", { AnyView(SelectScreenshotFixture(example: example)) })
+            },
             "combobox": ComboboxScreenshotFixture.Example.allCases.map { example in
                 ("combobox-\(example.rawValue)-initial", { AnyView(ComboboxScreenshotFixture(example: example)) })
             },
@@ -875,6 +878,45 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct SelectScreenshotFixture: View {
+    enum Example: String, CaseIterable { case `default`, groups, disabled, rtl }
+
+    @Environment(\.colorScheme) private var scheme
+    let example: Example
+
+    private var groups: [FoundationChoiceGroup<String>] {
+        if example == .rtl {
+            return [
+                .init("الفواكه", choices: [.init("تفاح", value: "apple"), .init("موز", value: "banana")]),
+                .init("الخضروات", choices: [.init("جزر", value: "carrot")]),
+            ]
+        }
+        let fruits = FoundationChoiceGroup("Fruits", choices: [
+            FoundationChoice("Apple", value: "apple"), FoundationChoice("Banana", value: "banana"),
+        ])
+        if example == .groups {
+            return [fruits, .init("Vegetables", choices: [.init("Carrot", value: "carrot")])]
+        }
+        return [fruits]
+    }
+
+    var body: some View {
+        let theme = FoundationTheme(preset: .nova)
+        let rightToLeft = example == .rtl
+        return FoundationSelect(rightToLeft ? "اختر فاكهة" : "Select a fruit", groups: groups,
+                                selection: .constant(nil as String?))
+            .disabled(example == .disabled)
+            .frame(width: rightToLeft ? 128 : 192)
+            .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
+            .foundationTheme(theme)
+            .padding(.horizontal, 24)
+            .padding(.top, 18)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
     }
 }
 

@@ -3,6 +3,12 @@ import SwiftUI
 public struct FoundationSelect<Value: Hashable>: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.foundationSurface) private var surface
+    #if os(iOS)
+    @Environment(\.isEnabled) private var isEnabled
+    #endif
+    @ScaledMetric(relativeTo: .subheadline) private var novaFieldHeight: CGFloat = 32
+    @ScaledMetric(relativeTo: .subheadline) private var novaFontSize: CGFloat = 14
     @Binding private var selection: Value?
 
     private let title: String
@@ -22,6 +28,9 @@ public struct FoundationSelect<Value: Hashable>: View {
         let palette = theme.palette(for: colorScheme)
         let shape = RoundedRectangle(cornerRadius: theme.cornerRadius)
         let chosen = groups.lazy.flatMap(\.choices).first { $0.value == selection }
+        let nova = theme.preset == .nova
+        let fieldHeight = max(32, novaFieldHeight)
+        let fill = nova ? (colorScheme == .dark ? palette.novaDarkOutlineFill(in: surface) : .clear) : palette.card
 
         Menu {
             ForEach(groups.indices, id: \.self) { index in
@@ -35,21 +44,29 @@ public struct FoundationSelect<Value: Hashable>: View {
                 }
             }
         } label: {
-            HStack(spacing: 8) {
+            HStack(spacing: nova ? 6 : 8) {
                 Text(chosen?.title ?? title)
                     .foregroundColor(chosen == nil ? palette.mutedForeground : palette.foreground)
                 Spacer(minLength: 0)
-                Image(systemName: "chevron.down").font(.caption).foregroundColor(palette.mutedForeground)
+                Image(systemName: "chevron.down")
+                    .font(nova ? .system(size: 10, weight: .medium) : .caption)
+                    .foregroundColor(palette.mutedForeground)
+                    .accessibilityHidden(true)
             }
-            .font(.subheadline)
-            .padding(.horizontal, 12)
-            .frame(minHeight: 40)
-            .background(shape.fill(palette.card))
-            .overlay(shape.strokeBorder(palette.input).allowsHitTesting(false))
+            .font(nova ? .system(size: novaFontSize) : .subheadline)
+            .padding(.leading, nova ? 11 : 12)
+            .padding(.trailing, 12)
+            .frame(minHeight: nova ? max(44, fieldHeight) : 40)
+            .background(shape.fill(fill).frame(height: nova ? fieldHeight : nil))
+            .overlay(shape.strokeBorder(palette.input).frame(height: nova ? fieldHeight : nil).allowsHitTesting(false))
+            .contentShape(Rectangle())
         }
         .accessibilityLabel(Text(title))
         .accessibilityValue(Text(chosen?.title ?? ""))
         .disabled(groups.isEmpty)
+        #if os(iOS)
+        .opacity(nova && (!isEnabled || groups.isEmpty) ? 0.5 : 1)
+        #endif
     }
 
     private func menuChoices(_ choices: [FoundationChoice<Value>]) -> some View {
@@ -64,6 +81,7 @@ public struct FoundationSelect<Value: Hashable>: View {
                 }
             }
             .disabled(!choice.isEnabled)
+            .accessibilityAddTraits(choice.value == selection ? .isSelected : [])
         }
     }
 }
