@@ -47,7 +47,6 @@ public struct FoundationButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.textCase) private var textCase
-    @Environment(\.font) private var labelFont
     @ScaledMetric(relativeTo: .subheadline) private var horizontalPadding: CGFloat = 12
 
     private let variant: Variant
@@ -74,7 +73,7 @@ public struct FoundationButtonStyle: ButtonStyle {
         let pressed = isEnabled && configuration.isPressed
         let novaOutline = theme.preset == .nova && variant == .outline
         let darkNovaOutline = novaOutline && colorScheme == .dark
-        let font = labelFont ?? size.map { Font.system(size: $0.textSize, weight: .medium) }
+        let font = size.map { Font.system(size: $0.textSize, weight: .medium) }
             ?? theme.font(editorial ? .caption : .subheadline, weight: editorial ? .semibold : .medium)
         let padding = size?.horizontalPadding ?? metrics?.buttonPadding ?? 12
         let iconOnly = size?.iconOnly == true

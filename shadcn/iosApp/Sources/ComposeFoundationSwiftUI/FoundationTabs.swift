@@ -3,7 +3,6 @@ import SwiftUI
 public struct FoundationTabs<Value: Hashable, Panel: View>: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
-    @Environment(\.font) private var labelFont
     @Binding private var selection: Value
 
     private let choices: [FoundationChoice<Value>]
@@ -101,7 +100,7 @@ public struct FoundationTabs<Value: Hashable, Panel: View>: View {
         let selectedFill = dark ? darkFill : palette.background
         let foreground = selected ? palette.foreground : dark ? palette.mutedForeground : palette.foreground.opacity(0.60)
         return Text(title)
-            .font(labelFont ?? .system(size: 14, weight: .medium))
+            .font(.system(size: 14, weight: .medium))
             .foregroundColor(foreground)
             .lineLimit(1)
             .padding(.horizontal, 7)

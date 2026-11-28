@@ -137,36 +137,41 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         }
 
         let outputDirectory = try prepareOutputDirectory()
-        let parityFont = !names.isDisjoint(with: ["popover", "tabs", "button", "badge", "separator"])
-            ? Bundle.main.url(forResource: "geist_medium", withExtension: "ttf") : nil
-        let regularFont = names.contains("separator") ? Bundle.main.url(forResource: "geist_regular", withExtension: "ttf") : nil
-        for font in [parityFont, regularFont].compactMap({ $0 }) {
-            if !CTFontManagerRegisterFontsForURL(font as CFURL, .process, nil) {
-                throw CocoaError(.fileReadCorruptFile, userInfo: [NSFilePathErrorKey: font.path])
+        let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
+        if popoverCases.isEmpty && !names.isDisjoint(with: ["badge", "separator"]) {
+            for name in ["geist_medium", "geist_regular"] {
+                if let font = Bundle.main.url(forResource: name, withExtension: "ttf"),
+                   !CTFontManagerRegisterFontsForURL(font as CFURL, .process, nil) {
+                    throw CocoaError(.fileReadCorruptFile, userInfo: [NSFilePathErrorKey: font.path])
+                }
             }
         }
         var count = 0
         for name in names.sorted() {
+            if name == "popover", !popoverCases.isEmpty {
+                for item in popoverCases {
+                    for dark in [false, true] {
+                        try await capturePopover(item, dark: dark, root: root, window: window,
+                                                 outputDirectory: outputDirectory)
+                        count += 1
+                    }
+                }
+                continue
+            }
             guard let fixture = fixtures[name] else { continue }
             for dark in [false, true] {
                 let scheme: ColorScheme = dark ? .dark : .light
                 let palette = FoundationTheme().palette(for: scheme)
                 window.overrideUserInterfaceStyle = dark ? .dark : .light
-                let useComparisonViewport = parityFont != nil && ["popover", "tabs", "button", "badge", "separator"].contains(name)
+                let useComparisonViewport = ["tabs", "button", "badge", "separator"].contains(name)
                 let content: AnyView
-                if useComparisonViewport && name == "popover" {
-                    content = AnyView(PopoverInitialScreenshotFixture(dark: dark))
-                } else if useComparisonViewport && name == "tabs" {
-                    content = AnyView(TabsInitialScreenshotFixture())
-                } else if useComparisonViewport && name == "button" {
-                    content = AnyView(ButtonInitialScreenshotFixture())
-                } else if useComparisonViewport && name == "badge" {
-                    content = AnyView(BadgeInitialScreenshotFixture())
-                } else if useComparisonViewport && name == "separator" {
-                    content = AnyView(SeparatorInitialScreenshotFixture())
-                } else {
-                    content = AnyView(fixture()
-                        .padding(16)
+                switch name {
+                case "tabs": content = AnyView(TabsInitialScreenshotFixture())
+                case "button": content = AnyView(ButtonInitialScreenshotFixture())
+                case "badge": content = AnyView(BadgeInitialScreenshotFixture())
+                case "separator": content = AnyView(SeparatorInitialScreenshotFixture())
+                default:
+                    content = AnyView(fixture().padding(16)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .background(palette.background))
                 }
@@ -206,56 +211,349 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         window.rootViewController = UIHostingController(rootView: Text("Rendered \(count) audit fixtures"))
         return count
     }
+
+    private func loadPopoverCases() throws -> [PopoverAuditCase] {
+        guard let manifest = Bundle.main.url(forResource: "parity-plan", withExtension: "json") else {
+            return []
+        }
+        for name in ["geist_regular", "geist_medium"] {
+            guard let font = Bundle.main.url(forResource: name, withExtension: "ttf"),
+                  CTFontManagerRegisterFontsForURL(font as CFURL, .process, nil) else {
+                throw CocoaError(.fileReadCorruptFile, userInfo: [NSFilePathErrorKey: name])
+            }
+        }
+        struct Plan: Decodable {
+            struct Component: Decodable { let platformCases: [String: [PopoverAuditCase]]? }
+            let components: [String: Component]
+        }
+        let plan = try JSONDecoder().decode(Plan.self, from: Data(contentsOf: manifest))
+        guard let cases = plan.components["popover"]?.platformCases?["swiftui-ios"], !cases.isEmpty else {
+            throw CocoaError(.fileReadCorruptFile)
+        }
+        return cases
+    }
+
+    private func capturePopover(
+        _ item: PopoverAuditCase, dark: Bool, root: UIViewController, window: UIWindow, outputDirectory: URL
+    ) async throws {
+        let name = "popover-\(item.variant.rawValue)-\(item.status.rawValue)-\(dark ? "dark" : "light")"
+        let scheme: ColorScheme = dark ? .dark : .light
+        window.overrideUserInterfaceStyle = dark ? .dark : .light
+        let host = UIHostingController(rootView: PopoverScreenshotFixture(item: item)
+            .environment(\.colorScheme, scheme)
+            .environment(\.layoutDirection, .leftToRight)
+            .environment(\.locale, Locale(identifier: "en_US"))
+            .environment(\.foundationPopoverFullViewport, true))
+        root.addChild(host)
+        host.view.frame = root.view.bounds
+        root.view.addSubview(host.view)
+        host.didMove(toParent: root)
+        defer {
+            host.willMove(toParent: nil)
+            host.view.removeFromSuperview()
+            host.removeFromParent()
+        }
+        root.view.layoutIfNeeded()
+        try await Task.sleep(nanoseconds: 200_000_000)
+
+        let surfaces = window.windowScene?.windows.filter {
+            $0 !== window && !$0.isHidden && $0.windowLevel.rawValue == window.windowLevel.rawValue + 1
+        } ?? []
+        guard surfaces.count == (item.status.isOpen ? 1 : 0),
+              item.viewport.count == 2,
+              item.viewport[0] == Int(root.view.bounds.width),
+              item.viewport[1] > 0, item.viewport[1] <= Int(root.view.bounds.height) else {
+            throw CocoaError(.fileWriteUnknown, userInfo: [NSLocalizedDescriptionKey: "Unexpected viewport or panel for \(name)"])
+        }
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        format.preferredRange = .standard
+        format.opaque = true
+        let size = CGSize(width: CGFloat(item.viewport[0]), height: CGFloat(item.viewport[1]))
+        var rendered = false
+        let image = UIGraphicsImageRenderer(size: size, format: format).image { _ in
+            rendered = root.view.drawHierarchy(in: root.view.bounds, afterScreenUpdates: true)
+            for surface in surfaces {
+                let overlayFormat = UIGraphicsImageRendererFormat()
+                overlayFormat.scale = 1
+                overlayFormat.preferredRange = .standard
+                let overlay = UIGraphicsImageRenderer(size: size, format: overlayFormat).image { _ in
+                    rendered = surface.drawHierarchy(in: surface.bounds, afterScreenUpdates: true) && rendered
+                }
+                overlay.draw(at: .zero)
+            }
+        }
+        guard rendered, let data = image.pngData() else {
+            throw CocoaError(.fileWriteUnknown, userInfo: [NSFilePathErrorKey: name])
+        }
+        try data.write(to: outputDirectory.appendingPathComponent(name + ".png"))
+    }
 }
 
-private struct PopoverInitialScreenshotFixture: View {
-    let dark: Bool
-    @State private var isPresented = false
+private struct PopoverAuditCase: Decodable {
+    enum Variant: String, Decodable { case `default`, basic, alignments, form, rtl }
+    enum Status: String, Decodable {
+        case initial, open
+        case keyboardFocused = "keyboard-focused"
+        case keyboardActivated = "keyboard-activated"
+
+        var isOpen: Bool { self == .open || self == .keyboardActivated }
+    }
+
+    let variant: Variant
+    let status: Status
+    let viewport: [Int]
+}
+
+private struct PopoverScreenshotFixture: View {
+    let item: PopoverAuditCase
+    @Environment(\.colorScheme) private var scheme
+    @State private var active: String?
     @State private var width = "100%"
     @State private var maxWidth = "300px"
     @State private var height = "25px"
     @State private var maxHeight = "none"
 
+    init(item: PopoverAuditCase) {
+        self.item = item
+        let first = item.variant == .alignments ? "Start" : item.variant == .rtl ? "يسار" :
+            item.variant == .default ? "Open popover" : "Open Popover"
+        _active = State(initialValue: item.status.isOpen ? first : nil)
+    }
+
+    private var palette: FoundationPalette { FoundationTheme().palette(for: scheme) }
+    private var dark: Bool { scheme == .dark }
+
     var body: some View {
-        // The hosted light example uses black text. Use Geist for the audit label.
-        let theme = FoundationTheme(preset: .nova)
-        let palette = theme.palette(for: dark ? .dark : .light)
-        Button {
-            isPresented.toggle()
-        } label: {
-            Text("Open popover")
-                .font(.custom("Geist-Medium", size: 14, relativeTo: .subheadline))
-                .foregroundColor(dark ? palette.foreground : .black)
-        }
-        .buttonStyle(FoundationButtonStyle(.outline))
-        .modifier(FoundationPopover(isPresented: $isPresented) {
-            VStack(alignment: .leading, spacing: 16) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Dimensions").font(.headline)
-                    Text("Set the dimensions for the layer.")
-                        .font(.subheadline)
-                        .foregroundColor(palette.mutedForeground)
+        Group {
+            switch item.variant {
+            case .default:
+                trigger("Open popover", width: 320, alignment: .center) { form(twoFields: false) }
+            case .basic:
+                trigger("Open Popover", width: 288, alignment: .start) { heading() }
+            case .form:
+                trigger("Open Popover", width: 256, alignment: .start) { form(twoFields: true) }
+            case .alignments:
+                HStack(spacing: 24) {
+                    aligned("Start", alignment: .start)
+                    aligned("Center", alignment: .center)
+                    aligned("End", alignment: .end)
                 }
-                dimension("Width", value: $width)
-                dimension("Max. width", value: $maxWidth)
-                dimension("Height", value: $height)
-                dimension("Max. height", value: $maxHeight)
+            case .rtl:
+                VStack(spacing: 16) {
+                    HStack(spacing: 8) {
+                        rtl("يسار", edge: .leading, triggerWidth: 48)
+                        rtl("أعلى", edge: .bottom, triggerWidth: 47)
+                        rtl("أسفل", edge: .top, triggerWidth: 53)
+                        rtl("يمين", edge: .trailing, triggerWidth: 50)
+                    }
+                    HStack(spacing: 8) {
+                        rtl("بداية السطر", edge: .trailing, triggerWidth: 85)
+                        rtl("نهاية السطر", edge: .leading, triggerWidth: 85)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                // The open example is cropped farther right to keep its entire panel in frame.
+                .offset(x: item.status.isOpen ? -40 : 0)
             }
-        })
-        .foundationTheme(theme)
-        .padding(.horizontal, 24)
-        // The Nova style centers its 32-point border in a 44-point hit target.
-        .padding(.top, 24 - (44 - 32) / 2)
+        }
+        .padding(24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+        .foundationTheme(FoundationTheme(preset: .nova))
     }
 
-    private func dimension(_ label: String, value: Binding<String>) -> some View {
-        HStack {
-            Text(label).frame(width: 84, alignment: .leading).accessibilityHidden(true)
-            FoundationInput(label, text: value)
+    private func aligned(_ title: String, alignment: FoundationPopoverAlignment) -> some View {
+        trigger(title, width: 160, alignment: alignment, compact: true) {
+            Text("Aligned to \(title.lowercased())")
+                .font(.custom("Geist-Regular", size: 14))
+                .frame(height: 20)
         }
+    }
+
+    private func rtl(_ title: String, edge: Edge, triggerWidth: CGFloat) -> some View {
+        trigger(title, width: 288, alignment: .center, edge: edge, rightToLeft: true, minimumTriggerWidth: triggerWidth) {
+            heading(rightToLeft: true)
+        }
+    }
+
+    private func trigger<Panel: View>(
+        _ title: String,
+        width: CGFloat,
+        alignment: FoundationPopoverAlignment,
+        compact: Bool = false,
+        edge: Edge = .top,
+        rightToLeft: Bool = false,
+        minimumTriggerWidth: CGFloat? = nil,
+        @ViewBuilder panel: @escaping () -> Panel
+    ) -> some View {
+        let open = Binding(get: { active == title }, set: { shown in
+            if shown { active = title } else if active == title { active = nil }
+        })
+        let focus = item.status == .keyboardFocused
+        let height: CGFloat = compact ? 28 : 32
+        let radius: CGFloat = compact ? 8 : 10
+        let shape = RoundedRectangle(cornerRadius: radius)
+        let mutedTrigger = open.wrappedValue && (item.variant != .default || item.status != .open)
+        let fill = dark ? (mutedTrigger ? grey(28) : palette.novaDarkOutlineFill) : (open.wrappedValue ? grey(245) : .white)
+        return Group {
+            if item.variant == .default && item.status == .initial {
+                Button {
+                    open.wrappedValue.toggle()
+                } label: {
+                    Text(title)
+                        .font(.custom("Geist-Medium", size: 14, relativeTo: .subheadline))
+                        .foregroundColor(dark ? palette.foreground : .black)
+                }
+                .buttonStyle(FoundationButtonStyle(.outline))
+                // Position the visual border, centered within the 44-point hit target, at the canvas inset.
+                .padding(.top, -(44 - 32) / 2)
+            } else {
+                Button {
+                    open.wrappedValue.toggle()
+                } label: {
+                    Text(title)
+                        .font(rightToLeft ? .system(size: 14) : .custom("Geist-Medium", size: compact ? 12.8 : 14))
+                        .foregroundColor(dark ? palette.foreground : .black)
+                        .padding(.horizontal, 11)
+                        .frame(minWidth: minimumTriggerWidth)
+                        .frame(height: height)
+                        .background(shape.fill(fill))
+                        .overlay(shape.strokeBorder(focus && !dark ? grey(161) : dark ? grey(46) : grey(229)))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: radius + 1.5)
+                                .strokeBorder(focus ? (dark ? grey(63) : grey(208)) : .clear, lineWidth: 3)
+                                .padding(-3).allowsHitTesting(false)
+                        )
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .modifier(PopoverAuditTriggerFocus(requestFocus: focus))
+        .modifier(FoundationPopover(isPresented: open, arrowEdge: edge, alignment: alignment, width: width) {
+            panel()
+        })
+        .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
+    }
+
+    private func heading(rightToLeft: Bool = false, compactTitle: Bool = false) -> some View {
+        VStack(alignment: .leading, spacing: compactTitle ? 8 : 2) {
+            Text(rightToLeft ? "الأبعاد" : "Dimensions")
+                .font(rightToLeft ? .system(size: 14) : .custom("Geist-Medium", size: 14))
+                .foregroundColor(dark ? palette.foreground : .black)
+                .frame(height: compactTitle ? 14 : 20)
+                .accessibilityAddTraits(.isHeader)
+            Text(rightToLeft ? "تعيين الأبعاد للطبقة." : "Set the dimensions for the layer.")
+                .font(rightToLeft ? .system(size: 14) : .custom("Geist-Regular", size: 14))
+                .foregroundColor(palette.mutedForeground)
+                .frame(height: 20)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func form(twoFields: Bool) -> some View {
+        VStack(alignment: .leading, spacing: twoFields ? 10 : 16) {
+            heading(compactTitle: !twoFields)
+            VStack(spacing: twoFields ? 16 : 8) {
+                dimension("Width", value: $width, twoFields: twoFields, focused: true)
+                if !twoFields {
+                    dimension("Max. width", value: $maxWidth, twoFields: twoFields)
+                }
+                dimension("Height", value: $height, twoFields: twoFields)
+                if !twoFields {
+                    dimension("Max. height", value: $maxHeight, twoFields: twoFields)
+                }
+            }
+        }
+    }
+
+    private func dimension(_ label: String, value: Binding<String>, twoFields: Bool, focused: Bool = false) -> some View {
+        let shape = RoundedRectangle(cornerRadius: 10)
+        return HStack(spacing: 16) {
+            Text(label)
+                .font(.custom("Geist-Medium", size: 14))
+                .foregroundColor(dark ? palette.foreground : .black)
+                .frame(width: twoFields ? 64 : 89, alignment: .leading)
+                .accessibilityHidden(true)
+            PopoverAuditTextField(label: label, value: value, requestFocus: focused)
+                .padding(.horizontal, 10)
+                .frame(maxWidth: .infinity)
+                .frame(height: 32)
+                .background(shape.fill(dark ? grey(33) : .white))
+                .overlay(shape.strokeBorder(focused ? (dark ? grey(69) : grey(161)) : dark ? grey(69) : grey(229)))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .strokeBorder(focused ? (dark ? grey(66) : grey(208)) : .clear, lineWidth: 3)
+                        .padding(-3).allowsHitTesting(false)
+                )
+        }
+    }
+
+    private func grey(_ value: Double) -> Color {
+        Color(.sRGB, red: value / 255, green: value / 255, blue: value / 255, opacity: 1)
+    }
+}
+
+private struct PopoverAuditTriggerFocus: ViewModifier {
+    let requestFocus: Bool
+
+    @ViewBuilder func body(content: Content) -> some View {
+        if #available(iOS 17, *) {
+            content.modifier(KeyboardFocus(requestFocus: requestFocus))
+        } else {
+            content
+        }
+    }
+
+    @available(iOS 17, *)
+    private struct KeyboardFocus: ViewModifier {
+        let requestFocus: Bool
+        @FocusState private var focused: Bool
+
+        func body(content: Content) -> some View {
+            content.focusable()
+                .focused($focused)
+                .focusEffectDisabled()
+                .onAppear { if requestFocus { focused = true } }
+        }
+    }
+}
+
+private struct PopoverAuditTextField: UIViewRepresentable {
+    let label: String
+    @Binding var value: String
+    let requestFocus: Bool
+
+    func makeCoordinator() -> Coordinator { Coordinator(value: $value) }
+
+    func makeUIView(context: Context) -> UITextField {
+        let field = UITextField()
+        field.font = UIFont(name: "Geist-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16)
+        field.textColor = .label
+        field.accessibilityLabel = label
+        field.tintColor = .clear
+        // The audit viewport represents hardware-keyboard entry and keeps the software keyboard out of frame.
+        field.inputView = UIView()
+        field.addTarget(context.coordinator, action: #selector(Coordinator.changed(_:)), for: .editingChanged)
+        if requestFocus {
+            DispatchQueue.main.async { [weak field] in
+                if field?.window != nil { field?.becomeFirstResponder() }
+            }
+        }
+        return field
+    }
+
+    func updateUIView(_ field: UITextField, context: Context) {
+        context.coordinator.value = $value
+        if field.text != value { field.text = value }
+    }
+
+    @MainActor final class Coordinator: NSObject {
+        var value: Binding<String>
+        init(value: Binding<String>) { self.value = value }
+
+        @objc func changed(_ field: UITextField) { value.wrappedValue = field.text ?? "" }
     }
 }
 
@@ -271,7 +569,6 @@ private struct TabsInitialScreenshotFixture: View {
         ], selection: $selection) { _ in
             EmptyView()
         }
-        .environment(\.font, .custom("Geist-Medium", size: 14))
         .foundationTheme(theme)
         .padding(.horizontal, 24)
         // The 32-point rail is centered inside its 44-point touch targets.
@@ -312,7 +609,6 @@ private struct ButtonInitialScreenshotFixture: View {
             .buttonStyle(FoundationButtonStyle(.outline, size: .icon))
             .accessibilityLabel("Arrow up")
         }
-        .environment(\.font, .custom("Geist-Medium", size: 14))
         .foundationTheme(theme)
         .padding(.horizontal, 24)
         .padding(.top, 18)
