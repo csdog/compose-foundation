@@ -478,6 +478,28 @@ jobs:
             grep -q '^PASS:' "$log"
           done
 
+      - name: Verify Nova Resizable keyboard and drag on macOS
+        if: contains(needs.baseline.outputs.matrix, '"resizable"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          app="$RUNNER_TEMP/ResizableAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string ResizableAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.resizable-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$swiftui"/Sources/ComposeFoundationSwiftUI/Foundation{Theme,Resizable}.swift \
+            "$swiftui/validation/MacResizableInteractionAudit.swift" -o "$app/Contents/MacOS/ResizableAudit"
+          for mode in ltr rtl vertical; do
+            log="$RUNNER_TEMP/resizable-$mode.log"
+            open -n -W --stdout "$log" --stderr "$log" "$app" --args "--$mode"
+            cat "$log"
+            grep -q '^PASS:' "$log"
+          done
+
       - name: Verify Nova Toggle bindings on macOS
         if: contains(needs.baseline.outputs.matrix, '"toggle"') || contains(needs.baseline.outputs.matrix, '"toggle-group"')
         timeout-minutes: 2

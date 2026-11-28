@@ -707,6 +707,26 @@
       "accessibility": "group role, child order and independent button labels",
       "motion": "static settled frames"
     },
+    "resizable": {
+      "title": "Resizable",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPhone-17-Pro-Max",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [440, 520]},
+          {"variant": "handle", "status": "initial", "viewport": [440, 520]},
+          {"variant": "vertical", "status": "initial", "viewport": [440, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [440, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/resizable-demo.tsx",
+      "visual": "compare nested, handle, vertical and RTL panel groups",
+      "behavior": "drag the divider and resize along the panel axis with keyboard controls",
+      "accessibility": "adjustable separator with the current percentage",
+      "motion": "divider follows the pointer continuously"
+    },
     "toggle": {
       "title": "Toggle",
       "variant": "default",

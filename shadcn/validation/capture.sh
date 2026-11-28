@@ -53,7 +53,7 @@ if [[ "$platform" == swiftui-ios ]]; then
   mkdir "$app"
   cp "$swiftui/validation/IOSAuditInfo.plist" "$app/Info.plist"
   cp "$registry" "$app/registry.json"
-  cp app/shared/src/commonMain/composeResources/font/geist_{medium,regular}.ttf "$app/"
+  cp app/shared/src/commonMain/composeResources/font/geist_{medium,regular,semibold}.ttf "$app/"
   if [[ " ${components[*]} " == *" scroll-area "* ]]; then
     cp app/shared/src/commonMain/composeResources/drawable/scroll_area_art_{0,1,2}.jpg "$app/"
   fi
