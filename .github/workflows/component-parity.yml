@@ -112,6 +112,7 @@ jobs:
       UPDATE_MODE: ${{ needs.baseline.outputs.update }}
       UPDATE_BASELINES: ${{ needs.baseline.outputs.update == 'review' || needs.baseline.outputs.update == 'publish' }}
       MENU_INTERACTION: ${{ matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && contains(fromJSON('["dropdown-menu","context-menu","command","calendar"]'), inputs.component) }}
+      TOGGLE_GROUP_INTERACTION: ${{ matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && inputs.component == 'toggle-group' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -203,6 +204,19 @@ jobs:
           name: swiftui-${{ inputs.component }}-interaction
           retention-days: 7
           path: ${{ runner.temp }}/menu-interaction-attachments/
+          if-no-files-found: ignore
+
+      - name: Verify Toggle Group keyboard and touch on iPad
+        if: env.TOGGLE_GROUP_INTERACTION == 'true'
+        timeout-minutes: 15
+        run: bash shadcn/iosApp/validation/probe_toggle_group_hid.sh
+      - name: Upload iPad Toggle Group keyboard screenshots
+        if: ${{ !cancelled() && env.TOGGLE_GROUP_INTERACTION == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: swiftui-toggle-group-ipad-keyboard
+          retention-days: 7
+          path: ${{ runner.temp }}/toggle-hid/
           if-no-files-found: ignore
 
       - name: Free disk space for the Android emulator
