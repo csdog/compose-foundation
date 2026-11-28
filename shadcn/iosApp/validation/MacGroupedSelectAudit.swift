@@ -11,9 +11,11 @@ private final class SelectAuditState: NSObject, ObservableObject {
         guard let menu = notification.object as? NSMenu else { return }
         trackedMenu = menu
         presentationCount += 1
+        print("Tracking native menu \(presentationCount): \(menu.items.map(\.title))")
         let timer = Timer(timeInterval: 0.12, target: self, selector: #selector(resolveMenu(_:)),
                           userInfo: nil, repeats: false)
         RunLoop.main.add(timer, forMode: .eventTracking)
+        RunLoop.main.add(timer, forMode: .default)
     }
 
     @objc private func resolveMenu(_ timer: Timer) {
@@ -29,9 +31,11 @@ private final class SelectAuditState: NSObject, ObservableObject {
                 "Expected only nonempty native section labels, found \(titles)")
         require(menu.item(withTitle: "Apricot")?.isEnabled == false,
                 "The disabled option must stay disabled in the native menu")
-        let index = menu.indexOfItem(withTitle: "Carrot")
-        require(index >= 0 && menu.item(at: index)?.isEnabled == true, "The enabled option must be available")
-        menu.performActionForItem(at: index)
+        guard let item = menu.item(withTitle: "Carrot"), item.isEnabled, let action = item.action else {
+            require(false, "The enabled option must have a native action")
+            return
+        }
+        require(NSApplication.shared.sendAction(action, to: item.target, from: item), "The native action must dispatch")
     }
 }
 
@@ -75,11 +79,11 @@ enum MacGroupedSelectAudit {
             try? await Task.sleep(for: .milliseconds(400))
             require(window.isKeyWindow, "The audit window needs focus")
 
-            openSelect(in: window)
+            await openSelect(in: window)
             try? await Task.sleep(for: .milliseconds(600))
-            require(state.selection == "carrot", "The enabled native action must update the binding")
+            require(state.selection == "carrot", "The native action must update the binding after \(state.presentationCount) menu openings")
 
-            openSelect(in: window)
+            await openSelect(in: window)
             try? await Task.sleep(for: .milliseconds(600))
             require(state.presentationCount == 2, "The native menu must reopen after selection")
             require(state.selection == "carrot", "Canceling the menu must preserve the binding")
@@ -89,14 +93,15 @@ enum MacGroupedSelectAudit {
         app.run()
     }
 
-    private static func openSelect(in window: NSWindow) {
+    private static func openSelect(in window: NSWindow) async {
         for type in [NSEvent.EventType.leftMouseDown, .leftMouseUp] {
             guard let event = NSEvent.mouseEvent(
-                with: type, location: NSPoint(x: 180, y: 308), modifierFlags: [],
+                with: type, location: NSPoint(x: 250, y: 308), modifierFlags: [],
                 timestamp: ProcessInfo.processInfo.systemUptime, windowNumber: window.windowNumber,
                 context: nil, eventNumber: 0, clickCount: 1, pressure: type == .leftMouseUp ? 0 : 1
             ) else { continue }
             NSApplication.shared.postEvent(event, atStart: false)
+            try? await Task.sleep(for: .milliseconds(140))
         }
     }
 }
