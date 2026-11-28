@@ -103,18 +103,18 @@ public struct FoundationCommand<Value: Hashable>: View {
     }
 
     private func searchField(_ palette: FoundationPalette, enabled: [RowID], highlighted: RowID?) -> some View {
-        let field = TextField(searchPrompt, text: search) {
+        let submit = {
             guard isEnabled, let target = highlighted ?? enabled.first else { return }
             onAction(target.value)
         }
-        .textFieldStyle(PlainTextFieldStyle())
         let shape = RoundedRectangle(cornerRadius: nova ? theme.popoverCornerRadius : theme.cornerRadius)
         let fill = colorScheme == .dark ? palette.novaDarkOutlineFill(in: .card) : palette.secondary.opacity(0.8)
         return HStack(spacing: nova ? 7 : 8) {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(nova ? palette.mutedForeground.opacity(0.65) : palette.foreground)
                 .accessibilityHidden(true)
-            keyboardSearch(field, enabled: enabled, highlighted: highlighted)
+            keyboardSearch(enabled: enabled, highlighted: highlighted, submit: submit)
+                .textFieldStyle(PlainTextFieldStyle())
         }
         .font(nova ? .system(size: novaFontSize) : nil)
         .padding(.horizontal, 8)
@@ -127,22 +127,20 @@ public struct FoundationCommand<Value: Hashable>: View {
     }
 
     @ViewBuilder
-    private func keyboardSearch<Field: View>(_ field: Field, enabled: [RowID], highlighted: RowID?) -> some View {
+    private func keyboardSearch(enabled: [RowID], highlighted: RowID?, submit: @escaping () -> Void) -> some View {
         if #available(iOS 17, macOS 14, *) {
-            field.onKeyPress(keys: [.upArrow, .downArrow], phases: [.down, .repeat]) { press in
-                guard isEnabled, !enabled.isEmpty,
-                      press.modifiers.intersection([.control, .command, .option, .shift]).isEmpty else { return .ignored }
-                let forward = press.key == .downArrow
+            FoundationCommandSearch(prompt: searchPrompt, query: search, move: { forward in
+                guard isEnabled, !enabled.isEmpty else { return false }
                 if let highlighted, let index = enabled.firstIndex(of: highlighted) {
                     let offset = forward ? 1 : -1
                     activeRow = enabled[(index + offset + enabled.count) % enabled.count]
                 } else {
                     activeRow = forward ? enabled.first : enabled.last
                 }
-                return .handled
-            }
+                return true
+            }, submit: submit)
         } else {
-            field
+            TextField(searchPrompt, text: search, onCommit: submit)
         }
     }
 
@@ -235,5 +233,26 @@ public struct FoundationCommand<Value: Hashable>: View {
         sections.flatMap { section in
             section.actions.filter(\.isEnabled).map { RowID(section: section.id, value: $0.value) }
         }
+    }
+}
+
+@available(iOS 17, macOS 14, *)
+private struct FoundationCommandSearch: View {
+    @FocusState private var focused: Bool
+    let prompt: String
+    @Binding var query: String
+    let move: (Bool) -> Bool
+    let submit: () -> Void
+
+    var body: some View {
+        TextField(prompt, text: $query)
+            .focused($focused)
+            .onSubmit(submit)
+            .onKeyPress(.upArrow) { move(false) ? .handled : .ignored }
+            .onKeyPress(.downArrow) { move(true) ? .handled : .ignored }
+            .onKeyPress(.return) {
+                submit()
+                return .handled
+            }
     }
 }
