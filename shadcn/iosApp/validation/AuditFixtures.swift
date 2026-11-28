@@ -376,14 +376,20 @@ struct CalendarNavigationFixture: View {
     @State private var range: FoundationCalendarRange? = .init(
         start: Self.date(2025, 1, 20), end: Self.date(2025, 1, 20)
     )
+    @State private var selected: Date? = Self.date(2025, 1, 31)
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("Range: \(dayLabel(range?.start)) to \(dayLabel(range?.end))")
-            FoundationCalendar(
-                range: $range, in: Self.date(2025, 1, 20)...Self.date(2026, 3, 10),
-                numberOfMonths: 2, captionLayout: .dropdown
-            )
+            if ProcessInfo.processInfo.arguments.contains("--calendar-keys") {
+                Text("Selected: \(dayLabel(selected))").accessibilityIdentifier("calendar-selection")
+                FoundationCalendar(selection: $selected, in: Self.date(2025, 1, 20)...Self.date(2025, 2, 15))
+            } else {
+                Text("Range: \(dayLabel(range?.start)) to \(dayLabel(range?.end))")
+                FoundationCalendar(
+                    range: $range, in: Self.date(2025, 1, 20)...Self.date(2026, 3, 10),
+                    numberOfMonths: 2, captionLayout: .dropdown
+                )
+            }
         }
         .padding(12)
         .environment(\.calendar, Self.calendar)

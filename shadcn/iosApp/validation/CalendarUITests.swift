@@ -2,6 +2,28 @@ import XCTest
 
 final class CalendarUITests: XCTestCase {
     @MainActor
+    func testDateKeysMoveFocusAndCommitAcrossMonths() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--calendar-navigation", "--calendar-keys", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launch()
+        let result = app.staticTexts["calendar-selection"]
+        XCTAssertTrue(result.waitForExistence(timeout: 5))
+        XCTAssertEqual(result.label, "Selected: 2025-01-31")
+        app.typeKey(.tab, modifierFlags: [])
+        app.typeKey(.rightArrow, modifierFlags: [])
+        XCTAssertEqual(result.label, "Selected: 2025-01-31")
+        XCTAssertTrue(app.buttons["February 1, 2025"].waitForExistence(timeout: 3))
+        attachMenu("Calendar hardware keyboard focus after crossing the month")
+        app.typeKey(.return, modifierFlags: [])
+        XCTAssertEqual(result.label, "Selected: 2025-02-01")
+        app.typeKey(.downArrow, modifierFlags: [])
+        XCTAssertEqual(result.label, "Selected: 2025-02-01")
+        app.typeKey(" ", modifierFlags: [])
+        XCTAssertEqual(result.label, "Selected: 2025-02-08")
+    }
+
+    @MainActor
     func testMonthAndYearMenusKeepTheRangeAndRespectBounds() {
         continueAfterFailure = false
         let app = XCUIApplication()
