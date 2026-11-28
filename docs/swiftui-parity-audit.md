@@ -26,6 +26,10 @@ Badge 对照官方 Nova 示例的 Default、Secondary、Destructive、Outline �
 
 iPhone 17 Pro（iOS 26.2）上浅色和深色各拍两遍。四张原图逐文件一致。差异主要集中在文字边缘、圆角抗锯齿及正文基线。macOS Swift Package 构建通过。[验证运行](https://github.com/csdog/compose-foundation/actions/runs/45994534289) · [四张实拍及 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/45994534289/artifacts/15196185208)
 
+### Kbd、Skeleton 和 Spinner 初始态
+
+Kbd 覆盖四个修饰键与 Ctrl + B 两行。Skeleton 覆盖头像和两条文本占位。Spinner 覆盖静止帧以及完整的支付状态行。各用例使用 402 × 520 的共用画布，浅色和深色均以 iPhone 17 Pro（iOS 26.2）复拍。六张新图逐张一致，集成分支此前的 32 张图也保持逐字节一致。macOS Swift Package 构建通过。符号字体与抗锯齿仍有平台差异，Spinner 动画需单独验收。[Review 报告](https://github.com/csdog/compose-foundation/actions/runs/45998642997/artifacts/15197407696)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
