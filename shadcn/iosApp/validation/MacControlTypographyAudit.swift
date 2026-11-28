@@ -40,6 +40,7 @@ struct MacControlTypographyAudit {
         print("PASS: Button typography and Nova Tabs are independent of ancestor fonts")
     }
 
+    @MainActor
     private static func tabs(_ title: String, theme: FoundationTheme) -> some View {
         FoundationTabs([
             FoundationChoice(title, value: 0),
