@@ -14,6 +14,9 @@ SwiftUI registry 当前有 69 个条目。基准仓库为其中 63 个条目提�
 
 ### Tabs 和 Button 初始态
 
+Button 的字号由 `Size` 决定，省略尺寸时走主题字体，Sera 使用 caption / semibold。Nova Tabs 保留组件字号，祖先的 `.font` 不会改变标签样式。截图用例使用组件实际的 SwiftUI 字体，Web 侧保留 Geist。
+
+
 - Tabs 使用 `tabs-disabled.tsx`。Home 为选中项，Disabled 保持禁用，方向键仍跳过禁用项。Web 的 Disabled 焦点环示例与这一规则不同，后续键盘视觉对照使用可聚焦项。
 - Button 使用现有 `button-variants-initial` 参考，覆盖描边文字按钮和向上箭头图标按钮。两个控件均保留 44 pt 高的点按范围，图标按钮的宽度也至少为 44 pt。
 - 比对使用 402 × 520 共用画布，每个用例分别采集浅色和深色。

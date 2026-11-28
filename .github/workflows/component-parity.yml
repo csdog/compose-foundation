@@ -375,6 +375,14 @@ jobs:
             "$swiftui/validation/TabsNavigationAudit.swift" -o "$RUNNER_TEMP/tabs-navigation"
           "$RUNNER_TEMP/tabs-navigation"
 
+      - name: Verify SwiftUI Button and Tabs typography
+        run: |
+          swiftui=shadcn/iosApp
+          xcrun swiftc -swift-version 6 -parse-as-library \
+            "$swiftui"/Sources/ComposeFoundationSwiftUI/*.swift \
+            "$swiftui/validation/MacControlTypographyAudit.swift" -o "$RUNNER_TEMP/control-typography"
+          "$RUNNER_TEMP/control-typography"
+
   report:
     name: Component parity report
     needs: [capture, cmp-behavior, swift-logic, publish]

@@ -264,7 +264,6 @@ private struct TabsInitialScreenshotFixture: View {
         ], selection: $selection) { _ in
             EmptyView()
         }
-        .environment(\.font, .custom("Geist-Medium", size: 14))
         .foundationTheme(theme)
         .padding(.horizontal, 24)
         // The 32-point rail is centered inside its 44-point touch targets.
@@ -305,7 +304,6 @@ private struct ButtonInitialScreenshotFixture: View {
             .buttonStyle(FoundationButtonStyle(.outline, size: .icon))
             .accessibilityLabel("Arrow up")
         }
-        .environment(\.font, .custom("Geist-Medium", size: 14))
         .foundationTheme(theme)
         .padding(.horizontal, 24)
         .padding(.top, 18)
