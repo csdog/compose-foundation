@@ -111,6 +111,7 @@ jobs:
       PLATFORM: ${{ matrix.platform }}
       UPDATE_MODE: ${{ needs.baseline.outputs.update }}
       UPDATE_BASELINES: ${{ needs.baseline.outputs.update == 'review' || needs.baseline.outputs.update == 'publish' }}
+      MENU_INTERACTION: ${{ matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && contains(fromJSON('["dropdown-menu","context-menu"]'), inputs.component) }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -164,34 +165,42 @@ jobs:
         if: matrix.platform == 'swiftui-ios'
         run: sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
 
-      - name: Verify Dropdown Menu touch interaction on iOS
-        if: matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && inputs.component == 'dropdown-menu'
+      - name: Verify menu touch interaction on iOS
+        if: env.MENU_INTERACTION == 'true'
         timeout-minutes: 15
+        env:
+          MENU_COMPONENT: ${{ inputs.component }}
         run: |
           brew install xcodegen
+          case "$MENU_COMPONENT" in
+            dropdown-menu) test_class=DropdownMenuUITests ;;
+            context-menu) test_class=ContextMenuUITests ;;
+            *) exit 1 ;;
+          esac
           validation=shadcn/iosApp/validation
-          xcodegen generate --spec "$validation/DropdownMenuUITests.yml"
-          device="$(xcrun simctl create 'Dropdown Menu UI audit' com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro com.apple.CoreSimulator.SimRuntime.iOS-26-2)"
+          xcodegen generate --spec "$validation/MenuUITests.yml"
+          device="$(xcrun simctl create 'Menu UI audit' com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro com.apple.CoreSimulator.SimRuntime.iOS-26-2)"
           trap 'xcrun simctl delete "$device" || true' EXIT
           xcrun simctl boot "$device"
           xcodebuild test -project "$validation/ComposeFoundationAudit.xcodeproj" \
-            -scheme DropdownMenuAudit -destination "platform=iOS Simulator,id=$device" \
-            -parallel-testing-enabled NO -resultBundlePath "$RUNNER_TEMP/dropdown-menu.xcresult" \
+            -scheme MenuAudit -destination "platform=iOS Simulator,id=$device" \
+            -only-testing:"MenuUITests/$test_class" -parallel-testing-enabled NO \
+            -resultBundlePath "$RUNNER_TEMP/menu-interaction.xcresult" \
             CODE_SIGNING_ALLOWED=NO
-      - name: Export Dropdown Menu interaction screenshots
-        if: ${{ !cancelled() && matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && inputs.component == 'dropdown-menu' }}
+      - name: Export menu interaction screenshots
+        if: ${{ !cancelled() && env.MENU_INTERACTION == 'true' }}
         run: |
-          result="$RUNNER_TEMP/dropdown-menu.xcresult"
+          result="$RUNNER_TEMP/menu-interaction.xcresult"
           if [[ -d "$result" ]]; then
-            xcrun xcresulttool export attachments --path "$result" --output-path "$RUNNER_TEMP/dropdown-menu-attachments"
+            xcrun xcresulttool export attachments --path "$result" --output-path "$RUNNER_TEMP/menu-interaction-attachments"
           fi
-      - name: Upload Dropdown Menu interaction screenshots
-        if: ${{ !cancelled() && matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && inputs.component == 'dropdown-menu' }}
+      - name: Upload menu interaction screenshots
+        if: ${{ !cancelled() && env.MENU_INTERACTION == 'true' }}
         uses: actions/upload-artifact@v4
         with:
-          name: swiftui-dropdown-menu-interaction
+          name: swiftui-${{ inputs.component }}-interaction
           retention-days: 7
-          path: ${{ runner.temp }}/dropdown-menu-attachments/
+          path: ${{ runner.temp }}/menu-interaction-attachments/
           if-no-files-found: ignore
 
       - name: Free disk space for the Android emulator

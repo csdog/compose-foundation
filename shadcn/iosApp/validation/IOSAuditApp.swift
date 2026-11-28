@@ -57,6 +57,12 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             return
         }
 
+        if ProcessInfo.processInfo.arguments.contains("--context-menu-interaction") {
+            window.rootViewController = UIHostingController(rootView: ContextMenuInteractionFixture())
+            window.makeKeyAndVisible()
+            return
+        }
+
         if #available(iOS 17, *), ProcessInfo.processInfo.arguments.contains("--overlay-focus") {
             window.rootViewController = UIHostingController(rootView: OverlayFocusInteractionFixture())
             window.makeKeyAndVisible()
@@ -306,6 +312,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "dropdown-menu": [
                 ("dropdown-menu-default-initial", { AnyView(DropdownMenuScreenshotFixture(rtl: false)) }),
                 ("dropdown-menu-rtl-initial", { AnyView(DropdownMenuScreenshotFixture(rtl: true)) }),
+            ],
+            "context-menu": [
+                ("context-menu-default-initial", { AnyView(ContextMenuScreenshotFixture(rtl: false)) }),
+                ("context-menu-rtl-initial", { AnyView(ContextMenuScreenshotFixture(rtl: true)) }),
             ],
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
@@ -2923,6 +2933,59 @@ private struct InputOtpScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(theme.palette(for: scheme).background)
         .ignoresSafeArea()
+    }
+}
+
+private struct ContextMenuInteractionFixture: View {
+    @State private var result = "No action"
+
+    var body: some View {
+        VStack {
+            Text("Long press here")
+                .modifier(FoundationContextMenu(triggerStyle: .outline) {
+                    Button("Back") { result = "Back selected" }
+                    Button("Forward") { result = "Forward selected" }
+                        .disabled(true)
+                    Button("Reload") { result = "Reload selected" }
+                    Menu("More Tools") {
+                        Button("Save Page") { result = "Save Page selected" }
+                    }
+                })
+                .accessibilityIdentifier("context-menu-trigger")
+            Spacer()
+            Text(result)
+                .accessibilityIdentifier("context-menu-result")
+        }
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foundationTheme(FoundationTheme(preset: .nova))
+    }
+}
+
+private struct ContextMenuScreenshotFixture: View {
+    let rtl: Bool
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        return Text(rtl ? "انقر بزر الماوس الأيمن هنا" : "Right click here")
+            .modifier(FoundationContextMenu(triggerStyle: .outline) {
+                Button(rtl ? "رجوع" : "Back") {}
+                Button(rtl ? "تقدم" : "Forward") {}.disabled(true)
+                Button(rtl ? "إعادة تحميل" : "Reload") {}
+                Menu(rtl ? "المزيد من الأدوات" : "More Tools") {
+                    Button(rtl ? "حفظ الصفحة..." : "Save Page...") {}
+                }
+            })
+            .font(.custom("Geist-Regular", size: 14))
+            .foundationTheme(theme)
+            .environment(\.layoutDirection, rtl ? .rightToLeft : .leftToRight)
+            .padding(24)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
     }
 }
 

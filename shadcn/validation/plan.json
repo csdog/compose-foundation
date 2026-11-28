@@ -799,6 +799,24 @@
       "accessibility": "named multiline editor",
       "motion": "static settled frames"
     },
+    "context-menu": {
+      "title": "Context Menu",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/context-menu-demo.tsx",
+      "visual": "compare the outlined 16:9 trigger and Arabic label",
+      "behavior": "long press the outline surface, choose a menu or submenu action, and skip disabled actions",
+      "accessibility": "named trigger and native menu actions",
+      "motion": "static settled frames"
+    },
     "dropdown-menu": {
       "title": "Dropdown Menu",
       "variant": "default",

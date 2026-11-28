@@ -68,7 +68,10 @@ enum SwiftUIAuditFixtures {
             "collapsible": { AnyView(FoundationCollapsible("Details", isExpanded: .constant(true)) { Text("Expanded") }) },
             "combobox": { AnyView(FoundationCombobox("Choose a section", choices: options, selection: .constant("advanced"))) },
             "command": { AnyView(FoundationCommand(sections: [.init(id: "settings", title: "Settings", actions: options)]) { _ in }) },
-            "context-menu": { AnyView(Text("Context menu trigger").modifier(FoundationContextMenu { Button("Copy") {} })) },
+            "context-menu": { AnyView(Text("Long press here").modifier(FoundationContextMenu(triggerStyle: .outline) {
+                Button("Copy") {}
+                Button("Forward") {}.disabled(true)
+            })) },
             "dialog": { AnyView(Button("Open dialog") {}.modifier(FoundationDialog(
                 isPresented: .constant(false), title: "Edit"
             ) { Text("Dialog content") })) },
