@@ -52,6 +52,16 @@ iPhone 17 Pro（iOS 26.2）上以 402 × 520 画布复拍深浅色八张 PNG，�
 
 iPhone 17 Pro（iOS 26.2）上深浅色共六张截图，复拍逐字节一致。切换 Comfortable 和 Compact 的预设选择只改变第二、第三项的圆形控件区域。原有 54 张截图与上一轮逐字节一致。macOS Swift Package 构建和 Tabs 导航回归通过。方向键导航、实际触控和 VoiceOver 待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46011436975/artifacts/15204561793)
 
+#### Radio Group 方向键与焦点
+
+iOS 17 和 macOS 14 起，Radio Group 默认只保留当前有效选择的 Tab 停靠点。无有效选择时焦点进入首个可用选项，绑定仍保持原值，按 Space 才选择该项。方向键移动焦点并提交新选项，跳过禁用项，首尾循环。左右键跟随界面方向，上下键始终按项目顺序移动。Nova 在当前聚焦的圆形控件外绘制焦点环。较早系统继续使用原有按钮交互。[shadcn 禁用示例](https://ui.shadcn.com/examples/base/radio-group-disabled) · [Base UI Radio Group](https://base-ui.com/react/components/radio-group)
+
+实测 shadcn 的禁用示例从第二项按上键，跳过禁用的第一项并循环到第三项。官方 RTL 预览的视觉方向为 RTL，左右键实测仍沿 LTR 索引。SwiftUI 使用 `layoutDirection` 映射左右方向，与 Base UI 的方向上下文约定一致。[shadcn RTL 示例](https://ui.shadcn.com/examples/base/radio-group-rtl)
+
+iPhone 17 Pro（iOS 26.2）复拍默认、Compact 选中和首项禁用的六张深浅色截图，逐字节一致，静态画面与上轮像素一致。[截图与 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/46119665206/artifacts/15253064945)
+
+macOS 实际窗口的 LTR、RTL 回归覆盖初始无选择、Space 选择、方向键跳过禁用项、循环、Tab 离开、反向 Tab 返回及整组禁用。测试核对每次有效选择只写入绑定一次。[macOS 按键运行](https://github.com/csdog/compose-foundation/actions/runs/46120905530/job/140905026114)
+
 ### Input 和 Textarea 初始态
 
 Input 覆盖完整的 API Key 字段和独立输入框。API Key 示例使用系统 SecureField。Textarea 覆盖独立编辑器和含标题说明的编辑器。iPad mini（A17 Pro，iPadOS 26.2）使用 720 × 520 画布，完整保留 672 pt 宽的输入框及边框。输入与占位文字为 16 pt，外部标签和说明为 14 pt。
@@ -483,7 +493,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | popover | iOS 和 macOS 使用锚定的无箭头圆角面板，默认居中显示在触发器下方，间距 4 pt，并根据可用空间翻转或调整位置。`arrowEdge` 指定首选方向，`onDismiss` 在窗口关闭后调用。iOS 模拟器已验证面板内键盘焦点、Return、Escape、触控关闭和跨窗口还原触发器焦点。 |
 | progress | 支持范围归一化、动画、减少动态效果与百分比无障碍语义。Compose 可插入 label、value、track 和 indicator。 |
 | questionnaire | 单选、多选、文本题、验证、回退、跳过及提交可用。缺少 Compose 的快捷键、题定义 slots、重置与部分进度状态 API。 |
-| radio-group | 支持纵向单选和禁用。Nova 使用 16 pt 圆形控件、8 pt 选中圆点和深色未选中底色。iOS 每项至少保留 44 × 44 pt 点按区域。横向布局、键盘方向键导航和其他示例仍待验收。 |
+| radio-group | 支持纵向单选和禁用。Nova 使用 16 pt 圆形控件、8 pt 选中圆点和深色未选中底色。iOS 每项至少保留 44 × 44 pt 点按区域。macOS 已验收 LTR、RTL 的方向键和组内单一 Tab 停靠点。横向布局、实际触控与 VoiceOver 仍待验收。 |
 | resizable | 支持双窗格纵向/横向比例、拖动限制、RTL 和无障碍增减。拖动读取全局坐标，避免手柄移动改变手势参考点。Compose 另有专门的状态与面板 slots。 |
 | scroll-area | 使用原生 ScrollView，支持滚动轴、系统指示器与可选主题边框和圆角裁剪。自定义滚动条及其显隐和拖动配置待对齐。 |
 | scroll-fade | 按所选边缘和固定距离加渐变遮罩。和 Compose 的静态 overload 对应，缺少按可滚动方向和偏移量驱动的 overload。 |
