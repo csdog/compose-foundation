@@ -887,6 +887,27 @@ jobs:
           done
           exit "$failed"
 
+      - name: Verify Dropdown Menu trigger state on macOS
+        if: contains(needs.baseline.outputs.matrix, '"dropdown-menu"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          sources="$swiftui/Sources/ComposeFoundationSwiftUI"
+          app="$RUNNER_TEMP/DropdownMenuAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string DropdownMenuAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.dropdown-menu-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$sources"/Foundation{Theme,DropdownMenu}.swift \
+            "$swiftui/validation/MacDropdownMenuAudit.swift" -o "$app/Contents/MacOS/DropdownMenuAudit"
+          log="$RUNNER_TEMP/dropdown-menu.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app"
+          cat "$log"
+          grep -q '^PASS:' "$log"
+
       - name: Verify Textarea focus and multiline input on macOS
         if: contains(needs.baseline.outputs.matrix, '"textarea"')
         timeout-minutes: 2

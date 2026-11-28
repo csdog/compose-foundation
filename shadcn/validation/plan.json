@@ -799,6 +799,24 @@
       "accessibility": "named multiline editor",
       "motion": "static settled frames"
     },
+    "dropdown-menu": {
+      "title": "Dropdown Menu",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/dropdown-menu-demo.tsx",
+      "visual": "compare the collapsed Nova outline trigger and Arabic label",
+      "behavior": "use the native menu builder for groups, submenus, and disabled actions",
+      "accessibility": "native menu trigger named by its content",
+      "motion": "static settled frames"
+    },
     "radio-group": {
       "title": "Radio Group",
       "variant": "default",

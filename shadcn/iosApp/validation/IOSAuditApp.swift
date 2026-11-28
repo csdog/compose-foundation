@@ -297,6 +297,10 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 ("textarea-invalid-initial", { AnyView(TextFieldScreenshotFixture(example: .textareaInvalid)) }),
                 ("textarea-rtl-initial", { AnyView(TextFieldScreenshotFixture(example: .textareaRTL)) }),
             ],
+            "dropdown-menu": [
+                ("dropdown-menu-default-initial", { AnyView(DropdownMenuScreenshotFixture(rtl: false)) }),
+                ("dropdown-menu-rtl-initial", { AnyView(DropdownMenuScreenshotFixture(rtl: true)) }),
+            ],
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
         let useComparisonFixtures = (names.contains("hover-card")
@@ -2909,6 +2913,41 @@ private struct InputOtpScreenshotFixture: View {
         .font(.custom("Geist-Regular", size: 14))
         .foundationTheme(theme)
         .padding(.horizontal, 24)
+        .padding(.top, 18)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct DropdownMenuScreenshotFixture: View {
+    let rtl: Bool
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        return FoundationDropdownMenu {
+            Section(header: Text(rtl ? "الحساب" : "My Account")) {
+                Button(rtl ? "الملف الشخصي" : "Profile") {}
+                Button(rtl ? "الفوترة" : "Billing") {}
+                Button(rtl ? "الإعدادات" : "Settings") {}
+            }
+            Divider()
+            Button(rtl ? "الفريق" : "Team") {}
+            Menu(rtl ? "دعوة المستخدمين" : "Invite users") {
+                Button(rtl ? "البريد الإلكتروني" : "Email") {}
+                Button(rtl ? "رسالة" : "Message") {}
+            }
+            Button("API") {}.disabled(true)
+        } trigger: {
+            Text(rtl ? "افتح القائمة" : "Open")
+        }
+        .font(.custom("Geist-Medium", size: 14))
+        .foundationTheme(theme)
+        .environment(\.layoutDirection, rtl ? .rightToLeft : .leftToRight)
+        .padding(.leading, 24)
         .padding(.top, 18)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(theme.palette(for: scheme).background)
