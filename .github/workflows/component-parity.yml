@@ -901,7 +901,7 @@ jobs:
           plutil -insert CFBundleIdentifier -string com.composefoundation.theme-audit "$plist"
           plutil -insert CFBundlePackageType -string APPL "$plist"
           xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
-            "$sources"/Foundation{Theme,Input,ButtonStyle}.swift \
+            "$sources"/Foundation{Theme,Input,ButtonStyle,Card}.swift \
             "$swiftui/validation/MacStylePresetAudit.swift" -o "$app/Contents/MacOS/StylePresetAudit"
           log="$RUNNER_TEMP/style.log"
           open -n -W --stdout "$log" --stderr "$log" "$app"

@@ -14,18 +14,19 @@ private struct StyleAuditFixture: View {
 
     var body: some View {
         let theme = FoundationTheme(preset: state.preset)
-        VStack(spacing: 12) {
-            FoundationInput("Display name", text: $state.name)
-                .frame(width: 240)
-            Button("Save") { state.saves += 1 }
-                .buttonStyle(FoundationButtonStyle())
+        FoundationCard {
+            VStack(spacing: 12) {
+                FoundationInput("Display name", text: $state.name)
+                    .frame(width: 240)
+                Button("Save") { state.saves += 1 }
+                    .buttonStyle(FoundationButtonStyle())
+            }
         }
         .frame(width: 480, height: 260)
         .background(theme.palette(for: state.scheme).background)
         .environment(\.colorScheme, state.scheme)
         .foundationTheme(theme)
     }
-
 }
 
 @main @MainActor
