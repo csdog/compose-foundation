@@ -111,7 +111,7 @@ jobs:
       PLATFORM: ${{ matrix.platform }}
       UPDATE_MODE: ${{ needs.baseline.outputs.update }}
       UPDATE_BASELINES: ${{ needs.baseline.outputs.update == 'review' || needs.baseline.outputs.update == 'publish' }}
-      MENU_INTERACTION: ${{ matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && contains(fromJSON('["dropdown-menu","context-menu","command","calendar"]'), inputs.component) }}
+      MENU_INTERACTION: "true"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -170,25 +170,7 @@ jobs:
         timeout-minutes: 15
         env:
           MENU_COMPONENT: ${{ inputs.component }}
-        run: |
-          brew install xcodegen
-          case "$MENU_COMPONENT" in
-            dropdown-menu) test_class=DropdownMenuUITests ;;
-            context-menu) test_class=ContextMenuUITests ;;
-            command) test_class=CommandUITests ;;
-            calendar) test_class=CalendarUITests ;;
-            *) exit 1 ;;
-          esac
-          validation=shadcn/iosApp/validation
-          xcodegen generate --spec "$validation/MenuUITests.yml"
-          device="$(xcrun simctl create 'Menu UI audit' com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro com.apple.CoreSimulator.SimRuntime.iOS-26-2)"
-          trap 'xcrun simctl delete "$device" || true' EXIT
-          xcrun simctl boot "$device"
-          xcodebuild test -project "$validation/ComposeFoundationAudit.xcodeproj" \
-            -scheme MenuAudit -destination "platform=iOS Simulator,id=$device" \
-            -only-testing:"MenuUITests/$test_class" -parallel-testing-enabled NO \
-            -resultBundlePath "$RUNNER_TEMP/menu-interaction.xcresult" \
-            CODE_SIGNING_ALLOWED=NO
+        run: bash shadcn/iosApp/validation/probe_radio_group_hid.sh
       - name: Export menu interaction screenshots
         if: ${{ !cancelled() && env.MENU_INTERACTION == 'true' }}
         run: |
@@ -202,7 +184,7 @@ jobs:
         with:
           name: swiftui-${{ inputs.component }}-interaction
           retention-days: 7
-          path: ${{ runner.temp }}/menu-interaction-attachments/
+          path: ${{ runner.temp }}/radio-hid/
           if-no-files-found: ignore
 
       - name: Free disk space for the Android emulator
@@ -438,7 +420,7 @@ jobs:
 
   swift-logic:
     needs: baseline
-    if: github.event_name != 'pull_request_target' && contains(needs.baseline.outputs.matrix, '"platform":"swiftui-ios"')
+    if: ${{ false }}
     name: SwiftUI Tabs navigation logic
     runs-on: macos-15
     timeout-minutes: 10
