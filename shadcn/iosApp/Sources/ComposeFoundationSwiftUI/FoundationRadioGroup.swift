@@ -22,9 +22,9 @@ public struct FoundationRadioGroup<Value: Hashable>: View {
 
         Group {
             if #available(iOS 17, macOS 14, *) {
-                FoundationKeyboardRadioGroup(choices: choices, selection: $selection) { choice, focused in
+                FoundationKeyboardRadioGroup(choices: choices, selection: $selection,
+                                             usesCustomFocusEffect: nova) { choice, focused in
                     row(choice, labelFont: labelFont, nova: nova, palette: palette, focused: focused)
-                        .focusEffectDisabled(nova)
                 }
             } else {
                 VStack(alignment: .leading, spacing: 2) {
@@ -40,14 +40,15 @@ public struct FoundationRadioGroup<Value: Hashable>: View {
     private func row(_ choice: FoundationChoice<Value>, labelFont: Font, nova: Bool, palette: FoundationPalette,
                      focused: Bool) -> some View {
         let selected = choice.value == selection
+        let focusVisible = nova && focused && isEnabled && choice.isEnabled
         return Button {
             selection = choice.value
         } label: {
             HStack(spacing: nova ? 12 : 8) {
-                indicator(selected: selected, nova: nova, palette: palette)
+                indicator(selected: selected, nova: nova, palette: palette, focused: focusVisible)
                     .overlay(Group {
-                        if nova && focused && isEnabled && choice.isEnabled {
-                            Circle().strokeBorder(palette.ring.opacity(0.55), lineWidth: 3)
+                        if focusVisible {
+                            Circle().strokeBorder(palette.ring.opacity(0.5), lineWidth: 3)
                                 .frame(width: 22, height: 22)
                                 .allowsHitTesting(false)
                                 .accessibilityHidden(true)
@@ -65,8 +66,8 @@ public struct FoundationRadioGroup<Value: Hashable>: View {
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
-    private func indicator(selected: Bool, nova: Bool, palette: FoundationPalette) -> some View {
-        let ring = selected ? palette.primary : palette.input
+    private func indicator(selected: Bool, nova: Bool, palette: FoundationPalette, focused: Bool) -> some View {
+        let ring = focused ? palette.ring : selected ? palette.primary : palette.input
         let background = nova && colorScheme == .dark ? palette.novaDarkOutlineFill : Color.clear
         let fill = nova && selected ? palette.primary : background
         let dot = nova ? palette.primaryForeground : palette.primary
@@ -87,6 +88,7 @@ private struct FoundationKeyboardRadioGroup<Value: Hashable, Row: View>: View {
     @State private var cursor: Value?
     let choices: [FoundationChoice<Value>]
     @Binding var selection: Value?
+    let usesCustomFocusEffect: Bool
     let row: (FoundationChoice<Value>, Bool) -> Row
 
     var body: some View {
@@ -99,6 +101,7 @@ private struct FoundationKeyboardRadioGroup<Value: Hashable, Row: View>: View {
                     row(choice, focused == choice.value)
                         .focusable()
                         .focused($focused, equals: choice.value)
+                        .focusEffectDisabled(usesCustomFocusEffect)
                         .onKeyPress(keys: [.leftArrow, .rightArrow, .upArrow, .downArrow, .space],
                                     phases: [.down, .repeat]) { key in
                             handle(key, from: choice.value, navigation: navigation)
