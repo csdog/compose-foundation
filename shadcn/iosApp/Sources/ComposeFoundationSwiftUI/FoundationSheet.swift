@@ -8,7 +8,12 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
     @ScaledMetric(relativeTo: .body) private var titleSize: CGFloat = 16
     @ScaledMetric(relativeTo: .subheadline) private var descriptionSize: CGFloat = 14
     @Binding private var isPresented: Bool
+    #if os(macOS)
+    @State private var pendingDismissal: Task<Void, Never>?
+    @State private var backdropDismissalID: UUID?
+    #endif
 
+    private let transitionDuration: TimeInterval = 0.20
     private let title: String
     private let description: String?
     private let edge: Edge?
@@ -104,15 +109,19 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
                         .transition(.opacity)
-                        .onDisappear {
-                            guard !isPresented else { return }
-                            DispatchQueue.main.async {
-                                if !isPresented { onDismiss() }
-                            }
-                        }
+                        .onDisappear(perform: notifyAfterDismissal)
                     }
                 })
-                .animation(reduceMotion ? nil : .easeInOut(duration: 0.20), value: isPresented)
+                .animation(reduceMotion ? nil : .easeInOut(duration: transitionDuration), value: isPresented)
+                #if os(macOS)
+                .onChange(of: isPresented) { presented in
+                    if presented {
+                        pendingDismissal?.cancel()
+                        backdropDismissalID = nil
+                    }
+                }
+                .onDisappear { pendingDismissal?.cancel() }
+                #endif
         } else {
             content.sheet(isPresented: $isPresented, onDismiss: onDismiss) {
                 VStack(alignment: .leading, spacing: 12) {
@@ -245,7 +254,44 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
 
     private func closeFromBackdrop() {
         foundationEndEditingBeforeBackdropDismissal()
+        #if os(macOS)
+        if #available(macOS 14, *) {
+            // Wait for the panel and its native field to leave the hierarchy before the caller sets focus.
+            let id = UUID()
+            backdropDismissalID = id
+            withAnimation(
+                reduceMotion ? nil : .easeInOut(duration: transitionDuration), completionCriteria: .removed,
+                { close() },
+                completion: {
+                    DispatchQueue.main.async {
+                        guard !isPresented, backdropDismissalID == id else { return }
+                        onDismiss()
+                    }
+                }
+            )
+            return
+        }
+        #endif
         close()
+    }
+
+    private func notifyAfterDismissal() {
+        guard !isPresented else { return }
+        #if os(macOS)
+        guard backdropDismissalID == nil else { return }
+        // A departing AppKit field editor can clear focus while the edge transition is still running.
+        pendingDismissal?.cancel()
+        let delay = reduceMotion ? 0 : UInt64(transitionDuration * 1_000_000_000)
+        pendingDismissal = Task { @MainActor in
+            do { try await Task.sleep(nanoseconds: delay) } catch { return }
+            guard !Task.isCancelled, !isPresented else { return }
+            onDismiss()
+        }
+        #else
+        DispatchQueue.main.async {
+            if !isPresented { onDismiss() }
+        }
+        #endif
     }
 
     private func close() {
