@@ -378,6 +378,16 @@ iPhone 17 Pro（iOS 26.2）的两项 XCUITest 验证实际点按。菜单展开�
 
 在相同 iPhone 模拟器上，XCUITest 的按键方式未改变菜单高亮，也未关闭菜单。使用 idb USB HID 事件复测后，Escape 关闭菜单且不执行动作。触控重开后输入两次 Down 和 Return，跳过禁用的 API 并选中 Settings。触控打开、Escape 关闭后，Space 未重新打开，键盘打开后的焦点归还仍待验收。可用已安装审计应用的模拟器 UDID 和 idb companion 地址运行 `python3 shadcn/iosApp/validation/verify_dropdown_menu_keyboard.py --device "$device" --companion "$companion"`，复验已确认的两条键盘路径。macOS 托管 runner 缺少系统输入注入权限，键盘探针未打开原生菜单。[iOS HID 探针日志](https://github.com/csdog/compose-foundation/actions/runs/46101756296/job/140845596818) · [XCUITest 探针日志](https://github.com/csdog/compose-foundation/actions/runs/46099999639/job/140840079576) · [macOS 探针日志](https://github.com/csdog/compose-foundation/actions/runs/46100117185/job/140840481645)
 
+### Context Menu Nova 虚线触发区与 RTL
+
+对照 shadcn Base UI / Nova 的 `context-menu-demo.tsx` 和 `context-menu-rtl.tsx`。新增可选的 `triggerStyle: .outline`，提供 16:9、宽度上限 320 pt 的完整触发区，沿用主题圆角及描边色。原有初始化器保持调用方提供的内容和布局。iOS 通过原生长按打开，macOS 使用原生右键菜单。菜单内容仍由调用方提供。
+
+iPad mini（A17 Pro，iOS 26.2）采集默认、阿拉伯语 RTL 和深浅色的四张收起态截图，复拍逐字节一致。以相同 720 × 520 画布比较，触发区各边与 shadcn 相差至多 2 px。虚线取样差异集中在描边抗锯齿和虚线长度及间隔，阿拉伯文字形由各平台的备用字体绘制。截图采用参考的右键文案，实际触控用例使用长按文案。[iOS 截图与差异报告](https://github.com/csdog/compose-foundation/actions/runs/46102840957/artifacts/15246767791)
+
+macOS 实际窗口向虚线框内的空白处发送右键事件。系统菜单的 Forward 标记为禁用。再发送两次 Down 和 Return，越过 Forward 并执行一次 Reload。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46103051907/job/140849669837)
+
+iPhone 17 Pro（iOS 26.2）的两项 XCUITest 验证点按空白区不开菜单，长按同一位置会打开。禁用项不执行，Reload 和子菜单动作更新结果，点外部关闭并保留结果。展开时系统显示触发区预览及遮罩，与 shadcn Web 浮层的展开布局有差异。测试记录 UIKit 的 `_UIGravityWellEffectAnchorView` 和 `_UIReparentingView` 层级警告，两项测试通过。[iOS 触控日志](https://github.com/csdog/compose-foundation/actions/runs/46102840957/job/140848985022) · [展开截图](https://github.com/csdog/compose-foundation/actions/runs/46102840957/artifacts/15246013498)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -403,7 +413,7 @@ iPhone 17 Pro（iOS 26.2）的两项 XCUITest 验证实际点按。菜单展开�
 | collapsible | 保留原生 DisclosureGroup，支持可单独摆放的按钮和内容 slots、共享展开状态和自定义标签。展开动画由调用方决定。 |
 | combobox | 支持搜索、空态、禁用选项、分组、单选和可移除的多选 chips。Nova 已接入默认、分组和禁用初始态对照。此前已验证分组导航、隐藏空组、多选、软键盘提交和 VoiceOver 朗读。Nova 展开面板的 iOS 截图和定位待验收。 |
 | command | 支持分组过滤、空态、禁用项和回车选择首个可用结果。缺少对话框、加载状态、footer 和逐项快捷键。 |
-| context-menu | 使用系统右键或长按菜单。调用方可传入系统菜单视图，Compose 的位置、portal、子菜单和条目 DSL 有独立 API。 |
+| context-menu | Nova 可选虚线触发区，iOS 原生长按和 macOS 右键已验。普通项、禁用项、子菜单及外点关闭已有实测，macOS 已验证方向键跳过禁用项。展开样式、iOS 键盘及 VoiceOver 待对齐或验收。 |
 | dialog | 支持系统 sheet 及带遮罩的可选居中面板、滚动内容和固定页脚。默认编辑资料示例覆盖深浅色。其他变体、iOS 居中版触控、键盘焦点和 VoiceOver 待验收。 |
 | drawer | 支持原有底部面板，以及 Nova、Rhea 的说明文字、可滚动内容和固定页脚。原布局已验收关闭焦点、Return、Escape、向下拖动和焦点归还。侧边面板、吸附点、嵌套面板和无模态示例待对齐。 |
 | dropdown-menu | Nova 触发器覆盖默认与阿拉伯语 RTL 收起态。iOS 已验证分组、禁用项、子菜单、外点关闭、方向键选择和 Escape 关闭。展开面板保留系统样式，键盘焦点归还和 VoiceOver 待验收。 |
