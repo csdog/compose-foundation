@@ -164,6 +164,36 @@ jobs:
         if: matrix.platform == 'swiftui-ios'
         run: sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
 
+      - name: Verify Dropdown Menu touch interaction on iOS
+        if: matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && inputs.component == 'dropdown-menu'
+        timeout-minutes: 15
+        run: |
+          brew install xcodegen
+          validation=shadcn/iosApp/validation
+          xcodegen generate --spec "$validation/DropdownMenuUITests.yml"
+          device="$(xcrun simctl create 'Dropdown Menu UI audit' com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro com.apple.CoreSimulator.SimRuntime.iOS-26-2)"
+          trap 'xcrun simctl delete "$device" || true' EXIT
+          xcrun simctl boot "$device"
+          xcodebuild test -project "$validation/ComposeFoundationAudit.xcodeproj" \
+            -scheme DropdownMenuAudit -destination "platform=iOS Simulator,id=$device" \
+            -parallel-testing-enabled NO -resultBundlePath "$RUNNER_TEMP/dropdown-menu.xcresult" \
+            CODE_SIGNING_ALLOWED=NO
+      - name: Export Dropdown Menu interaction screenshots
+        if: ${{ !cancelled() && matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && inputs.component == 'dropdown-menu' }}
+        run: |
+          result="$RUNNER_TEMP/dropdown-menu.xcresult"
+          if [[ -d "$result" ]]; then
+            xcrun xcresulttool export attachments --path "$result" --output-path "$RUNNER_TEMP/dropdown-menu-attachments"
+          fi
+      - name: Upload Dropdown Menu interaction screenshots
+        if: ${{ !cancelled() && matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && inputs.component == 'dropdown-menu' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: swiftui-dropdown-menu-interaction
+          retention-days: 7
+          path: ${{ runner.temp }}/dropdown-menu-attachments/
+          if-no-files-found: ignore
+
       - name: Free disk space for the Android emulator
         if: matrix.platform == 'cmp-android'
         run: |

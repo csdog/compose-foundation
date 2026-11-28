@@ -51,6 +51,12 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             return
         }
 
+        if ProcessInfo.processInfo.arguments.contains("--dropdown-menu-interaction") {
+            window.rootViewController = UIHostingController(rootView: DropdownMenuInteractionFixture())
+            window.makeKeyAndVisible()
+            return
+        }
+
         if #available(iOS 17, *), ProcessInfo.processInfo.arguments.contains("--overlay-focus") {
             window.rootViewController = UIHostingController(rootView: OverlayFocusInteractionFixture())
             window.makeKeyAndVisible()
@@ -2917,6 +2923,34 @@ private struct InputOtpScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(theme.palette(for: scheme).background)
         .ignoresSafeArea()
+    }
+}
+
+private struct DropdownMenuInteractionFixture: View {
+    @State private var result = "No action"
+
+    var body: some View {
+        VStack(spacing: 24) {
+            FoundationDropdownMenu {
+                Section(header: Text("My Account")) {
+                    Button("Profile") { result = "Profile selected" }
+                    Button("API") { result = "API selected" }
+                        .disabled(true)
+                    Button("Settings") { result = "Settings selected" }
+                }
+                Menu("Invite users") {
+                    Button("Email") { result = "Email selected" }
+                }
+            } trigger: {
+                Text("Open actions")
+            }
+            Spacer()
+            Text(result)
+                .accessibilityIdentifier("dropdown-result")
+        }
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foundationTheme(FoundationTheme(preset: .nova))
     }
 }
 

@@ -1,0 +1,40 @@
+name: ComposeFoundationAudit
+options:
+  deploymentTarget:
+    iOS: "14.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+targets:
+  ComposeFoundationAudit:
+    type: application
+    platform: iOS
+    sources:
+      - ../Sources/ComposeFoundationSwiftUI
+      - AuditFixtures.swift
+      - IOSAuditApp.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.toutiaoyan.compose.foundation.audit
+        INFOPLIST_FILE: IOSAuditInfo.plist
+  DropdownMenuUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - DropdownMenuUITests.swift
+    dependencies:
+      - target: ComposeFoundationAudit
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.toutiaoyan.compose.foundation.audit.dropdown-tests
+schemes:
+  DropdownMenuAudit:
+    build:
+      targets:
+        ComposeFoundationAudit: all
+        DropdownMenuUITests: [test]
+    test:
+      targets:
+        - DropdownMenuUITests
