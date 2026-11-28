@@ -14,6 +14,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--platform", required=True)
+    parser.add_argument("--component", action="append", help="Require a complete pair for each selected component.")
     parser.add_argument("--candidates", type=Path, required=True)
     parser.add_argument("--baselines", type=Path, required=True)
     args = parser.parse_args()
@@ -21,11 +22,21 @@ def main():
     plan = json.loads(args.plan.read_text())
     if plan["platforms"].get(args.platform) != "automated":
         parser.error(f"no automated capture for {args.platform}")
+    selected = set(args.component or ())
+    if unknown := selected - plan["components"].keys():
+        parser.error(f"unknown components: {', '.join(sorted(unknown))}")
     pairs = defaultdict(set)
     for slug, case, _, screenshot, _ in screenshot_cases(plan, args.platform):
-        pairs[(slug, case["variant"], case["status"])].add(Path(args.platform) / screenshot)
+        supports_platform = args.platform in plan["components"][slug].get("platforms", plan["platforms"])
+        if supports_platform and (not selected or slug in selected):
+            pairs[(slug, case["variant"], case["status"])].add(Path(args.platform) / screenshot)
+    if unsupported := selected - {slug for slug, _, _ in pairs}:
+        parser.error(f"no screenshot cases for {args.platform}: {', '.join(sorted(unsupported))}")
+
     expected = set().union(*pairs.values())
     files = {path.relative_to(args.candidates) for path in args.candidates.rglob("*") if path.is_file()}
+    if selected and files != expected:
+        parser.error("candidates must contain exactly the selected components and their screenshot cases")
     if not files or not files <= expected or any(files & pair and not pair <= files for pair in pairs.values()):
         parser.error("candidates must contain complete light/dark PNG pairs for the selected platform")
 

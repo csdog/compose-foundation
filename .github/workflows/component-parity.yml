@@ -12,11 +12,22 @@ on:
       - "*gradle*"
       - scripts/verify_component_browser.mjs
       - scripts/component_browser_helpers.mjs
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       component:
         description: Component slug to capture. Leave empty for the full pilot.
         type: string
+      platform:
+        description: Platform to capture. Select all for every supported platform.
+        type: choice
+        options:
+          - all
+          - swiftui-ios
+          - cmp-web
+          - cmp-android
+        default: all
       update:
         description: Compare screenshots, review new baselines, or publish new baselines from main
         type: choice
@@ -32,26 +43,63 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
+
+env:
+  SOURCE_REVISION: ${{ github.sha }}
 
 concurrency:
-  group: component-parity-${{ github.ref }}-${{ inputs.update == 'publish' && 'publish' || 'check' }}
-  cancel-in-progress: ${{ inputs.update != 'publish' }}
+  group: component-parity-${{ github.ref }}-${{ (inputs.update == 'publish' || github.event_name == 'push') && github.run_id || 'check' }}
+  cancel-in-progress: ${{ inputs.update != 'publish' && github.event_name != 'push' }}
 
 jobs:
   baseline:
+    if: github.event_name != 'push' || (!github.event.created && !github.event.deleted && !github.event.forced)
     name: Resolve the baseline once for all platforms
     runs-on: ubuntu-24.04
     outputs:
       repository: ${{ steps.resolve.outputs.repository }}
       revision: ${{ steps.resolve.outputs.revision }}
+      matrix: ${{ steps.scope.outputs.matrix }}
+      has_scope: ${{ steps.scope.outputs.has_scope }}
+      update: ${{ steps.resolve.outputs.update }}
     steps:
       - uses: actions/checkout@v5
         with:
+          ref: ${{ env.SOURCE_REVISION }}
+          fetch-depth: ${{ github.event_name == 'push' && '0' || '1' }}
           persist-credentials: false
+      - name: Read labels from merged pull requests
+        if: github.event_name == 'push'
+        id: labels
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          git merge-base --is-ancestor "$BEFORE" "$SOURCE_REVISION"
+          commits="$(git rev-list --first-parent "$BEFORE..$SOURCE_REVISION")"
+          labels="$RUNNER_TEMP/publish-labels.jsonl"
+          : > "$labels"
+          for commit in $commits; do
+            gh api --paginate "repos/$GITHUB_REPOSITORY/commits/$commit/pulls" --jq '.[]' |
+              jq -c --arg commit "$commit" --arg branch "$GITHUB_REF_NAME" --arg repo "$GITHUB_REPOSITORY" '
+                select(.merged_at != null and .merge_commit_sha == $commit and .base.ref == $branch and .base.repo.full_name == $repo)
+                | .labels[].name | select(startswith("publish:"))
+              ' >> "$labels"
+          done
+          printf 'names=%s\n' "$(jq -cs 'unique' "$labels")" >> "$GITHUB_OUTPUT"
+      - name: Select capture scope
+        id: scope
+        env:
+          COMPONENT: ${{ inputs.component }}
+          CAPTURE_PLATFORM: ${{ inputs.platform }}
+          PUBLISH_LABELS: ${{ steps.labels.outputs.names }}
+        run: python3 shadcn/validation/capture_scope.py >> "$GITHUB_OUTPUT"
       - name: Resolve the pinned commit or the latest main
+        if: steps.scope.outputs.has_scope == 'true'
         id: resolve
         env:
-          UPDATE_MODE: ${{ inputs.update }}
+          UPDATE_MODE: ${{ github.event_name == 'push' && 'publish' || inputs.update || 'no' }}
           GH_TOKEN: ${{ secrets.COMPONENT_BASELINES_READ_TOKEN || github.token }}
         run: |
           if [[ "$UPDATE_MODE" == publish && "$GITHUB_REF" != refs/heads/main ]]; then
@@ -71,28 +119,26 @@ jobs:
             echo 'Baseline revision must be a full commit SHA' >&2
             exit 1
           fi
-          printf 'repository=%s\nrevision=%s\n' "$repository" "$revision" >> "$GITHUB_OUTPUT"
+          printf 'repository=%s\nrevision=%s\nupdate=%s\n' "$repository" "$revision" "$UPDATE_MODE" >> "$GITHUB_OUTPUT"
 
   capture:
     needs: baseline
+    if: needs.baseline.outputs.has_scope == 'true'
     name: Capture and compare / ${{ matrix.platform }}
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - platform: cmp-web
-            runner: ubuntu-24.04
-          - platform: cmp-android
-            runner: ubuntu-24.04
-          - platform: swiftui-ios
-            runner: macos-15
+      matrix: ${{ fromJSON(needs.baseline.outputs.matrix) }}
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 45
     env:
       PLATFORM: ${{ matrix.platform }}
-      UPDATE_BASELINES: ${{ inputs.update == 'review' || inputs.update == 'publish' }}
+      UPDATE_MODE: ${{ needs.baseline.outputs.update }}
+      UPDATE_BASELINES: ${{ needs.baseline.outputs.update == 'review' || needs.baseline.outputs.update == 'publish' }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.SOURCE_REVISION }}
+          persist-credentials: false
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
@@ -209,11 +255,12 @@ jobs:
         env:
           REQUIRE_BASELINES: ${{ inputs.require_baselines }}
           BASELINE_REVISION: ${{ needs.baseline.outputs.revision }}
-          COMPONENT: ${{ inputs.component }}
-          UPDATE_MODE: ${{ inputs.update }}
+          COMPONENTS: ${{ toJSON(matrix.components) }}
         run: |
           flags=()
-          if [[ -n "$COMPONENT" ]]; then flags+=(--component "$COMPONENT"); fi
+          while IFS= read -r component; do
+            flags+=(--component "$component")
+          done < <(jq -r '.[]' <<< "$COMPONENTS")
           if [[ "$UPDATE_MODE" == review ]]; then
             flags+=(--bundle "$RUNNER_TEMP/component-parity-shadcn-review-$PLATFORM")
           fi
@@ -241,15 +288,15 @@ jobs:
           done
       - name: Upload screenshot differences
         if: failure()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: component-parity-differences-${{ matrix.platform }}
           retention-days: 7
           path: build/component-parity/${{ matrix.platform }}/diff/
           if-no-files-found: ignore
       - name: Upload shadcn visual review
-        if: ${{ !cancelled() && inputs.update == 'review' }}
-        uses: actions/upload-artifact@v6
+        if: ${{ !cancelled() && env.UPDATE_MODE == 'review' }}
+        uses: actions/upload-artifact@v7
         with:
           name: component-parity-shadcn-review-${{ matrix.platform }}
           retention-days: 7
@@ -257,14 +304,14 @@ jobs:
           if-no-files-found: ignore
       - name: Upload baseline candidates
         if: ${{ !cancelled() && env.UPDATE_BASELINES == 'true' }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: component-parity-candidates-${{ matrix.platform }}
           retention-days: 7
           path: build/component-parity/${{ matrix.platform }}/candidate/
-          if-no-files-found: ${{ inputs.update == 'publish' && 'error' || 'ignore' }}
+          if-no-files-found: ${{ env.UPDATE_MODE == 'publish' && 'error' || 'ignore' }}
       - name: Preview baseline index changes
-        if: ${{ inputs.update == 'review' && needs.baseline.outputs.revision != '' }}
+        if: ${{ env.UPDATE_MODE == 'review' && needs.baseline.outputs.revision != '' }}
         run: |
           plan=shadcn/validation/plan.json
           checkout=build/component-baselines
@@ -278,8 +325,8 @@ jobs:
             git -C "$checkout" diff HEAD -- ':(glob)**/Index.md' > "$RUNNER_TEMP/baseline-index.patch"
           fi
       - name: Upload baseline index preview
-        if: ${{ inputs.update == 'review' }}
-        uses: actions/upload-artifact@v6
+        if: ${{ env.UPDATE_MODE == 'review' }}
+        uses: actions/upload-artifact@v7
         with:
           name: component-parity-index-preview-${{ matrix.platform }}
           retention-days: 7
@@ -289,13 +336,18 @@ jobs:
   publish:
     name: Publish component baselines
     needs: [baseline, capture]
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.update == 'publish'
+    if: github.ref == 'refs/heads/main' && needs.baseline.outputs.update == 'publish'
     runs-on: ubuntu-24.04
+    concurrency:
+      group: component-baselines-write
+      queue: max
     env:
       BASELINE_REPOSITORY: ${{ needs.baseline.outputs.repository }}
+      CAPTURE_MATRIX: ${{ needs.baseline.outputs.matrix }}
     steps:
       - uses: actions/checkout@v5
         with:
+          ref: ${{ env.SOURCE_REVISION }}
           persist-credentials: false
       - uses: actions/download-artifact@v7
         with:
@@ -305,41 +357,65 @@ jobs:
         with:
           repository: ${{ needs.baseline.outputs.repository }}
           ref: main
-          token: ${{ secrets.COMPONENT_BASELINES_WRITE_TOKEN }}
+          token: ${{ secrets.COMPONENT_BASELINES_READ_TOKEN || github.token }}
           path: baseline-repository
           submodules: true
+          persist-credentials: false
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - run: python -m pip install Pillow==11.3.0
-      - name: Publish validated screenshots and indexes
+      - name: Stage validated screenshots and indexes
+        id: stage
         run: |
           plan=shadcn/validation/plan.json
-          platforms="$(jq -er '.platforms | to_entries | map(select(.value == "automated") | .key) | join("\n")' "$plan")"
           published_paths="$RUNNER_TEMP/published-paths.txt"
           : > "$published_paths"
-          for platform in $platforms; do
-            python shadcn/validation/publish_baselines.py --plan "$plan" --platform "$platform" \
+          while IFS= read -r capture; do
+            platform="$(jq -er '.platform' <<< "$capture")"
+            flags=()
+            while IFS= read -r component; do
+              flags+=(--component "$component")
+            done < <(jq -r '.components[]' <<< "$capture")
+            python shadcn/validation/publish_baselines.py --plan "$plan" --platform "$platform" "${flags[@]}" \
               --candidates "$RUNNER_TEMP/candidates/component-parity-candidates-$platform" \
               --baselines baseline-repository >> "$published_paths"
             python shadcn/validation/update_baseline_indexes.py --plan "$plan" --platform "$platform" \
               --baselines baseline-repository >> "$published_paths"
-          done
+          done < <(jq -c '.include[]' <<< "$CAPTURE_MATRIX")
           mapfile -t paths < "$published_paths"
           git -C baseline-repository add -- "${paths[@]}"
           if ! git -C baseline-repository diff --cached --quiet; then
             git -C baseline-repository -c user.name='github-actions[bot]' \
               -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
               commit -m 'Update component screenshot baselines' \
-                -m "Capture source: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$GITHUB_SHA" \
+                -m "Capture source: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$SOURCE_REVISION" \
                 -m "Publish run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-            git -C baseline-repository push origin HEAD:main
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
           fi
+      - name: Push the validated baseline commit
+        if: steps.stage.outputs.changed == 'true'
+        env:
+          WRITE_TOKEN: ${{ secrets.COMPONENT_BASELINES_WRITE_TOKEN }}
+        run: |
+          if [[ -z "$WRITE_TOKEN" ]]; then
+            echo '::error::Set COMPONENT_BASELINES_WRITE_TOKEN to publish screenshots.'
+            exit 1
+          fi
+          authorization="$(printf 'x-access-token:%s' "$WRITE_TOKEN" | base64 -w0)"
+          echo "::add-mask::$authorization"
+          git -C baseline-repository -c core.hooksPath=/dev/null \
+            -c "http.$GITHUB_SERVER_URL/.extraheader=AUTHORIZATION: basic $authorization" \
+            push "$GITHUB_SERVER_URL/$BASELINE_REPOSITORY.git" HEAD:main
+      - name: Record the published baseline revision
+        run: |
           revision="$(git -C baseline-repository rev-parse HEAD)"
           printf '发布后的基准提交：[%s](%s/%s/commit/%s)\n' \
             "$revision" "$GITHUB_SERVER_URL" "$BASELINE_REPOSITORY" "$revision" >> "$GITHUB_STEP_SUMMARY"
 
   cmp-behavior:
+    needs: baseline
+    if: github.event_name != 'push' && contains(needs.baseline.outputs.matrix, '"platform":"cmp-')
     name: CMP shared interaction tests
     runs-on: ubuntu-24.04
     timeout-minutes: 30
@@ -355,7 +431,7 @@ jobs:
           xvfb-run -a ./gradlew :shadcn:core:jvmTest \
             --tests '*TabsBehaviorParityTest' --tests '*PopoverBehaviorTest' \
             --tests '*PopoverFocusTest' --tests '*PopoverMotionTest'
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: component-cmp-interaction-tests
@@ -363,6 +439,8 @@ jobs:
           path: shadcn/shared/build/reports/tests/jvmTest
 
   swift-logic:
+    needs: baseline
+    if: github.event_name != 'push' && contains(needs.baseline.outputs.matrix, '"platform":"swiftui-ios"')
     name: SwiftUI Tabs navigation logic
     runs-on: macos-15
     timeout-minutes: 10
@@ -381,17 +459,19 @@ jobs:
 
   report:
     name: Component parity report
-    needs: [capture, cmp-behavior, swift-logic, publish]
-    if: always()
+    needs: [baseline, capture, cmp-behavior, swift-logic, publish]
+    if: always() && (needs.baseline.result == 'failure' || needs.baseline.outputs.has_scope == 'true')
     runs-on: ubuntu-24.04
     steps:
       - name: Summarize platform and interaction checks
         env:
-          UPDATE_MODE: ${{ inputs.update }}
+          UPDATE_MODE: ${{ needs.baseline.outputs.update }}
           CAPTURE_RESULT: ${{ needs.capture.result }}
+          CAPTURE_MATRIX: ${{ needs.baseline.outputs.matrix }}
           CMP_RESULT: ${{ needs.cmp-behavior.result }}
           SWIFT_RESULT: ${{ needs.swift-logic.result }}
           PUBLISH_RESULT: ${{ needs.publish.result }}
+          BASELINE_RESULT: ${{ needs.baseline.result }}
         run: |
           {
             echo '## 跨平台组件验收'
@@ -403,9 +483,18 @@ jobs:
               echo '日常回归：每个用例拍摄一遍。比对详情在各平台任务的 Summary，截图差异只在失败时上传。'
             fi
             echo
+            echo "- 基准和采集范围：$BASELINE_RESULT"
             echo "- 各平台截图：$CAPTURE_RESULT"
             echo "- CMP JVM Tabs 与 Popover 交互：$CMP_RESULT"
             echo "- SwiftUI Tabs 焦点与选择逻辑：$SWIFT_RESULT"
           } >> "$GITHUB_STEP_SUMMARY"
-          [[ "$CAPTURE_RESULT" == success && "$CMP_RESULT" == success && "$SWIFT_RESULT" == success ]]
+          [[ "$CAPTURE_RESULT" == success ]]
+          if [[ "$GITHUB_EVENT_NAME" != push ]]; then
+            if jq -e 'any(.include[].platform; startswith("cmp-"))' <<< "$CAPTURE_MATRIX" >/dev/null; then
+              [[ "$CMP_RESULT" == success ]]
+            fi
+            if jq -e 'any(.include[].platform; . == "swiftui-ios")' <<< "$CAPTURE_MATRIX" >/dev/null; then
+              [[ "$SWIFT_RESULT" == success ]]
+            fi
+          fi
           [[ "$UPDATE_MODE" != publish || "$PUBLISH_RESULT" == success ]]
