@@ -63,6 +63,12 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             return
         }
 
+        if ProcessInfo.processInfo.arguments.contains("--command-interaction") {
+            window.rootViewController = UIHostingController(rootView: CommandInteractionFixture())
+            window.makeKeyAndVisible()
+            return
+        }
+
         if #available(iOS 17, *), ProcessInfo.processInfo.arguments.contains("--overlay-focus") {
             window.rootViewController = UIHostingController(rootView: OverlayFocusInteractionFixture())
             window.makeKeyAndVisible()
@@ -316,6 +322,11 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "context-menu": [
                 ("context-menu-default-initial", { AnyView(ContextMenuScreenshotFixture(rtl: false)) }),
                 ("context-menu-rtl-initial", { AnyView(ContextMenuScreenshotFixture(rtl: true)) }),
+            ],
+            "command": [
+                ("command-default-initial", { AnyView(CommandScreenshotFixture(query: "")) }),
+                ("command-default-filtered", { AnyView(CommandScreenshotFixture(query: "Calendar")) }),
+                ("command-default-empty", { AnyView(CommandScreenshotFixture(query: "xyz")) }),
             ],
         ]
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
@@ -2959,6 +2970,66 @@ private struct ContextMenuInteractionFixture: View {
         .padding(24)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .foundationTheme(FoundationTheme(preset: .nova))
+    }
+}
+
+private struct CommandInteractionFixture: View {
+    @State private var result = "No action"
+
+    var body: some View {
+        VStack(spacing: 14) {
+            FoundationCommand(sections: [
+                .init(id: "suggestions", title: "Suggestions", actions: [
+                    .init("Calendar", value: "Calendar"),
+                    .init("Calculator", value: "Calculator", isEnabled: false),
+                ]),
+                .init(id: "settings", title: "Settings", actions: [
+                    .init("Profile", value: "Profile"), .init("Billing", value: "Billing"),
+                ]),
+            ]) { result = $0 }
+            Text(result).accessibilityIdentifier("command-result")
+            Spacer(minLength: 0)
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foundationTheme(FoundationTheme(preset: .nova))
+    }
+}
+
+private struct CommandScreenshotFixture: View {
+    let query: String
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let sections: [FoundationCommand<String>.Section] = [
+            .init(id: "suggestions", title: "Suggestions", actions: [
+                .init("Calendar", value: "calendar"), .init("Search Emoji", value: "emoji"),
+                .init("Calculator", value: "calculator", isEnabled: false),
+            ]),
+            .init(id: "settings", title: "Settings", actions: [
+                .init("Profile", value: "profile"), .init("Billing", value: "billing"),
+                .init("Settings", value: "settings"),
+            ]),
+        ]
+        return FoundationCommand(sections: sections, query: .constant(query),
+                                 searchPrompt: "Type a command or search...", emptyMessage: "No results found.",
+                                 actionAppearance: [
+                                    "calendar": .init(systemImage: "calendar"),
+                                    "emoji": .init(systemImage: "face.smiling"),
+                                    "calculator": .init(systemImage: "plus.forwardslash.minus"),
+                                    "profile": .init(systemImage: "person", shortcutLabel: "⌘P"),
+                                    "billing": .init(systemImage: "creditcard", shortcutLabel: "⌘B"),
+                                    "settings": .init(systemImage: "gearshape", shortcutLabel: "⌘S"),
+                                 ]) { _ in }
+            .foundationTheme(theme)
+            .frame(width: 384)
+            .padding(24)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
     }
 }
 

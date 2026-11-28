@@ -111,7 +111,7 @@ jobs:
       PLATFORM: ${{ matrix.platform }}
       UPDATE_MODE: ${{ needs.baseline.outputs.update }}
       UPDATE_BASELINES: ${{ needs.baseline.outputs.update == 'review' || needs.baseline.outputs.update == 'publish' }}
-      MENU_INTERACTION: ${{ matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && contains(fromJSON('["dropdown-menu","context-menu"]'), inputs.component) }}
+      MENU_INTERACTION: ${{ matrix.platform == 'swiftui-ios' && github.event_name == 'workflow_dispatch' && inputs.update == 'review' && contains(fromJSON('["dropdown-menu","context-menu","command"]'), inputs.component) }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -165,7 +165,7 @@ jobs:
         if: matrix.platform == 'swiftui-ios'
         run: sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
 
-      - name: Verify menu touch interaction on iOS
+      - name: Verify SwiftUI catalog input on iOS
         if: env.MENU_INTERACTION == 'true'
         timeout-minutes: 15
         env:
@@ -175,6 +175,7 @@ jobs:
           case "$MENU_COMPONENT" in
             dropdown-menu) test_class=DropdownMenuUITests ;;
             context-menu) test_class=ContextMenuUITests ;;
+            command) test_class=CommandUITests ;;
             *) exit 1 ;;
           esac
           validation=shadcn/iosApp/validation
@@ -943,6 +944,26 @@ jobs:
             "$sources"/Foundation{Theme,ContextMenu}.swift \
             "$swiftui/validation/MacContextMenuAudit.swift" -o "$app/Contents/MacOS/ContextMenuAudit"
           log="$RUNNER_TEMP/context-menu.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app" || true
+          cat "$log"
+          grep -q '^PASS:' "$log"
+
+      - name: Verify Command search and keyboard selection on macOS
+        if: contains(needs.baseline.outputs.matrix, '"command"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          app="$RUNNER_TEMP/CommandAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string CommandAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.command-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$swiftui"/Sources/ComposeFoundationSwiftUI/Foundation{Theme,Command}.swift \
+            "$swiftui/validation/MacCommandAudit.swift" -o "$app/Contents/MacOS/CommandAudit"
+          log="$RUNNER_TEMP/command.log"
           open -n -W --stdout "$log" --stderr "$log" "$app" || true
           cat "$log"
           grep -q '^PASS:' "$log"

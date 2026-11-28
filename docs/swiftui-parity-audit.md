@@ -388,6 +388,18 @@ macOS 实际窗口向虚线框内的空白处发送右键事件。系统菜单�
 
 iPhone 17 Pro（iOS 26.2）的两项 XCUITest 验证点按空白区不开菜单，长按同一位置会打开。禁用项不执行，Reload 和子菜单动作更新结果，点外部关闭并保留结果。展开时系统显示触发区预览及遮罩，与 shadcn Web 浮层的展开布局有差异。测试记录 UIKit 的 `_UIGravityWellEffectAnchorView` 和 `_UIReparentingView` 层级警告，两项测试通过。[iOS 触控日志](https://github.com/csdog/compose-foundation/actions/runs/46102840957/job/140848985022) · [展开截图](https://github.com/csdog/compose-foundation/actions/runs/46102840957/artifacts/15246013498)
 
+### Command Nova 搜索、分组与空状态
+
+对照 shadcn Base UI / Nova 的 `command-demo.tsx`。Nova 采用紧凑搜索栏、分组标题、组间分隔线和高亮行。调用方可提供查询绑定、搜索提示、空态文案和结果行的图标或快捷键提示。原有初始化器和按标题过滤保持兼容。快捷键提示是视觉标签。
+
+macOS 实际窗口验证搜索框聚焦后，两次 Down 跳过禁用项并移到下一组。Return 执行高亮项一次。原生文本输入更新绑定并过滤结果，空状态不执行动作，Up 可从起点循环至最后一项。方向键增强适用于 iOS 17、macOS 14 起的系统，较早版本继续使用 SwiftUI 文本框和 Return 选择。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46106250389/job/140859625033)
+
+iOS 的 Command 复用 Combobox 的 UIKit 搜索文本框处理硬件按键。两者保留各自的样式和自动聚焦规则。Combobox 的六张 iPad 截图与上一轮及本轮复拍均逐字节一致，macOS 分组键盘回归通过。[Combobox 回归](https://github.com/csdog/compose-foundation/actions/runs/46106240821) · [截图](https://github.com/csdog/compose-foundation/actions/runs/46106240821/artifacts/15247587438)
+
+iPhone 17 Pro（iOS 26.2）的两项 XCUITest 验证实际文本输入、空状态、禁用项和点按执行。聚焦搜索框后发送两次硬件方向键，再点屏幕键盘的 Search，从第一组跳过禁用项并执行下一组的 Profile。硬件 Return 在 macOS 已验证，iOS 的实体 Return 与 VoiceOver 仍待验收。[iPhone 回归](https://github.com/csdog/compose-foundation/actions/runs/46106217615/job/140859515396)
+
+iPad mini（A17 Pro，iOS 26.2）采集初始、过滤和空状态的六张深浅色截图，均与复拍逐字节一致。搜索栏取样色为浅色 `#F7F7F7`、深色 `#212121`，高亮行为浅色 `#F5F5F5`、深色 `#262626`，均与 shadcn 一致。过滤面板比参考高约 13 pt，iOS 行保留 44 pt 的点按高度。上游初始图同时显示空态文字和结果，SwiftUI 只在无匹配项时显示空态。独立空状态尚无对应的上游截图。[iOS 截图和差异报告](https://github.com/csdog/compose-foundation/actions/runs/46106250389/artifacts/15248145701)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -412,7 +424,7 @@ iPhone 17 Pro（iOS 26.2）的两项 XCUITest 验证点按空白区不开菜单�
 | code-block | 支持横向滚动、语言标签和行号。缺少复制按钮、行状态、页脚和操作栏。 |
 | collapsible | 保留原生 DisclosureGroup，支持可单独摆放的按钮和内容 slots、共享展开状态和自定义标签。展开动画由调用方决定。 |
 | combobox | 支持搜索、空态、禁用选项、分组、单选和可移除的多选 chips。Nova 已接入默认、分组和禁用初始态对照。此前已验证分组导航、隐藏空组、多选、软键盘提交和 VoiceOver 朗读。Nova 展开面板的 iOS 截图和定位待验收。 |
-| command | 支持分组过滤、空态、禁用项和回车选择首个可用结果。缺少对话框、加载状态、footer 和逐项快捷键。 |
+| command | Nova 搜索、分组、空态、禁用项和方向键高亮已实现。支持查询绑定、图标和快捷键提示。对话框、加载状态、页脚和快捷键动作待对齐。 |
 | context-menu | Nova 可选虚线触发区，iOS 原生长按和 macOS 右键已验。普通项、禁用项、子菜单及外点关闭已有实测，macOS 已验证方向键跳过禁用项。展开样式、iOS 键盘及 VoiceOver 待对齐或验收。 |
 | dialog | 支持系统 sheet 及带遮罩的可选居中面板、滚动内容和固定页脚。默认编辑资料示例覆盖深浅色。其他变体、iOS 居中版触控、键盘焦点和 VoiceOver 待验收。 |
 | drawer | 支持原有底部面板，以及 Nova、Rhea 的说明文字、可滚动内容和固定页脚。原布局已验收关闭焦点、Return、Escape、向下拖动和焦点归还。侧边面板、吸附点、嵌套面板和无模态示例待对齐。 |
