@@ -9,6 +9,7 @@ final class IOSAuditApp: NSObject, UIApplicationDelegate {}
 final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
     var window: UIWindow?
     private var animationMarker: UIWindow?
+    private var sheetAnimation: SheetAnimationState?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
@@ -38,12 +39,14 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             marker.rootViewController?.view.addSubview(signal)
             marker.rootViewController?.view.addSubview(heartbeat)
             animationMarker = marker
-            window.rootViewController = UIHostingController(rootView: SheetAnimationFixture {
+            let state = SheetAnimationState {
                 signal.backgroundColor = .green
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
                     signal.backgroundColor = .blue
                 }
-            })
+            }
+            sheetAnimation = state
+            window.rootViewController = UIHostingController(rootView: SheetAnimationFixture(state: state))
             window.makeKeyAndVisible()
             marker.isHidden = false
             return
@@ -139,6 +142,12 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         }
     }
 
+    func scene(_ scene: UIScene, openURLContexts contexts: Set<UIOpenURLContext>) {
+        if contexts.contains(where: { $0.url.absoluteString == "sheet-audit://animation/sheet-open" }) {
+            sheetAnimation?.open()
+        }
+    }
+
     private func prepareOutputDirectory() throws -> URL {
         let files = FileManager.default
         let documents = try files.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -229,29 +238,31 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
     }
 }
 
-private struct SheetAnimationFixture: View {
-    var markTrigger: () -> Void
-    @State private var presented = false
-    @State private var scheduled = false
+@MainActor
+private final class SheetAnimationState: ObservableObject {
+    @Published var presented = false
+    private let markTrigger: () -> Void
 
-    var body: some View {
-        Button("Edit profile", action: openSheet)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .modifier(FoundationSheet(isPresented: $presented, title: "Profile") {
-                Text("Update your profile details.")
-            })
-            .onAppear {
-                guard !scheduled else { return }
-                scheduled = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-                    openSheet()
-                }
-            }
+    init(markTrigger: @escaping () -> Void) {
+        self.markTrigger = markTrigger
     }
 
-    private func openSheet() {
+    func open() {
+        guard !presented else { return }
         markTrigger()
         presented = true
+    }
+}
+
+private struct SheetAnimationFixture: View {
+    @ObservedObject var state: SheetAnimationState
+
+    var body: some View {
+        Button("Edit profile", action: state.open)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .modifier(FoundationSheet(isPresented: $state.presented, title: "Profile") {
+                Text("Update your profile details.")
+            })
     }
 }
 

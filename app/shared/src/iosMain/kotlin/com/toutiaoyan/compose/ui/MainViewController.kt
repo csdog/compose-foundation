@@ -17,10 +17,9 @@ import com.toutiaoyan.compose.ui.components.sheet.SheetTrigger
 import com.toutiaoyan.compose.ui.navigation.InboundDeepLinks
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
-import kotlinx.coroutines.delay
 
 private val iosInboundDeepLinks = InboundDeepLinks()
-private const val SHEET_CAPTURE_WARMUP_MILLIS = 6000L
+private const val SHEET_CAPTURE_URL = "shadcncompose://animation/sheet-open"
 
 /** Called from Swift `onOpenURL` to hand the URI to [App]. */
 fun offerIosInboundDeepLink(uri: String) {
@@ -36,14 +35,18 @@ fun MainViewController() =
 fun sheetAnimationViewController(markTrigger: () -> Unit) =
     ComposeUIViewController {
         var opened by remember { mutableStateOf(false) }
+        val changeOpen: (Boolean) -> Unit = { next ->
+            if (next && !opened) markTrigger()
+            opened = next
+        }
         LaunchedEffect(Unit) {
-            delay(SHEET_CAPTURE_WARMUP_MILLIS)
-            markTrigger()
-            opened = true
+            iosInboundDeepLinks.events.collect { url ->
+                if (url == SHEET_CAPTURE_URL) changeOpen(true)
+            }
         }
         Theme(preset = StylePreset.Nova, isDark = false) {
             Box(Modifier.fillMaxSize()) {
-                Sheet(open = opened, onOpenChange = { opened = it }) {
+                Sheet(open = opened, onOpenChange = changeOpen) {
                     SheetTrigger("Edit profile")
                     SheetContent(side = SheetSide.End) {
                         SheetHeader("Profile", description = "Update your profile details.")

@@ -18,6 +18,7 @@ case "$platform" in
   swiftui-ios)
     app="$work/ComposeFoundationAudit.app"
     bundle=com.toutiaoyan.compose.foundation.audit
+    trigger_url=sheet-audit://animation/sheet-open
     swiftui=shadcn/iosApp
     sdk="$(xcrun --sdk iphonesimulator --show-sdk-path)"
     mkdir "$app"
@@ -28,6 +29,7 @@ case "$platform" in
       "$swiftui"/validation/{AuditFixtures,IOSAuditApp}.swift -o "$app/ComposeFoundationAudit"
     ;;
   cmp-ios)
+    trigger_url=shadcncompose://animation/sheet-open
     xcodebuild -project app/iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug \
       -destination 'generic/platform=iOS Simulator' -derivedDataPath "$work/derived" CODE_SIGNING_ALLOWED=NO build
     app="$work/derived/Build/Products/Debug-iphonesimulator/ShadcnComposeCatalog.app"
@@ -44,14 +46,25 @@ xcrun simctl status_bar "$device" override --time '9:41' --dataNetwork wifi \
   --wifiMode active --wifiBars 3 --cellularMode active --cellularBars 4 \
   --batteryState discharging --batteryLevel 100
 xcrun simctl install "$device" "$app"
-xcrun simctl io "$device" recordVideo --codec=h264 "$work/sheet.mov" &
-recording=$!
-sleep 1
 xcrun simctl launch "$device" "$bundle" --sheet-animation
-sleep 10
+xcrun simctl io "$device" recordVideo --codec=h264 "$work/sheet.mov" >"$work/recording.log" 2>&1 &
+recording=$!
+for ((attempt = 0; attempt < 60; attempt++)); do
+  if grep -q 'Recording started' "$work/recording.log"; then break; fi
+  kill -0 "$recording"
+  sleep 1
+done
+if ! grep -q 'Recording started' "$work/recording.log"; then
+  cat "$work/recording.log"
+  exit 1
+fi
+sleep 1
+xcrun simctl openurl "$device" "$trigger_url"
+sleep 3
 kill -INT "$recording"
 wait "$recording" || test "$?" -eq 130
 recording=
+cat "$work/recording.log"
 mkdir -p "$(dirname "$diagnostics")"
 cp "$work/sheet.mov" "$diagnostics"
 ffprobe -v error -select_streams v:0 -show_entries stream=width,height,avg_frame_rate,duration "$diagnostics"
