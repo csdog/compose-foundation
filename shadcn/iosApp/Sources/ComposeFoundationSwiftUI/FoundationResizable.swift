@@ -81,7 +81,7 @@ public struct FoundationResizable<First: View, Second: View>: View {
                 }
                 separator(available: available)
                     .frame(width: min(44, size.width), height: size.height)
-                    .position(x: layoutDirection == .rightToLeft ? size.width - position : position, y: size.height / 2)
+                    .position(x: position, y: size.height / 2)
             } else {
                 VStack(spacing: 0) {
                     first.frame(width: size.width, height: firstSize).clipped()
