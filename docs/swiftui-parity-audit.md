@@ -30,6 +30,8 @@ iPhone 17 Pro（iOS 26.2）上浅色和深色各拍两遍。四张原图逐文�
 
 Kbd 覆盖四个修饰键与 Ctrl + B 两行。Skeleton 覆盖头像和两条文本占位。Spinner 覆盖静止帧以及完整的支付状态行。各用例使用 402 × 520 的共用画布，浅色和深色均以 iPhone 17 Pro（iOS 26.2）复拍。六张新图逐张一致，集成分支此前的 32 张图也保持逐字节一致。macOS Swift Package 构建通过。符号字体与抗锯齿仍有平台差异，Spinner 动画需单独验收。[Review 报告](https://github.com/csdog/compose-foundation/actions/runs/45998642997/artifacts/15197407696)
 
+`FoundationKbdGroup` 复验两组键帽。iPhone 17 Pro 的默认深浅色截图与原审核逐字节一致。新增 RTL 深浅色用例复拍一致，Ctrl 键帽移到右侧，B 移到左侧，与 shadcn RTL 例子顺序一致。真实 VoiceOver 朗读待验。[Kbd Review](https://github.com/csdog/compose-foundation/actions/runs/46126808324/artifacts/15256331515) · [macOS 构建](https://github.com/csdog/compose-foundation/actions/runs/46126808324/job/140923155551)
+
 ### Progress 默认示例
 
 官方示例在 500 ms 后从 13% 更新到 66%，归档参考图为更新后的状态。SwiftUI Nova 对照完整的 403.2 pt 宽进度条，在 iPhone 17 Pro Max（iOS 26.2）用 440 × 520 共用画布采集。深浅色各拍两遍，PNG 逐字节一致。原有 38 张 iPhone 17 Pro 截图与上一轮逐字节一致。圆角边缘及轨道配色有像素差异。macOS Swift Package 构建通过。进度变化过程及 RTL 待单独验收。[Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46000170133/artifacts/15198731356)
