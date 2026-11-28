@@ -603,12 +603,14 @@
       "platformCases": {
         "swiftui-ios": [
           {"variant": "example-axis", "status": "initial", "viewport": [720, 520]},
-          {"variant": "example-legend", "status": "initial", "viewport": [720, 520]}
+          {"variant": "example-legend", "status": "initial", "viewport": [720, 520]},
+          {"variant": "example-tooltip", "status": "initial", "viewport": [720, 520]},
+          {"variant": "example-tooltip", "status": "selected", "viewport": [720, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/chart-example-axis.tsx",
-      "visual": "compare the six-month bar chart, horizontal guide lines, month labels and centered series legend",
-      "behavior": "optionally format the horizontal axis, set the minimum positive extent and show series swatches",
+      "visual": "compare the six-month bar chart, horizontal guide lines, month labels, centered series legend and selected tooltip",
+      "behavior": "optionally format the horizontal axis, set the minimum positive extent, show series swatches and display selection or pointer-hover details",
       "accessibility": "adjustable point selection with full month and series names, plus series names before selection when the legend is visible",
       "motion": "static settled frames"
     },
