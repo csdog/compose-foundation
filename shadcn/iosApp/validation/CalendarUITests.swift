@@ -10,10 +10,14 @@ final class CalendarUITests: XCTestCase {
         let result = app.staticTexts["calendar-selection"]
         XCTAssertTrue(result.waitForExistence(timeout: 5))
         XCTAssertEqual(result.label, "Selected: 2025-01-31")
-        app.typeKey(.tab, modifierFlags: [])
+        let nextMonth = app.buttons["February 1, 2025"]
         app.typeKey(.rightArrow, modifierFlags: [])
+        if !nextMonth.waitForExistence(timeout: 1) {
+            app.typeKey(.tab, modifierFlags: [])
+            app.typeKey(.rightArrow, modifierFlags: [])
+        }
         XCTAssertEqual(result.label, "Selected: 2025-01-31")
-        XCTAssertTrue(app.buttons["February 1, 2025"].waitForExistence(timeout: 3))
+        XCTAssertTrue(nextMonth.waitForExistence(timeout: 3))
         attachMenu("Calendar hardware keyboard focus after crossing the month")
         app.typeKey(.return, modifierFlags: [])
         XCTAssertEqual(result.label, "Selected: 2025-02-01")

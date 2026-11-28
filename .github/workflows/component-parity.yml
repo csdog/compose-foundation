@@ -181,7 +181,7 @@ jobs:
           esac
           validation=shadcn/iosApp/validation
           xcodegen generate --spec "$validation/MenuUITests.yml"
-          device="$(xcrun simctl create 'Menu UI audit' com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro com.apple.CoreSimulator.SimRuntime.iOS-26-2)"
+          device="$(xcrun simctl create 'Calendar keyboard iPad audit' com.apple.CoreSimulator.SimDeviceType.iPad-mini-A17-Pro com.apple.CoreSimulator.SimRuntime.iOS-26-2)"
           trap 'xcrun simctl delete "$device" || true' EXIT
           xcrun simctl boot "$device"
           xcodebuild test -project "$validation/ComposeFoundationAudit.xcodeproj" \
