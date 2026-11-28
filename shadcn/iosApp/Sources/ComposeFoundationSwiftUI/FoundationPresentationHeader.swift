@@ -52,6 +52,7 @@ struct FoundationPresentationFocus<Heading: View, Close: View, Layout: View>: Vi
     let heading: Heading
     let close: Close
     let onActivate: () -> Void
+    var initiallyFocusClose = true
     @ViewBuilder let layout: (AnyView, AnyView) -> Layout
 
     private var closeFocusInteractions: FocusInteractions {
@@ -75,13 +76,13 @@ struct FoundationPresentationFocus<Heading: View, Close: View, Layout: View>: Vi
                     return .handled
                 })
         )
-        .defaultFocus($closeFocused, !voiceOverEnabled)
+        .defaultFocus($closeFocused, initiallyFocusClose && !voiceOverEnabled)
         .task {
             await Task.yield()
             guard !Task.isCancelled else { return }
             if voiceOverEnabled {
                 headingFocused = true
-            } else {
+            } else if initiallyFocusClose {
                 closeFocused = true
             }
         }

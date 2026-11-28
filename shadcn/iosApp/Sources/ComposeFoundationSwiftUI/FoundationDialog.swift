@@ -19,6 +19,7 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
     private let onDismiss: () -> Void
     private let footer: AnyView?
     private let dialogContent: () -> DialogContent
+    private var initiallyFocusClose = true
 
     public init(
         isPresented: Binding<Bool>,
@@ -78,6 +79,12 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
         self.onDismiss = onDismiss
         self.footer = footer
         self.dialogContent = content
+    }
+
+    func focusesCloseOnAppear(_ enabled: Bool) -> Self {
+        var dialog = self
+        dialog.initiallyFocusClose = enabled
+        return dialog
     }
 
     @ViewBuilder
@@ -159,7 +166,9 @@ public struct FoundationDialog<DialogContent: View>: ViewModifier {
 
         return Group {
             if #available(iOS 17, macOS 14, *) {
-                FoundationPresentationFocus(heading: heading, close: closeControl, onActivate: close) { heading, close in
+                FoundationPresentationFocus(
+                    heading: heading, close: closeControl, onActivate: close, initiallyFocusClose: initiallyFocusClose
+                ) { heading, close in
                     regions(heading: heading, close: close, palette: palette)
                 }
             } else {
