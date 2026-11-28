@@ -16,7 +16,7 @@ struct MacControlTypographyAudit {
 
     @MainActor
     static func main() {
-        _ = NSApplication.shared
+        NSApplication.shared.setActivationPolicy(.prohibited)
         let ancestor = Font.system(size: 36, weight: .heavy)
         let sera = FoundationTheme(preset: .sera)
         checkButton("Sera caption and weight under an ancestor font", theme: sera, ancestor: ancestor,
@@ -32,10 +32,10 @@ struct MacControlTypographyAudit {
         checkButton("explicit button label font", theme: nova, ancestor: ancestor,
                     size: .regular, labelOverride: labelOverride, expected: labelOverride)
 
-        let referenceTabs = render(tabs("Overview", theme: nova))
-        precondition(referenceTabs != render(tabs("Different", theme: nova)),
+        let referenceTabs = renderTabs(tabs("Overview", theme: nova))
+        precondition(referenceTabs != renderTabs(tabs("Different", theme: nova)),
                      "The rendered tab labels are missing from the typography audit")
-        precondition(referenceTabs == render(tabs("Overview", theme: nova).font(ancestor)),
+        precondition(referenceTabs == renderTabs(tabs("Overview", theme: nova).font(ancestor)),
                      "An ancestor font changed Nova Tabs typography")
         print("PASS: Button typography and Nova Tabs are independent of ancestor fonts")
     }
@@ -74,6 +74,27 @@ struct MacControlTypographyAudit {
         .fixedSize()
         _ = render(button)
         precondition(actual == expected, "Unexpected font for \(name): \(String(describing: actual))")
+    }
+
+    @MainActor
+    private static func renderTabs<Content: View>(_ content: Content) -> Data {
+        // Tabs uses a native scroll view, so capture it in an AppKit window.
+        let bounds = NSRect(x: 0, y: 0, width: 260, height: 52)
+        let window = NSWindow(contentRect: bounds, styleMask: [.borderless], backing: .buffered, defer: false)
+        window.isReleasedWhenClosed = false
+        defer { window.close() }
+        let host = NSHostingView(rootView: content)
+        window.contentView = host
+        host.layoutSubtreeIfNeeded()
+        window.display()
+        guard let bitmap = host.bitmapImageRepForCachingDisplay(in: host.bounds) else {
+            preconditionFailure("Could not render the SwiftUI tab strip")
+        }
+        host.cacheDisplay(in: host.bounds, to: bitmap)
+        guard let png = bitmap.representation(using: .png, properties: [:]) else {
+            preconditionFailure("Could not encode the SwiftUI tab strip")
+        }
+        return png
     }
 
     @MainActor
