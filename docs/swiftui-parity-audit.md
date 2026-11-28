@@ -424,6 +424,8 @@ iPhone 17 Pro（iOS 26.2）通过 XCUITest 验证了搜索框聚焦期间用 `�
 
 iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节一致，之前的 10 张保持像素和文件一致。新增快捷键展开态使用三项相同内容与 384 pt 宽的面板。SwiftUI 面板保留标题和关闭按钮，iOS 行高至少为 44 pt。上游展开图显示首项高亮，原生静态采集未激活搜索键盘，初始行高亮仍有差异。[iPad 截图及 shadcn 差异](https://github.com/csdog/compose-foundation/actions/runs/46109901238/artifacts/15249263011)
 
+快捷键展开图约 80% 的差异像素来自遮罩下的一档灰度差。浅色背景为 SwiftUI `#E6E6E6`、shadcn `#E5E5E5`，深色为 `#090909`、`#080808`。面板与搜索框取样色在两端一致。
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
