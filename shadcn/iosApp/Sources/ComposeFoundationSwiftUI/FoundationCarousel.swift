@@ -188,7 +188,7 @@ public struct FoundationCarousel<Page: View>: View {
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(!enabled)
-        .opacity(enabled ? 1 : (nova ? 0.5 : 0.4))
+        .opacity(enabled || nova ? 1 : 0.4)
         .accessibilityLabel(Text(label))
     }
 

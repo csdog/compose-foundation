@@ -893,13 +893,15 @@ private struct CarouselScreenshotFixture: View {
     @State private var selection = 0
     let rightToLeft: Bool
 
+    private let arabicPageNumbers = ["١", "٢", "٣", "٤", "٥"]
+
     var body: some View {
         var light = FoundationPalette.neutralLight
         light.foreground = .black
         let theme = FoundationTheme(preset: .nova, light: light)
         return FoundationCarousel(pageCount: 5, selection: $selection, navigation: .sides) { index in
             FoundationCard {
-                Text(pageNumber(index + 1))
+                Text(rightToLeft ? arabicPageNumbers[index] : String(index + 1))
                     .font(.system(size: 36, weight: .semibold))
                     .frame(maxWidth: .infinity)
                     .frame(height: 312)
@@ -916,12 +918,6 @@ private struct CarouselScreenshotFixture: View {
         .ignoresSafeArea()
     }
 
-    private func pageNumber(_ number: Int) -> String {
-        guard rightToLeft else { return String(number) }
-        let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "ar")
-        return formatter.string(from: NSNumber(value: number)) ?? String(number)
-    }
 }
 
 private struct ToastScreenshotFixture: View {
