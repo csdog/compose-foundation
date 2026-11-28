@@ -316,6 +316,10 @@ iPad mini（A17 Pro，iOS 26.2）的 10 张静态深浅色截图与复拍逐字�
 
 同一模拟器上的 UIKit 诊断确认，优先右键命令在普通模式下能到达应用，完全键盘控制开启后该命令未收到事件。在 Calendar 测试页试用系统 Tab 和 Space，也未激活下一月按钮。诊断命令只在测试应用注册。[按键路由日志](https://github.com/csdog/compose-foundation/actions/runs/46122376521/job/140909507890) · [设置与逐次 Tab 截图](https://github.com/csdog/compose-foundation/actions/runs/46122376521/artifacts/15255475042)
 
+标准 UIKit 按钮对照确认普通触控能激活按钮，随后 iPad 设置页的无障碍服务超时，未执行完全键盘控制下的按钮用例。诊断加上无障碍读数重试，并在前台 Simulator 重新运行。[首次对照日志](https://github.com/csdog/compose-foundation/actions/runs/46123973218/job/140914401875) · [复跑](https://github.com/csdog/compose-foundation/actions/runs/46126207498)
+
+全量截图回归的 Popover 深色关闭态差异 PNG 与 Popover PR #6 保存的差异逐字节一致。差异只在触发器区域，包含 3,107 个像素。已发布基准的填充取样是 `#151515`，审核过的 SwiftUI 截图和 shadcn 参考是 `#141414`。Calendar 专项截图仍逐像素一致。[全量回归差异](https://github.com/csdog/compose-foundation/actions/runs/46118576344/artifacts/15253650171) · [Popover 审核](https://github.com/csdog/compose-foundation/pull/6)
+
 独立的 UIKit 按钮对照用于区分模拟键盘输入路径与 Calendar 本身的问题。该运行在 Apple runner 队列中，结论待验证。[UIKit 对照任务](https://github.com/csdog/compose-foundation/actions/runs/46123973218)
 
 ### Calendar Nova 双月区间与阿拉伯语 RTL
