@@ -312,6 +312,8 @@ iPad mini（A17 Pro，iOS 26.2）的 10 张静态深浅色截图与复拍逐字�
 
 同一型号的模拟器通过了 USB 键盘事件回归。右键把焦点从 1 月 31 日移到 2 月 1 日，选择值仍是 1 月 31 日。Return 提交 2 月 1 日，下键把焦点移到 2 月 8 日，Space 才提交。查看截图可见独立的日期焦点环。常规 XCUITest 按键未进入网格，此用例由 idb 的 USB HID 路径复现。安装 iOS 审计应用并启动 idb companion 后，运行 `python3 shadcn/iosApp/validation/verify_calendar_keyboard.py --device "$ios_device" --companion "$idb_companion"`。[iPad 按键运行](https://github.com/csdog/compose-foundation/actions/runs/46114246221/job/140884398533) · [焦点截图](https://github.com/csdog/compose-foundation/actions/runs/46114246221/artifacts/15251246540)
 
+单独开启 iPad 的「完全键盘控制」后复现了差异。设置开关已确认开启，同样的 USB HID 用例发送 Tab 和右键后仍停在 1 月 31 日，跨月键盘操作待继续对齐。实际 VoiceOver 朗读仍待验收。[完全键盘控制运行](https://github.com/csdog/compose-foundation/actions/runs/46117478557/job/140894477836) · [设置与焦点截图](https://github.com/csdog/compose-foundation/actions/runs/46117478557/artifacts/15251859139)
+
 ### Calendar Nova 双月区间与阿拉伯语 RTL
 
 对照 `calendar-range.tsx` 和 `calendar-rtl.tsx`。双月区间固定为 2026 年 1 月 12 日到 2 月 11 日。`FoundationCalendar(range:initialMonth:numberOfMonths:)` 可以指定首个月份，原有绑定和范围初始化方式仍可使用。Nova 区间端点在本周本月内连接到相邻的已选日期。未完成区间、同日区间与周月交界处的端点独立显示。
