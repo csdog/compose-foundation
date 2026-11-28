@@ -45,4 +45,4 @@ jobs:
             echo 'Expected the previous implementation to fail the typography regression'
             exit 1
           fi
-          rg 'Unexpected font for Sera caption and weight' "$RUNNER_TEMP/typography-before.log"
+          grep -F 'Unexpected font for Sera caption and weight' "$RUNNER_TEMP/typography-before.log"
