@@ -60,8 +60,13 @@ def enable_full_keyboard_access():
     else:
         # The simulator AX tree exposes the detail pane but omits the visible sidebar rows.
         app = next(row["frame"] for row in rows() if row.get("type") == "Application")
-        x, y = round(app["width"] * 0.16), round(app["height"] * 0.314)
-        subprocess.run([*client, "tap", str(x), str(y)], check=True, timeout=15)
+        x = round(app["width"] * 0.16)
+        # The first-run Apple Intelligence row shifts the sidebar entry below General.
+        for fraction in (0.364, 0.314):
+            y = round(app["height"] * fraction)
+            subprocess.run([*client, "tap", str(x), str(y), "--duration", "0.15"], check=True, timeout=15)
+            if wait_for("Accessibility", timeout=3):
+                break
     if not wait_for("Accessibility", timeout=8):
         capture("settings-accessibility.png")
         raise AssertionError(f"Settings sidebar did not open Accessibility: {sorted(labels())}")
