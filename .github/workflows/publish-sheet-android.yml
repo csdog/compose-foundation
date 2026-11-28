@@ -21,22 +21,56 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          for run in 46119170933 46120977722 46121676535; do
-            gh run download "$run" -n animation-candidate-cmp-android-sheet-open-attempt-1 -D "$RUNNER_TEMP/$run"
-          done
-          python3 - <<'PY'
-          from PIL import Image, ImageChops
+          for platform in cmp-android; do
+            base="$RUNNER_TEMP/reference/$platform/sheet-open"
+            candidate="$RUNNER_TEMP/repeat/$platform/sheet-open/actual"
+            gh run download 46120977722 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$base"
+            gh run download 46121676535 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$candidate"
+            python - "$base" "$candidate" <<'PYFI'
+          import sys
           from pathlib import Path
           from collections import Counter
-          import os
-          root = Path(os.environ["RUNNER_TEMP"])
-          for frame in ("before", "000", "096", "192", "224", "480"):
-              print(frame)
-              previous = None
-              for run in ("46119170933", "46120977722", "46121676535"):
-                  img = Image.open(root / run / (frame + ".png")).convert("RGB")
-                  content = img.crop((0, 96, img.width, img.height))
-                  diff = ImageChops.difference(previous, content).getbbox() if previous else None
-                  print(run, Counter(content.resize((100, 200)).getdata()).most_common(3), diff)
-                  previous = content
-          PY
+          from PIL import Image, ImageChops, ImageStat
+          a, b = (Path(x) for x in sys.argv[1:])
+          for time in ('before', '096', '480'):
+              left, right = (Image.open(x / f'{time}.png').convert('RGB') for x in (a, b))
+              print(time, left.size, right.size)
+              for img in (left, right):
+                  print(Counter(img.resize((160, 320)).getdata()).most_common(5), img.getpixel((left.width//2,left.height//2)))
+              print(ImageStat.Stat(ImageChops.difference(left, right)).mean)
+          PYFI
+            python shadcn/validation/animation_baseline.py "$platform" sheet-open --strict --gif \
+              --baselines "$RUNNER_TEMP/reference" --output "$RUNNER_TEMP/repeat"
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-sheet-reproducibility
+          path: ${{ runner.temp }}/repeat/*/sheet-open/*.gif
+          if-no-files-found: ignore
+      - uses: actions/checkout@v4
+        with:
+          repository: csdog/compose-foundation-baselines
+          ref: main
+          token: ${{ secrets.COMPONENT_BASELINES_WRITE_TOKEN }}
+          path: baseline-repository
+      - name: Publish the verified frame-synchronized Compose Android reference
+        run: |
+          for platform in cmp-android; do
+            source="$RUNNER_TEMP/reference/$platform/sheet-open"
+            target="baseline-repository/animations/$platform/sheet-open"
+            test -f "$target/README.md" && grep -Fq "46119170933" "$target/README.md"
+            mkdir -p "$target"
+            cp "$source/"*.png "$target/"
+            {
+              printf '# Sheet opening on %s\n\n' "$platform"
+              printf 'API 35 x86_64 Android emulator, Pixel 7 profile, Nova light. The Compose test clock samples every 16 ms through 480 ms after display presentation. Comparison excludes the top 96 px status bar.\n\n'
+              printf 'Initial capture: https://github.com/csdog/compose-foundation/actions/runs/46120977722\n\n'
+              printf 'Independent replay: https://github.com/csdog/compose-foundation/actions/runs/46121676535\n'
+            } > "$target/README.md"
+          done
+          git -C baseline-repository add -- animations/cmp-android/sheet-open
+          git -C baseline-repository -c user.name='github-actions[bot]' \
+            -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -m 'Refresh Compose Android Sheet reference after frame synchronization'
+          git -C baseline-repository push origin HEAD:main
