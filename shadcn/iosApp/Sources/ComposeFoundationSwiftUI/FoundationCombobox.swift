@@ -67,11 +67,11 @@ public struct FoundationCombobox<Value: Hashable>: View {
                         .accessibilityHidden(true)
                 }
                 .font(isNova ? .system(size: novaFontSize) : .subheadline)
+                .opacity(isNova && !isEnabled ? 0.5 : 1)
                 .padding(.horizontal, isNova ? 11 : 12)
                 .frame(minHeight: isNova ? max(44, fieldHeight) : 44)
                 .background(shape.fill(fill).frame(height: isNova ? fieldHeight : nil))
                 .overlay(shape.strokeBorder(palette.input).frame(height: isNova ? fieldHeight : nil).allowsHitTesting(false))
-                .opacity(isNova && !isEnabled ? 0.5 : 1)
                 .contentShape(Rectangle())
             }
             .buttonStyle(PlainButtonStyle())
@@ -111,8 +111,11 @@ public struct FoundationCombobox<Value: Hashable>: View {
     private var isNova: Bool { theme.preset == .nova }
 
     private func novaTriggerFill(_ palette: FoundationPalette) -> Color {
+        if !isEnabled {
+            return colorScheme == .dark ? palette.secondary : palette.input.opacity(0.55)
+        }
         if colorScheme == .dark { return palette.novaDarkOutlineFill(in: surface) }
-        return isEnabled ? .clear : palette.secondary
+        return .clear
     }
 
     private var selectedTitle: String? {
