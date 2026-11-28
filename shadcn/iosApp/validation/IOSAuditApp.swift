@@ -9,7 +9,6 @@ final class IOSAuditApp: NSObject, UIApplicationDelegate {}
 final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
     var window: UIWindow?
     private var animationMarker: UIWindow?
-    private var sheetAnimation: SheetAnimationState?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
@@ -45,7 +44,6 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                     signal.backgroundColor = .blue
                 }
             }
-            sheetAnimation = state
             window.rootViewController = UIHostingController(rootView: SheetAnimationFixture(state: state))
             window.makeKeyAndVisible()
             marker.isHidden = false
@@ -139,12 +137,6 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             } catch {
                 try? saveSummary("FAIL \(error.localizedDescription)")
             }
-        }
-    }
-
-    func scene(_ scene: UIScene, openURLContexts contexts: Set<UIOpenURLContext>) {
-        if contexts.contains(where: { $0.url.absoluteString == "sheet-audit://animation/sheet-open" }) {
-            sheetAnimation?.open()
         }
     }
 
@@ -256,6 +248,7 @@ private final class SheetAnimationState: ObservableObject {
 
 private struct SheetAnimationFixture: View {
     @ObservedObject var state: SheetAnimationState
+    @State private var scheduled = false
 
     var body: some View {
         Button("Edit profile", action: state.open)
@@ -263,6 +256,13 @@ private struct SheetAnimationFixture: View {
             .modifier(FoundationSheet(isPresented: $state.presented, title: "Profile") {
                 Text("Update your profile details.")
             })
+            .onAppear {
+                guard !scheduled else { return }
+                scheduled = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 12) {
+                    state.open()
+                }
+            }
     }
 }
 

@@ -18,7 +18,6 @@ case "$platform" in
   swiftui-ios)
     app="$work/ComposeFoundationAudit.app"
     bundle=com.toutiaoyan.compose.foundation.audit
-    trigger_url=sheet-audit://animation/sheet-open
     swiftui=shadcn/iosApp
     sdk="$(xcrun --sdk iphonesimulator --show-sdk-path)"
     mkdir "$app"
@@ -79,9 +78,14 @@ if ! grep -q 'Recording started' "$work/recording.log"; then
   cat "$work/recording.log"
   exit 1
 fi
-sleep 1
-xcrun simctl openurl "$device" "$trigger_url"
-sleep 3
+if [[ "$platform" == cmp-ios ]]; then
+  sleep 1
+  xcrun simctl openurl "$device" "$trigger_url"
+  sleep 3
+else
+  # SwiftUI schedules the trigger in-process to avoid SpringBoard URL presentation.
+  sleep 15
+fi
 kill -INT "$recording"
 wait "$recording" || test "$?" -eq 130
 recording=
