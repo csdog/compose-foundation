@@ -1,6 +1,7 @@
 """Compare animation keyframes and render a synchronized review GIF."""
 
 import argparse
+from collections import Counter
 import json
 from pathlib import Path
 import subprocess
@@ -26,12 +27,14 @@ def find_trigger(video, step, marker):
         check=True,
     ).stdout
     armed = False
-    for index, (red, green, blue) in enumerate(zip(probe[::3], probe[1::3], probe[2::3])):
+    pixels = list(zip(probe[::3], probe[1::3], probe[2::3]))
+    for index, (red, green, blue) in enumerate(pixels):
         if red > 180 and max(green, blue) < 80:
             armed = True
         if armed and green > 180 and max(red, blue) < 80:
             return index * step
-    raise ValueError("Recording does not show the red-to-green trigger marker")
+    colors = Counter(pixels).most_common(6)
+    raise ValueError(f"No red-to-green trigger at ({x}, {y}). Observed RGB colors: {colors}")
 
 
 def extract_frames(video, trigger_ms, step, names, output, crop_top=0):
@@ -55,14 +58,17 @@ def extract_frames(video, trigger_ms, step, names, output, crop_top=0):
             (output / f"{name}.png").write_bytes(source.read_bytes())
 
 
-def load_frames(directory, names):
+def load_frames(directory, names, crop_top=0):
     missing = [name for name in names if not (directory / f"{name}.png").is_file()]
     if missing:
         raise ValueError(f"{directory} is missing PNG frames: {', '.join(missing)}")
     frames = []
     for name in names:
         with Image.open(directory / f"{name}.png") as image:
-            frames.append(image.convert("RGBA"))
+            frame = image.convert("RGBA")
+            if crop_top:
+                frame = frame.crop((0, crop_top, frame.width, frame.height))
+            frames.append(frame)
     return frames
 
 
@@ -151,8 +157,9 @@ def main():
         return 0
 
     baseline = args.baselines / lane
-    expected = load_frames(baseline, names)
-    actual = load_frames(actual_dir, names)
+    crop_top = case.get("cropTopByPlatform", {}).get(args.platform, 0)
+    expected = load_frames(baseline, names, crop_top)
+    actual = load_frames(actual_dir, names, crop_top)
     threshold = case.get("channelTolerance", 0)
     budget = int(expected[-1].width * expected[-1].height * case.get("changedPixelFraction", 0))
     timing_tolerance = case.get("timingToleranceMs", 0)
