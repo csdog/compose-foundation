@@ -524,6 +524,29 @@ jobs:
           cat "$log"
           grep -q '^PASS:' "$log"
 
+      - name: Verify Nova Radio Group keyboard navigation on macOS
+        if: contains(needs.baseline.outputs.matrix, '"radio-group"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          sources="$swiftui/Sources/ComposeFoundationSwiftUI"
+          app="$RUNNER_TEMP/RadioGroupAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string RadioGroupAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.radio-group-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$sources"/Foundation{Theme,RadioGroup,TabsNavigation}.swift \
+            "$swiftui/validation/MacRadioGroupKeyboardAudit.swift" -o "$app/Contents/MacOS/RadioGroupAudit"
+          for direction in ltr rtl; do
+            log="$RUNNER_TEMP/radio-group-$direction.log"
+            open -n -W --stdout "$log" --stderr "$log" "$app" --args "--$direction"
+            cat "$log"
+            grep -q '^PASS:' "$log"
+          done
+
       - name: Verify Nova Checkbox labels on macOS
         if: contains(needs.baseline.outputs.matrix, '"label"')
         timeout-minutes: 2
