@@ -3,6 +3,22 @@ import SwiftUI
 public struct FoundationChart: View {
     public enum Variant: Sendable { case bar, line, area }
 
+    public struct Axes {
+        public let horizontalGridLineCount: Int
+        public let preferredUpperBound: Double?
+        public let xLabel: (String) -> String
+
+        public init(
+            horizontalGridLineCount: Int = 3,
+            preferredUpperBound: Double? = nil,
+            xLabel: @escaping (String) -> String = { $0 }
+        ) {
+            self.horizontalGridLineCount = min(max(horizontalGridLineCount, 0), 20)
+            self.preferredUpperBound = preferredUpperBound.flatMap { $0.isFinite && $0 > 0 ? $0 : nil }
+            self.xLabel = xLabel
+        }
+    }
+
     public struct Series: Identifiable {
         public let id: String
         public let values: [Double]
@@ -22,6 +38,7 @@ public struct FoundationChart: View {
     private let labels: [String]
     private let series: [Series]
     private let variant: Variant
+    private let axes: Axes?
 
     public init(
         labels: [String],
@@ -29,10 +46,21 @@ public struct FoundationChart: View {
         variant: Variant = .bar,
         selection: Binding<Int?> = .constant(nil)
     ) {
+        self.init(labels: labels, series: series, variant: variant, selection: selection, axes: nil)
+    }
+
+    public init(
+        labels: [String],
+        series: [Series],
+        variant: Variant = .bar,
+        selection: Binding<Int?> = .constant(nil),
+        axes: Axes?
+    ) {
         self.labels = labels
         self.series = series
         self.variant = variant
         self._selection = selection
+        self.axes = axes
     }
 
     public var body: some View {
@@ -54,14 +82,18 @@ public struct FoundationChart: View {
                         .accessibilityHidden(true)
                 }
                 .frame(minHeight: 140)
-                HStack {
-                    Text(labels[0])
-                    Spacer(minLength: 0)
-                    if labels.count > 1 { Text(labels[labels.count - 1]) }
+                if let axes {
+                    axisLabels(axes, palette: palette)
+                } else {
+                    HStack {
+                        Text(labels[0])
+                        Spacer(minLength: 0)
+                        if labels.count > 1 { Text(labels[labels.count - 1]) }
+                    }
+                    .font(.caption)
+                    .foregroundColor(palette.mutedForeground)
+                    .accessibilityHidden(true)
                 }
-                .font(.caption)
-                .foregroundColor(palette.mutedForeground)
-                .accessibilityHidden(true)
                 if let selection, labels.indices.contains(selection) {
                     Text(summary(at: selection)).font(.caption).foregroundColor(palette.foreground)
                 }
@@ -83,9 +115,27 @@ public struct FoundationChart: View {
         }
     }
 
+    private func axisLabels(_ axes: Axes, palette: FoundationPalette) -> some View {
+        GeometryReader { geometry in
+            let step = geometry.size.width / CGFloat(labels.count)
+            let stride = max(1, Int(ceil(40 / max(step, 1))))
+            let shown = labels.indices.filter { $0.isMultiple(of: stride) }
+            ForEach(shown, id: \.self) { index in
+                Text(axes.xLabel(labels[index]))
+                    .font(.caption)
+                    .foregroundColor(palette.mutedForeground)
+                    .lineLimit(1)
+                    .position(x: step * (CGFloat(index) + 0.5), y: geometry.size.height / 2)
+            }
+        }
+        .frame(height: 20)
+        .accessibilityHidden(true)
+    }
+
     private func plot(size: CGSize, values: [Double], palette: FoundationPalette) -> some View {
-        let scale = max(1, values.map(abs).max() ?? 1)
-        let upper = max(0, (values.max() ?? 0) / scale)
+        let preferredUpper = axes?.preferredUpperBound ?? 0
+        let scale = max(1, values.map(abs).max() ?? 1, preferredUpper)
+        let upper = max(preferredUpper, values.max() ?? 0) / scale
         let lower = min(0, (values.min() ?? 0) / scale)
         let span = upper == lower ? 1 : upper - lower
         let baseline = size.height * (upper / span)
@@ -93,8 +143,17 @@ public struct FoundationChart: View {
 
         return ZStack {
             Path { path in
-                path.move(to: CGPoint(x: 0, y: baseline))
-                path.addLine(to: CGPoint(x: size.width, y: baseline))
+                let count = axes?.horizontalGridLineCount ?? 0
+                let offsets = count > 1 ? (0..<count).map { size.height * CGFloat($0) / CGFloat(count - 1) }
+                    : count == 1 ? [size.height] : []
+                for y in offsets {
+                    path.move(to: CGPoint(x: 0, y: y))
+                    path.addLine(to: CGPoint(x: size.width, y: y))
+                }
+                if offsets.isEmpty || (upper > 0 && lower < 0) {
+                    path.move(to: CGPoint(x: 0, y: baseline))
+                    path.addLine(to: CGPoint(x: size.width, y: baseline))
+                }
             }
             .stroke(palette.border, lineWidth: 1)
             ForEach(series.indices, id: \.self) { index in
@@ -121,13 +180,19 @@ public struct FoundationChart: View {
     private func marks(points: [CGPoint], index: Int, step: CGFloat, baseline: CGFloat, color: Color) -> some View {
         if let first = points.first, let last = points.last {
             if variant == .bar {
-                let width = step * 0.75 / CGFloat(series.count)
+                let groupWidth = step * (axes == nil ? 0.75 : 0.8)
+                let width = groupWidth / CGFloat(series.count)
+                let barWidth = axes == nil ? width * 0.9 : width - min(4, width * 0.2)
                 Path { path in
                     for point in points {
-                        let x = point.x - step * 0.375 + CGFloat(index) * width
-                        path.addRect(CGRect(
-                            x: x, y: min(point.y, baseline), width: width * 0.9, height: abs(point.y - baseline)
-                        ))
+                        let x = point.x - groupWidth / 2 + CGFloat(index) * width
+                        let bar = CGRect(x: x, y: min(point.y, baseline), width: barWidth, height: abs(point.y - baseline))
+                        if axes != nil {
+                            let radius = min(4, bar.width / 2, bar.height / 2)
+                            path.addRoundedRect(in: bar, cornerSize: CGSize(width: radius, height: radius))
+                        } else {
+                            path.addRect(bar)
+                        }
                     }
                 }
                 .fill(color)
