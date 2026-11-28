@@ -41,6 +41,17 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             return
         }
 
+        if ProcessInfo.processInfo.arguments.contains("--resizable-interaction") {
+            let arguments = ProcessInfo.processInfo.arguments
+            window.rootViewController = UIHostingController(rootView: ResizableInteractionFixture(
+                vertical: arguments.contains("--resizable-vertical"),
+                rightToLeft: arguments.contains("--resizable-rtl"),
+                enabled: !arguments.contains("--resizable-disabled")
+            ))
+            window.makeKeyAndVisible()
+            return
+        }
+
         if ProcessInfo.processInfo.arguments.contains("--theme-presets") {
             window.rootViewController = UIHostingController(rootView: ThemePresetsInteractionFixture())
             window.makeKeyAndVisible()
@@ -3535,6 +3546,30 @@ private struct SwitchScreenshotFixture: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(theme.palette(for: scheme).background)
             .ignoresSafeArea()
+    }
+}
+
+private struct ResizableInteractionFixture: View {
+    let vertical: Bool
+    let rightToLeft: Bool
+    let enabled: Bool
+    @State private var fraction: CGFloat = 0.25
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("First pane: \(Int((fraction * 100).rounded()))%")
+            FoundationResizable(vertical ? .vertical : .horizontal, fraction: $fraction, limits: 0.2...0.8) {
+                Text("First")
+            } second: {
+                Text("Second")
+            }
+            .frame(width: 320, height: 180)
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("Resizable split")
+            .disabled(!enabled)
+        }
+        .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
+        .foundationTheme(FoundationTheme(preset: .nova))
     }
 }
 

@@ -496,7 +496,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | progress | 支持范围归一化、动画、减少动态效果与百分比无障碍语义。Compose 可插入 label、value、track 和 indicator。 |
 | questionnaire | 单选、多选、文本题、验证、回退、跳过及提交可用。缺少 Compose 的快捷键、题定义 slots、重置与部分进度状态 API。 |
 | radio-group | 支持纵向单选和禁用。Nova 使用 16 pt 圆形控件、8 pt 选中圆点和深色未选中底色。iOS 每项至少保留 44 × 44 pt 点按区域。macOS 与 iPad 已验收 LTR、RTL 的方向键，macOS 已验收组内单一 Tab 停靠点，iPad 已验收触控。横向布局与实际 VoiceOver 仍待验收。 |
-| resizable | 支持双窗格比例绑定、嵌套横纵布局、RTL、拖动限制和无障碍增减。Nova 分隔线为 1 pt，可选 4 × 24 pt 手柄，拖动区域保留 44 pt。iOS 17 / macOS 14 起，方向键按轴调整，Home / End 到比例上下限。新增默认嵌套、手柄、纵向及 RTL 截图用例。Apple 平台验证待完成。 |
+| resizable | 支持双窗格比例绑定、嵌套横纵布局、RTL、拖动限制和无障碍增减。Nova 分隔线为 1 pt，可选 4 × 24 pt 手柄，拖动区域保留 44 pt。iOS 17 / macOS 14 起，方向键按轴调整，Home / End 到比例上下限。macOS 已验收横向 LTR/RTL、纵向、键盘边界、命中范围和禁用。iPhone 新增拖动及深浅色截图用例待验。 |
 | scroll-area | 使用原生 ScrollView，支持滚动轴、系统指示器与可选主题边框和圆角裁剪。自定义滚动条及其显隐和拖动配置待对齐。 |
 | scroll-fade | 按所选边缘和固定距离加渐变遮罩。和 Compose 的静态 overload 对应，缺少按可滚动方向和偏移量驱动的 overload。 |
 | select | 原生 Menu 支持单选、占位、选中图标、禁用项和原生分区标题。Nova 已接入默认、分组、禁用及阿拉伯语 RTL 初始态截图。展开样式、尺寸和面板位置待对齐。 |
