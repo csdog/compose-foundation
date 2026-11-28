@@ -150,6 +150,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "combobox": ComboboxScreenshotFixture.Example.allCases.map { example in
+                ("combobox-\(example.rawValue)-initial", { AnyView(ComboboxScreenshotFixture(example: example)) })
+            },
             "navigation-menu": [
                 ("navigation-menu-default-initial", { AnyView(NavigationMenuScreenshotFixture(rightToLeft: false)) }),
                 ("navigation-menu-rtl-initial", { AnyView(NavigationMenuScreenshotFixture(rightToLeft: true)) }),
@@ -871,6 +874,39 @@ private struct SeparatorInitialScreenshotFixture: View {
         .padding(.top, 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct ComboboxScreenshotFixture: View {
+    enum Example: String, CaseIterable { case `default`, groups, disabled }
+
+    @Environment(\.colorScheme) private var scheme
+    let example: Example
+
+    var body: some View {
+        let theme = FoundationTheme(preset: .nova)
+        return Group {
+            if example == .groups {
+                FoundationCombobox("Select a timezone", groups: [
+                    .init("Americas", choices: ["(GMT-5) New York", "(GMT-8) Los Angeles"].map { FoundationChoice($0, value: $0) }),
+                    .init("Europe", choices: ["(GMT+0) London", "(GMT+1) Paris"].map { FoundationChoice($0, value: $0) }),
+                    .init("Asia/Pacific", choices: ["(GMT+9) Tokyo", "(GMT+8) Shanghai"].map { FoundationChoice($0, value: $0) }),
+                ], selection: .constant(nil))
+            } else {
+                FoundationCombobox("Select a framework",
+                                   choices: ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"].map {
+                                       FoundationChoice($0, value: $0)
+                                   }, selection: .constant(nil))
+                    .disabled(example == .disabled)
+            }
+        }
+        .frame(width: 672)
+        .foundationTheme(theme)
+        .padding(.horizontal, 24)
+        .padding(.top, 18)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
         .ignoresSafeArea()
     }
 }

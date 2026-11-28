@@ -6,6 +6,12 @@ import UIKit
 public struct FoundationCombobox<Value: Hashable>: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.font) private var inheritedFont
+    @Environment(\.foundationSurface) private var surface
+    @Environment(\.isEnabled) private var isEnabled
+    @ScaledMetric(relativeTo: .subheadline) private var novaFieldHeight: CGFloat = 32
+    @ScaledMetric(relativeTo: .body) private var novaFontSize: CGFloat = 16
+    @ScaledMetric(relativeTo: .subheadline) private var novaRowFontSize: CGFloat = 14
     @State private var query = ""
     @State private var isPresented = false
     @State private var highlighted: Value?
@@ -42,6 +48,8 @@ public struct FoundationCombobox<Value: Hashable>: View {
     public var body: some View {
         let palette = theme.palette(for: colorScheme)
         let shape = RoundedRectangle(cornerRadius: theme.cornerRadius)
+        let fieldHeight = max(32, novaFieldHeight)
+        let fill = isNova ? novaTriggerFill(palette) : palette.card
 
         VStack(alignment: .leading, spacing: 8) {
             Button {
@@ -50,16 +58,20 @@ public struct FoundationCombobox<Value: Hashable>: View {
                 isPresented = true
             } label: {
                 HStack {
-                    Text(triggerTitle)
+                    Text(selectedTitle ?? title)
+                        .foregroundColor(isNova && selectedTitle == nil ? palette.mutedForeground : palette.foreground)
                     Spacer(minLength: 0)
-                    Image(systemName: "chevron.up.chevron.down").font(.caption).accessibilityHidden(true)
+                    Image(systemName: isNova ? "chevron.down" : "chevron.up.chevron.down")
+                        .font(isNova ? .system(size: 10, weight: .medium) : .caption)
+                        .foregroundColor(isNova ? palette.mutedForeground : palette.foreground)
+                        .accessibilityHidden(true)
                 }
-                .font(.subheadline)
-                .foregroundColor(palette.foreground)
-                .padding(.horizontal, 12)
-                .frame(minHeight: 44)
-                .background(shape.fill(palette.card))
-                .overlay(shape.strokeBorder(palette.input).allowsHitTesting(false))
+                .font(isNova ? .system(size: novaFontSize) : .subheadline)
+                .padding(.horizontal, isNova ? 11 : 12)
+                .frame(minHeight: isNova ? max(44, fieldHeight) : 44)
+                .background(shape.fill(fill).frame(height: isNova ? fieldHeight : nil))
+                .overlay(shape.strokeBorder(palette.input).frame(height: isNova ? fieldHeight : nil).allowsHitTesting(false))
+                .opacity(isNova && !isEnabled ? 0.5 : 1)
                 .contentShape(Rectangle())
             }
             .buttonStyle(PlainButtonStyle())
@@ -96,11 +108,16 @@ public struct FoundationCombobox<Value: Hashable>: View {
         }
     }
 
-    private var triggerTitle: String {
-        if case .single = selection {
-            return choices.first { isSelected($0.value) }?.title ?? title
-        }
-        return title
+    private var isNova: Bool { theme.preset == .nova }
+
+    private func novaTriggerFill(_ palette: FoundationPalette) -> Color {
+        if colorScheme == .dark { return palette.novaDarkOutlineFill(in: surface) }
+        return isEnabled ? .clear : palette.secondary
+    }
+
+    private var selectedTitle: String? {
+        guard case .single = selection else { return nil }
+        return choices.first { isSelected($0.value) }?.title
     }
 
     private var selectionDescription: String {
@@ -189,6 +206,7 @@ public struct FoundationCombobox<Value: Hashable>: View {
 
     private func results(palette: FoundationPalette) -> some View {
         let matches = matchingChoices
+        let visibleGroups = matches.indices.filter { !matches[$0].isEmpty }
         return VStack(alignment: .leading, spacing: 8) {
             HStack {
                 searchField.textFieldStyle(RoundedBorderTextFieldStyle())
@@ -197,25 +215,28 @@ public struct FoundationCombobox<Value: Hashable>: View {
                         .frame(minWidth: 44, minHeight: 44)
                 }
             }
-            if matches.allSatisfy(\.isEmpty) {
+            if visibleGroups.isEmpty {
                 Text("No results").font(.subheadline).foregroundColor(palette.mutedForeground)
             } else {
                 ScrollViewReader { scroll in
                     ScrollView {
                         VStack(alignment: .leading, spacing: 2) {
-                            ForEach(matches.indices, id: \.self) { index in
-                                if !matches[index].isEmpty {
-                                    if let title = groups[index].title {
-                                        Text(title)
-                                            .font(.caption.weight(.medium))
-                                            .foregroundColor(palette.mutedForeground)
-                                            .padding(.horizontal, 8)
-                                            .padding(.top, 6)
-                                            .accessibilityAddTraits(.isHeader)
-                                    }
-                                    ForEach(matches[index]) { choice in
-                                        resultRow(choice, palette: palette).id(choice.value)
-                                    }
+                            ForEach(visibleGroups, id: \.self) { index in
+                                if isNova && index != visibleGroups.first {
+                                    Rectangle().fill(palette.border).frame(height: 1)
+                                        .padding(.vertical, 4).accessibilityHidden(true)
+                                }
+                                if let title = groups[index].title {
+                                    Text(title)
+                                        .font(isNova ? .caption : .caption.weight(.medium))
+                                        .foregroundColor(palette.mutedForeground)
+                                        .padding(.horizontal, 8)
+                                        .padding(.top, 6)
+                                        .padding(.bottom, isNova ? 4 : 0)
+                                        .accessibilityAddTraits(.isHeader)
+                                }
+                                ForEach(matches[index]) { choice in
+                                    resultRow(choice, palette: palette).id(choice.value)
                                 }
                             }
                         }
@@ -236,6 +257,11 @@ public struct FoundationCombobox<Value: Hashable>: View {
     }
 
     private func resultRow(_ choice: FoundationChoice<Value>, palette: FoundationPalette) -> some View {
+        #if os(macOS)
+        let height: CGFloat = isNova ? 28 : 44
+        #else
+        let height: CGFloat = 44
+        #endif
         Button {
             select(choice)
         } label: {
@@ -246,10 +272,11 @@ public struct FoundationCombobox<Value: Hashable>: View {
                     Image(systemName: "checkmark").accessibilityHidden(true)
                 }
             }
+            .font(isNova ? .system(size: novaRowFontSize) : inheritedFont)
             .padding(.horizontal, 8)
-            .frame(minHeight: 44)
+            .frame(minHeight: height)
             .background(
-                RoundedRectangle(cornerRadius: theme.cornerRadius)
+                RoundedRectangle(cornerRadius: isNova ? max(0, theme.cornerRadius - 4) : theme.cornerRadius)
                     .fill(highlighted == choice.value ? palette.secondary : .clear)
             )
             .contentShape(Rectangle())

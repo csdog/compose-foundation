@@ -20,6 +20,25 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "combobox": {
+      "title": "Combobox",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "groups", "status": "initial", "viewport": [720, 520]},
+          {"variant": "disabled", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/combobox-demo.tsx",
+      "visual": "compare the Nova input outline, placeholder, trailing arrow, and disabled appearance",
+      "behavior": "skip disabled choices across groups and submit with Return",
+      "accessibility": "preserve group headings and report the selected value",
+      "motion": "static initial frames"
+    },
     "navigation-menu": {
       "title": "Navigation Menu",
       "variant": "default",
