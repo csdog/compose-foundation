@@ -9,25 +9,32 @@ public struct FoundationRadioGroup<Value: Hashable>: View {
     @Binding private var selection: Value?
 
     private let choices: [FoundationChoice<Value>]
+    private let descriptions: [Value: String]
 
     public init(_ choices: [FoundationChoice<Value>], selection: Binding<Value?>) {
+        self.init(choices, selection: selection, descriptions: [:])
+    }
+
+    public init(_ choices: [FoundationChoice<Value>], selection: Binding<Value?>, descriptions: [Value: String]) {
         self.choices = choices
         self._selection = selection
+        self.descriptions = descriptions
     }
 
     public var body: some View {
         let palette = theme.palette(for: colorScheme)
         let nova = theme.preset == .nova
         let labelFont = nova ? (font ?? .system(size: labelSize, weight: .medium)) : .subheadline
+        let spacing: CGFloat = nova && choices.contains { descriptions[$0.value] != nil } ? 8 : 2
 
         Group {
             if #available(iOS 17, macOS 14, *) {
                 FoundationKeyboardRadioGroup(choices: choices, selection: $selection,
-                                             usesCustomFocusEffect: nova) { choice, focused in
+                                             usesCustomFocusEffect: nova, spacing: spacing) { choice, focused in
                     row(choice, labelFont: labelFont, nova: nova, palette: palette, focused: focused)
                 }
             } else {
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: spacing) {
                     ForEach(choices) { choice in
                         row(choice, labelFont: labelFont, nova: nova, palette: palette, focused: false)
                     }
@@ -40,11 +47,12 @@ public struct FoundationRadioGroup<Value: Hashable>: View {
     private func row(_ choice: FoundationChoice<Value>, labelFont: Font, nova: Bool, palette: FoundationPalette,
                      focused: Bool) -> some View {
         let selected = choice.value == selection
+        let description = descriptions[choice.value]
         let focusVisible = nova && focused && isEnabled && choice.isEnabled
         return Button {
             selection = choice.value
         } label: {
-            HStack(spacing: nova ? 12 : 8) {
+            HStack(alignment: description == nil ? .center : .top, spacing: nova && description == nil ? 12 : 8) {
                 indicator(selected: selected, nova: nova, palette: palette, focused: focusVisible)
                     .overlay(Group {
                         if focusVisible {
@@ -54,7 +62,17 @@ public struct FoundationRadioGroup<Value: Hashable>: View {
                                 .accessibilityHidden(true)
                         }
                     })
-                Text(choice.title).font(labelFont)
+                    .padding(.top, description == nil ? 0 : 1)
+                if let description {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(choice.title).font(labelFont)
+                        Text(description)
+                            .font(nova ? .system(size: labelSize) : .caption)
+                            .foregroundColor(palette.mutedForeground)
+                    }
+                } else {
+                    Text(choice.title).font(labelFont)
+                }
             }
             .foregroundColor(palette.foreground)
             .frame(minWidth: nova ? 44 : nil, minHeight: 44, alignment: .leading)
@@ -63,6 +81,7 @@ public struct FoundationRadioGroup<Value: Hashable>: View {
         .buttonStyle(PlainButtonStyle())
         .disabled(!choice.isEnabled)
         .opacity(nova || (isEnabled && choice.isEnabled) ? 1 : 0.5)
+        .accessibilityLabel(Text(description.map { "\(choice.title), \($0)" } ?? choice.title))
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
@@ -89,13 +108,14 @@ private struct FoundationKeyboardRadioGroup<Value: Hashable, Row: View>: View {
     let choices: [FoundationChoice<Value>]
     @Binding var selection: Value?
     let usesCustomFocusEffect: Bool
+    let spacing: CGFloat
     let row: (FoundationChoice<Value>, Bool) -> Row
 
     var body: some View {
         let navigation = FoundationTabsNavigation(enabledValues: isEnabled ? choices.filter(\.isEnabled).map(\.value) : [])
         let entry = selection.flatMap { navigation.entryFocus(for: $0) } ?? navigation.enabledValues.first
         let target = cursor.flatMap { navigation.enabledValues.contains($0) ? $0 : nil } ?? entry
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: spacing) {
             ForEach(choices) { choice in
                 if target == choice.value {
                     row(choice, focused == choice.value)

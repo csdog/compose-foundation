@@ -868,11 +868,12 @@
         "swiftui-ios": [
           {"variant": "default", "status": "initial", "viewport": [402, 520]},
           {"variant": "default", "status": "compact", "viewport": [402, 520]},
-          {"variant": "disabled", "status": "initial", "viewport": [402, 520]}
+          {"variant": "disabled", "status": "initial", "viewport": [402, 520]},
+          {"variant": "description", "status": "initial", "viewport": [402, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/radio-group-demo.tsx",
-      "visual": "compare all three radio rows and the selected indicator while retaining 44-point native touch targets",
+      "visual": "compare default, disabled and described radio rows with 44-point native touch targets",
       "behavior": "select one enabled item and use arrow keys to wrap past disabled options",
       "accessibility": "selected and disabled states, a single keyboard Tab stop, and a visible focus ring",
       "motion": "static settled frames"
