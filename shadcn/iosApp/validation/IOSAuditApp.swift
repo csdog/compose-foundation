@@ -36,7 +36,8 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
 
         if ProcessInfo.processInfo.arguments.contains("--chart-interaction") {
             window.rootViewController = UIHostingController(rootView: ChartAxesScreenshotFixture(
-                showsLegend: true, fixedViewport: false
+                showsLegend: true, fixedViewport: false,
+                showsTooltip: ProcessInfo.processInfo.arguments.contains("--chart-tooltip")
             ))
             window.makeKeyAndVisible()
             return
@@ -193,6 +194,12 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "chart": [
                 ("chart-example-axis-initial", { AnyView(ChartAxesScreenshotFixture(showsLegend: false)) }),
                 ("chart-example-legend-initial", { AnyView(ChartAxesScreenshotFixture(showsLegend: true)) }),
+                ("chart-example-tooltip-initial", {
+                    AnyView(ChartAxesScreenshotFixture(showsLegend: false, showsTooltip: true))
+                }),
+                ("chart-example-tooltip-selected", {
+                    AnyView(ChartAxesScreenshotFixture(showsLegend: false, showsTooltip: true, initialSelection: 1))
+                }),
             ],
             "theme": FoundationStylePreset.allCases.map { preset in
                 ("theme-\(preset.rawValue)-initial", { AnyView(ThemePresetScreenshotFixture(preset: preset)) })
@@ -3548,9 +3555,17 @@ private struct SwitchScreenshotFixture: View {
 
 private struct ChartAxesScreenshotFixture: View {
     let showsLegend: Bool
-    var fixedViewport = true
+    let fixedViewport: Bool
+    let showsTooltip: Bool
     @Environment(\.colorScheme) private var scheme
     @State private var selection: Int?
+
+    init(showsLegend: Bool, fixedViewport: Bool = true, showsTooltip: Bool = false, initialSelection: Int? = nil) {
+        self.showsLegend = showsLegend
+        self.fixedViewport = fixedViewport
+        self.showsTooltip = showsTooltip
+        _selection = State(initialValue: initialSelection)
+    }
 
     var body: some View {
         let theme = FoundationTheme(preset: .nova)
@@ -3558,7 +3573,7 @@ private struct ChartAxesScreenshotFixture: View {
             .init("Desktop", values: [186, 305, 237, 73, 209, 214], color: Color(rgb: 0x2563eb)),
             .init("Mobile", values: [80, 200, 120, 190, 130, 140], color: Color(rgb: 0x60a5fa)),
         ], selection: $selection, axes: FoundationChart.Axes(preferredUpperBound: 320) { String($0.prefix(3)) },
-           showsLegend: showsLegend)
+           showsLegend: showsLegend, showsTooltip: showsTooltip)
             .frame(width: fixedViewport ? 662 : nil, height: fixedViewport ? 364 : 260)
             .padding(.leading, 29)
             .padding(.trailing, fixedViewport ? 0 : 29)
