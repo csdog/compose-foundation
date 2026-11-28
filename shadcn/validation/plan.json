@@ -138,6 +138,41 @@
       "accessibility": "field label and secure entry where applicable",
       "motion": "static settled frames"
     },
+    "alert": {
+      "title": "Alert",
+      "variant": "basic",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "basic", "status": "initial", "viewport": [720, 520]},
+          {"variant": "destructive", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/alert-basic.tsx",
+      "visual": "compare the complete confirmation and destructive notices",
+      "behavior": "present a readable title and message",
+      "accessibility": "hide decorative symbols from accessibility",
+      "motion": "static settled frames"
+    },
+    "card": {
+      "title": "Card",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [402, 520], "referenceOrigin": [12, 0]},
+          {"variant": "small", "status": "initial", "viewport": [402, 520], "referenceOrigin": [159, 0]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/card-demo.tsx",
+      "visual": "compare the complete login and small scheduled reports cards",
+      "behavior": "compose independently actionable footer content",
+      "accessibility": "retain editor and button labels",
+      "motion": "static settled frames"
+    },
     "label": {
       "title": "Label",
       "variant": "default",

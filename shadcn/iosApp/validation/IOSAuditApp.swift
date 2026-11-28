@@ -150,6 +150,14 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "alert": [
+                ("alert-basic-initial", { AnyView(AlertScreenshotFixture(destructive: false)) }),
+                ("alert-destructive-initial", { AnyView(AlertScreenshotFixture(destructive: true)) }),
+            ],
+            "card": [
+                ("card-default-initial", { AnyView(CardScreenshotFixture(small: false)) }),
+                ("card-small-initial", { AnyView(CardScreenshotFixture(small: true)) }),
+            ],
             "field": [
                 ("field-input-initial", { AnyView(LabelFieldScreenshotFixture(example: .input)) }),
                 ("field-textarea-initial", { AnyView(LabelFieldScreenshotFixture(example: .textarea)) }),
@@ -492,24 +500,39 @@ private struct PopoverScreenshotFixture: View {
         let shape = RoundedRectangle(cornerRadius: radius)
         let mutedTrigger = open.wrappedValue && (item.variant != .default || item.status != .open)
         let fill = dark ? (mutedTrigger ? grey(28) : palette.novaDarkOutlineFill) : (open.wrappedValue ? grey(245) : .white)
-        return Button {
-            open.wrappedValue.toggle()
-        } label: {
-            Text(title)
-                .font(rightToLeft ? .system(size: 14) : .custom("Geist-Medium", size: compact ? 12.8 : 14))
-                .foregroundColor(dark ? palette.foreground : .black)
-                .padding(.horizontal, 11)
-                .frame(minWidth: minimumTriggerWidth)
-                .frame(height: height)
-                .background(shape.fill(fill))
-                .overlay(shape.strokeBorder(focus && !dark ? grey(161) : dark ? grey(46) : grey(229)))
-                .overlay(
-                    RoundedRectangle(cornerRadius: radius + 1.5)
-                        .strokeBorder(focus ? (dark ? grey(63) : grey(208)) : .clear, lineWidth: 3)
-                        .padding(-3).allowsHitTesting(false)
-                )
+        return Group {
+            if item.variant == .default && item.status == .initial {
+                Button {
+                    open.wrappedValue.toggle()
+                } label: {
+                    Text(title)
+                        .font(.custom("Geist-Medium", size: 14, relativeTo: .subheadline))
+                        .foregroundColor(dark ? palette.foreground : .black)
+                }
+                .buttonStyle(FoundationButtonStyle(.outline))
+                // Position the visual border, centered within the 44-point hit target, at the canvas inset.
+                .padding(.top, -(44 - 32) / 2)
+            } else {
+                Button {
+                    open.wrappedValue.toggle()
+                } label: {
+                    Text(title)
+                        .font(rightToLeft ? .system(size: 14) : .custom("Geist-Medium", size: compact ? 12.8 : 14))
+                        .foregroundColor(dark ? palette.foreground : .black)
+                        .padding(.horizontal, 11)
+                        .frame(minWidth: minimumTriggerWidth)
+                        .frame(height: height)
+                        .background(shape.fill(fill))
+                        .overlay(shape.strokeBorder(focus && !dark ? grey(161) : dark ? grey(46) : grey(229)))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: radius + 1.5)
+                                .strokeBorder(focus ? (dark ? grey(63) : grey(208)) : .clear, lineWidth: 3)
+                                .padding(-3).allowsHitTesting(false)
+                        )
+                }
+                .buttonStyle(.plain)
+            }
         }
-        .buttonStyle(.plain)
         .modifier(PopoverAuditTriggerFocus(requestFocus: focus))
         .modifier(FoundationPopover(isPresented: open, arrowEdge: edge, alignment: alignment, width: width) {
             panel()
@@ -754,6 +777,148 @@ private struct SeparatorInitialScreenshotFixture: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(palette.background)
         .ignoresSafeArea()
+    }
+}
+
+private struct AlertScreenshotFixture: View {
+    let destructive: Bool
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        return FoundationAlert(
+            destructive ? "Payment failed" : "Account updated successfully",
+            message: destructive
+                ? "Your payment could not be processed. Please check your payment method and try again."
+                : "Your profile information has been saved. Changes will be reflected immediately.",
+            symbol: destructive ? "exclamationmark.circle" : "checkmark.circle",
+            variant: destructive ? .destructive : .standard
+        )
+        .font(.custom("Geist-Regular", size: 14))
+        .foundationTheme(theme)
+        .frame(width: 448)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct CardScreenshotFixture: View {
+    let small: Bool
+    @Environment(\.colorScheme) private var scheme
+    @State private var email = ""
+    @State private var password = ""
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.foreground = .black
+        light.primary = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        let palette = theme.palette(for: scheme)
+        return Group {
+            if small {
+                FoundationCard(size: .small) {
+                    VStack(alignment: .leading, spacing: 12) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            heading("Scheduled reports", size: 14)
+                            subtitle("Weekly snapshots. No more manual exports.", palette: palette)
+                        }
+                        VStack(alignment: .leading, spacing: 8) {
+                            feature("Choose a schedule (daily, or weekly).", palette: palette)
+                            feature("Send to channels or specific teammates.", palette: palette)
+                            feature("Include charts, tables, and key metrics.", palette: palette)
+                        }
+                        .padding(.vertical, 8)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                } footer: {
+                    VStack(spacing: 8) {
+                        fullWidthButton("Set up scheduled reports", variant: .primary, size: .small)
+                        fullWidthButton("See what's new", variant: .outline, size: .small)
+                    }
+                }
+                .frame(width: 320)
+            } else {
+                FoundationCard {
+                    VStack(alignment: .leading, spacing: 16) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            heading("Login to your account", size: 16)
+                            subtitle("Enter your email below to login to your account", palette: palette)
+                        }
+                        .padding(.trailing, 62)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .overlay(
+                            Button("Sign Up") {}
+                                .buttonStyle(PlainButtonStyle())
+                                .font(.custom("Geist-Medium", size: 14))
+                                .frame(minHeight: 44, alignment: .topTrailing),
+                            alignment: .topTrailing
+                        )
+                        VStack(alignment: .leading, spacing: 8) {
+                            FoundationLabel("Email").font(.custom("Geist-Medium", size: 14))
+                            FoundationInput("Email", text: $email, placeholder: "m@example.com")
+                                .font(.custom("Geist-Regular", size: 16))
+                        }
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                FoundationLabel("Password").font(.custom("Geist-Medium", size: 14))
+                                Spacer()
+                                Button("Forgot your password?") {}
+                                    .buttonStyle(PlainButtonStyle())
+                            }
+                            FoundationInput("Password", text: $password, placeholder: "", secure: true)
+                                .font(.custom("Geist-Regular", size: 16))
+                        }
+                        .padding(.top, 8)
+                    }
+                } footer: {
+                    VStack(spacing: 8) {
+                        fullWidthButton("Login", variant: .primary, size: .regular)
+                        fullWidthButton("Login with Google", variant: .outline, size: .regular)
+                    }
+                }
+                .frame(width: 384)
+            }
+        }
+        .font(.custom("Geist-Regular", size: 14))
+        .foundationTheme(theme)
+        .padding(.leading, small ? 41 : 12)
+        .padding(.top, 24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
+        .ignoresSafeArea()
+    }
+
+    private func heading(_ title: String, size: CGFloat) -> some View {
+        Text(title).font(.custom("Geist-Medium", size: size)).frame(minHeight: 20)
+    }
+
+    private func subtitle(_ text: String, palette: FoundationPalette) -> some View {
+        Text(text).foregroundColor(palette.mutedForeground).frame(minHeight: 20)
+    }
+
+    private func feature(_ text: String, palette: FoundationPalette) -> some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: "chevron.right")
+                .font(.system(size: 10, weight: .medium))
+                .frame(width: 16, height: 16)
+                .foregroundColor(palette.mutedForeground)
+                .accessibilityHidden(true)
+            Text(text).frame(minHeight: 20, alignment: .topLeading)
+        }
+    }
+
+    private func fullWidthButton(
+        _ title: String, variant: FoundationButtonStyle.Variant, size: FoundationButtonStyle.Size
+    ) -> some View {
+        Button {} label: {
+            Text(title).frame(maxWidth: .infinity)
+        }
+        .buttonStyle(FoundationButtonStyle(variant, size: size))
+        .font(.custom("Geist-Medium", size: size == .small ? 12.8 : 14))
     }
 }
 
