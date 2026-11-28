@@ -82,12 +82,23 @@ enum MacCommandDialogAudit {
             }) else { fail("Escape did not dismiss and return focus without selecting", state) }
 
             press(2, "d", window: window)
-            guard await waitUntil({ state.presented }) else { fail("Could not reopen after Escape", state) }
+            guard await waitUntil({
+                state.presented && (window.firstResponder as? NSTextView)?.isFieldEditor == true
+            }) else { fail("Could not reopen and focus search after Escape", state) }
             state.presented = false
             guard await waitUntil({ !state.presented && state.triggerFocused && state.dismissals == 3 }) else {
                 fail("External dismissal did not return focus", state)
             }
-            print("PASS: Command-J opens with search focused and selection, Escape, and binding dismissal restore the trigger")
+
+            press(2, "d", window: window)
+            guard await waitUntil({
+                state.presented && (window.firstResponder as? NSTextView)?.isFieldEditor == true
+            }) else { fail("Could not reopen after binding dismissal", state) }
+            click(NSPoint(x: 12, y: 12), window: window)
+            guard await waitUntil({
+                !state.presented && state.triggerFocused && state.dismissals == 4 && state.actions == ["billing"]
+            }) else { fail("Clicking the backdrop did not close and restore focus", state) }
+            print("PASS: Command-J opens with search focused and each dismissal restores the trigger")
             exit(0)
         }
         app.run()
@@ -111,6 +122,17 @@ enum MacCommandDialogAudit {
                 characters: characters, charactersIgnoringModifiers: characters, isARepeat: false, keyCode: code
             ) else { continue }
             NSApp.sendEvent(event)
+        }
+    }
+
+    private static func click(_ point: NSPoint, window: NSWindow) {
+        for type in [NSEvent.EventType.leftMouseDown, .leftMouseUp] {
+            guard let event = NSEvent.mouseEvent(
+                with: type, location: point, modifierFlags: [],
+                timestamp: ProcessInfo.processInfo.systemUptime, windowNumber: window.windowNumber, context: nil,
+                eventNumber: 0, clickCount: 1, pressure: type == .leftMouseUp ? 0 : 1
+            ) else { continue }
+            NSApp.postEvent(event, atStart: false)
         }
     }
 
