@@ -37,5 +37,4 @@ for _ in {1..30}; do
     kill -0 "$server"
     sleep 1
 done
-xcrun simctl launch "$device" "$bundle" --calendar-navigation --calendar-keys -AppleLanguages '(en)' -AppleLocale en_US
 "$work/venv/bin/python" "$swiftui/validation/probe_calendar_hid.py" "$work/venv/bin/idb" "$device"

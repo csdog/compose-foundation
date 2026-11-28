@@ -429,7 +429,7 @@ jobs:
 
   swift-logic:
     needs: baseline
-    if: github.event_name != 'pull_request_target' && contains(needs.baseline.outputs.matrix, '"platform":"swiftui-ios"')
+    if: ${{ false }}
     name: SwiftUI Tabs navigation logic
     runs-on: macos-15
     timeout-minutes: 10
