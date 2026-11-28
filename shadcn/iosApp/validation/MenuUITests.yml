@@ -18,23 +18,24 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.toutiaoyan.compose.foundation.audit
         INFOPLIST_FILE: IOSAuditInfo.plist
-  DropdownMenuUITests:
+  MenuUITests:
     type: bundle.ui-testing
     platform: iOS
     sources:
       - DropdownMenuUITests.swift
+      - ContextMenuUITests.swift
     dependencies:
       - target: ComposeFoundationAudit
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
-        PRODUCT_BUNDLE_IDENTIFIER: com.toutiaoyan.compose.foundation.audit.dropdown-tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.toutiaoyan.compose.foundation.audit.menu-tests
 schemes:
-  DropdownMenuAudit:
+  MenuAudit:
     build:
       targets:
         ComposeFoundationAudit: all
-        DropdownMenuUITests: [test]
+        MenuUITests: [test]
     test:
       targets:
-        - DropdownMenuUITests
+        - MenuUITests
