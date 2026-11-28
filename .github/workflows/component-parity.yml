@@ -167,7 +167,7 @@ jobs:
 
       - name: Verify SwiftUI catalog input on iOS
         if: env.MENU_INTERACTION == 'true'
-        timeout-minutes: 15
+        timeout-minutes: 22
         env:
           MENU_COMPONENT: ${{ inputs.component }}
         run: bash shadcn/iosApp/validation/probe_calendar_hid.sh

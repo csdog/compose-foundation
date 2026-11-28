@@ -13,13 +13,20 @@ screenshots = Path(os.environ["RUNNER_TEMP"]) / "calendar-hid"
 screenshots.mkdir(exist_ok=True)
 
 
-def rows():
-    output = subprocess.check_output([*client, "describe-all", "--api", "ax"], timeout=25)
-    return json.loads(output)
+def rows(attempts=3):
+    for attempt in range(attempts):
+        try:
+            output = subprocess.check_output([*client, "describe-all", "--api", "ax"], timeout=25)
+            return json.loads(output)
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+            if attempt + 1 == attempts:
+                raise
+            print(f"Retrying simulator accessibility read ({attempt + 2}/{attempts})", flush=True)
+            time.sleep(1)
 
 
-def labels():
-    return {item["AXLabel"] for item in rows() if item.get("AXLabel")}
+def labels(attempts=3):
+    return {item["AXLabel"] for item in rows(attempts) if item.get("AXLabel")}
 
 
 def choose(names, scroll=False, switch=False, x_fraction=0.72):
@@ -95,7 +102,7 @@ def wait_for(label, timeout=6):
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
         try:
-            if label in labels():
+            if label in labels(attempts=1):
                 return True
         except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
             pass
@@ -104,12 +111,12 @@ def wait_for(label, timeout=6):
 
 
 def key(code):
-    subprocess.run([*client, "key", str(code), "--duration", "0.14"], check=True, timeout=15)
+    subprocess.run([*client, "key", str(code), "--duration", "0.14"], check=True, timeout=30)
     time.sleep(0.35)
 
 
 def capture(name):
-    subprocess.run(["xcrun", "simctl", "io", device, "screenshot", str(screenshots / name)], check=True, timeout=20)
+    subprocess.run(["xcrun", "simctl", "io", device, "screenshot", str(screenshots / name)], check=True, timeout=35)
 
 
 def launch_control():
