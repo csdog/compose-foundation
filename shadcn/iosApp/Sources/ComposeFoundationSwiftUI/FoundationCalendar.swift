@@ -425,8 +425,7 @@ private struct FoundationCalendarKeyboardGrid<Content: View>: View {
 
     var body: some View {
         let target = cursor.flatMap { acceptsFocus($0) ? $0 : nil } ?? entry
-        content($focused, target, { cursor = $0 })
-            .defaultFocus($focused, target)
+        preferredFocus(content($focused, target, { cursor = $0 }), target: target)
             .task(id: cursor) {
                 guard let cursor, cursor == target else { return }
                 // The destination becomes focusable on this update, including dates in a newly shown month.
@@ -434,6 +433,15 @@ private struct FoundationCalendarKeyboardGrid<Content: View>: View {
                 guard !Task.isCancelled else { return }
                 focused = cursor
             }
+    }
+
+    @ViewBuilder
+    private func preferredFocus<CalendarContent: View>(_ view: CalendarContent, target: Date?) -> some View {
+        if ProcessInfo.processInfo.arguments.contains("--fka-calendar-no-preferred-focus") {
+            view
+        } else {
+            view.defaultFocus($focused, target)
+        }
     }
 }
 
@@ -469,6 +477,8 @@ private struct FoundationCalendarKeyboardDay: ViewModifier {
                 }
                 .onKeyPress(keys: [.leftArrow, .rightArrow, .upArrow, .downArrow, .home, .end,
                                   .pageUp, .pageDown, .return, .space], phases: [.down, .repeat], action: handle)
+        } else if ProcessInfo.processInfo.arguments.contains("--fka-calendar-native-other-days") {
+            content
         } else {
             content.focusable(false)
         }

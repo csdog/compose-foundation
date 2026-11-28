@@ -148,6 +148,22 @@ def selected(prefix, current):
     return next((label for label in current if label.startswith(prefix) and label != f"{prefix}none"), None)
 
 
+launch("Selected: 2025-01-31", "--fka-calendar-no-preferred-focus")
+key(79)
+for _ in range(4):
+    if wait_for("February 1, 2025", timeout=2):
+        break
+    key(43)
+    key(79)
+else:
+    print("INPUT ordinary-no-preferred-focus: right did not enter February", flush=True)
+if "February 1, 2025" in labels():
+    assert "Selected: 2025-01-31" in labels()
+    capture("calendar-ordinary-no-preference-arrow.png")
+    key(40)
+    assert wait_for("Selected: 2025-02-01")
+    print("INPUT ordinary-no-preferred-focus: arrow moved independently; Return selected February 1", flush=True)
+
 enable_full_keyboard_access()
 assert probe("uikit", "UIKit result: none", lambda current: selected("UIKit result: ", current),
              "--fka-native-control"), "The UIKit control must receive focus and activation"
@@ -157,9 +173,9 @@ for name, arguments in (
 ):
     probe(name, "SwiftUI result: none", lambda current: selected("SwiftUI result: ", current), *arguments)
 for name, flags in (
-    ("calendar-toggle-date", ()),
-    ("calendar-native-grid", ("--fka-calendar-native-grid",)),
-    ("calendar-explicit-ax", ("--fka-calendar-ax-interactive",)),
+    ("calendar-no-preferred-focus", ("--fka-calendar-no-preferred-focus",)),
+    ("calendar-native-other-days", ("--fka-calendar-native-other-days",)),
+    ("calendar-no-preferred-and-native-other", ("--fka-calendar-no-preferred-focus", "--fka-calendar-native-other-days")),
 ):
     probe(name, "Selected: 2025-01-31",
           lambda current: next((label for label in current if label == "February 2025" or
