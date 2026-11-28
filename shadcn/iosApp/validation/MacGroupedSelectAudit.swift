@@ -8,7 +8,8 @@ private final class SelectAuditState: NSObject, ObservableObject {
     private var trackedMenu: NSMenu?
 
     @objc func menuDidOpen(_ notification: Notification) {
-        guard let menu = notification.object as? NSMenu else { return }
+        guard let menu = notification.object as? NSMenu,
+              menu.item(withTitle: "Carrot") != nil else { return }
         trackedMenu = menu
         presentationCount += 1
         print("Tracking native menu \(presentationCount): \(menu.items.map(\.title))")
@@ -94,9 +95,16 @@ enum MacGroupedSelectAudit {
     }
 
     private static func openSelect(in window: NSWindow) async {
+        let location = NSPoint(x: 250, y: 308)
+        let global = window.convertPoint(toScreen: location)
+        let screenTop = NSScreen.screens.first?.frame.maxY ?? 0
+        let pointer = CGPoint(x: global.x, y: screenTop - global.y)
+        require(CGWarpMouseCursorPosition(pointer) == .success, "The pointer must move to the Select control")
+        try? await Task.sleep(for: .milliseconds(100))
+
         for type in [NSEvent.EventType.leftMouseDown, .leftMouseUp] {
             guard let event = NSEvent.mouseEvent(
-                with: type, location: NSPoint(x: 250, y: 308), modifierFlags: [],
+                with: type, location: location, modifierFlags: [],
                 timestamp: ProcessInfo.processInfo.systemUptime, windowNumber: window.windowNumber,
                 context: nil, eventNumber: 0, clickCount: 1, pressure: type == .leftMouseUp ? 0 : 1
             ) else { continue }
