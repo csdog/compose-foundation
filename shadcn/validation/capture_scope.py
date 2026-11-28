@@ -55,9 +55,7 @@ def capture_matrix(plan, component="", labels=None, platform=""):
 
 if __name__ == "__main__":
     plan = json.loads(Path(__file__).with_name("plan.json").read_text())
-    labels = None
-    if os.environ["GITHUB_EVENT_NAME"] == "pull_request_target":
-        event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
-        labels = [item["name"] for item in event["pull_request"]["labels"]]
+    labels = json.loads(os.environ["PUBLISH_LABELS"]) if os.environ["GITHUB_EVENT_NAME"] == "push" else None
     matrix = capture_matrix(plan, os.environ.get("COMPONENT", ""), labels, os.environ.get("CAPTURE_PLATFORM", ""))
     print(f"matrix={json.dumps(matrix, separators=(',', ':'))}")
+    print(f"has_scope={str(bool(matrix['include'])).lower()}")
