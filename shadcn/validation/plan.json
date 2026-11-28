@@ -20,6 +20,24 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "carousel": {
+      "title": "Carousel",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "default", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rtl", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/carousel-demo.tsx",
+      "visual": "compare the Nova card and side arrow controls in both directions",
+      "behavior": "track the drag before updating selection, snap on release, and stop at the boundary",
+      "accessibility": "label previous and next and retain an adjustable page announcement",
+      "motion": "static initial frames"
+    },
     "toast": {
       "title": "Toast",
       "variant": "default",

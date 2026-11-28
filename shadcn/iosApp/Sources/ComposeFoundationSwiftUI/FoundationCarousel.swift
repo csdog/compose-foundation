@@ -3,6 +3,10 @@ import SwiftUI
 import UIKit
 #endif
 
+public enum FoundationCarouselNavigationPlacement: Sendable {
+    case below, sides
+}
+
 public struct FoundationCarousel<Page: View>: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
@@ -14,6 +18,7 @@ public struct FoundationCarousel<Page: View>: View {
     @State private var drag: PageDrag?
 
     private let pageCount: Int
+    private let navigation: FoundationCarouselNavigationPlacement
     private let page: (Int) -> Page
 
     private struct PageDrag {
@@ -23,8 +28,16 @@ public struct FoundationCarousel<Page: View>: View {
     }
 
     public init(pageCount: Int, selection: Binding<Int>, @ViewBuilder page: @escaping (Int) -> Page) {
+        self.init(pageCount: pageCount, selection: selection, navigation: .below, page: page)
+    }
+
+    public init(
+        pageCount: Int, selection: Binding<Int>, navigation: FoundationCarouselNavigationPlacement,
+        @ViewBuilder page: @escaping (Int) -> Page
+    ) {
         self.pageCount = max(0, pageCount)
         self._selection = selection
+        self.navigation = navigation
         self.page = page
     }
 
@@ -33,22 +46,27 @@ public struct FoundationCarousel<Page: View>: View {
             let palette = theme.palette(for: colorScheme)
             let index = currentPage
 
-            VStack(spacing: 8) {
-                viewport(at: index)
-                HStack(spacing: 8) {
+            if navigation == .sides {
+                HStack(spacing: 12) {
                     arrow("chevron.backward", label: "Previous", change: -1, enabled: index > 0)
-                    Text("\(index + 1) / \(pageCount)")
-                        .font(.caption.monospacedDigit())
-                        .foregroundColor(palette.mutedForeground)
+                    viewport(at: index)
+                        .accessibilityElement(children: .contain)
                         .accessibilityLabel(Text("Page \(index + 1) of \(pageCount)"))
-                        .accessibilityAdjustableAction { direction in
-                            switch direction {
-                            case .increment: move(by: 1)
-                            case .decrement: move(by: -1)
-                            @unknown default: break
-                            }
-                        }
+                        .accessibilityAdjustableAction(adjustPage)
                     arrow("chevron.forward", label: "Next", change: 1, enabled: index + 1 < pageCount)
+                }
+            } else {
+                VStack(spacing: 8) {
+                    viewport(at: index)
+                    HStack(spacing: 8) {
+                        arrow("chevron.backward", label: "Previous", change: -1, enabled: index > 0)
+                        Text("\(index + 1) / \(pageCount)")
+                            .font(.caption.monospacedDigit())
+                            .foregroundColor(palette.mutedForeground)
+                            .accessibilityLabel(Text("Page \(index + 1) of \(pageCount)"))
+                            .accessibilityAdjustableAction(adjustPage)
+                        arrow("chevron.forward", label: "Next", change: 1, enabled: index + 1 < pageCount)
+                    }
                 }
             }
         }
@@ -149,15 +167,37 @@ public struct FoundationCarousel<Page: View>: View {
     }
 
     private func arrow(_ icon: String, label: String, change: Int, enabled: Bool) -> some View {
-        Button {
+        let nova = theme.preset == .nova
+        let palette = theme.palette(for: colorScheme)
+        let fill = colorScheme == .dark ? palette.novaDarkOutlineFill : Color.clear
+        return Button {
             move(by: change)
         } label: {
-            Image(systemName: icon).frame(minWidth: 44, minHeight: 44).contentShape(Rectangle())
+            if nova {
+                Image(systemName: icon)
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundColor(palette.foreground)
+                    .frame(width: 28, height: 28)
+                    .background(Circle().fill(fill))
+                    .overlay(Circle().strokeBorder(palette.input).allowsHitTesting(false))
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
+            } else {
+                Image(systemName: icon).frame(minWidth: 44, minHeight: 44).contentShape(Rectangle())
+            }
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(!enabled)
-        .opacity(enabled ? 1 : 0.4)
+        .opacity(enabled ? 1 : (nova ? 0.5 : 0.4))
         .accessibilityLabel(Text(label))
+    }
+
+    private func adjustPage(_ direction: AccessibilityAdjustmentDirection) {
+        switch direction {
+        case .increment: move(by: 1)
+        case .decrement: move(by: -1)
+        @unknown default: break
+        }
     }
 }
 
