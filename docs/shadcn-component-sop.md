@@ -44,7 +44,7 @@ GitHub Actions 的 **Component parity** 在相关 PR 上采集 Button、Tabs、P
 
 [`shadcn/validation/plan.json`](../shadcn/validation/plan.json) 记录每个组件的 shadcn Base UI / Nova 源码版本和示例。日常回归和手动运行的默认模式 `update=no` 每个用例采集一遍，并与本次选定的基准做像素比较。手动选择 `review` 或 `publish` 时采集两遍，只有可复现的截图会成为候选图。对照上游示例审核候选图的内容、排版、主题和组件状态，并在 PR 上说明有意保留的平台差异。初始截图只覆盖当前 fixture 的状态。例如 Popover 展开态要单独验收。
 
-审核通过的实际图提交到独立的 `csdog/compose-foundation-baselines` 仓库。目录按 Web 和移动端组织，各平台路径由 `plan.json` 的 `baseline.paths` 定义。文件名保留组件、变体、状态和深浅色。
+审核通过的实际图提交到独立的 `csdog/compose-foundation-baselines` 仓库。目录按 Web 和移动端组织，各平台路径由 `plan.json` 的 `baseline.paths` 定义。文件名保留组件、变体、状态和深浅色。上游参考图存放在 [shadcn-baselines](https://github.com/csdog/shadcn-baselines)，通过基准仓库的 `shadcn/` 子模块锁定版本。本地对照上游截图时，用 `git clone --recurse-submodules` 初始化。
 
 | 截图 | 试点路径 |
 | --- | --- |
