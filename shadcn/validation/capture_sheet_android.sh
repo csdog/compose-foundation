@@ -6,6 +6,8 @@ output="${2:?Pass the output root}/$platform/sheet-open/actual"
 test_class=com.toutiaoyan.compose.ui.components.sheet.SheetAndroidAnimationTest
 adb shell settings put system screen_off_timeout 2147483647
 adb shell svc power stayon true
+adb shell settings put global window_animation_scale 0
+adb shell settings put global transition_animation_scale 0
 adb shell settings put global animator_duration_scale 1
 adb shell settings put global sysui_demo_allowed 1
 adb shell am broadcast -a com.android.systemui.demo -e command enter

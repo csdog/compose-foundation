@@ -4,49 +4,46 @@ on:
     branches: [codex/publish-sheet-cmp-ios]
 permissions:
   contents: read
-  actions: read
 jobs:
   publish:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    runs-on: macos-15
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install Pillow==11.3.0
-      - name: Compare independent Compose iOS captures
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Prepare the pinned simulator environment
         run: |
-          for platform in cmp-ios; do
-            base="$RUNNER_TEMP/reference/$platform/sheet-open"
-            candidate="$RUNNER_TEMP/repeat/$platform/sheet-open/actual"
-            gh run download 46119696300 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$base"
-            gh run download 46120538588 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$candidate"
-            python - "$base" "$candidate" <<'PYFI'
-          import sys
-          from pathlib import Path
-          from collections import Counter
-          from PIL import Image, ImageChops, ImageStat
-          a, b = (Path(x) for x in sys.argv[1:])
-          for time in ('before', '096', '480'):
-              left, right = (Image.open(x / f'{time}.png').convert('RGB') for x in (a, b))
-              print(time, left.size, right.size)
-              for img in (left, right):
-                  print(Counter(img.resize((160, 320)).getdata()).most_common(5), img.getpixel((left.width//2,left.height//2)))
-              print(ImageStat.Stat(ImageChops.difference(left, right)).mean)
-          PYFI
-            python shadcn/validation/animation_baseline.py "$platform" sheet-open --strict --gif \
-              --baselines "$RUNNER_TEMP/reference" --output "$RUNNER_TEMP/repeat"
-          done
+          sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
+          if ! command -v ffmpeg >/dev/null; then brew install ffmpeg; fi
+          python3 -m pip install Pillow==11.3.0
+      - name: Capture two independent Sheet openings
+        run: |
+          bash shadcn/validation/capture_sheet_ios.sh cmp-ios "$RUNNER_TEMP/first"
+          bash shadcn/validation/capture_sheet_ios.sh cmp-ios "$RUNNER_TEMP/repeat"
+      - name: Verify the candidate frames
+        run: |
+          path="$RUNNER_TEMP/reference/cmp-ios/sheet-open"
+          mkdir -p "$path"
+          cp "$RUNNER_TEMP/first/cmp-ios/sheet-open/actual/"*.png "$path/"
+          python3 shadcn/validation/animation_baseline.py cmp-ios sheet-open --strict --gif \
+            --baselines "$RUNNER_TEMP/reference" --output "$RUNNER_TEMP/repeat"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cmp-ios-sheet-reproducibility
-          path: ${{ runner.temp }}/repeat/*/sheet-open/*.gif
+          name: cmp-ios-sheet-verification
+          path: |
+            ${{ runner.temp }}/first/cmp-ios/sheet-open/recording.mov
+            ${{ runner.temp }}/repeat/cmp-ios/sheet-open/recording.mov
+            ${{ runner.temp }}/repeat/cmp-ios/sheet-open/comparison.gif
           if-no-files-found: ignore
       - uses: actions/checkout@v4
         with:
@@ -54,23 +51,19 @@ jobs:
           ref: main
           token: ${{ secrets.COMPONENT_BASELINES_WRITE_TOKEN }}
           path: baseline-repository
-      - name: Publish only the missing Compose iOS lane
+      - name: Publish the verified Compose iOS reference
         run: |
-          for platform in cmp-ios; do
-            source="$RUNNER_TEMP/reference/$platform/sheet-open"
-            target="baseline-repository/animations/$platform/sheet-open"
-            test ! -e "$target"
-            mkdir -p "$target"
-            cp "$source/"*.png "$target/"
-            {
-              printf '# Sheet opening on %s\n\n' "$platform"
-              printf 'iPhone 17 Pro simulator, iOS 26.2, Nova light. The video trigger marker aligns samples every 16 ms through 768 ms.\n\n'
-              printf 'Initial capture: https://github.com/csdog/compose-foundation/actions/runs/46119696300\n\n'
-              printf 'Independent replay: https://github.com/csdog/compose-foundation/actions/runs/46120538588\n'
-            } > "$target/README.md"
-          done
+          target=baseline-repository/animations/cmp-ios/sheet-open
+          test ! -e "$target"
+          mkdir -p "$target"
+          cp "$RUNNER_TEMP/reference/cmp-ios/sheet-open/"*.png "$target/"
+          {
+            printf '# Sheet opening on Compose iOS\n\n'
+            printf 'iPhone 17 Pro simulator, iOS 26.2, Nova light. The trigger marker aligns samples every 16 ms through 768 ms.\n\n'
+            printf 'Capture and independent replay: %s/%s/actions/runs/%s\n' "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
+          } > "$target/README.md"
           git -C baseline-repository add -- animations/cmp-ios/sheet-open
           git -C baseline-repository -c user.name='github-actions[bot]' \
             -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
-            commit -m 'Add verified Compose iOS Sheet opening animation reference'
+            commit -m 'Add replay-verified Compose iOS Sheet opening reference'
           git -C baseline-repository push origin HEAD:main
