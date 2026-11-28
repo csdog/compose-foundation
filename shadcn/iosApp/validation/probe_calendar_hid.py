@@ -28,7 +28,7 @@ def choose(names, scroll=False, switch=False, x_fraction=0.72):
         for row in elements:
             if row.get("AXLabel") not in names or not row.get("frame"):
                 continue
-            if switch and "switch" not in str(row.get("type", "")).lower():
+            if switch and str(row.get("type", "")).lower() not in {"switch", "checkbox"}:
                 continue
             frame = row["frame"]
             if frame["width"] > 0 and frame["height"] > 0:
@@ -55,13 +55,16 @@ def enable_full_keyboard_access():
     subprocess.run(["xcrun", "simctl", "launch", device, "com.apple.Preferences"], check=True, timeout=15)
     assert wait_for("Sidebar", timeout=90) or "Accessibility" in labels(), labels()
     capture("settings-initial.png")
-    if "Accessibility" not in labels():
-        tap(choose({"Sidebar"}))
-    try:
-        tap(choose({"Accessibility"}, scroll=True, x_fraction=0.22))
-    except AssertionError:
+    if "Accessibility" in labels():
+        tap(choose({"Accessibility"}))
+    else:
+        # The simulator AX tree exposes the detail pane but omits the visible sidebar rows.
+        app = next(row["frame"] for row in rows() if row.get("type") == "Application")
+        x, y = round(app["width"] * 0.16), round(app["height"] * 0.314)
+        subprocess.run([*client, "tap", str(x), str(y)], check=True, timeout=15)
+    if not wait_for("Accessibility", timeout=8):
         capture("settings-accessibility.png")
-        raise
+        raise AssertionError(f"Settings sidebar did not open Accessibility: {sorted(labels())}")
     tap(choose({"Keyboards & Typing", "Keyboards"}, scroll=True))
     tap(choose({"Full Keyboard Access"}))
     capture("settings-full-keyboard-access.png")
