@@ -8,7 +8,11 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
     @ScaledMetric(relativeTo: .body) private var titleSize: CGFloat = 16
     @ScaledMetric(relativeTo: .subheadline) private var descriptionSize: CGFloat = 14
     @Binding private var isPresented: Bool
+    #if os(macOS)
+    @State private var pendingDismissal: Task<Void, Never>?
+    #endif
 
+    private let transitionDuration: TimeInterval = 0.20
     private let title: String
     private let description: String?
     private let edge: Edge?
@@ -104,15 +108,16 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
                         .transition(.opacity)
-                        .onDisappear {
-                            guard !isPresented else { return }
-                            DispatchQueue.main.async {
-                                if !isPresented { onDismiss() }
-                            }
-                        }
+                        .onDisappear(perform: notifyAfterDismissal)
                     }
                 })
-                .animation(reduceMotion ? nil : .easeInOut(duration: 0.20), value: isPresented)
+                .animation(reduceMotion ? nil : .easeInOut(duration: transitionDuration), value: isPresented)
+                #if os(macOS)
+                .onChange(of: isPresented) { presented in
+                    if presented { pendingDismissal?.cancel() }
+                }
+                .onDisappear { pendingDismissal?.cancel() }
+                #endif
         } else {
             content.sheet(isPresented: $isPresented, onDismiss: onDismiss) {
                 VStack(alignment: .leading, spacing: 12) {
@@ -246,6 +251,24 @@ public struct FoundationSheet<SheetContent: View>: ViewModifier {
     private func closeFromBackdrop() {
         foundationEndEditingBeforeBackdropDismissal()
         close()
+    }
+
+    private func notifyAfterDismissal() {
+        guard !isPresented else { return }
+        #if os(macOS)
+        // A departing AppKit field editor can clear focus while the edge transition is still running.
+        pendingDismissal?.cancel()
+        let delay = reduceMotion ? 0 : UInt64(transitionDuration * 1_000_000_000)
+        pendingDismissal = Task { @MainActor in
+            do { try await Task.sleep(nanoseconds: delay) } catch { return }
+            guard !Task.isCancelled, !isPresented else { return }
+            onDismiss()
+        }
+        #else
+        DispatchQueue.main.async {
+            if !isPresented { onDismiss() }
+        }
+        #endif
     }
 
     private func close() {

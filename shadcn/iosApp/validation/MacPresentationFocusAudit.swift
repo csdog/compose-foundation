@@ -183,6 +183,15 @@ struct MacPresentationFocusAudit {
                 guard await waitUntil({ !state.presented && state.dismissals == 3 && state.triggerFocused }) else {
                     fail("The backdrop did not dismiss and restore the trigger", state)
                 }
+                press(2, "d", app: app)
+                guard await waitUntil({ state.presented }) else {
+                    fail("The trigger did not receive the keyboard after backdrop dismissal", state)
+                }
+                try? await Task.sleep(for: .milliseconds(350))
+                press(53, "\u{1b}", app: app)
+                guard await waitUntil({ !state.presented && state.dismissals == 4 && state.triggerFocused }) else {
+                    fail("The presentation did not restore focus after reopening and pressing Escape", state)
+                }
                 print("PASS: \(kind.rawValue) accepts form input and backdrop dismissal")
             }
             exit(0)
