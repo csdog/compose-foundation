@@ -170,25 +170,16 @@ jobs:
         timeout-minutes: 15
         env:
           MENU_COMPONENT: ${{ inputs.component }}
-        run: |
-          brew install xcodegen
-          case "$MENU_COMPONENT" in
-            dropdown-menu) test_class=DropdownMenuUITests ;;
-            context-menu) test_class=ContextMenuUITests ;;
-            command) test_class=CommandUITests ;;
-            calendar) test_class=CalendarUITests ;;
-            *) exit 1 ;;
-          esac
-          validation=shadcn/iosApp/validation
-          xcodegen generate --spec "$validation/MenuUITests.yml"
-          device="$(xcrun simctl create 'Menu UI audit' com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro com.apple.CoreSimulator.SimRuntime.iOS-26-2)"
-          trap 'xcrun simctl delete "$device" || true' EXIT
-          xcrun simctl boot "$device"
-          xcodebuild test -project "$validation/ComposeFoundationAudit.xcodeproj" \
-            -scheme MenuAudit -destination "platform=iOS Simulator,id=$device" \
-            -only-testing:"MenuUITests/$test_class" -parallel-testing-enabled NO \
-            -resultBundlePath "$RUNNER_TEMP/menu-interaction.xcresult" \
-            CODE_SIGNING_ALLOWED=NO
+        run: bash shadcn/iosApp/validation/probe_calendar_hid.sh
+      - name: Save iPad hardware-keyboard screenshots
+        if: ${{ !cancelled() && env.MENU_INTERACTION == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: swiftui-calendar-hardware-keyboard
+          retention-days: 7
+          path: ${{ runner.temp }}/calendar-hid/
+          if-no-files-found: ignore
+
       - name: Export menu interaction screenshots
         if: ${{ !cancelled() && env.MENU_INTERACTION == 'true' }}
         run: |
