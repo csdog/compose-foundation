@@ -395,12 +395,12 @@ private struct FoundationMenuGroupButton: View {
                         .accessibilityHidden(true)
                 }
             }
-                .padding(.horizontal, style == .novaMenubar ? 6 : 10)
-                .frame(maxWidth: fillsWidth ? .infinity : nil, minHeight: hitHeight, alignment: .leading)
-                .foregroundColor(enabled ? palette.foreground : palette.mutedForeground)
-                .background(shape.fill(activeFill))
-                .overlay(shape.strokeBorder(focused ? palette.ring : .clear, lineWidth: 2).allowsHitTesting(false))
-                .contentShape(Rectangle())
+            .padding(.horizontal, style == .novaMenubar ? 6 : 10)
+            .frame(maxWidth: fillsWidth ? .infinity : nil, minHeight: hitHeight, alignment: .leading)
+            .foregroundColor(enabled ? palette.foreground : palette.mutedForeground)
+            .background(shape.fill(activeFill))
+            .overlay(shape.strokeBorder(focused ? palette.ring : .clear, lineWidth: 2).allowsHitTesting(false))
+            .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(!enabled)

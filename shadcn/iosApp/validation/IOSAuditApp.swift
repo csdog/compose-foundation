@@ -891,10 +891,14 @@ private struct NavigationMenuScreenshotFixture: View {
         ]
         return FoundationNavigationMenu {
             FoundationMenuGroups(groups: groups, spacing: 16, novaStyle: .novaNavigation)
-            Button(rightToLeft ? "الوثائق" : "Docs") {}
-                .buttonStyle(PlainButtonStyle())
-                .padding(.horizontal, 10)
-                .frame(minHeight: 44)
+            Link(destination: URL(string: "https://ui.shadcn.com/docs")!) {
+                Text(rightToLeft ? "الوثائق" : "Docs")
+                    .foregroundColor(theme.palette(for: scheme).foreground)
+                    .padding(.horizontal, 10)
+                    .frame(minHeight: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(PlainButtonStyle())
         }
         .frame(width: rightToLeft ? 216 : 320)
         .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
