@@ -12,10 +12,11 @@ public struct FoundationSeparator: View {
     }
 
     public var body: some View {
-        Rectangle()
+        let thickness = theme.preset == .nova ? 1 : 1 / displayScale
+        return Rectangle()
             .fill(theme.palette(for: colorScheme).border)
-            .frame(width: axis == .vertical ? 1 / displayScale : nil,
-                   height: axis == .horizontal ? 1 / displayScale : nil)
+            .frame(width: axis == .vertical ? thickness : nil,
+                   height: axis == .horizontal ? thickness : nil)
             .accessibilityHidden(true)
     }
 }

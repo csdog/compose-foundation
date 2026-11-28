@@ -138,6 +138,14 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
 
         let outputDirectory = try prepareOutputDirectory()
         let popoverCases = try names.contains("popover") ? loadPopoverCases() : []
+        if popoverCases.isEmpty && !names.isDisjoint(with: ["badge", "separator"]) {
+            for name in ["geist_medium", "geist_regular"] {
+                if let font = Bundle.main.url(forResource: name, withExtension: "ttf"),
+                   !CTFontManagerRegisterFontsForURL(font as CFURL, .process, nil) {
+                    throw CocoaError(.fileReadCorruptFile, userInfo: [NSFilePathErrorKey: font.path])
+                }
+            }
+        }
         var count = 0
         for name in names.sorted() {
             if name == "popover", !popoverCases.isEmpty {
@@ -155,11 +163,13 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 let scheme: ColorScheme = dark ? .dark : .light
                 let palette = FoundationTheme().palette(for: scheme)
                 window.overrideUserInterfaceStyle = dark ? .dark : .light
-                let useComparisonViewport = name == "tabs" || name == "button"
+                let useComparisonViewport = ["tabs", "button", "badge", "separator"].contains(name)
                 let content: AnyView
                 switch name {
                 case "tabs": content = AnyView(TabsInitialScreenshotFixture())
                 case "button": content = AnyView(ButtonInitialScreenshotFixture())
+                case "badge": content = AnyView(BadgeInitialScreenshotFixture())
+                case "separator": content = AnyView(SeparatorInitialScreenshotFixture())
                 default:
                     content = AnyView(fixture().padding(16)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -604,6 +614,63 @@ private struct ButtonInitialScreenshotFixture: View {
         .padding(.top, 18)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct BadgeInitialScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        var light = FoundationPalette.neutralLight
+        light.primary = .black
+        light.foreground = .black
+        let theme = FoundationTheme(preset: .nova, light: light)
+        return HStack(spacing: 8) {
+            FoundationBadge { Text("Badge") }
+            FoundationBadge(.secondary) { Text("Secondary") }
+            FoundationBadge(.destructive) { Text("Destructive") }
+            FoundationBadge(.outline) { Text("Outline") }
+        }
+        .environment(\.font, .custom("Geist-Medium", size: 12))
+        .foundationTheme(theme)
+        .padding(.top, 24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
+    }
+}
+
+private struct SeparatorInitialScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        let theme = FoundationTheme(preset: .nova)
+        let palette = theme.palette(for: scheme)
+        let foreground: Color = scheme == .light ? .black : palette.foreground
+        return VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("shadcn/ui")
+                    .font(.custom("Geist-Medium", size: 14))
+                    .foregroundColor(foreground)
+                    .frame(height: 14)
+                Text("The Foundation for your Design System")
+                    .foregroundColor(palette.mutedForeground)
+                    .frame(height: 20)
+            }
+            FoundationSeparator()
+            Text("A set of beautifully designed components that you can customize, extend, and build on.")
+                .foregroundColor(foreground)
+                .lineSpacing(3)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .font(.custom("Geist-Regular", size: 14))
+        .frame(width: 384, alignment: .leading)
+        .foundationTheme(theme)
+        .padding(.leading, 18)
+        .padding(.top, 24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(palette.background)
         .ignoresSafeArea()
     }
 }

@@ -23,6 +23,12 @@ Button 的字号由 `Size` 决定，省略尺寸时走主题字体，Sera 使用
 
 iPhone 17 Pro（iOS 26.2）上两轮各四张原图逐文件一致。复验确认默认深色 Tabs 的选中填充为 `#2f2f2f`。shadcn 和 SwiftUI 在文字抗锯齿及轮廓边缘仍有像素差异。macOS Swift Package 构建通过。[验证运行](https://github.com/csdog/compose-foundation/actions/runs/45993072773) · [四张原图及差异](https://github.com/csdog/compose-foundation/actions/runs/45993072773/artifacts/15194918019)
 
+### Badge 和 Separator 初始态
+
+Badge 对照官方 Nova 示例的 Default、Secondary、Destructive、Outline 整行。Separator 对照标题、分隔线和下方两行正文。需要逻辑像素对照时，从上游原图分别以 x=159、x=6 裁取 402 × 520 区域，完整保留所有可见内容。
+
+iPhone 17 Pro（iOS 26.2）上浅色和深色各拍两遍。四张原图逐文件一致。差异主要集中在文字边缘、圆角抗锯齿及正文基线。macOS Swift Package 构建通过。[验证运行](https://github.com/csdog/compose-foundation/actions/runs/45994534289) · [四张实拍及 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/45994534289/artifacts/15196185208)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
