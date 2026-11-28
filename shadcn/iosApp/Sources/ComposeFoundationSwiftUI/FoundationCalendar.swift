@@ -191,27 +191,35 @@ public struct FoundationCalendar: View {
             let yearFirst = pattern.first(where: { "yYuML".contains($0) }).map { "yYu".contains($0) } ?? false
             let chooseMonth = captionLayout.selectsMonth
             let chooseYear = captionLayout.selectsYear
-            let monthControl = captionControl(
-                monthText.string(from: month), label: Text("Month for \(title)"), isMenu: chooseMonth
-            ) {
-                ForEach(navigation.months(inYearOf: month), id: \.self) { destination in
-                    Button(monthText.string(from: destination)) {
+            let monthSelection = Binding(
+                get: { month },
+                set: { visibleDate = navigation.anchor(showing: $0, at: offset) }
+            )
+            let yearSelection = Binding(
+                get: { calendar.dateInterval(of: .year, for: month)?.start ?? month },
+                set: { year in
+                    if let destination = navigation.month(inYearOf: year, matching: month) {
                         visibleDate = navigation.anchor(showing: destination, at: offset)
                     }
                 }
-            }
-            let yearControl = captionControl(
-                yearText.string(from: month), label: Text("Year for \(title)"), isMenu: chooseYear
+            )
+            let monthControl = captionControl(
+                monthText.string(from: month), label: Text("Month for \(title)"), isMenu: chooseMonth,
+                selection: monthSelection
             ) {
-                ForEach(navigation.yearOptions(including: month), id: \.self) { year in
-                    Button(yearText.string(from: year)) {
-                        if let destination = navigation.month(inYearOf: year, matching: month) {
-                            visibleDate = navigation.anchor(showing: destination, at: offset)
-                        }
-                    }
+                ForEach(navigation.months(inYearOf: month), id: \.self) { destination in
+                    Text(monthText.string(from: destination)).tag(destination)
                 }
             }
-            HStack(spacing: 8) {
+            let yearControl = captionControl(
+                yearText.string(from: month), label: Text("Year for \(title)"), isMenu: chooseYear,
+                selection: yearSelection
+            ) {
+                ForEach(navigation.yearOptions(including: month), id: \.self) { year in
+                    Text(yearText.string(from: year)).tag(year)
+                }
+            }
+            HStack(spacing: isNova ? 6 : 8) {
                 if yearFirst {
                     yearControl
                     monthControl
@@ -226,14 +234,22 @@ public struct FoundationCalendar: View {
 
     @ViewBuilder
     private func captionControl<Options: View>(
-        _ title: String, label: Text, isMenu: Bool, @ViewBuilder options: () -> Options
+        _ title: String, label: Text, isMenu: Bool, selection: Binding<Date>,
+        @ViewBuilder options: () -> Options
     ) -> some View {
         if isMenu {
-            Menu(content: options) {
+            Menu {
+                Picker(selection: selection, content: options) { label }
+                    .pickerStyle(InlinePickerStyle())
+            } label: {
                 HStack(spacing: 4) {
                     Text(title)
-                    #if !os(macOS)
-                    Image(systemName: "chevron.down").font(.caption2).accessibilityHidden(true)
+                    #if os(iOS)
+                    Image(systemName: "chevron.down")
+                        .font(isNova ? .system(size: 10, weight: .medium) : .caption2)
+                        .foregroundColor(isNova ? theme.palette(for: colorScheme).mutedForeground : nil)
+                        .frame(width: isNova ? 14 : nil)
+                        .accessibilityHidden(true)
                     #endif
                 }
                 .frame(minHeight: 44)

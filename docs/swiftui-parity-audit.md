@@ -294,6 +294,14 @@ iPad mini（A17 Pro，iOS 26.2）以 720 × 520 采集默认选中、基础月�
 
 macOS 实际窗口中点击禁用日期，绑定保持原值。有效日期更新绑定，翻到有效月份后可继续选日期，到达日期上限所在月份后停止翻页。状态回归同时覆盖跨月选区、月份年份导航、周起始日和首尾周。完整 SwiftUI 包在 macOS 构建通过。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46083621121/job/140788138648)
 
+#### Calendar 月份和年份菜单
+
+Nova 的月份、年份触发器采用 6 pt 间距和末尾指示图标，iOS 保留至少 44 pt 高的触控区。选项由原生单选菜单呈现，当前月份和年份对应各菜单的选择值。切换菜单只移动可见月份，日期区间绑定及边界沿用原有规则。样式以基准仓库的官方预览截图为准。固定源码的 Nova CSS 声明了触发器边框，已采集的官方预览使用无边框外观。[固定源码](https://github.com/shadcn-ui/ui/blob/0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4/apps/v4/examples/base/calendar-caption.tsx) · [官方示例](https://ui.shadcn.com/examples/base/calendar-caption)
+
+iPad mini（A17 Pro，iOS 26.2）复拍五个用例的 10 张深浅色图，均逐字节一致。基础月历和双月区间的四张图与上轮像素相同，其余六张的变化仅位于月份、年份标题。macOS Swift Package 编译和 LTR/RTL 日期导航回归通过。[截图与 shadcn 差异](https://github.com/csdog/compose-foundation/actions/runs/46111415465/artifacts/15249971385) · [macOS 回归](https://github.com/csdog/compose-foundation/actions/runs/46111415465/job/140875608206)
+
+iPhone 17 Pro（iOS 26.2）的 XCUITest 验证了触发器名称及当前值、菜单当前项的选中语义、月份和年份的触控切换、日期区间绑定保留，以及边界外选项不可用。两个展开态保留 iOS 系统菜单样式。实际 VoiceOver 朗读仍待验收。[iOS 交互回归](https://github.com/csdog/compose-foundation/actions/runs/46111945303/job/140877342187) · [月份和年份展开截图](https://github.com/csdog/compose-foundation/actions/runs/46111945303/artifacts/15250770536)
+
 ### Calendar Nova 双月区间与阿拉伯语 RTL
 
 对照 `calendar-range.tsx` 和 `calendar-rtl.tsx`。双月区间固定为 2026 年 1 月 12 日到 2 月 11 日。`FoundationCalendar(range:initialMonth:numberOfMonths:)` 可以指定首个月份，原有绑定和范围初始化方式仍可使用。Nova 区间端点在本周本月内连接到相邻的已选日期。未完成区间、同日区间与周月交界处的端点独立显示。
@@ -441,7 +449,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | bubble | 支持 incoming、outgoing、muted 内容气泡。缺少气泡组及定位在气泡边缘的 reactions。 |
 | button | 六种颜色变体、禁用、按压反馈和内容 slot。Compose 另有尺寸、图标位置、焦点环和多种按压动画。 |
 | button-group | 支持纵向和横向布局。iOS 18、macOS 15 起，Nova 的 FoundationButtonStyle 子项合并相邻圆角和边框。分隔符、文本项及子项焦点层级仍待对齐。 |
-| calendar | 支持本地化单月和连续多月、单选、区间、多选及月份年份菜单。Nova 已接入单月和双月区间截图，以及阿拉伯语 RTL。月份年份菜单开合和 VoiceOver 的 Nova 验收待补。 |
+| calendar | 支持本地化单月和连续多月、单选、区间、多选及月份年份菜单。Nova 已验收单月、双月区间、RTL 截图，以及 iPhone 上菜单当前值、选中项和触控切换。实际 VoiceOver 朗读待验收。 |
 | card | 支持主题背景、边框、常规与紧凑尺寸，以及独立的底部操作区。头部、图片与关联操作可通过内容构建器组合。边缘贴图和 RTL 尚待对照。 |
 | carousel | 当前页和相邻页随横向拖动移动，松手后吸附。支持 RTL、底部或侧边翻页、页码无障碍调节和减少动态效果。Nova 已接入默认与 RTL 初始态截图。纵向、部分页宽及分页圆点待对齐。 |
 | chart | 支持柱形、折线、面积、多序列和选点摘要。Compose 的独立图例、工具提示、序列主题配置和 indicator 选项未移植。 |

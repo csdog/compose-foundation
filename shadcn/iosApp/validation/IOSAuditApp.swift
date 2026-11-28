@@ -27,7 +27,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         }
 
         if ProcessInfo.processInfo.arguments.contains("--calendar-navigation") {
-            window.rootViewController = UIHostingController(rootView: ScrollView { CalendarNavigationFixture() })
+            window.rootViewController = UIHostingController(rootView: ScrollView {
+                CalendarNavigationFixture()
+            }.foundationTheme(FoundationTheme(preset: .nova)))
             window.makeKeyAndVisible()
             return
         }
