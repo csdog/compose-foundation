@@ -6,14 +6,29 @@ private final class ContextMenuProbe: NSObject {
     var reloaded = 0
     var opened = false
     var disabledForward = false
+    var windowNumber = 0
 
     @objc func track(_ notification: Notification) {
         guard let menu = notification.object as? NSMenu,
-              let reload = menu.items.firstIndex(where: { $0.title == "Reload" }) else { return }
+              menu.items.contains(where: { $0.title == "Reload" }) else { return }
         opened = true
         disabledForward = menu.items.contains { $0.title == "Forward" && !$0.isEnabled }
-        menu.performActionForItem(at: reload)
-        menu.cancelTracking()
+        let timeout = Timer(timeInterval: 1.5, target: self, selector: #selector(cancel(_:)),
+                            userInfo: menu, repeats: false)
+        RunLoop.main.add(timeout, forMode: .eventTracking)
+        for (code, key): (UInt16, String) in [(125, "\u{F701}"), (125, "\u{F701}"), (36, "\r")] {
+            for type in [NSEvent.EventType.keyDown, .keyUp] {
+                if let event = NSEvent.keyEvent(
+                    with: type, location: .zero, modifierFlags: [],
+                    timestamp: ProcessInfo.processInfo.systemUptime, windowNumber: windowNumber, context: nil,
+                    characters: key, charactersIgnoringModifiers: key, isARepeat: false, keyCode: code
+                ) { NSApp.postEvent(event, atStart: false) }
+            }
+        }
+    }
+
+    @objc func cancel(_ timer: Timer) {
+        (timer.userInfo as? NSMenu)?.cancelTracking()
     }
 }
 
@@ -36,6 +51,7 @@ enum MacContextMenuAudit {
         app.setActivationPolicy(.regular)
         window.center()
         window.makeKeyAndOrderFront(nil)
+        probe.windowNumber = window.windowNumber
         NotificationCenter.default.addObserver(probe, selector: #selector(ContextMenuProbe.track(_:)),
                                                name: NSMenu.didBeginTrackingNotification, object: nil)
 
@@ -57,7 +73,7 @@ enum MacContextMenuAudit {
             guard probe.opened else { fail("The outline did not open a native menu after right-click") }
             guard probe.disabledForward else { fail("Forward was not marked disabled in the native menu") }
             guard probe.reloaded == 1 else { fail("The Reload menu action did not execute exactly once") }
-            print("PASS: Context Menu opens from blank outline space and exposes native action state")
+            print("PASS: Context Menu opens from blank outline space and skips a disabled item with Down and Return")
             exit(0)
         }
         app.run()
