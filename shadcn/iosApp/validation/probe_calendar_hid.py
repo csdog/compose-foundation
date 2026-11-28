@@ -66,12 +66,13 @@ def enable_full_keyboard_access():
         capture("settings-accessibility.png")
         raise AssertionError(f"Settings sidebar did not open Accessibility: {sorted(labels())}")
     tap(choose({"Keyboards & Typing", "Keyboards"}, scroll=True))
-    tap(choose({"Full Keyboard Access"}))
+    tap(choose({"Full Keyboard Access", "Full Keyboard Access, Off", "Full Keyboard Access, On"}))
     capture("settings-full-keyboard-access.png")
-    toggle = choose({"Full Keyboard Access"}, switch=True)
+    options = {"Full Keyboard Access", "Full Keyboard Access, Off", "Full Keyboard Access, On"}
+    toggle = choose(options, switch=True)
     if str(toggle.get("AXValue")).lower() not in {"1", "on", "true"}:
         tap(toggle)
-    enabled = choose({"Full Keyboard Access"}, switch=True)
+    enabled = choose(options, switch=True)
     assert str(enabled.get("AXValue")).lower() in {"1", "on", "true"}, enabled
     print("Enabled Full Keyboard Access in iPad Settings", flush=True)
 
