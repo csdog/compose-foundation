@@ -594,6 +594,23 @@
       "accessibility": "review native semantics",
       "motion": "verify independently of static capture"
     },
+    "chart": {
+      "title": "Chart",
+      "variant": "example-axis",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "example-axis", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/examples/base/chart-example-axis.tsx",
+      "visual": "compare the six-month bar chart, horizontal guide lines and month labels",
+      "behavior": "optionally format the horizontal axis and set the minimum positive extent",
+      "accessibility": "existing adjustable point selection with full month and series names",
+      "motion": "static settled frames"
+    },
     "progress": {
       "title": "Progress",
       "variant": "default",

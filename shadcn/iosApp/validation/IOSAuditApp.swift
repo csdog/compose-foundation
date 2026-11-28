@@ -182,6 +182,9 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "chart": [
+                ("chart-example-axis-initial", { AnyView(ChartAxesScreenshotFixture()) }),
+            ],
             "theme": FoundationStylePreset.allCases.map { preset in
                 ("theme-\(preset.rawValue)-initial", { AnyView(ThemePresetScreenshotFixture(preset: preset)) })
             },
@@ -3530,6 +3533,26 @@ private struct SwitchScreenshotFixture: View {
             .padding(.top, 11)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(theme.palette(for: scheme).background)
+            .ignoresSafeArea()
+    }
+}
+
+private struct ChartAxesScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    @State private var selection: Int?
+
+    var body: some View {
+        let theme = FoundationTheme(preset: .nova)
+        FoundationChart(labels: ["January", "February", "March", "April", "May", "June"], series: [
+            .init("Desktop", values: [186, 305, 237, 73, 209, 214], color: Color(.sRGB, red: 37 / 255, green: 99 / 255, blue: 235 / 255)),
+            .init("Mobile", values: [80, 200, 120, 190, 130, 140], color: Color(.sRGB, red: 96 / 255, green: 165 / 255, blue: 250 / 255)),
+        ], selection: $selection, axes: FoundationChart.Axes(preferredUpperBound: 320) { String($0.prefix(3)) })
+            .frame(width: 662, height: 364)
+            .padding(.leading, 29)
+            .padding(.top, 29)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(theme.palette(for: scheme).background)
+            .foundationTheme(theme)
             .ignoresSafeArea()
     }
 }
