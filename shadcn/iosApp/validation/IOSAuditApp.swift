@@ -174,7 +174,6 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "badge": { AnyView(BadgeInitialScreenshotFixture()) },
             "button": { AnyView(ButtonInitialScreenshotFixture()) },
             "separator": { AnyView(SeparatorInitialScreenshotFixture()) },
-            "kbd": { AnyView(StatusInitialScreenshotFixture(example: .kbd)) },
             "skeleton": { AnyView(StatusInitialScreenshotFixture(example: .skeleton)) },
             "spinner": { AnyView(StatusInitialScreenshotFixture(example: .spinner)) },
             "progress": { AnyView(StatusInitialScreenshotFixture(example: .progress)) },
@@ -182,6 +181,12 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         ]
         typealias Capture = (filename: String, content: (() -> AnyView)?)
         let variantFixtures: [String: [Capture]] = [
+            "kbd": [
+                ("kbd-default-initial", { AnyView(StatusInitialScreenshotFixture(example: .kbd)) }),
+                ("kbd-rtl-initial", {
+                    AnyView(StatusInitialScreenshotFixture(example: .kbd).environment(\.layoutDirection, .rightToLeft))
+                }),
+            ],
             "theme": FoundationStylePreset.allCases.map { preset in
                 ("theme-\(preset.rawValue)-initial", { AnyView(ThemePresetScreenshotFixture(preset: preset)) })
             },
@@ -3550,12 +3555,12 @@ private struct StatusInitialScreenshotFixture: View {
             switch example {
             case .kbd:
                 VStack(spacing: 18) {
-                    HStack(spacing: 4) {
+                    FoundationKbdGroup {
                         ForEach(["⌘", "⇧", "⌥", "⌃"], id: \.self) { FoundationKbd($0) }
                     }
-                    HStack(spacing: 4) {
+                    FoundationKbdGroup {
                         FoundationKbd("Ctrl")
-                        Text("+").font(.custom("Geist-Regular", size: 14))
+                        Text("+").font(.custom("Geist-Regular", size: 14)).accessibilityHidden(true)
                         FoundationKbd("B")
                     }
                 }

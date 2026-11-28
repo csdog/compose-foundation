@@ -91,7 +91,12 @@ enum SwiftUIAuditFixtures {
             "input-otp": { AnyView(FoundationInputOtp(code: .constant("123"))) },
             "item": { AnyView(FoundationItem("Report", description: "Ready for review") { Image(systemName: "doc") }
                 actions: { Button("Open") {} }) },
-            "kbd": { AnyView(FoundationKbd("⌘K")) },
+            "kbd": {
+                AnyView(FoundationKbdGroup {
+                    FoundationKbd("⌘")
+                    FoundationKbd("K")
+                })
+            },
             "label": { AnyView(FoundationLabel("Name")) },
             "marker": { AnyView(FoundationMarker("Today", variant: .separator)) },
             "menubar": { AnyView(FoundationMenubar { Menu("File") { Button("New") {} } }) },

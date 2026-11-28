@@ -484,7 +484,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | input-group | 支持横向和纵向附加区域、共用边框与由调用方控制的焦点/错误外观。输入和操作可通过原生 SwiftUI 控件组合。 |
 | input-otp | 使用一个定长数字绑定和原生编辑字段，iOS 字段标记为一次性验证码。Nova 使用连续的 32 pt 格，可通过 `groupBreaks` 加入分隔符。字母数字模式及逐槽选区控制仍待补齐。 |
 | item | 支持媒体、标题、说明、操作、三种表面样式和三种尺寸。群组、图片媒体尺寸和独立 header/footer 待对齐。 |
-| kbd | 显示单个键符及 themed 键帽。Compose 另有组合键分组 slot。 |
+| kbd | 支持主题键帽及 `FoundationKbdGroup` 组合键分组。组内使用 4 pt 间距，可组合键帽和分隔符，并按系统布局方向排列。组合在无障碍树中使用合并语义，实际 VoiceOver 朗读待验。 |
 | label | Nova 标签使用 14 pt Medium，支持禁用淡化。作为原生 Toggle 的内容时，文字和复选框使用同一绑定。独立表单标签的焦点关联待补齐。 |
 | marker | plain、separator、border 三种文本标记。缺少 Compose 的独立图标和内容 slots。 |
 | menubar | 分组入口支持共享打开状态、键盘移动、跳过禁用项、Return 执行和 Escape 关闭。Nova 菜单栏覆盖默认和阿拉伯语 RTL。展开面板对照、子菜单、复选和单选项待补齐。 |
