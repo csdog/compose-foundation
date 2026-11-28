@@ -24,8 +24,8 @@ jobs:
           for platform in jetpack-compose; do
             base="$RUNNER_TEMP/reference/$platform/sheet-open"
             candidate="$RUNNER_TEMP/repeat/$platform/sheet-open/actual"
-            gh run download 46119244198 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$base"
-            gh run download 46119696300 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$candidate"
+            gh run download 46119696300 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$base"
+            gh run download 46120083893 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$candidate"
             python - "$base" "$candidate" <<'PYFI'
           import sys
           from pathlib import Path
@@ -65,8 +65,8 @@ jobs:
             {
               printf '# Sheet opening on %s\n\n' "$platform"
               printf 'API 35 x86_64 Android emulator, Pixel 7 profile, Nova light. The Compose test clock samples every 16 ms through 480 ms.\n\n'
-              printf 'Initial capture: https://github.com/csdog/compose-foundation/actions/runs/46119244198\n\n'
-              printf 'Independent replay: https://github.com/csdog/compose-foundation/actions/runs/46119696300\n'
+              printf 'Initial capture: https://github.com/csdog/compose-foundation/actions/runs/46119696300\n\n'
+              printf 'Independent replay: https://github.com/csdog/compose-foundation/actions/runs/46120083893\n'
             } > "$target/README.md"
           done
           git -C baseline-repository add -- animations/jetpack-compose/sheet-open
