@@ -294,6 +294,12 @@ iPad mini（A17 Pro，iOS 26.2）以 720 × 520 采集默认选中、基础月�
 
 macOS 实际窗口中点击禁用日期，绑定保持原值。有效日期更新绑定，翻到有效月份后可继续选日期，到达日期上限所在月份后停止翻页。状态回归同时覆盖跨月选区、月份年份导航、周起始日和首尾周。完整 SwiftUI 包在 macOS 构建通过。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46083621121/job/140788138648)
 
+#### Calendar 月份和年份菜单
+
+Nova 的月份、年份触发器采用 6 pt 间距和末尾指示图标，iOS 保留至少 44 pt 高的触控区。选项由原生单选菜单呈现，当前月份和年份对应各菜单的选择值。切换菜单只移动可见月份，日期区间绑定及边界沿用原有规则。样式以基准仓库的官方预览截图为准。固定源码的 Nova CSS 声明了触发器边框，已采集的官方预览使用无边框外观。[固定源码](https://github.com/shadcn-ui/ui/blob/0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4/apps/v4/examples/base/calendar-caption.tsx) · [官方示例](https://ui.shadcn.com/examples/base/calendar-caption)
+
+iPad mini（A17 Pro，iOS 26.2）复拍五个用例的 10 张深浅色图，均逐字节一致。基础月历和双月区间的四张图与上轮像素相同，其余六张的变化仅位于月份、年份标题。macOS Swift Package 编译和 LTR/RTL 日期导航回归通过。[截图与 shadcn 差异](https://github.com/csdog/compose-foundation/actions/runs/46111415465/artifacts/15249971385) · [macOS 回归](https://github.com/csdog/compose-foundation/actions/runs/46111415465/job/140875608206)
+
 ### Calendar Nova 双月区间与阿拉伯语 RTL
 
 对照 `calendar-range.tsx` 和 `calendar-rtl.tsx`。双月区间固定为 2026 年 1 月 12 日到 2 月 11 日。`FoundationCalendar(range:initialMonth:numberOfMonths:)` 可以指定首个月份，原有绑定和范围初始化方式仍可使用。Nova 区间端点在本周本月内连接到相邻的已选日期。未完成区间、同日区间与周月交界处的端点独立显示。

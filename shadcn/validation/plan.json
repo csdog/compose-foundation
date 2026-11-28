@@ -175,8 +175,8 @@
       },
       "reference": "apps/v4/examples/base/calendar-demo.tsx",
       "visual": "compare the Nova day grid, month/year captions, the two-month range, and Arabic RTL",
-      "behavior": "navigate months, select dates, and preserve selection and navigation bounds",
-      "accessibility": "named navigation buttons and date labels with selected states",
+      "behavior": "navigate through month and year menus without changing the date selection, and preserve navigation bounds",
+      "accessibility": "named caption controls with current values, selected menu options, and selected dates",
       "motion": "static settled frames"
     },
     "sheet": {
