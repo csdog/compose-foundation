@@ -167,6 +167,15 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         guard names.isSubset(of: fixtures.keys) else {
             throw CocoaError(.fileReadCorruptFile, userInfo: [NSLocalizedDescriptionKey: "Unknown audit component"])
         }
+        let casePrefix = "--audit-case="
+        var requestedCases: [String: Set<String>] = [:]
+        for argument in ProcessInfo.processInfo.arguments where argument.hasPrefix(casePrefix) {
+            let parts = argument.dropFirst(casePrefix.count).split(separator: ":", maxSplits: 1)
+            guard parts.count == 2, names.contains(String(parts[0])) else {
+                throw CocoaError(.fileReadCorruptFile, userInfo: [NSLocalizedDescriptionKey: "Invalid audit case"])
+            }
+            requestedCases[String(parts[0]), default: []].insert(String(parts[1]))
+        }
 
         let outputDirectory = try prepareOutputDirectory()
         let comparisonFixtures: [String: () -> AnyView] = [
@@ -289,6 +298,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             "field": [
                 ("field-input-initial", { AnyView(LabelFieldScreenshotFixture(example: .input)) }),
                 ("field-textarea-initial", { AnyView(LabelFieldScreenshotFixture(example: .textarea)) }),
+                ("field-fieldset-initial", { AnyView(LabelFieldScreenshotFixture(example: .fieldset)) }),
             ],
             "button-group": [
                 ("button-group-size-initial", { AnyView(ButtonGroupScreenshotFixture(vertical: false)) }),
@@ -362,8 +372,11 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         let viewports = useComparisonFixtures ? try loadComparisonViewports() : [:]
         var count = 0
         for name in names.sorted() {
+            let allowedCases = requestedCases[name]
             if name == "popover", !popoverCases.isEmpty {
                 for item in popoverCases {
+                    let filename = "popover-\(item.variant.rawValue)-\(item.status.rawValue)"
+                    if allowedCases?.contains(filename) == false { continue }
                     for dark in [false, true] {
                         try await capturePopover(item, dark: dark, root: root, window: window,
                                                  outputDirectory: outputDirectory)
@@ -375,6 +388,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             if name == "hover-card", useComparisonFixtures {
                 for isOpen in [false, true] {
                     let filename = "hover-card-default-\(isOpen ? "open" : "initial")"
+                    if allowedCases?.contains(filename) == false { continue }
                     guard let viewport = viewports[filename] else { throw CocoaError(.fileReadCorruptFile) }
                     for dark in [false, true] {
                         try await captureFloatingPanel(filename: filename, isOpen: isOpen, viewport: viewport,
@@ -394,6 +408,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 captures = [(name, useComparisonFixtures ? comparisonFixtures[name] : nil)]
             }
             for (filename, comparisonFixture) in captures {
+                if allowedCases?.contains(filename) == false { continue }
                 for dark in [false, true] {
                     let scheme: ColorScheme = dark ? .dark : .light
                     let palette = FoundationTheme().palette(for: scheme)
@@ -2660,7 +2675,7 @@ private struct CardScreenshotFixture: View {
 }
 
 private struct LabelFieldScreenshotFixture: View {
-    enum Example { case label, input, textarea }
+    enum Example { case label, input, textarea, fieldset }
 
     let example: Example
     @Environment(\.colorScheme) private var scheme
@@ -2668,6 +2683,9 @@ private struct LabelFieldScreenshotFixture: View {
     @State private var username = ""
     @State private var password = ""
     @State private var feedback = ""
+    @State private var street = ""
+    @State private var city = ""
+    @State private var postalCode = ""
 
     var body: some View {
         var light = FoundationPalette.neutralLight
@@ -2704,6 +2722,18 @@ private struct LabelFieldScreenshotFixture: View {
                 }
                 .font(.custom("Geist-Regular", size: 14))
                 .frame(width: 320)
+            case .fieldset:
+                FoundationFieldSet("Address Information", description: "We need your address to deliver your order.") {
+                    FoundationFieldGroup {
+                        addressField("Street Address", text: $street, placeholder: "123 Main St")
+                        HStack(alignment: .top, spacing: 16) {
+                            addressField("City", text: $city, placeholder: "New York")
+                            addressField("Postal Code", text: $postalCode, placeholder: "90502")
+                        }
+                    }
+                }
+                .font(.custom("Geist-Medium", size: 16))
+                .frame(width: 384)
             }
         }
         .foundationTheme(theme)
@@ -2715,6 +2745,15 @@ private struct LabelFieldScreenshotFixture: View {
     }
 
     private var editorFont: Font { .custom("Geist-Regular", size: 16) }
+
+    private func addressField(_ title: String, text: Binding<String>, placeholder: String) -> some View {
+        FoundationField(title) {
+            FoundationInput(title, text: text, placeholder: placeholder)
+                .font(editorFont)
+        }
+        .font(.custom("Geist-Regular", size: 14))
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
 }
 
 private struct ButtonGroupScreenshotFixture: View {
