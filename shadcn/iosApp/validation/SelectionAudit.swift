@@ -37,8 +37,17 @@ enum SelectionAudit {
         try expect(range.value.presentation(of: middle, calendar: calendar) == .rangeInterior, "Interior is highlighted across DST")
         try expect(range.value.presentation(of: last, calendar: calendar) == .rangeEnd, "End has endpoint styling")
         try expect(range.value.presentation(of: outside, calendar: calendar) == .ordinary, "Outside days are not highlighted")
+        try expect(range.value.endpointConnection(for: .rangeStart, on: first, column: 5, calendar: calendar) == .next,
+                   "A range start connects to the following date in its week")
+        try expect(range.value.endpointConnection(for: .rangeEnd, on: last, column: 2, calendar: calendar) == .previous,
+                   "A range end connects to the previous date in its week")
+        let sundayEnd = FoundationCalendarSelection.range(.init(start: first, end: middle))
+        try expect(sundayEnd.endpointConnection(for: .rangeEnd, on: middle, column: 0, calendar: calendar) == nil,
+                   "A Sunday endpoint does not connect across week rows")
         selectRange(laterOnMiddle)
         try expect(selectedRange == FoundationCalendarRange(start: middle), "A completed range starts over on the next click")
+        try expect(range.value.endpointConnection(for: .rangeStart, on: middle, column: 0, calendar: calendar) == nil,
+                   "An unfinished range has no connection")
         selectRange(middle)
         try expect(range.value.presentation(of: middle, calendar: calendar) == .singleDayRange, "Same-day range is complete")
 

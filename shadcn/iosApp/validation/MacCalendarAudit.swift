@@ -19,6 +19,7 @@ private final class CalendarAuditState: ObservableObject {
 
 private struct CalendarAuditFixture: View {
     @ObservedObject var state: CalendarAuditState
+    let rightToLeft: Bool
 
     var body: some View {
         VStack(spacing: 0) {
@@ -28,7 +29,8 @@ private struct CalendarAuditFixture: View {
         }
         .frame(width: 360, height: 390)
         .environment(\.calendar, CalendarAuditState.calendar)
-        .environment(\.locale, Locale(identifier: "en_US"))
+        .environment(\.locale, Locale(identifier: rightToLeft ? "ar_SA" : "en_US"))
+        .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
         .foundationTheme(FoundationTheme(preset: .nova))
     }
 }
@@ -38,10 +40,11 @@ enum MacCalendarAudit {
     static func main() {
         let app = NSApplication.shared
         let state = CalendarAuditState()
+        let rightToLeft = CommandLine.arguments.contains("--rtl")
         app.setActivationPolicy(.regular)
         let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 360, height: 390),
                               styleMask: [.titled, .closable], backing: .buffered, defer: false)
-        window.contentView = NSHostingView(rootView: CalendarAuditFixture(state: state))
+        window.contentView = NSHostingView(rootView: CalendarAuditFixture(state: state, rightToLeft: rightToLeft))
         window.center()
         window.makeKeyAndOrderFront(nil)
 
@@ -52,17 +55,23 @@ enum MacCalendarAudit {
             try? await Task.sleep(for: .milliseconds(400))
             require(window.isKeyWindow, "The audit window needs focus")
 
-            await click(x: 48, y: 284, in: window)
+            @MainActor func clickDateOrArrow(x: CGFloat, y: CGFloat) async {
+                let position = rightToLeft ? window.contentLayoutRect.width - x : x
+                await click(x: position, y: y, in: window)
+            }
+
+            await clickDateOrArrow(x: 48, y: 284)
             require(state.selection == CalendarAuditState.date(11, 27), "A disabled day must not change the binding")
-            await click(x: 180, y: 284, in: window)
+            await clickDateOrArrow(x: 180, y: 284)
             require(state.selection == CalendarAuditState.date(11, 4), "An enabled day updates the binding")
-            await click(x: 312, y: 360, in: window)
-            await click(x: 136, y: 284, in: window)
+            await clickDateOrArrow(x: 312, y: 360)
+            await clickDateOrArrow(x: 136, y: 284)
             require(state.selection == CalendarAuditState.date(12, 1), "Next month exposes its selectable dates")
-            await click(x: 312, y: 360, in: window)
-            await click(x: 180, y: 284, in: window)
+            await clickDateOrArrow(x: 312, y: 360)
+            await clickDateOrArrow(x: 180, y: 284)
             require(state.selection == CalendarAuditState.date(12, 2), "Paging stops at the upper bound")
-            print("PASS: Calendar rejects disabled days, accepts selection, and stops at the month boundary")
+            let direction = rightToLeft ? "RTL" : "LTR"
+            print("PASS: \(direction) Calendar rejects disabled days, accepts selection, and stops at the month boundary")
             exit(0)
         }
         app.run()

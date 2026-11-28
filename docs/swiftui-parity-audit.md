@@ -292,6 +292,14 @@ iPad mini（A17 Pro，iOS 26.2）以 720 × 520 采集默认选中、基础月�
 
 macOS 实际窗口中点击禁用日期，绑定保持原值。有效日期更新绑定，翻到有效月份后可继续选日期，到达日期上限所在月份后停止翻页。状态回归同时覆盖跨月选区、月份年份导航、周起始日和首尾周。完整 SwiftUI 包在 macOS 构建通过。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46083621121/job/140788138648)
 
+### Calendar Nova 双月区间与阿拉伯语 RTL
+
+对照 `calendar-range.tsx` 和 `calendar-rtl.tsx`。双月区间固定为 2026 年 1 月 12 日到 2 月 11 日。`FoundationCalendar(range:initialMonth:numberOfMonths:)` 可以指定首个月份，原有绑定和范围初始化方式仍可使用。Nova 区间端点在本周本月内连接到相邻的已选日期。未完成区间、同日区间与周月交界处的端点独立显示。
+
+RTL 用例使用阿拉伯语标题和星期名，保留参考图中的西文日期数字。SwiftUI 由布局方向控制月份按钮和星期列的排列。macOS 实际窗口在 LTR 和 RTL 下验证了禁用日期、选择、跨月翻页与月份上限，区间端点与周边界状态测试也已通过。[macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46084778506/job/140792048023)
+
+iPad mini（A17 Pro，iOS 26.2）的 10 张深浅色候选图复拍逐字节一致。原有三种单月用例的 6 张图与上一轮像素一致。双月图使用 720 × 680 画布，容纳两个完整月份和 44 pt 日期触控行。shadcn 双月参考为 720 × 532。SwiftUI 的前后箭头分布于首末月份标题，区间色带的换行边缘为直角。[iOS 截图和对照报告](https://github.com/csdog/compose-foundation/actions/runs/46084778506/artifacts/15239270143)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -307,7 +315,7 @@ macOS 实际窗口中点击禁用日期，绑定保持原值。有效日期更�
 | bubble | 支持 incoming、outgoing、muted 内容气泡。缺少气泡组及定位在气泡边缘的 reactions。 |
 | button | 六种颜色变体、禁用、按压反馈和内容 slot。Compose 另有尺寸、图标位置、焦点环和多种按压动画。 |
 | button-group | 支持纵向和横向布局。iOS 18、macOS 15 起，Nova 的 FoundationButtonStyle 子项合并相邻圆角和边框。分隔符、文本项及子项焦点层级仍待对齐。 |
-| calendar | 支持本地化单月和连续多月、单选、区间、多选及月份年份菜单。Nova 单月覆盖日期网格、当天、选中和邻月补位。多月、RTL、实际菜单交互和 VoiceOver 的 Nova 验收待补。 |
+| calendar | 支持本地化单月和连续多月、单选、区间、多选及月份年份菜单。Nova 已接入单月和双月区间截图，以及阿拉伯语 RTL。月份年份菜单开合和 VoiceOver 的 Nova 验收待补。 |
 | card | 支持主题背景、边框、常规与紧凑尺寸，以及独立的底部操作区。头部、图片与关联操作可通过内容构建器组合。边缘贴图和 RTL 尚待对照。 |
 | carousel | 当前页和相邻页随横向拖动连续移动，松手后吸附到当前或相邻页。支持 RTL、前后按钮、页码无障碍调节和减少动态效果。视口高度由当前页决定。Compose 另有纵向模式、部分页宽及 dots API。 |
 | chart | 支持柱形、折线、面积、多序列和选点摘要。Compose 的独立图例、工具提示、序列主题配置和 indicator 选项未移植。 |
