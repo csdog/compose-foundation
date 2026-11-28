@@ -88,9 +88,13 @@ public struct FoundationCalendar: View {
             if #available(iOS 17, macOS 14, *) {
                 let entry = navigation.focusEntry(in: months, selected: selected.navigationDate,
                                                   today: referenceDate ?? Date())
-                FoundationCalendarKeyboardGrid(entry: entry) { focus, requestFocus in
+                FoundationCalendarKeyboardGrid(entry: entry, acceptsFocus: { date in
+                    months.contains { calendar.isDate($0, equalTo: date, toGranularity: .month) }
+                        && FoundationCalendarSelection.isSelectable(date, calendar: calendar, bounds: bounds)
+                }) { focus, tabStop, requestFocus in
                     monthGrid(months, selection: selected, palette: palette) { date, enabled in
                         FoundationCalendarKeyboardDay(date: date, enabled: enabled, focus: focus,
+                                                      isTabStop: date == tabStop,
                                                       ring: isNova ? palette.ring : nil, ringSize: dayHighlightSize,
                                                       cornerRadius: max(0, theme.cornerRadius - 2),
                                                       activate: { activate(date) }) { move in
@@ -185,13 +189,14 @@ public struct FoundationCalendar: View {
                     if let date = days[index] {
                         let number = dayNumbers.string(from: date)
                         if calendar.isDate(date, equalTo: month, toGranularity: .month) {
+                            let focusDay = calendar.startOfDay(for: date)
                             let enabled = FoundationCalendarSelection.isSelectable(date, calendar: calendar, bounds: bounds)
                             dayButton(
                                 date, title: number, accessibilityLabel: dayLabels.string(from: date),
                                 column: index % 7, selection: selection, palette: palette, enabled: enabled
                             )
-                            .modifier(decorate(date, enabled))
-                            .id(date)
+                            .modifier(decorate(focusDay, enabled))
+                            .id(focusDay)
                         } else {
                             Text(number)
                                 .font(.system(size: cellTextSize))
@@ -396,22 +401,23 @@ public struct FoundationCalendar: View {
 @available(iOS 17, macOS 14, *)
 private struct FoundationCalendarKeyboardGrid<Content: View>: View {
     @FocusState private var focused: Date?
-    @State private var pending: Date?
+    @State private var cursor: Date?
     let entry: Date?
-    let content: (FocusState<Date?>.Binding, @escaping (Date) -> Void) -> Content
+    let acceptsFocus: (Date) -> Bool
+    let content: (FocusState<Date?>.Binding, Date?, @escaping (Date) -> Void) -> Content
 
     var body: some View {
-        content($focused, { pending = $0 })
-            .defaultFocus($focused, entry, priority: .userInitiated)
+        let target = cursor.flatMap { acceptsFocus($0) ? $0 : nil } ?? entry
+        content($focused, target, { cursor = $0 })
+            .defaultFocus($focused, target, priority: .userInitiated)
             .onChange(of: focused) { old, new in print("CAL_FOCUS", old as Any, new as Any) }
-            .task(id: pending) {
-                guard let pending else { return }
-                print("CAL_PENDING", pending)
-                // A cross-month move inserts its destination after the key event.
+            .task(id: cursor) {
+                guard let cursor, cursor == target else { return }
+                print("CAL_MOVE", cursor)
+                // The destination becomes focusable on this update, including dates in a newly shown month.
                 await Task.yield()
                 guard !Task.isCancelled else { return }
-                focused = pending
-                self.pending = nil
+                focused = cursor
             }
     }
 }
@@ -423,6 +429,7 @@ private struct FoundationCalendarKeyboardDay: ViewModifier {
     let date: Date
     let enabled: Bool
     let focus: FocusState<Date?>.Binding
+    let isTabStop: Bool
     let ring: Color?
     let ringSize: CGFloat?
     let cornerRadius: CGFloat
@@ -431,7 +438,7 @@ private struct FoundationCalendarKeyboardDay: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .focusable(enabled && isEnabled)
+            .focusable(enabled && isEnabled && (isTabStop || focus.wrappedValue == date))
             .focused(focus, equals: date)
             .focusEffectDisabled(ring != nil)
             .overlay {
@@ -451,7 +458,7 @@ private struct FoundationCalendarKeyboardDay: ViewModifier {
         guard enabled, isEnabled, key.modifiers.intersection([.command, .control, .option]).isEmpty else {
             return .ignored
         }
-        print("CAL_KEY", date, key.key)
+        print("CAL_KEY", date, key.key, key.phase)
         let shift = key.modifiers.contains(.shift)
         switch key.key {
         case .leftArrow, .rightArrow:
