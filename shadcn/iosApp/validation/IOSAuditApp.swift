@@ -170,6 +170,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
 
         let outputDirectory = try prepareOutputDirectory()
         let comparisonFixtures: [String: () -> AnyView] = [
+            "sidebar": { AnyView(SidebarInitialScreenshotFixture()) },
             "label": { AnyView(LabelFieldScreenshotFixture(example: .label)) },
             "badge": { AnyView(BadgeInitialScreenshotFixture()) },
             "button": { AnyView(ButtonInitialScreenshotFixture()) },
@@ -3531,6 +3532,29 @@ private struct SwitchScreenshotFixture: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(theme.palette(for: scheme).background)
             .ignoresSafeArea()
+    }
+}
+
+private struct SidebarInitialScreenshotFixture: View {
+    @Environment(\.colorScheme) private var scheme
+    @State private var isOpen = false
+
+    var body: some View {
+        let theme = FoundationTheme(preset: .nova)
+        FoundationSidebar(isOpen: $isOpen) {
+            Text("Projects")
+        } content: {
+            FoundationSidebarTrigger(isOpen: $isOpen) {
+                Label("Toggle Sidebar", systemImage: "sidebar.left")
+                    .labelStyle(.iconOnly)
+                    .font(.system(size: 16, weight: .medium))
+            }
+            .buttonStyle(FoundationButtonStyle(.ghost, size: .iconSmall))
+            .position(x: 50, y: 56)
+        }
+        .foundationTheme(theme)
+        .background(theme.palette(for: scheme).background)
+        .ignoresSafeArea()
     }
 }
 

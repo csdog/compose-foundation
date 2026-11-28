@@ -503,7 +503,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | separator | 横纵向装饰性分隔线可用。边缘颜色和屏幕像素由 SwiftUI/theme 决定。 |
 | sheet | 支持系统 sheet 及四个逻辑边的面板。可设最大高度，正文可滚动，页脚固定。四个方向和阿拉伯语 RTL 示例覆盖深浅色。iOS 实际触控、滚动及 VoiceOver 待验收。 |
 | shimmer | 支持开关、穿过内容的光带、减少动态效果。Compose 另有文本遮罩及可调颜色、宽度、方向、时序。 |
-| sidebar | 可开关侧栏，宽容器并排、窄容器遮罩。Compose 另有侧栏方位、collapsible/rail 策略、菜单 slots 和键盘快捷键。 |
+| sidebar | 可开关侧栏，宽容器并排、窄容器遮罩，支持逻辑起始侧或末尾侧。可见触发器绑定展开状态，带可配置的 Command+B。紧凑侧栏支持 Escape 关闭。紧凑关闭态截图、键盘和 RTL 待验，菜单 slots 与图标折叠仍待对齐。 |
 | skeleton | 支持静态主题占位圆角。Compose 默认包含 pulse 动画。 |
 | slider | 支持单值范围和步长。iOS 17、macOS 14 起，Nova 使用 4 pt 轨道、12 pt 滑块与 RTL 方向，系统提供可调整无障碍语义。较早系统继续用原生 Slider。纵向和双滑块范围仍待补齐。 |
 | spinner | 系统不定进度控件及无障碍标签。Compose 提供原有旋转外观和 size 参数。 |

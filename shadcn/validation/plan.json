@@ -707,6 +707,18 @@
       "accessibility": "group role, child order and independent button labels",
       "motion": "static settled frames"
     },
+    "sidebar": {
+      "title": "Sidebar",
+      "variant": "default",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "reference": "apps/v4/examples/base/sidebar-demo.tsx",
+      "shadcnComparisonViewport": {"swiftui-ios": [402, 520]},
+      "visual": "compare the closed compact sidebar trigger",
+      "behavior": "toggle controlled sidebar with the trigger or keyboard shortcut",
+      "accessibility": "named sidebar trigger with expanded or collapsed value",
+      "motion": "compact rail appears from its logical edge"
+    },
     "toggle": {
       "title": "Toggle",
       "variant": "default",

@@ -478,6 +478,30 @@ jobs:
             grep -q '^PASS:' "$log"
           done
 
+      - name: Verify Sidebar shortcuts and logical edges on macOS
+        if: contains(needs.baseline.outputs.matrix, '"sidebar"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          app="$RUNNER_TEMP/SidebarAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string SidebarAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.sidebar-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos13.0" \
+            "$swiftui"/Sources/ComposeFoundationSwiftUI/Foundation{Theme,Sidebar}.swift \
+            "$swiftui/validation/MacSidebarInteractionAudit.swift" -o "$app/Contents/MacOS/SidebarAudit"
+          for size in compact wide; do
+            for direction in ltr rtl; do
+              log="$RUNNER_TEMP/sidebar-$size-$direction.log"
+              open -n -W --stdout "$log" --stderr "$log" "$app" --args "--$size" "--$direction"
+              cat "$log"
+              grep -q '^PASS:' "$log"
+            done
+          done
+
       - name: Verify Nova Toggle bindings on macOS
         if: contains(needs.baseline.outputs.matrix, '"toggle"') || contains(needs.baseline.outputs.matrix, '"toggle-group"')
         timeout-minutes: 2
