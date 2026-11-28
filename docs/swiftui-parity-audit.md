@@ -332,6 +332,14 @@ macOS 实际窗口验证了外部绑定切换蔬菜与水果时的触发器重�
 
 iPad mini（A17 Pro，iOS 26.2）的 8 张深浅色截图复拍逐字节一致。默认、分组与禁用触发器宽 192 pt，阿拉伯语 RTL 宽 128 pt。与 shadcn 对照，浅色中心底面均为 `#FFFFFF`，深色启用为 `#141414`，深色禁用为 `#0F0F0F`。禁用调整前后的 6 张启用用例像素一致。截图程序以 iOS 14 模拟器部署目标编译。[iOS 截图和对照报告](https://github.com/csdog/compose-foundation/actions/runs/46091495270/artifacts/15241042954)
 
+### Toast Nova 卡片、状态图标与队列
+
+对照 shadcn Base UI / Nova 的 `toast-demo.tsx`、类型示例及 Sonner 的卡片样式。Nova 使用 16 pt 圆角、16 pt 起始内边距和可缩放的 14 pt 文案。Undo 使用紧凑描边按钮，Undo 与关闭操作保留至少 44 pt 高的点击区域。成功图标保留圆形标记，错误图标改用八角形并使用主题错误色。
+
+macOS 实际窗口点击 Undo 后回调恰好执行一次，对应通知退出队列，最早的排队通知补位。关闭按钮只移除当前通知。另验证单条到期和清空队列后的计时器取消。[macOS 队列日志](https://github.com/csdog/compose-foundation/actions/runs/46092913983/job/140817763434)
+
+iPad mini（A17 Pro，iOS 26.2）在 720 × 520 画布上采集默认触发和展开、类型触发、成功及错误共 10 张深浅色图。复拍逐字节一致。通知卡片的取样底色与 shadcn 一致，浅色为 `#FFFFFF`，深色为 `#171717`。Nova 的阴影应用于卡片轮廓。审计应用以 iOS 14 模拟器部署目标编译。[iOS 截图及 shadcn 对照](https://github.com/csdog/compose-foundation/actions/runs/46092913983/artifacts/15241424116)
+
 ## 各条目
 
 | 条目 | SwiftUI 实现与差异 |
@@ -400,7 +408,7 @@ iPad mini（A17 Pro，iOS 26.2）的 8 张深浅色截图复拍逐字节一致�
 | text | 支持标题、headline、正文、caption 和 muted 文本。Compose 有更多主题字体角色及自定义内容和样式参数。 |
 | textarea | 原生 TextEditor 支持多行绑定、独立占位文字及错误边框。Nova 最小高 64 pt，iOS 16 和 macOS 13 起隐藏系统滚动背景。自动增高和自定义焦点样式仍待补齐。 |
 | theme | SwiftUI 环境支持自定义深浅色、圆角及 Vega、Nova、Maia、Lyra、Mira、Luma、Sera、Rhea 八种样式。预设为通用圆角、按钮尺寸、卡片和 Popover 间距、部分字体和动效提供默认值。Compose 的配色集合、图表色及各组件状态样式仍有差别。 |
-| toast | 支持原有单条通知和 `FoundationToastState` 队列。队列默认显示最新三条，支持深浅色、变体图标、可选操作、逐条关闭、清空和独立计时。面板目前纵向展开。堆叠展开、滑动手势、优先级播报和多操作仍待对齐。 |
+| toast | 支持单条通知和 `FoundationToastState` 队列，默认显示最新三条，支持操作、逐条关闭、清空及独立计时。Nova 已接入默认、成功和错误样式的截图。堆叠展开、滑动关闭、优先级播报和多操作待对齐。 |
 | toggle | 可绑定选中、禁用及自定义标签。Nova 支持普通、描边和三个尺寸。描边书签的状态已截图。 |
 | toggle-group | 支持单选、多选、是否允许空选择、禁用以及自定义图标标签。Nova 与 Toggle 共用外观。纵向布局和组内方向键导航仍待补齐。 |
 | tooltip | Nova 支持反色气泡、方向配置、悬停延迟和绑定显示。iOS 继续提供长按提示及无障碍 hint。共享 provider、边界自动换边、滚动容器裁剪、自动键盘焦点触发和 RTL 上屏验收待补。 |
