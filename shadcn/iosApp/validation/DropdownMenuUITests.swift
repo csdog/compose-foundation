@@ -2,6 +2,42 @@ import XCTest
 
 final class DropdownMenuUITests: XCTestCase {
     @MainActor
+    func testHardwareArrowsSkipDisabledAction() {
+        let app = launchFixture()
+        let trigger = app.buttons["Open actions"]
+        let row = menuElement("Profile", in: app)
+        let result = app.staticTexts["dropdown-result"]
+
+        trigger.tap()
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        XCTAssertFalse(menuElement("API", in: app).isEnabled)
+        app.typeKey(.downArrow, modifierFlags: [])
+        attachOpenMenu(named: "Dropdown Menu after first Down")
+        app.typeKey(.downArrow, modifierFlags: [])
+        attachOpenMenu(named: "Dropdown Menu after second Down")
+        app.typeKey(.return, modifierFlags: [])
+        XCTAssertTrue(row.waitForNonExistence(timeout: 5))
+        XCTAssertEqual(result.label, "Settings selected")
+    }
+
+    @MainActor
+    func testEscapeRestoresKeyboardActivation() {
+        let app = launchFixture()
+        let trigger = app.buttons["Open actions"]
+        let row = menuElement("Profile", in: app)
+        let result = app.staticTexts["dropdown-result"]
+
+        trigger.tap()
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        app.typeKey(.escape, modifierFlags: [])
+        XCTAssertTrue(row.waitForNonExistence(timeout: 5))
+        XCTAssertEqual(result.label, "No action")
+        app.typeKey(.space, modifierFlags: [])
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        XCTAssertEqual(result.label, "No action")
+    }
+
+    @MainActor
     func testTouchSelectionSkipsDisabledAction() {
         let app = launchFixture()
         let trigger = app.buttons["Open actions"]
