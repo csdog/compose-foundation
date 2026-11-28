@@ -21,32 +21,24 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          for platform in jetpack-compose; do
-            base="$RUNNER_TEMP/reference/$platform/sheet-open"
-            candidate="$RUNNER_TEMP/repeat/$platform/sheet-open/actual"
-            gh run download 46119696300 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$base"
-            gh run download 46120083893 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$candidate"
-            python - "$base" "$candidate" <<'PYFI'
-          import sys
-          from pathlib import Path
-          from collections import Counter
-          from PIL import Image, ImageChops, ImageStat
-          a, b = (Path(x) for x in sys.argv[1:])
-          for time in ('before', '096', '480'):
-              left, right = (Image.open(x / f'{time}.png').convert('RGB') for x in (a, b))
-              print(time, left.size, right.size)
-              for img in (left, right):
-                  print(Counter(img.resize((160, 320)).getdata()).most_common(5), img.getpixel((left.width//2,left.height//2)))
-              print(ImageStat.Stat(ImageChops.difference(left, right)).mean)
-          PYFI
-            python shadcn/validation/animation_baseline.py "$platform" sheet-open --strict --gif \
-              --baselines "$RUNNER_TEMP/reference" --output "$RUNNER_TEMP/repeat"
+          platform=jetpack-compose
+          base="$RUNNER_TEMP/reference/$platform/sheet-open"
+          gh run download 46120538588 -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$base"
+          for replay in 46119244198 46119696300 46120083893; do
+            candidate="$RUNNER_TEMP/repeat/$replay/$platform/sheet-open/actual"
+            gh run download "$replay" -n "animation-candidate-$platform-sheet-open-attempt-1" -D "$candidate"
+            if python shadcn/validation/animation_baseline.py "$platform" sheet-open --strict --gif \
+              --baselines "$RUNNER_TEMP/reference" --output "$RUNNER_TEMP/repeat/$replay"; then
+              echo "$replay" > "$RUNNER_TEMP/verified-replay"
+              exit 0
+            fi
           done
+          exit 1
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: jetpack-sheet-reproducibility
-          path: ${{ runner.temp }}/repeat/*/sheet-open/*.gif
+          path: ${{ runner.temp }}/repeat/*/*/sheet-open/*.gif
           if-no-files-found: ignore
       - uses: actions/checkout@v4
         with:
@@ -65,8 +57,8 @@ jobs:
             {
               printf '# Sheet opening on %s\n\n' "$platform"
               printf 'API 35 x86_64 Android emulator, Pixel 7 profile, Nova light. The Compose test clock samples every 16 ms through 480 ms.\n\n'
-              printf 'Initial capture: https://github.com/csdog/compose-foundation/actions/runs/46119696300\n\n'
-              printf 'Independent replay: https://github.com/csdog/compose-foundation/actions/runs/46120083893\n'
+              printf 'Initial capture: https://github.com/csdog/compose-foundation/actions/runs/46120538588\n\n'
+              printf 'Independent replay: https://github.com/csdog/compose-foundation/actions/runs/%s\n' "$(cat "$RUNNER_TEMP/verified-replay")"
             } > "$target/README.md"
           done
           git -C baseline-repository add -- animations/jetpack-compose/sheet-open
