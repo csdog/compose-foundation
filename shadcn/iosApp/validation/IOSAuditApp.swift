@@ -290,6 +290,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 ("field-input-initial", { AnyView(LabelFieldScreenshotFixture(example: .input)) }),
                 ("field-textarea-initial", { AnyView(LabelFieldScreenshotFixture(example: .textarea)) }),
                 ("field-fieldset-initial", { AnyView(LabelFieldScreenshotFixture(example: .fieldset)) }),
+                ("field-switch-initial", { AnyView(LabelFieldScreenshotFixture(example: .horizontalSwitch)) }),
             ],
             "button-group": [
                 ("button-group-size-initial", { AnyView(ButtonGroupScreenshotFixture(vertical: false)) }),
@@ -2661,7 +2662,7 @@ private struct CardScreenshotFixture: View {
 }
 
 private struct LabelFieldScreenshotFixture: View {
-    enum Example { case label, input, textarea, fieldset }
+    enum Example { case label, input, textarea, fieldset, horizontalSwitch }
 
     let example: Example
     @Environment(\.colorScheme) private var scheme
@@ -2672,6 +2673,7 @@ private struct LabelFieldScreenshotFixture: View {
     @State private var street = ""
     @State private var city = ""
     @State private var postalCode = ""
+    @State private var requiresSecondFactor = false
 
     var body: some View {
         var light = FoundationPalette.neutralLight
@@ -2720,6 +2722,13 @@ private struct LabelFieldScreenshotFixture: View {
                 }
                 .font(.custom("Geist-Medium", size: 16))
                 .frame(width: 384)
+            case .horizontalSwitch:
+                FoundationField("Multi-factor authentication", orientation: .horizontal) {
+                    Toggle(isOn: $requiresSecondFactor) { EmptyView() }
+                        .toggleStyle(FoundationSwitchStyle())
+                        .accessibilityLabel(Text("Multi-factor authentication"))
+                }
+                .font(.custom("Geist-Regular", size: 14))
             }
         }
         .foundationTheme(theme)
