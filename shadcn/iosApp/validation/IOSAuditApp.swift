@@ -63,6 +63,12 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             return
         }
 
+        if ProcessInfo.processInfo.arguments.contains("--command-interaction") {
+            window.rootViewController = UIHostingController(rootView: CommandInteractionFixture())
+            window.makeKeyAndVisible()
+            return
+        }
+
         if #available(iOS 17, *), ProcessInfo.processInfo.arguments.contains("--overlay-focus") {
             window.rootViewController = UIHostingController(rootView: OverlayFocusInteractionFixture())
             window.makeKeyAndVisible()
@@ -2962,6 +2968,29 @@ private struct ContextMenuInteractionFixture: View {
                 .accessibilityIdentifier("context-menu-result")
         }
         .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foundationTheme(FoundationTheme(preset: .nova))
+    }
+}
+
+private struct CommandInteractionFixture: View {
+    @State private var result = "No action"
+
+    var body: some View {
+        VStack(spacing: 14) {
+            FoundationCommand(sections: [
+                .init(id: "suggestions", title: "Suggestions", actions: [
+                    .init("Calendar", value: "Calendar"),
+                    .init("Calculator", value: "Calculator", isEnabled: false),
+                ]),
+                .init(id: "settings", title: "Settings", actions: [
+                    .init("Profile", value: "Profile"), .init("Billing", value: "Billing"),
+                ]),
+            ]) { result = $0 }
+            Text(result).accessibilityIdentifier("command-result")
+            Spacer(minLength: 0)
+        }
+        .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .foundationTheme(FoundationTheme(preset: .nova))
     }

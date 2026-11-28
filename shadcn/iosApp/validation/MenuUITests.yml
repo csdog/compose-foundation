@@ -24,6 +24,7 @@ targets:
     sources:
       - DropdownMenuUITests.swift
       - ContextMenuUITests.swift
+      - CommandUITests.swift
     dependencies:
       - target: ComposeFoundationAudit
     settings:
