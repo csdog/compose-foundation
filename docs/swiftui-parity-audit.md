@@ -314,6 +314,10 @@ iPad mini（A17 Pro，iOS 26.2）的 10 张静态深浅色截图与复拍逐字�
 
 单独开启 iPad 的「完全键盘控制」后复现了差异。设置开关已确认开启，同样的 USB HID 用例发送 Tab 和右键后仍停在 1 月 31 日，跨月键盘操作待继续对齐。实际 VoiceOver 朗读仍待验收。[完全键盘控制运行](https://github.com/csdog/compose-foundation/actions/runs/46117478557/job/140894477836) · [设置与焦点截图](https://github.com/csdog/compose-foundation/actions/runs/46117478557/artifacts/15251859139)
 
+同一模拟器上的 UIKit 诊断确认，优先右键命令在普通模式下能到达应用，完全键盘控制开启后该命令未收到事件。在 Calendar 测试页试用系统 Tab 和 Space，也未激活下一月按钮。诊断命令只在测试应用注册。[按键路由日志](https://github.com/csdog/compose-foundation/actions/runs/46122376521/job/140909507890) · [设置与逐次 Tab 截图](https://github.com/csdog/compose-foundation/actions/runs/46122376521/artifacts/15255475042)
+
+独立的 UIKit 按钮对照用于区分模拟键盘输入路径与 Calendar 本身的问题。该运行在 Apple runner 队列中，结论待验证。[UIKit 对照任务](https://github.com/csdog/compose-foundation/actions/runs/46123973218)
+
 ### Calendar Nova 双月区间与阿拉伯语 RTL
 
 对照 `calendar-range.tsx` 和 `calendar-rtl.tsx`。双月区间固定为 2026 年 1 月 12 日到 2 月 11 日。`FoundationCalendar(range:initialMonth:numberOfMonths:)` 可以指定首个月份，原有绑定和范围初始化方式仍可使用。Nova 区间端点在本周本月内连接到相邻的已选日期。未完成区间、同日区间与周月交界处的端点独立显示。
