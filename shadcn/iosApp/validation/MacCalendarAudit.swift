@@ -5,7 +5,7 @@ import SwiftUI
 private final class CalendarAuditState: ObservableObject {
     @Published var selection: Date? = CalendarAuditState.date(11, 27)
     @Published var enabled = true
-    var afterActivated = false
+    var afterFocused = false
 
     static let calendar: Calendar = {
         var value = Calendar(identifier: .gregorian)
@@ -21,6 +21,7 @@ private final class CalendarAuditState: ObservableObject {
 
 private struct CalendarAuditFixture: View {
     @ObservedObject var state: CalendarAuditState
+    @FocusState private var afterFocused: Bool
     let rightToLeft: Bool
     let keyboard: Bool
 
@@ -30,7 +31,10 @@ private struct CalendarAuditFixture: View {
                 .frame(width: 324)
                 .disabled(!state.enabled)
             if keyboard {
-                Button("After calendar") { state.afterActivated = true }.focusable()
+                Text("After calendar")
+                    .focusable()
+                    .focused($afterFocused)
+                    .onChange(of: afterFocused) { _, focused in state.afterFocused = focused }
             }
             Spacer(minLength: 0)
         }
@@ -137,8 +141,7 @@ enum MacCalendarAudit {
         await send(enter)
         expect(11, 4, "Navigation stops on the first selectable date")
         await send((48, "\t"))
-        await send(space)
-        require(state.afterActivated, "Tab should leave the date grid for the next control")
+        require(state.afterFocused, "Tab should leave the date grid for the next focus target")
         await send((48, "\u{19}"), modifiers: .shift)
         state.enabled = false
         try? await Task.sleep(for: .milliseconds(180))
