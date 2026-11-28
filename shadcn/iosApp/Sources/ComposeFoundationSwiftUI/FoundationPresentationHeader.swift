@@ -22,6 +22,7 @@ struct FoundationPresentationHeader<Close: View>: View {
     let alignment: VerticalAlignment
     let close: Close
     let dismiss: () -> Void
+    var initiallyFocusClose = true
 
     var body: some View {
         let heading = Text(title)
@@ -30,7 +31,9 @@ struct FoundationPresentationHeader<Close: View>: View {
             .accessibilityAddTraits(.isHeader)
         let dismissButton = close.keyboardShortcut(.cancelAction)
         if #available(iOS 17, macOS 14, *) {
-            FoundationPresentationFocus(heading: heading, close: dismissButton, onActivate: dismiss) { heading, close in
+            FoundationPresentationFocus(
+                heading: heading, close: dismissButton, onActivate: dismiss, initiallyFocusClose: initiallyFocusClose
+            ) { heading, close in
                 FoundationPresentationHeaderRow(
                     heading: heading, description: description, alignment: alignment, close: close
                 )
