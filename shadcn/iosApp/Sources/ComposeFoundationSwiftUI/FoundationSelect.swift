@@ -4,6 +4,9 @@ public struct FoundationSelect<Value: Hashable>: View {
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.foundationSurface) private var surface
+    #if os(iOS)
+    @Environment(\.isEnabled) private var isEnabled
+    #endif
     @ScaledMetric(relativeTo: .subheadline) private var novaFieldHeight: CGFloat = 32
     @ScaledMetric(relativeTo: .subheadline) private var novaFontSize: CGFloat = 14
     @Binding private var selection: Value?
@@ -61,6 +64,9 @@ public struct FoundationSelect<Value: Hashable>: View {
         .accessibilityLabel(Text(title))
         .accessibilityValue(Text(chosen?.title ?? ""))
         .disabled(groups.isEmpty)
+        #if os(iOS)
+        .opacity(nova && (!isEnabled || groups.isEmpty) ? 0.5 : 1)
+        #endif
     }
 
     private func menuChoices(_ choices: [FoundationChoice<Value>]) -> some View {
