@@ -88,6 +88,8 @@ macOS 窗口通过 AppKit 事件验证两种方向的点击、按住拖动、四
 
 Toggle 对照完整描边书签的关闭和选中态。Toggle Group 对照 Bold、Italic、Underline 三个描边按钮，覆盖无选中和 Bold 选中。选中 Bold 后，像素变化局限于该按钮。Nova 的这两组控件保留至少 44 × 44 pt 的操作区域。
 
+Toggle Group 的纵向截图对应 [shadcn Base UI Nova 纵向示例](https://github.com/shadcn-ui/ui/blob/0e5b2e621a9ee4cf6a604bbe6c5c0d5b70561eb4/apps/v4/examples/base/toggle-group-vertical.tsx)，初始按下 Bold 和 Italic。浏览器参考使用 402 × 520 视口，三个按钮均为 36 × 32 CSS px，纵向间距为 4 CSS px。SwiftUI 保留 44 pt 的最小触控高度。组内方向键依据横向或纵向排列移动焦点，横向遵循 RTL。Space 和 Return 才切换按下状态。macOS 和 iPad 键盘、触控及 iPhone 深浅色回归待验。
+
 iPhone 17 Pro（iOS 26.2）深浅色共八张新图，与复拍逐字节一致。原有 82 张图也与上一轮一致，外边界与 shadcn 参考相差最多 2 px。macOS 窗口通过 AppKit 鼠标事件验证单按钮切换、单选替换、多选保留、最后一项必选及单项和整组禁用。实际 iOS 触控、硬件键盘、VoiceOver 和组内方向键导航仍待验收。[完整 Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46028364880/artifacts/15214950117) · [macOS 回归日志](https://github.com/csdog/compose-foundation/actions/runs/46028364880/job/140605804826)
 
 ### Button Group 三种尺寸和纵向布局
@@ -516,7 +518,7 @@ iPad mini（A17 Pro，iOS 26.2）的 16 张深浅色截图均与复拍逐字节�
 | theme | SwiftUI 环境支持自定义深浅色、圆角及八种预设。按钮、输入框、卡片和 Popover 使用预设尺寸。各预设的完整配色、图表色和逐组件状态样式仍待对齐。 |
 | toast | 支持单条通知和 `FoundationToastState` 队列，默认显示最新三条，支持操作、逐条关闭、清空及独立计时。Nova 已接入默认、成功和错误样式的截图。堆叠展开、滑动关闭、优先级播报和多操作待对齐。 |
 | toggle | 可绑定选中、禁用及自定义标签。Nova 支持普通、描边和三个尺寸。描边书签的状态已截图。 |
-| toggle-group | 支持单选、多选、是否允许空选择、禁用以及自定义图标标签。Nova 与 Toggle 共用外观。纵向布局和组内方向键导航仍待补齐。 |
+| toggle-group | 支持单选、多选、是否允许空选择、禁用、自定义图标标签和纵向布局。Nova 与 Toggle 共用外观。组内键盘焦点独立于按下状态，输入与截图回归待验。 |
 | tooltip | Nova 支持反色气泡、方向配置、悬停延迟和绑定显示。iOS 继续提供长按提示及无障碍 hint。共享 provider、边界自动换边、滚动容器裁剪、自动键盘焦点触发和 RTL 上屏验收待补。 |
 | trace | 支持状态、标题和可展开内容。Compose 的多行跟踪、独立图标、描述和链接 slots 未移植。 |
 
