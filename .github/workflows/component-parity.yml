@@ -887,6 +887,27 @@ jobs:
           done
           exit "$failed"
 
+      - name: Verify SwiftUI style presets and live form state on macOS
+        if: contains(needs.baseline.outputs.matrix, '"theme"')
+        timeout-minutes: 2
+        run: |
+          swiftui=shadcn/iosApp
+          sources="$swiftui/Sources/ComposeFoundationSwiftUI"
+          app="$RUNNER_TEMP/StylePresetAudit.app"
+          mkdir -p "$app/Contents/MacOS"
+          plist="$app/Contents/Info.plist"
+          plutil -create xml1 "$plist"
+          plutil -insert CFBundleExecutable -string StylePresetAudit "$plist"
+          plutil -insert CFBundleIdentifier -string com.composefoundation.theme-audit "$plist"
+          plutil -insert CFBundlePackageType -string APPL "$plist"
+          xcrun swiftc -swift-version 6 -parse-as-library -target "$(uname -m)-apple-macos14.0" \
+            "$sources"/Foundation{Theme,Input,ButtonStyle}.swift \
+            "$swiftui/validation/MacStylePresetAudit.swift" -o "$app/Contents/MacOS/StylePresetAudit"
+          log="$RUNNER_TEMP/style.log"
+          open -n -W --stdout "$log" --stderr "$log" "$app"
+          cat "$log"
+          grep -q '^PASS:' "$log"
+
       - name: Verify Carousel dragging and side controls on macOS
         if: contains(needs.baseline.outputs.matrix, '"carousel"')
         timeout-minutes: 3

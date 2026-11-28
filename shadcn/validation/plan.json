@@ -20,6 +20,30 @@
     "swiftui-ios": "automated"
   },
   "components": {
+    "theme": {
+      "title": "Theme",
+      "variant": "nova",
+      "status": "initial",
+      "platforms": ["swiftui-ios"],
+      "swiftuiDevice": "iPad-mini-A17-Pro",
+      "platformCases": {
+        "swiftui-ios": [
+          {"variant": "vega", "status": "initial", "viewport": [720, 520]},
+          {"variant": "nova", "status": "initial", "viewport": [720, 520]},
+          {"variant": "maia", "status": "initial", "viewport": [720, 520]},
+          {"variant": "lyra", "status": "initial", "viewport": [720, 520]},
+          {"variant": "mira", "status": "initial", "viewport": [720, 520]},
+          {"variant": "luma", "status": "initial", "viewport": [720, 520]},
+          {"variant": "sera", "status": "initial", "viewport": [720, 520]},
+          {"variant": "rhea", "status": "initial", "viewport": [720, 520]}
+        ]
+      },
+      "reference": "apps/v4/registry/styles/style-nova.css",
+      "visual": "capture the eight native presets in both themes and verify field heights against the upstream stylesheets",
+      "behavior": "change the preset and appearance while preserving form state",
+      "accessibility": "keep the 44 pt editor touch area and native text entry",
+      "motion": "static initial frames"
+    },
     "carousel": {
       "title": "Carousel",
       "variant": "default",
