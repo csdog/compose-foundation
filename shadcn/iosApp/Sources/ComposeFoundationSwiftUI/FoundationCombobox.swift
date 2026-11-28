@@ -297,8 +297,9 @@ private struct FoundationComboboxSearchField: UIViewRepresentable {
     let submit: () -> Void
     let dismiss: () -> Void
 
-    func makeUIView(context: Context) -> SearchTextField {
-        let field = SearchTextField()
+    func makeUIView(context: Context) -> FoundationSearchTextField {
+        let field = FoundationSearchTextField()
+        field.activatesOnAttach = true
         field.placeholder = NSLocalizedString("Search", comment: "Combobox search prompt")
         field.borderStyle = .roundedRect
         field.font = .preferredFont(forTextStyle: .body)
@@ -306,62 +307,16 @@ private struct FoundationComboboxSearchField: UIViewRepresentable {
         field.autocapitalizationType = .none
         field.returnKeyType = .search
         field.delegate = field
-        field.addTarget(field, action: #selector(SearchTextField.updateQuery), for: .editingChanged)
+        field.addTarget(field, action: #selector(FoundationSearchTextField.updateQuery), for: .editingChanged)
         return field
     }
 
-    func updateUIView(_ field: SearchTextField, context: Context) {
+    func updateUIView(_ field: FoundationSearchTextField, context: Context) {
         if field.text != query { field.text = query }
         field.writeQuery = { query = $0 }
         field.move = move
         field.submit = submit
         field.dismiss = dismiss
-    }
-
-    final class SearchTextField: UITextField, UITextFieldDelegate {
-        var writeQuery: ((String) -> Void)?
-        var move: ((Int) -> Bool)?
-        var submit: (() -> Void)?
-        var dismiss: (() -> Void)?
-
-        override func didMoveToWindow() {
-            super.didMoveToWindow()
-            guard window != nil, !UIAccessibility.isVoiceOverRunning else { return }
-            DispatchQueue.main.async { [weak self] in
-                guard let self, window != nil else { return }
-                becomeFirstResponder()
-            }
-        }
-
-        override var keyCommands: [UIKeyCommand]? {
-            guard markedTextRange == nil else { return super.keyCommands }
-            let inputs = [UIKeyCommand.inputUpArrow, UIKeyCommand.inputDownArrow, "\r", UIKeyCommand.inputEscape]
-            return inputs.map { input in
-                let command = UIKeyCommand(input: input, modifierFlags: [], action: #selector(handleCommand(_:)))
-                if #available(iOS 15, *) {
-                    command.wantsPriorityOverSystemBehavior = true
-                }
-                return command
-            }
-        }
-
-        @objc private func handleCommand(_ command: UIKeyCommand) {
-            guard markedTextRange == nil else { return }
-            switch command.input {
-            case UIKeyCommand.inputUpArrow: _ = move?(-1)
-            case UIKeyCommand.inputDownArrow: _ = move?(1)
-            case "\r": submit?()
-            case UIKeyCommand.inputEscape: dismiss?()
-            default: break
-            }
-        }
-
-        @objc func updateQuery() { writeQuery?(text ?? "") }
-
-        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            submit?()
-            return false
-        }
     }
 }
 #else

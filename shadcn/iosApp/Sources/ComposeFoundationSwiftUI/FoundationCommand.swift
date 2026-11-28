@@ -1,4 +1,7 @@
 import SwiftUI
+#if os(iOS)
+import UIKit
+#endif
 
 public struct FoundationCommand<Value: Hashable>: View {
     public struct Section: Identifiable {
@@ -113,7 +116,7 @@ public struct FoundationCommand<Value: Hashable>: View {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(nova ? palette.mutedForeground.opacity(0.65) : palette.foreground)
                 .accessibilityHidden(true)
-            keyboardSearch(enabled: enabled, highlighted: highlighted, submit: submit)
+            keyboardSearch(palette, enabled: enabled, highlighted: highlighted, submit: submit)
                 .textFieldStyle(PlainTextFieldStyle())
         }
         .font(nova ? .system(size: novaFontSize) : nil)
@@ -127,18 +130,25 @@ public struct FoundationCommand<Value: Hashable>: View {
     }
 
     @ViewBuilder
-    private func keyboardSearch(enabled: [RowID], highlighted: RowID?, submit: @escaping () -> Void) -> some View {
+    private func keyboardSearch(
+        _ palette: FoundationPalette, enabled: [RowID], highlighted: RowID?, submit: @escaping () -> Void
+    ) -> some View {
         if #available(iOS 17, macOS 14, *) {
-            FoundationCommandSearch(prompt: searchPrompt, query: search, move: { forward in
+            let move: (Int) -> Bool = { offset in
                 guard isEnabled, !enabled.isEmpty else { return false }
                 if let highlighted, let index = enabled.firstIndex(of: highlighted) {
-                    let offset = forward ? 1 : -1
                     activeRow = enabled[(index + offset + enabled.count) % enabled.count]
                 } else {
-                    activeRow = forward ? enabled.first : enabled.last
+                    activeRow = offset > 0 ? enabled.first : enabled.last
                 }
                 return true
-            }, submit: submit)
+            }
+            #if os(iOS)
+            FoundationCommandSearch(prompt: searchPrompt, query: search, fontSize: nova ? novaFontSize : nil,
+                                    foreground: palette.foreground, move: move, submit: submit)
+            #else
+            FoundationCommandSearch(prompt: searchPrompt, query: search, move: move, submit: submit)
+            #endif
         } else {
             TextField(searchPrompt, text: search, onCommit: submit)
         }
@@ -236,12 +246,52 @@ public struct FoundationCommand<Value: Hashable>: View {
     }
 }
 
-@available(iOS 17, macOS 14, *)
+#if os(iOS)
+@available(iOS 17, *)
+private struct FoundationCommandSearch: UIViewRepresentable {
+    @Environment(\.isEnabled) private var isEnabled
+    let prompt: String
+    @Binding var query: String
+    let fontSize: CGFloat?
+    let foreground: Color
+    let move: (Int) -> Bool
+    let submit: () -> Void
+
+    func makeUIView(context: Context) -> FoundationSearchTextField {
+        let field = FoundationSearchTextField()
+        field.borderStyle = .none
+        field.autocapitalizationType = .none
+        field.returnKeyType = .search
+        field.delegate = field
+        field.addTarget(field, action: #selector(FoundationSearchTextField.updateQuery), for: .editingChanged)
+        return field
+    }
+
+    func updateUIView(_ field: FoundationSearchTextField, context: Context) {
+        if field.text != query { field.text = query }
+        field.font = fontSize.map { UIFont.systemFont(ofSize: $0) } ?? .preferredFont(forTextStyle: .body)
+        field.adjustsFontForContentSizeCategory = fontSize == nil
+        field.textColor = UIColor(foreground)
+        field.placeholder = prompt
+        field.accessibilityLabel = prompt
+        field.isEnabled = isEnabled
+        field.writeQuery = { query = $0 }
+        field.move = move
+        field.submit = submit
+    }
+
+    func sizeThatFits(_ proposal: ProposedViewSize, uiView: FoundationSearchTextField, context: Context) -> CGSize? {
+        guard let width = proposal.width else { return nil }
+        return CGSize(width: width, height: uiView.intrinsicContentSize.height)
+    }
+}
+#else
+@available(macOS 14, *)
 private struct FoundationCommandSearch: View {
     @FocusState private var focused: Bool
     let prompt: String
     @Binding var query: String
-    let move: (Bool) -> Bool
+    let move: (Int) -> Bool
     let submit: () -> Void
 
     var body: some View {
@@ -254,7 +304,8 @@ private struct FoundationCommandSearch: View {
                     if press.phase == .down { submit() }
                     return .handled
                 }
-                return move(press.key == .downArrow) ? .handled : .ignored
+                return move(press.key == .downArrow ? 1 : -1) ? .handled : .ignored
             }
     }
 }
+#endif

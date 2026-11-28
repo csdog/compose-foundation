@@ -29,9 +29,11 @@ final class CommandUITests: XCTestCase {
         let app = launchFixture()
         let field = app.textFields["Search commands"]
         field.tap()
+        let submit = app.keyboards.buttons.matching(NSPredicate(format: "label =[c] %@", "Search")).firstMatch
+        XCTAssertTrue(submit.waitForExistence(timeout: 5))
         field.typeKey(.downArrow, modifierFlags: [])
         field.typeKey(.downArrow, modifierFlags: [])
-        field.typeKey(.return, modifierFlags: [])
+        submit.tap()
         XCTAssertEqual(app.staticTexts["command-result"].label, "Profile")
     }
 
