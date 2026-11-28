@@ -147,27 +147,43 @@ private struct FoundationResponsiveFieldLayout: Layout {
     private var column: VStackLayout { VStackLayout(alignment: .leading, spacing: spacing) }
 
     func makeCache(subviews: Subviews) -> Cache {
-        Cache(row: row.makeCache(subviews: subviews), column: column.makeCache(subviews: subviews))
+        Cache(row: makeCache(for: row, subviews: subviews), column: makeCache(for: column, subviews: subviews))
     }
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout Cache) -> CGSize {
         if isWide(proposal) {
-            row.sizeThatFits(proposal: proposal, subviews: subviews, cache: &cache.row)
+            sizeThatFits(using: row, proposal: proposal, subviews: subviews, cache: &cache.row)
         } else {
-            column.sizeThatFits(proposal: proposal, subviews: subviews, cache: &cache.column)
+            sizeThatFits(using: column, proposal: proposal, subviews: subviews, cache: &cache.column)
         }
     }
 
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout Cache) {
         if isWide(proposal) {
-            row.placeSubviews(in: bounds, proposal: proposal, subviews: subviews, cache: &cache.row)
+            placeSubviews(using: row, in: bounds, proposal: proposal, subviews: subviews, cache: &cache.row)
         } else {
-            column.placeSubviews(in: bounds, proposal: proposal, subviews: subviews, cache: &cache.column)
+            placeSubviews(using: column, in: bounds, proposal: proposal, subviews: subviews, cache: &cache.column)
         }
     }
 
     private func isWide(_ proposal: ProposedViewSize) -> Bool {
         (proposal.width ?? 0) >= 448
+    }
+
+    private func makeCache<Stack: Layout>(for stack: Stack, subviews: Subviews) -> Stack.Cache {
+        stack.makeCache(subviews: subviews)
+    }
+
+    private func sizeThatFits<Stack: Layout>(
+        using stack: Stack, proposal: ProposedViewSize, subviews: Subviews, cache: inout Stack.Cache
+    ) -> CGSize {
+        stack.sizeThatFits(proposal: proposal, subviews: subviews, cache: &cache)
+    }
+
+    private func placeSubviews<Stack: Layout>(
+        using stack: Stack, in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout Stack.Cache
+    ) {
+        stack.placeSubviews(in: bounds, proposal: proposal, subviews: subviews, cache: &cache)
     }
 }
 
