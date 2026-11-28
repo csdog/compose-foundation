@@ -11,6 +11,7 @@ private final class MenuResult: ObservableObject {
 private struct MenuProbe: View {
     @ObservedObject var result: MenuResult
     let navigation: Bool
+    let rightToLeft: Bool
 
     var body: some View {
         let groups: [FoundationMenuGroup] = [
@@ -20,7 +21,8 @@ private struct MenuProbe: View {
                 action("Save"),
             ]),
             .init(id: "disabled", title: "Unavailable", isEnabled: false, actions: []),
-            .init(id: "last", title: "Edit", actions: [action("Copy"), action("Paste")]),
+            .init(id: "edit", title: "Edit", actions: [action("Copy"), action("Paste")]),
+            .init(id: "last", title: "View", actions: [action("Reload")]),
         ]
         Group {
             if navigation {
@@ -30,6 +32,8 @@ private struct MenuProbe: View {
             }
         }
         .disabled(!result.isEnabled)
+        .foundationTheme(navigation ? FoundationTheme() : FoundationTheme(preset: .nova))
+        .environment(\.layoutDirection, rightToLeft ? .rightToLeft : .leftToRight)
         .frame(width: 400, height: 240)
     }
 
@@ -48,6 +52,9 @@ struct MacMenuKeyboardAudit {
         let app = NSApplication.shared
         app.setActivationPolicy(.regular)
         let navigation = CommandLine.arguments.contains("--navigation")
+        let rightToLeft = CommandLine.arguments.contains("--rtl")
+        let forward: (UInt16, String) = rightToLeft ? (123, "\u{F702}") : (124, "\u{F703}")
+        let backward: (UInt16, String) = rightToLeft ? (124, "\u{F703}") : (123, "\u{F702}")
         let actionsOnly = CommandLine.arguments.contains("--actions-only")
         let result = MenuResult()
         let window = NSWindow(
@@ -55,7 +62,8 @@ struct MacMenuKeyboardAudit {
             styleMask: [.titled, .closable], backing: .buffered, defer: false
         )
         window.title = navigation ? "Navigation Menu Keyboard Audit" : "Menubar Keyboard Audit"
-        window.contentView = NSHostingView(rootView: MenuProbe(result: result, navigation: navigation))
+        window.contentView = NSHostingView(rootView: MenuProbe(result: result, navigation: navigation,
+                                                               rightToLeft: rightToLeft))
         window.center()
         app.activate(ignoringOtherApps: true)
         window.makeKeyAndOrderFront(nil)
@@ -97,12 +105,12 @@ struct MacMenuKeyboardAudit {
                 fail("Parent did not regain the key window after selection", result)
             }
 
-            // Down reopens File without another Tab. Right skips the disabled
+            // Down reopens File without another Tab. The forward arrow skips the disabled
             // trigger. Escape restores Edit so Down and Return choose Copy.
             press(125, "\u{F701}", app)
             guard await waitUntil({ app.keyWindow is NSPanel }) else { fail("Could not reopen File", result) }
             try? await Task.sleep(for: .milliseconds(160))
-            press(124, "\u{F703}", app)
+            press(forward.0, forward.1, app)
             try? await Task.sleep(for: .milliseconds(330))
             press(53, "\u{1B}", app)
             guard await waitUntil({ window.isKeyWindow }) else { fail("Escape did not close the menu", result) }
@@ -119,7 +127,7 @@ struct MacMenuKeyboardAudit {
             press(125, "\u{F701}", app)
             guard await waitUntil({ app.keyWindow is NSPanel }) else { fail("Could not reopen Edit after selection", result) }
             try? await Task.sleep(for: .milliseconds(160))
-            press(123, "\u{F702}", app)
+            press(backward.0, backward.1, app)
             try? await Task.sleep(for: .milliseconds(330))
             press(36, "\r", app)
             guard await waitUntil({ result.actions == ["Save", "Copy", "New"] }) else {
@@ -136,7 +144,8 @@ struct MacMenuKeyboardAudit {
             guard window.isKeyWindow, result.actions == ["Save", "Copy", "New"] else {
                 fail("Keyboard input opened a disabled bar or executed an action", result)
             }
-            print("PASS \(navigation ? "Navigation Menu" : "Menubar"): skips disabled items, executes across groups, restores focus, and closes when disabled")
+            let direction = rightToLeft ? "RTL" : "LTR"
+            print("PASS \(navigation ? "Navigation Menu" : "Menubar") \(direction): skips disabled items, executes across groups, restores focus, and closes when disabled")
             exit(0)
         }
         app.run()

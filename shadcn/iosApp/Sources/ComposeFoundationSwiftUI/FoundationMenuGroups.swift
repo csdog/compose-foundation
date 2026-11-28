@@ -29,14 +29,18 @@ public struct FoundationMenuGroup: Identifiable {
 }
 
 struct FoundationMenuGroups: View {
+    @Environment(\.foundationTheme) private var theme
     let groups: [FoundationMenuGroup]
     let spacing: CGFloat
+    var isMenubar = false
 
     var body: some View {
+        let novaMenubar = isMenubar && theme.preset == .nova
+        let triggerSpacing = novaMenubar ? 2 : spacing
         if #available(iOS 17, macOS 14, *) {
-            FoundationKeyboardMenuGroups(groups: groups, spacing: spacing)
+            FoundationKeyboardMenuGroups(groups: groups, spacing: triggerSpacing, novaMenubar: novaMenubar)
         } else {
-            HStack(spacing: spacing) {
+            HStack(spacing: triggerSpacing) {
                 ForEach(groups) { group in
                     Menu(group.title) {
                         ForEach(group.actions) { action in
@@ -69,6 +73,7 @@ private struct FoundationKeyboardMenuGroups: View {
 
     let groups: [FoundationMenuGroup]
     let spacing: CGFloat
+    let novaMenubar: Bool
 
     private var enabledGroups: [FoundationMenuGroup] { isEnabled ? groups.filter(\.isEnabled) : [] }
     private var openGroup: FoundationMenuGroup? { enabledGroups.first { $0.id == openID } }
@@ -98,7 +103,8 @@ private struct FoundationKeyboardMenuGroups: View {
     private var triggers: some View {
         HStack(spacing: spacing) {
             ForEach(groups) { group in
-                FoundationMenuGroupButton(title: group.title, enabled: group.isEnabled, focused: triggerIsFocused(group)) {
+                FoundationMenuGroupButton(title: group.title, enabled: group.isEnabled, focused: triggerIsFocused(group),
+                                          novaTrigger: novaMenubar, expanded: openID == group.id) {
                     open(group)
                 }
                 .accessibilityValue(openID == group.id ? Text("Expanded") : Text("Collapsed"))
@@ -333,28 +339,40 @@ private struct FoundationMenuGroupPanel: View {
 }
 
 private struct FoundationMenuGroupButton: View {
+    @Environment(\.isEnabled) private var ancestorEnabled
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
+    @State private var hovered = false
 
     let title: String
     let enabled: Bool
     let focused: Bool
     var fillsWidth = false
+    var novaTrigger = false
+    var expanded = false
     let action: () -> Void
 
     var body: some View {
         let palette = theme.palette(for: colorScheme)
-        let shape = RoundedRectangle(cornerRadius: theme.cornerRadius)
+        let shape = RoundedRectangle(cornerRadius: novaTrigger ? max(0, theme.cornerRadius - 6) : theme.cornerRadius)
+        #if os(macOS)
+        let hitHeight: CGFloat = novaTrigger ? 26 : 44
+        #else
+        let hitHeight: CGFloat = 44
+        #endif
+        let activeFill = novaTrigger && ancestorEnabled && enabled && (expanded || hovered)
         Button(action: action) {
             Text(title)
-                .padding(.horizontal, 10)
-                .frame(maxWidth: fillsWidth ? .infinity : nil, minHeight: 44, alignment: .leading)
+                .padding(.horizontal, novaTrigger ? 6 : 10)
+                .frame(maxWidth: fillsWidth ? .infinity : nil, minHeight: hitHeight, alignment: .leading)
                 .foregroundColor(enabled ? palette.foreground : palette.mutedForeground)
+                .background(shape.fill(activeFill ? palette.secondary : .clear))
                 .overlay(shape.strokeBorder(focused ? palette.ring : .clear, lineWidth: 2).allowsHitTesting(false))
                 .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(!enabled)
+        .onHover { hovered = novaTrigger && $0 }
     }
 }
 
