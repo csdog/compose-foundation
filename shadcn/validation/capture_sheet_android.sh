@@ -34,8 +34,12 @@ adb install -r "$test_apk"
 adb shell pm clear "$package"
 adb shell input keyevent KEYCODE_WAKEUP
 adb shell wm dismiss-keyguard
+adb shell cmd statusbar collapse
 result="$(adb shell am instrument -w -e class "$test_class" "$test_package/androidx.test.runner.AndroidJUnitRunner")"
 printf '%s\n' "$result"
-grep -Fq 'OK (1 test)' <<<"$result"
+if ! grep -Fq 'OK (1 test)' <<<"$result"; then
+  adb shell dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' || true
+  exit 1
+fi
 mkdir -p "$output"
 adb pull "/sdcard/Android/data/$package/files/sheet-animation/." "$output"

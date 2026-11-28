@@ -25,6 +25,7 @@ private const val CAPTURE_STEP_MILLIS = 16
 private const val FRAME_NUMBER_DIGITS = 3
 private const val FULL_IMAGE_QUALITY = 100
 private const val SCREENSHOT_TIMEOUT_SECONDS = 5L
+private const val WINDOW_TIMEOUT_MILLIS = 10_000L
 
 class SheetAndroidAnimationTest {
     @get:Rule
@@ -51,7 +52,10 @@ class SheetAndroidAnimationTest {
         }
         compose.waitForIdle()
         val targetPackage = instrumentation.targetContext.packageName
-        compose.waitUntil {
+        compose.waitUntil(
+            conditionDescription = "the Sheet fixture owns the active window for $targetPackage",
+            timeoutMillis = WINDOW_TIMEOUT_MILLIS,
+        ) {
             instrumentation.uiAutomation.rootInActiveWindow?.packageName?.toString() == targetPackage
         }
 
