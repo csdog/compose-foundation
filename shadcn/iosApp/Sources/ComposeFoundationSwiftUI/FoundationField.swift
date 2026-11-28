@@ -5,6 +5,14 @@ public struct FoundationField<Content: View>: View {
         case beforeContent, afterContent
     }
 
+    public enum Orientation: Sendable {
+        case vertical, horizontal, responsive
+    }
+
+    public enum ControlPlacement: Sendable {
+        case leading, trailing
+    }
+
     @Environment(\.foundationTheme) private var theme
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.font) private var font
@@ -14,6 +22,8 @@ public struct FoundationField<Content: View>: View {
     private let description: String?
     private let error: String?
     private let descriptionPlacement: DescriptionPlacement
+    private let orientation: Orientation
+    private let controlPlacement: ControlPlacement
     private let content: Content
 
     public init(
@@ -32,33 +42,58 @@ public struct FoundationField<Content: View>: View {
         descriptionPlacement: DescriptionPlacement,
         @ViewBuilder content: () -> Content
     ) {
+        self.init(title, description: description, error: error, orientation: .vertical,
+                  descriptionPlacement: descriptionPlacement, content: content)
+    }
+
+    public init(
+        _ title: String,
+        description: String? = nil,
+        error: String? = nil,
+        orientation: Orientation,
+        controlPlacement: ControlPlacement = .trailing,
+        descriptionPlacement: DescriptionPlacement = .afterContent,
+        @ViewBuilder content: () -> Content
+    ) {
         self.title = title
         self.description = description
         self.error = error
         self.descriptionPlacement = descriptionPlacement
+        self.orientation = orientation
+        self.controlPlacement = controlPlacement
         self.content = content()
     }
 
     public var body: some View {
         let palette = theme.palette(for: colorScheme)
         let nova = theme.preset == .nova
+        let spacing: CGFloat = nova ? 8 : 6
         let supportFont = nova ? (font ?? .system(size: novaTextSize)) : .caption
         let supportHeight = nova ? novaTextSize * (20.0 / 14) : nil
 
-        VStack(alignment: .leading, spacing: nova ? 8 : 6) {
-            if nova {
-                FoundationLabel(title)
-                    .font(font?.weight(.medium))
-                    .frame(minHeight: novaTextSize * (19.0 / 14))
+        VStack(alignment: .leading, spacing: spacing) {
+            if orientation == .vertical {
+                fieldLabel(nova: nova, palette: palette)
+                if descriptionPlacement == .beforeContent, let description {
+                    supportText(description, color: palette.mutedForeground, font: supportFont, minHeight: supportHeight)
+                }
+                content
+                if descriptionPlacement == .afterContent, let description {
+                    supportText(description, color: palette.mutedForeground, font: supportFont, minHeight: supportHeight)
+                }
             } else {
-                Text(title).font(.subheadline.weight(.medium)).foregroundColor(palette.foreground)
-            }
-            if descriptionPlacement == .beforeContent, let description {
-                supportText(description, color: palette.mutedForeground, font: supportFont, minHeight: supportHeight)
-            }
-            content
-            if descriptionPlacement == .afterContent, let description {
-                supportText(description, color: palette.mutedForeground, font: supportFont, minHeight: supportHeight)
+                controlRow(spacing: spacing) {
+                    if controlPlacement == .leading { content }
+                    VStack(alignment: .leading, spacing: 2) {
+                        fieldLabel(nova: nova, palette: palette)
+                        if let description {
+                            supportText(description, color: palette.mutedForeground,
+                                        font: supportFont, minHeight: supportHeight)
+                        }
+                    }
+                    .layoutPriority(1)
+                    if controlPlacement == .trailing { content }
+                }
             }
             if let error {
                 supportText(error, color: palette.destructive, font: supportFont, minHeight: supportHeight)
@@ -67,11 +102,88 @@ public struct FoundationField<Content: View>: View {
         .accessibilityElement(children: .contain)
     }
 
+    @ViewBuilder
+    private func fieldLabel(nova: Bool, palette: FoundationPalette) -> some View {
+        if nova {
+            FoundationLabel(title)
+                .font(font?.weight(.medium))
+                .frame(minHeight: novaTextSize * (19.0 / 14))
+        } else {
+            Text(title).font(.subheadline.weight(.medium)).foregroundColor(palette.foreground)
+        }
+    }
+
+    @ViewBuilder
+    private func controlRow<Row: View>(spacing: CGFloat, @ViewBuilder row: () -> Row) -> some View {
+        let alignment: VerticalAlignment = description == nil ? .center : .top
+        if orientation == .horizontal {
+            HStack(alignment: alignment, spacing: spacing, content: row)
+        } else if #available(iOS 16, macOS 13, *) {
+            FoundationResponsiveFieldLayout(alignment: alignment, spacing: spacing) { row() }
+        } else {
+            VStack(alignment: .leading, spacing: spacing, content: row)
+        }
+    }
+
     private func supportText(_ value: String, color: Color, font: Font, minHeight: CGFloat?) -> some View {
         Text(value)
             .font(font)
             .foregroundColor(color)
             .frame(minHeight: minHeight)
+    }
+}
+
+@available(iOS 16, macOS 13, *)
+private struct FoundationResponsiveFieldLayout: Layout {
+    struct Cache {
+        var row: HStackLayout.Cache
+        var column: VStackLayout.Cache
+    }
+
+    let alignment: VerticalAlignment
+    let spacing: CGFloat
+
+    private var row: HStackLayout { HStackLayout(alignment: alignment, spacing: spacing) }
+    private var column: VStackLayout { VStackLayout(alignment: .leading, spacing: spacing) }
+
+    func makeCache(subviews: Subviews) -> Cache {
+        Cache(row: makeCache(for: row, subviews: subviews), column: makeCache(for: column, subviews: subviews))
+    }
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout Cache) -> CGSize {
+        if isWide(proposal) {
+            sizeThatFits(using: row, proposal: proposal, subviews: subviews, cache: &cache.row)
+        } else {
+            sizeThatFits(using: column, proposal: proposal, subviews: subviews, cache: &cache.column)
+        }
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout Cache) {
+        if isWide(proposal) {
+            placeSubviews(using: row, in: bounds, proposal: proposal, subviews: subviews, cache: &cache.row)
+        } else {
+            placeSubviews(using: column, in: bounds, proposal: proposal, subviews: subviews, cache: &cache.column)
+        }
+    }
+
+    private func isWide(_ proposal: ProposedViewSize) -> Bool {
+        (proposal.width ?? 0) >= 448
+    }
+
+    private func makeCache<Stack: Layout>(for stack: Stack, subviews: Subviews) -> Stack.Cache {
+        stack.makeCache(subviews: subviews)
+    }
+
+    private func sizeThatFits<Stack: Layout>(
+        using stack: Stack, proposal: ProposedViewSize, subviews: Subviews, cache: inout Stack.Cache
+    ) -> CGSize {
+        stack.sizeThatFits(proposal: proposal, subviews: subviews, cache: &cache)
+    }
+
+    private func placeSubviews<Stack: Layout>(
+        using stack: Stack, in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout Stack.Cache
+    ) {
+        stack.placeSubviews(in: bounds, proposal: proposal, subviews: subviews, cache: &cache)
     }
 }
 

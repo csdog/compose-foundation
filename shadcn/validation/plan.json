@@ -682,12 +682,13 @@
         "swiftui-ios": [
           {"variant": "input", "status": "initial", "viewport": [402, 520]},
           {"variant": "textarea", "status": "initial", "viewport": [402, 520]},
-          {"variant": "fieldset", "status": "initial", "viewport": [440, 520], "swiftuiDevice": "iPhone-17-Pro-Max"}
+          {"variant": "fieldset", "status": "initial", "viewport": [440, 520], "swiftuiDevice": "iPhone-17-Pro-Max"},
+          {"variant": "switch", "status": "initial", "viewport": [402, 520]}
         ]
       },
       "reference": "apps/v4/examples/base/field-input.tsx",
-      "visual": "compare both input fields, the complete feedback textarea and the address fieldset",
-      "behavior": "support descriptions before and after content and compose related fields",
+      "visual": "compare both input fields, feedback textarea, address fieldset and horizontal switch field",
+      "behavior": "support descriptions and preserve field state across responsive layouts",
       "accessibility": "section legend heading, named editors and readable descriptions",
       "motion": "static settled frames"
     },
