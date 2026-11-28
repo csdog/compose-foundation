@@ -434,22 +434,27 @@ private struct FoundationCalendarKeyboardDay: ViewModifier {
     let activate: () -> Void
     let move: (FoundationCalendarNavigation.FocusMove) -> Void
 
+    @ViewBuilder
     func body(content: Content) -> some View {
-        content
-            .focusable(enabled && isEnabled && (isTabStop || focus.wrappedValue == date))
-            .focused(focus, equals: date)
-            .focusEffectDisabled(ring != nil)
-            .overlay {
-                if let ring, enabled, isEnabled, focus.wrappedValue == date {
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .strokeBorder(ring.opacity(0.55), lineWidth: 3)
-                        .frame(width: ringSize, height: ringSize)
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
+        if enabled && isEnabled && isTabStop {
+            content
+                .focusable()
+                .focused(focus, equals: date)
+                .focusEffectDisabled(ring != nil)
+                .overlay {
+                    if let ring, focus.wrappedValue == date {
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .strokeBorder(ring.opacity(0.55), lineWidth: 3)
+                            .frame(width: ringSize, height: ringSize)
+                            .allowsHitTesting(false)
+                            .accessibilityHidden(true)
+                    }
                 }
-            }
-            .onKeyPress(keys: [.leftArrow, .rightArrow, .upArrow, .downArrow, .home, .end,
-                              .pageUp, .pageDown, .return, .space], phases: [.down, .repeat], action: handle)
+                .onKeyPress(keys: [.leftArrow, .rightArrow, .upArrow, .downArrow, .home, .end,
+                                  .pageUp, .pageDown, .return, .space], phases: [.down, .repeat], action: handle)
+        } else {
+            content.focusable(false)
+        }
     }
 
     private func handle(_ key: KeyPress) -> KeyPress.Result {

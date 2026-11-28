@@ -137,7 +137,7 @@ enum MacCalendarAudit {
         await send(enter)
         expect(11, 4, "Navigation stops on the first selectable date")
         await send((48, "\t"))
-        await send(enter)
+        await send(space)
         require(state.afterActivated, "Tab should leave the date grid for the next control")
         await send((48, "\u{19}"), modifiers: .shift)
         state.enabled = false
