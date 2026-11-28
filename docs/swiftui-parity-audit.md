@@ -34,7 +34,7 @@ Kbd 覆盖四个修饰键与 Ctrl + B 两行。Skeleton 覆盖头像和两条文
 
 官方示例在 500 ms 后从 13% 更新到 66%，归档参考图为更新后的状态。SwiftUI Nova 对照完整的 403.2 pt 宽进度条，在 iPhone 17 Pro Max（iOS 26.2）用 440 × 520 共用画布采集。深浅色各拍两遍，PNG 逐字节一致。原有 38 张 iPhone 17 Pro 截图与上一轮逐字节一致。圆角边缘及轨道配色有像素差异。macOS Swift Package 构建通过。进度变化过程及 RTL 待单独验收。[Review 报告](https://github.com/csdog/compose-foundation/actions/runs/46000170133/artifacts/15198731356)
 
-带标题的 Progress 对照 56% 的英文示例和阿拉伯语 RTL 示例。iPhone 17 Pro Max 的六张深浅色图复拍一致，原有纯轨道的两张图与此前审核逐字节一致。沿轨道抽样确认英文填充从左开始，RTL 填充从右开始。进度变化过程及实际 VoiceOver 仍待验。[iPhone Review](https://github.com/csdog/compose-foundation/actions/runs/46129844621/artifacts/15257840765)
+带标题的 Progress 对照 56% 的英文示例和阿拉伯语 RTL 示例。iPhone 17 Pro Max 的六张深浅色图复拍一致，原有纯轨道的两张图与此前审核逐字节一致。沿轨道抽样确认英文填充从左开始，RTL 填充从右开始。macOS Swift Package 编译及通用焦点与选择规则通过。进度变化过程及实际 VoiceOver 仍待验。[macOS 日志](https://github.com/csdog/compose-foundation/actions/runs/46129844621/job/140932439657)[iPhone Review](https://github.com/csdog/compose-foundation/actions/runs/46129844621/artifacts/15257840765)
 
 ### Switch 关闭、开启和禁用态
 
