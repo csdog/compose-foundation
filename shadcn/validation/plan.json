@@ -678,12 +678,11 @@
       "variant": "input",
       "status": "initial",
       "platforms": ["swiftui-ios"],
-      "swiftuiDevice": "iPhone-17-Pro-Max",
       "platformCases": {
         "swiftui-ios": [
           {"variant": "input", "status": "initial", "viewport": [402, 520]},
           {"variant": "textarea", "status": "initial", "viewport": [402, 520]},
-          {"variant": "fieldset", "status": "initial", "viewport": [440, 520]},
+          {"variant": "fieldset", "status": "initial", "viewport": [440, 520], "swiftuiDevice": "iPhone-17-Pro-Max"},
           {"variant": "switch", "status": "initial", "viewport": [402, 520]}
         ]
       },

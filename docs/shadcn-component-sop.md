@@ -60,6 +60,8 @@ Actions 的 **Summary** 显示各平台的比对结论和所用基准 SHA。日�
 
 手动运行 CI 时，把 `component` 设为 `popover` 即可只采集这一个组件。本地可用同一入口采集、比对、生成差异图和 Markdown 报告。以下例子使用 JDK 21、Xvfb 和 Pillow，从现有 CMP JVM fixture 采集 **展开态**，使用两个独立运行目录验证候选图。桌面采集会裁掉 Roborazzi 画布的透明区域。该 fixture 含触发器和弹层标题、描述，上游完整表单需要单独采集。
 
+SwiftUI iOS 截图默认在 iPhone 17 Pro 上采集。组件级 `swiftuiDevice` 设置该组件的默认机型。只有部分用例需要更宽的画布时，可在 `platformCases.swiftui-ios` 对应行设置 `swiftuiDevice`。同一机型的用例合并在一次模拟器启动中。Field 地址示例使用 iPhone 17 Pro Max，其余 Field 用例继续使用 iPhone 17 Pro。
+
 ```sh
 first=build/shadcn-audit/popover-first
 second=build/shadcn-audit/popover-second

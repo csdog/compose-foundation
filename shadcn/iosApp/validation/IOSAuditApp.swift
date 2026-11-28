@@ -167,6 +167,15 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         guard names.isSubset(of: fixtures.keys) else {
             throw CocoaError(.fileReadCorruptFile, userInfo: [NSLocalizedDescriptionKey: "Unknown audit component"])
         }
+        let casePrefix = "--audit-case="
+        var requestedCases: [String: Set<String>] = [:]
+        for argument in ProcessInfo.processInfo.arguments where argument.hasPrefix(casePrefix) {
+            let parts = argument.dropFirst(casePrefix.count).split(separator: ":", maxSplits: 1)
+            guard parts.count == 2, names.contains(String(parts[0])) else {
+                throw CocoaError(.fileReadCorruptFile, userInfo: [NSLocalizedDescriptionKey: "Invalid audit case"])
+            }
+            requestedCases[String(parts[0]), default: []].insert(String(parts[1]))
+        }
 
         let outputDirectory = try prepareOutputDirectory()
         let comparisonFixtures: [String: () -> AnyView] = [
@@ -364,8 +373,11 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
         let viewports = useComparisonFixtures ? try loadComparisonViewports() : [:]
         var count = 0
         for name in names.sorted() {
+            let allowedCases = requestedCases[name]
             if name == "popover", !popoverCases.isEmpty {
                 for item in popoverCases {
+                    let filename = "popover-\(item.variant.rawValue)-\(item.status.rawValue)"
+                    if allowedCases?.contains(filename) == false { continue }
                     for dark in [false, true] {
                         try await capturePopover(item, dark: dark, root: root, window: window,
                                                  outputDirectory: outputDirectory)
@@ -377,6 +389,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
             if name == "hover-card", useComparisonFixtures {
                 for isOpen in [false, true] {
                     let filename = "hover-card-default-\(isOpen ? "open" : "initial")"
+                    if allowedCases?.contains(filename) == false { continue }
                     guard let viewport = viewports[filename] else { throw CocoaError(.fileReadCorruptFile) }
                     for dark in [false, true] {
                         try await captureFloatingPanel(filename: filename, isOpen: isOpen, viewport: viewport,
@@ -396,6 +409,7 @@ final class IOSAuditSceneDelegate: NSObject, UIWindowSceneDelegate {
                 captures = [(name, useComparisonFixtures ? comparisonFixtures[name] : nil)]
             }
             for (filename, comparisonFixture) in captures {
+                if allowedCases?.contains(filename) == false { continue }
                 for dark in [false, true] {
                     let scheme: ColorScheme = dark ? .dark : .light
                     let palette = FoundationTheme().palette(for: scheme)
